@@ -37,6 +37,7 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
         this.login.Barra.addMouseMotionListener(this);
         this.login.BTN_cerrar.addActionListener(this);
         this.login.BTN_cerrar.addMouseListener(this);
+        this.login.BTN_Visibilidad.addActionListener(this);
         this.login.BTN_siguiente.addActionListener(this);
         this.login.BTN_siguiente.addMouseListener(this);
          
@@ -59,27 +60,28 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
 
       
     @Override
-    public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
         if (e.getSource()==login.BTN_cerrar) {
-            System.exit(0);
+                  System.exit(0);
         }
         if (e.getSource()==login.BTN_siguiente) {
-            if (!login.Txt_usuario.getText().equals(usuario) && !login.Txt_contraseña.getText().equals(contraseña)) {
-                     JOptionPane.showMessageDialog(null,"Usuario y/o contraseña incorrectas","Error en el ingreso", JOptionPane.ERROR_MESSAGE);
-            }
-            else if(login.Txt_usuario.getText().equals("") && login.Txt_contraseña.getText().equals("")){
-                JOptionPane.showMessageDialog(null,"No se ingreso un usuario ni contraseña","Error en el ingreso", JOptionPane.ERROR_MESSAGE);
-
-            }else if (login.Txt_usuario.getText().equals("")) {
-                JOptionPane.showMessageDialog(null,"No se ingreso un usuario","Error en el ingreso", JOptionPane.ERROR_MESSAGE);
-                
-            }else if(login.Txt_contraseña.getText().equals("")){
-                JOptionPane.showMessageDialog(null,"No se ingreso una contraseña","Error en el ingreso", JOptionPane.ERROR_MESSAGE);
-            }
-            else{
-                principal.getVista().jLabel1.setText(login.Txt_usuario.getText());
-                principal.Iniciar();
-                login.dispose();
+                  if (!login.Txt_usuario.getText().equals("") && !login.Txt_contraseña.getText().equals("") || !login.Txt_usuario.getText().equals("") || !login.Txt_contraseña.getText().equals("")) {     
+                           if (!login.Txt_usuario.getText().equals(usuario) &&  !login.Txt_contraseña.getText().equals(contraseña) || !login.Txt_usuario.getText().equals(usuario) || !login.Txt_contraseña.getText().equals(contraseña)) {
+                                    JOptionPane.showMessageDialog(null,"El usuario y/o contraseña ingresados son incorrectos", "Error en el ingreso",JOptionPane.ERROR_MESSAGE);
+                           }else{
+                                     login.dispose();
+                                    principal.Iniciar();
+                                    principal.getVista().jLabel1.setText(usuario);
+                           }
+                  }else{
+                          JOptionPane.showMessageDialog(null,"No se debe dejar nigún campo vacio","Error en el ingreso", JOptionPane.ERROR_MESSAGE);
+                  }          
+         }
+        if(e.getSource()==login.BTN_Visibilidad){
+            if (login.BTN_Visibilidad.isSelected()) {
+                  login.Txt_contraseña.setEchoChar((char)0);
+            }else{
+                  login.Txt_contraseña.setEchoChar('●');
             }
         }
     }

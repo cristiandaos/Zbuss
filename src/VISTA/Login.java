@@ -31,10 +31,10 @@ public class Login extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        Txt_usuario = new MODELO.TextPersonalizado();
-        Txt_contraseña = new MODELO.TextPersonalizado();
         BTN_siguiente = new javax.swing.JButton();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        BTN_Visibilidad = new javax.swing.JToggleButton();
+        Txt_contraseña = new javax.swing.JPasswordField();
+        Txt_usuario = new javax.swing.JTextField();
         BTN_cerrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -67,24 +67,6 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(123, 216, 80)));
         jPanel7.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 140, -1));
 
-        Txt_usuario.setBackground(java.awt.Color.darkGray);
-        Txt_usuario.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
-        Txt_usuario.setForeground(new java.awt.Color(255, 255, 255));
-        Txt_usuario.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        Txt_usuario.setArc(25);
-        Txt_usuario.setCaretColor(new java.awt.Color(255, 255, 255));
-        Txt_usuario.setFont(new java.awt.Font("Consolas", 0, 16)); // NOI18N
-        jPanel7.add(Txt_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 200, 30));
-
-        Txt_contraseña.setBackground(java.awt.Color.darkGray);
-        Txt_contraseña.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
-        Txt_contraseña.setForeground(new java.awt.Color(255, 255, 255));
-        Txt_contraseña.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        Txt_contraseña.setArc(25);
-        Txt_contraseña.setCaretColor(new java.awt.Color(255, 255, 255));
-        Txt_contraseña.setFont(new java.awt.Font("Consolas", 0, 16)); // NOI18N
-        jPanel7.add(Txt_contraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 200, 30));
-
         BTN_siguiente.setBackground(new java.awt.Color(18, 18, 18));
         BTN_siguiente.setFont(new java.awt.Font("Consolas", 0, 16)); // NOI18N
         BTN_siguiente.setForeground(new java.awt.Color(255, 255, 255));
@@ -94,15 +76,30 @@ public class Login extends javax.swing.JFrame {
         BTN_siguiente.setFocusable(false);
         jPanel7.add(BTN_siguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 300, 100, 30));
 
-        jToggleButton1.setBackground(new java.awt.Color(18, 18, 18));
-        jToggleButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMGS/No_Visible.png"))); // NOI18N
-        jToggleButton1.setBorderPainted(false);
-        jToggleButton1.setContentAreaFilled(false);
-        jToggleButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jToggleButton1.setFocusPainted(false);
-        jToggleButton1.setFocusable(false);
-        jToggleButton1.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMGS/Visible.png"))); // NOI18N
-        jPanel7.add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, 30, 30));
+        BTN_Visibilidad.setBackground(new java.awt.Color(18, 18, 18));
+        BTN_Visibilidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMGS/No_Visible.png"))); // NOI18N
+        BTN_Visibilidad.setBorderPainted(false);
+        BTN_Visibilidad.setContentAreaFilled(false);
+        BTN_Visibilidad.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BTN_Visibilidad.setFocusPainted(false);
+        BTN_Visibilidad.setFocusable(false);
+        BTN_Visibilidad.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMGS/Visible.png"))); // NOI18N
+        jPanel7.add(BTN_Visibilidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, 30, 30));
+
+        Txt_contraseña.setBackground(new java.awt.Color(18, 18, 18));
+        Txt_contraseña.setFont(new java.awt.Font("Consolas", 0, 16)); // NOI18N
+        Txt_contraseña.setForeground(new java.awt.Color(255, 255, 255));
+        Txt_contraseña.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        Txt_contraseña.setCaretColor(new java.awt.Color(255, 255, 255));
+        Txt_contraseña.setEchoChar('\u25cf');
+        jPanel7.add(Txt_contraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 200, 30));
+
+        Txt_usuario.setBackground(new java.awt.Color(18, 18, 18));
+        Txt_usuario.setFont(new java.awt.Font("Consolas", 0, 16)); // NOI18N
+        Txt_usuario.setForeground(new java.awt.Color(255, 255, 255));
+        Txt_usuario.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        Txt_usuario.setCaretColor(new java.awt.Color(255, 255, 255));
+        jPanel7.add(Txt_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 210, 30));
 
         getContentPane().add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 300, 370));
 
@@ -155,15 +152,15 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JToggleButton BTN_Visibilidad;
     public javax.swing.JButton BTN_cerrar;
     public javax.swing.JButton BTN_siguiente;
     public javax.swing.JPanel Barra;
-    public MODELO.TextPersonalizado Txt_contraseña;
-    public MODELO.TextPersonalizado Txt_usuario;
+    public javax.swing.JPasswordField Txt_contraseña;
+    public javax.swing.JTextField Txt_usuario;
     public javax.swing.JLabel jLabel1;
     public javax.swing.JLabel jLabel2;
     public javax.swing.JLabel jLabel3;
     public javax.swing.JPanel jPanel7;
-    public javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }
