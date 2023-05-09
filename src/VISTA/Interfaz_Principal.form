@@ -42,7 +42,7 @@
         <Property name="useNullLayout" type="boolean" value="false"/>
       </Layout>
       <SubComponents>
-        <Container class="MODELO.PanelPersonalizado" name="panelPersonalizado1">
+        <Container class="UTILIDADES.PanelPersonalizado" name="panelPersonalizado1">
           <Properties>
             <Property name="colorFinal" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="66" red="33" type="rgb"/>
@@ -190,7 +190,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="MODELO.PanelPersonalizado" name="panelPersonalizado2">
+        <Container class="UTILIDADES.PanelPersonalizado" name="panelPersonalizado2">
           <Properties>
             <Property name="colorFinal" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -216,7 +216,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="0" y="0" width="1200" height="40"/>
+          <AbsoluteConstraints x="0" y="0" width="1220" height="40"/>
         </Constraint>
       </Constraints>
 
@@ -242,7 +242,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="1200" y="0" width="80" height="40"/>
+          <AbsoluteConstraints x="1220" y="0" width="60" height="40"/>
         </Constraint>
       </Constraints>
     </Component>

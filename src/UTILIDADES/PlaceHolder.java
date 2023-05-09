@@ -1,4 +1,4 @@
-package MODELO;
+package UTILIDADES;
 
 
 import java.awt.*;

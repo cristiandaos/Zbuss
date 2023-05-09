@@ -13,7 +13,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        panelPersonalizado1 = new MODELO.PanelPersonalizado();
+        panelPersonalizado1 = new org.netbeans.modules.form.InvalidComponent();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -23,7 +23,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        panelPersonalizado2 = new MODELO.PanelPersonalizado();
+        panelPersonalizado2 = new org.netbeans.modules.form.InvalidComponent();
         Barra = new javax.swing.JPanel();
         BTN_cerrar = new javax.swing.JButton();
 
@@ -34,8 +34,6 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(18, 18, 18));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        panelPersonalizado1.setColorFinal(new java.awt.Color(51, 102, 0));
-        panelPersonalizado1.setColorInicial(new java.awt.Color(51, 255, 51));
         panelPersonalizado1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -84,14 +82,14 @@ public class Interfaz_Principal extends javax.swing.JFrame {
 
         jPanel1.add(panelPersonalizado1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 680));
 
-        panelPersonalizado2.setColorFinal(new java.awt.Color(255, 255, 255));
         panelPersonalizado2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel1.add(panelPersonalizado2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 1070, 680));
+        panelPersonalizado2.getAccessibleContext().setAccessibleParent(panelPersonalizado1);
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 1280, 680));
 
         Barra.setBackground(new java.awt.Color(18, 18, 18));
-        getContentPane().add(Barra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 40));
+        getContentPane().add(Barra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1220, 40));
 
         BTN_cerrar.setBackground(new java.awt.Color(18, 18, 18));
         BTN_cerrar.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -100,7 +98,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         BTN_cerrar.setBorderPainted(false);
         BTN_cerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BTN_cerrar.setFocusable(false);
-        getContentPane().add(BTN_cerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 0, 80, 40));
+        getContentPane().add(BTN_cerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 0, 60, 40));
 
         pack();
         setLocationRelativeTo(null);
@@ -151,7 +149,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
     public javax.swing.JLabel jLabel8;
     public javax.swing.JLabel jLabel9;
     public javax.swing.JPanel jPanel1;
-    public MODELO.PanelPersonalizado panelPersonalizado1;
-    public MODELO.PanelPersonalizado panelPersonalizado2;
+    public org.netbeans.modules.form.InvalidComponent panelPersonalizado1;
+    public org.netbeans.modules.form.InvalidComponent panelPersonalizado2;
     // End of variables declaration//GEN-END:variables
 }

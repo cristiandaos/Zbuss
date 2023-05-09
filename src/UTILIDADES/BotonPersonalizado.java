@@ -1,44 +1,16 @@
-package MODELO;
+package UTILIDADES;
 
-import java.awt.Color;
-import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Shape;
-import java.awt.event.MouseMotionListener;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
-import javax.swing.JPanel;
+import javax.swing.JButton;
 
+public class BotonPersonalizado extends JButton {
 
-public class PanelPersonalizado extends JPanel {
-
-   //Esta es una subclase de un Jpanel Personalizable
-    private int roundTopLeft = 0;
-    private int roundTopRight = 0;
-    private int roundBottomLeft = 0;
-    private int roundBottomRight = 0;
-    private Color colorInicial=Color.white;
-    private Color colorfinal=Color.BLACK;
-    
-     public Color getColorInicial() {
-        return colorInicial;
-    }
-
-    public void setColorInicial(Color colorInicial) {
-        this.colorInicial = colorInicial;
-    }
-
-    public Color getColorFinal() {
-        return colorfinal;
-    }
-
-    public void setColorFinal(Color colorfinal) {
-        this.colorfinal = colorfinal;
-    }
-   
     public int getRoundTopLeft() {
         return roundTopLeft;
     }
@@ -75,22 +47,21 @@ public class PanelPersonalizado extends JPanel {
         repaint();
     }
 
-    public PanelPersonalizado() {
+    private int roundTopLeft = 0;
+    private int roundTopRight = 0;
+    private int roundBottomLeft = 0;
+    private int roundBottomRight = 0;
+
+    public BotonPersonalizado() {
         setOpaque(false);
-    }
-   
-        
-        @Override
-   public synchronized void addMouseMotionListener(MouseMotionListener e) {
-        super.addMouseMotionListener(e);
     }
 
     @Override
-    public void paintComponent(Graphics grphcs) {
-        super.paintComponent(grphcs);
-        int w = getWidth();
-        int h = getHeight();
+    protected void paintComponent(Graphics grphcs) {
         Graphics2D g2 = (Graphics2D) grphcs.create();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        g2.setColor(getBackground());
         Area area = new Area(createRoundTopLeft());
         if (roundTopRight > 0) {
             area.intersect(new Area(createRoundTopRight()));
@@ -101,13 +72,11 @@ public class PanelPersonalizado extends JPanel {
         if (roundBottomRight > 0) {
             area.intersect(new Area(createRoundBottomRight()));
         }
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-        GradientPaint gp = new GradientPaint(0, 0, colorInicial, w,h, colorfinal);
-        g2.setPaint(gp);
         g2.fill(area);
+        g2.dispose();
+        super.paintComponent(grphcs);
     }
-    
+
     private Shape createRoundTopLeft() {
         int width = getWidth();
         int height = getHeight();

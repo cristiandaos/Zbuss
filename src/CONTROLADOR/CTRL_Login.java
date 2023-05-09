@@ -1,6 +1,6 @@
 
 package CONTROLADOR;
-import MODELO.PlaceHolder;
+import UTILIDADES.PlaceHolder;
 import VISTA.Login;
 import java.awt.Color;
 import java.awt.Font;
