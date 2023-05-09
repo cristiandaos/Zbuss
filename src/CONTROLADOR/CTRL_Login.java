@@ -71,7 +71,6 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                            }else{
                                      login.dispose();
                                     principal.Iniciar();
-                                    principal.getVista().jLabel1.setText(usuario);
                            }
                   }else{
                           JOptionPane.showMessageDialog(null,"No se debe dejar nigún campo vacio","Error en el ingreso", JOptionPane.ERROR_MESSAGE);
