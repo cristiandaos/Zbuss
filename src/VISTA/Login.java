@@ -17,10 +17,11 @@ public class Login extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        BTN_siguiente = new javax.swing.JButton();
+        BTN_ingresar = new javax.swing.JButton();
         BTN_Visibilidad = new javax.swing.JToggleButton();
         Txt_contraseña = new javax.swing.JPasswordField();
         Txt_usuario = new javax.swing.JTextField();
+        Ingresar = new javax.swing.JLabel();
         BTN_cerrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -53,14 +54,15 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(123, 216, 80)));
         jPanel7.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 140, -1));
 
-        BTN_siguiente.setBackground(new java.awt.Color(18, 18, 18));
-        BTN_siguiente.setFont(new java.awt.Font("Consolas", 0, 16)); // NOI18N
-        BTN_siguiente.setForeground(new java.awt.Color(255, 255, 255));
-        BTN_siguiente.setText("Ingresar");
-        BTN_siguiente.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(123, 216, 80), 2, true));
-        BTN_siguiente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BTN_siguiente.setFocusable(false);
-        jPanel7.add(BTN_siguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 300, 100, 30));
+        BTN_ingresar.setBackground(new java.awt.Color(18, 18, 18));
+        BTN_ingresar.setFont(new java.awt.Font("Consolas", 0, 16)); // NOI18N
+        BTN_ingresar.setForeground(new java.awt.Color(255, 255, 255));
+        BTN_ingresar.setText("Ingresar");
+        BTN_ingresar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(123, 216, 80), 2, true));
+        BTN_ingresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BTN_ingresar.setFocusPainted(false);
+        BTN_ingresar.setFocusable(false);
+        jPanel7.add(BTN_ingresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 100, 30));
 
         BTN_Visibilidad.setBackground(new java.awt.Color(18, 18, 18));
         BTN_Visibilidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMGS/No_Visible.png"))); // NOI18N
@@ -77,7 +79,6 @@ public class Login extends javax.swing.JFrame {
         Txt_contraseña.setForeground(new java.awt.Color(255, 255, 255));
         Txt_contraseña.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         Txt_contraseña.setCaretColor(new java.awt.Color(255, 255, 255));
-        Txt_contraseña.setEchoChar('\u25cf');
         jPanel7.add(Txt_contraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 200, 30));
 
         Txt_usuario.setBackground(new java.awt.Color(18, 18, 18));
@@ -86,6 +87,15 @@ public class Login extends javax.swing.JFrame {
         Txt_usuario.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         Txt_usuario.setCaretColor(new java.awt.Color(255, 255, 255));
         jPanel7.add(Txt_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 210, 30));
+
+        Ingresar.setBackground(new java.awt.Color(18, 18, 18));
+        Ingresar.setFont(new java.awt.Font("Consolas", 0, 16)); // NOI18N
+        Ingresar.setForeground(new java.awt.Color(255, 255, 255));
+        Ingresar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Ingresar.setText("Ingresar");
+        Ingresar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(123, 216, 80), 2, true));
+        Ingresar.setOpaque(true);
+        jPanel7.add(Ingresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 300, 90, 30));
 
         getContentPane().add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 300, 370));
 
@@ -138,8 +148,9 @@ public class Login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JToggleButton BTN_Visibilidad;
     public javax.swing.JButton BTN_cerrar;
-    public javax.swing.JButton BTN_siguiente;
+    public javax.swing.JButton BTN_ingresar;
     public javax.swing.JPanel Barra;
+    public javax.swing.JLabel Ingresar;
     public javax.swing.JPasswordField Txt_contraseña;
     public javax.swing.JTextField Txt_usuario;
     public javax.swing.JLabel jLabel1;
