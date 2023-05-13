@@ -75,15 +75,17 @@ public class Interfaz_Principal extends javax.swing.JFrame {
 
         ScrollBuses.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
+        PanelBuses.setPreferredSize(new java.awt.Dimension(1100, 670));
+
         javax.swing.GroupLayout PanelBusesLayout = new javax.swing.GroupLayout(PanelBuses);
         PanelBuses.setLayout(PanelBusesLayout);
         PanelBusesLayout.setHorizontalGroup(
             PanelBusesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1098, Short.MAX_VALUE)
+            .addGap(0, 1100, Short.MAX_VALUE)
         );
         PanelBusesLayout.setVerticalGroup(
             PanelBusesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 668, Short.MAX_VALUE)
+            .addGap(0, 670, Short.MAX_VALUE)
         );
 
         ScrollBuses.setViewportView(PanelBuses);

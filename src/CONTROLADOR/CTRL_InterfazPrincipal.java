@@ -23,6 +23,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -31,14 +32,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
     private Interfaz_Principal vista;
     private int x;
     private int y;
-    ArrayList<JLabel>CodCombos;
-    ArrayList<JPanel>PanelCombos;
-    ArrayList<JTextArea>DescripCombos;
-    ArrayList<JLabel>IMGCombos;
-    ArrayList<JButton> BotonesCombo;
-    ArrayList<JButton> QuitarCombo;
-    ArrayList<JLabel>NomCombos;
-    ArrayList<JLabel>PreciosCombos;
+    private ArrayList<JPanel>Paneles;
     
     public CTRL_InterfazPrincipal(Interfaz_Principal vista){
         this.vista=vista;
@@ -49,14 +43,8 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
         this.vista.BTN_cerrarSesion.addMouseListener(this);
         this.vista.BTN_cerrar.addActionListener(this);
         this.vista.BTN_cerrar.addMouseListener(this);
-        CodCombos=new ArrayList<>();
-        QuitarCombo=new ArrayList<>();
-        BotonesCombo=new ArrayList<>();
-        IMGCombos=new ArrayList<>();
-        NomCombos=new ArrayList<>();
-        PreciosCombos=new ArrayList<>();
-        DescripCombos=new ArrayList<>();
-        GenerarPaneles(10);
+        Paneles=new ArrayList<>();
+        GenerarPaneles(5);
     } 
     
     public Interfaz_Principal getVista(){
@@ -76,7 +64,8 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
     }
     
     void GenerarPaneles(int cant){
-        int x=100;
+        vista.ScrollBuses.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+        int x=140;
         int y=100;
         int ancho=300;
         int alto=400;
@@ -84,18 +73,25 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
         for (int i = 0; i < cant; i++) {
             JPanel contenido=new JPanel();
             contenido.setBounds(x,y,ancho,alto);
-            contenido.setBackground(new Color(1,176,241));
+            contenido.setBackground(new Color(18,18,18));
             contenido.setLayout(null);
+            Paneles.add(contenido);
             vista.PanelBuses.add(contenido);
             x+=incremento;
-            if(x+contenido.getWidth()>vista.PanelBuses.getWidth()){
-                x=100;
+            if(x>vista.PanelBuses.getWidth()-contenido.getWidth()){
+                x=140;
                 y+=incremento;
             }
-            if (y>vista.PanelBuses.getHeight()) {
-                vista.PanelBuses.setPreferredSize(new Dimension( (int)vista.PanelBuses.getPreferredSize().getWidth(), ((int) (vista.PanelBuses.getPreferredSize().getHeight())+130)));
+            
+            if (y>vista.PanelBuses.getHeight()-contenido.getHeight()) {
+                  vista.PanelBuses.setPreferredSize(new Dimension((int) vista.PanelBuses.getPreferredSize().getWidth(),Paneles.get(i).getY()+alto+100));
+                  vista.ScrollBuses.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
             }
         }   
+    }
+    
+    void CargarPaneles(){
+        
     }
     
     @Override
