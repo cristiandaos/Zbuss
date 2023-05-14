@@ -18,7 +18,7 @@ public class Efectos  {
                             Thread.sleep(delay);
                             componente.setLocation(i, componente.getY());
                         } catch (InterruptedException e) {
-                            System.out.println("Error: Interrupcion"+e);
+                            System.out.println("Error: Interrupcion "+e);
                         }  
                     }
                 }
@@ -39,7 +39,7 @@ public class Efectos  {
                             Thread.sleep(delay);
                             componente.setLocation(i, componente.getY());
                         } catch (InterruptedException e) {
-                            System.out.println("Error: Interrupcion"+e);
+                            System.out.println("Error: Interrupcion "+e);
                         }  
                     }
                 }
@@ -50,8 +50,8 @@ public class Efectos  {
     }
     }
    
-   public void mostrarPanel(JPanel panelDinamico,JPanel panel,int x, int y ){
-        panel.setSize(x,y);
+   public void mostrarPanel(JPanel panelDinamico,JPanel panel,int ancho, int alto ){
+        panel.setSize(ancho,alto);
         panel.setLocation(0, 0);
         panelDinamico.removeAll();
         panelDinamico.add(panel,BorderLayout.CENTER);

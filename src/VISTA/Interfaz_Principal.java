@@ -21,7 +21,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         BTN_cerrarSesion = new javax.swing.JButton();
         Barra = new javax.swing.JPanel();
         BTN_cerrar = new javax.swing.JButton();
-        PanelPrincipal = new javax.swing.JPanel();
+        PanelDinamico = new javax.swing.JPanel();
         ScrollBuses = new javax.swing.JScrollPane();
         PanelBuses = new javax.swing.JPanel();
 
@@ -45,7 +45,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 70, 30));
 
         BTN_cerrarSesion.setBackground(new java.awt.Color(18, 18, 18));
-        BTN_cerrarSesion.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
+        BTN_cerrarSesion.setFont(new java.awt.Font("Consolas", 0, 16)); // NOI18N
         BTN_cerrarSesion.setForeground(new java.awt.Color(255, 255, 255));
         BTN_cerrarSesion.setText("Cerrar Sesión");
         BTN_cerrarSesion.setAlignmentX(0.5F);
@@ -54,7 +54,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         BTN_cerrarSesion.setFocusPainted(false);
         BTN_cerrarSesion.setFocusable(false);
         BTN_cerrarSesion.setMargin(new java.awt.Insets(2, 14, 2, 14));
-        jPanel1.add(BTN_cerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 600, 120, 30));
+        jPanel1.add(BTN_cerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 600, 130, 30));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 180, 670));
 
@@ -71,7 +71,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         BTN_cerrar.setFocusable(false);
         getContentPane().add(BTN_cerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 0, 60, 50));
 
-        PanelPrincipal.setBackground(new java.awt.Color(255, 255, 255));
+        PanelDinamico.setBackground(new java.awt.Color(255, 255, 255));
 
         ScrollBuses.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -90,18 +90,18 @@ public class Interfaz_Principal extends javax.swing.JFrame {
 
         ScrollBuses.setViewportView(PanelBuses);
 
-        javax.swing.GroupLayout PanelPrincipalLayout = new javax.swing.GroupLayout(PanelPrincipal);
-        PanelPrincipal.setLayout(PanelPrincipalLayout);
-        PanelPrincipalLayout.setHorizontalGroup(
-            PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout PanelDinamicoLayout = new javax.swing.GroupLayout(PanelDinamico);
+        PanelDinamico.setLayout(PanelDinamicoLayout);
+        PanelDinamicoLayout.setHorizontalGroup(
+            PanelDinamicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(ScrollBuses)
         );
-        PanelPrincipalLayout.setVerticalGroup(
-            PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        PanelDinamicoLayout.setVerticalGroup(
+            PanelDinamicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(ScrollBuses)
         );
 
-        getContentPane().add(PanelPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 50, 1100, 670));
+        getContentPane().add(PanelDinamico, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 50, 1100, 670));
 
         pack();
         setLocationRelativeTo(null);
@@ -144,7 +144,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
     public javax.swing.JButton BTN_cerrarSesion;
     public javax.swing.JPanel Barra;
     public javax.swing.JPanel PanelBuses;
-    public javax.swing.JPanel PanelPrincipal;
+    public javax.swing.JPanel PanelDinamico;
     public javax.swing.JScrollPane ScrollBuses;
     public javax.swing.JLabel jLabel1;
     public javax.swing.JLabel jLabel2;

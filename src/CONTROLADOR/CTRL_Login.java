@@ -1,12 +1,10 @@
 
 package CONTROLADOR;
 import UTILIDADES.PlaceHolder;
-import VISTA.Interfaz_Principal;
-import VISTA.Login;
+import VISTA.*;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Shape;
-import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -17,14 +15,8 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.geom.RoundRectangle2D;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRootPane;
-import javax.swing.LookAndFeel;
 
 public class CTRL_Login implements ActionListener,MouseListener,KeyListener,MouseMotionListener,WindowListener{
     
@@ -44,7 +36,6 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
         this.login.BTN_Visibilidad.addActionListener(this);
         this.login.BTN_ingresar.addActionListener(this);
         this.login.BTN_ingresar.addMouseListener(this);
-        this.login.Ingresar.addMouseListener(this);
          
          PlaceHolder Usuario=new PlaceHolder("Usuario", login.Txt_usuario);
         
@@ -80,7 +71,8 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                            }else{
                                      login.dispose();
                                      Interfaz_Principal principal=new Interfaz_Principal();
-                                     CTRL_InterfazPrincipal ctrl_principal=new CTRL_InterfazPrincipal(principal);
+                                     Panel_Asientos PanelAsientos=new Panel_Asientos();
+                                     CTRL_InterfazPrincipal ctrl_principal=new CTRL_InterfazPrincipal(principal,PanelAsientos);
                                      ctrl_principal.Iniciar();
                                      Cerrar();
                            }
@@ -111,30 +103,10 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
         if (e.getSource()==login.BTN_ingresar) {
             login.BTN_ingresar.setBackground(new Color(41,47, 59));
         }
-        if (e.getSource()==login.Ingresar) {
-            login.Ingresar.setBackground(new Color(41,47, 59));
-        }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if (e.getSource()==login.Ingresar) {
-                  if (!login.Txt_usuario.getText().equals("") && !login.Txt_contraseña.getText().equals("") || !login.Txt_usuario.getText().equals("") || !login.Txt_contraseña.getText().equals("")) {     
-                           if (!login.Txt_usuario.getText().equals(usuario) &&  !login.Txt_contraseña.getText().equals(contraseña) || !login.Txt_usuario.getText().equals(usuario) || !login.Txt_contraseña.getText().equals(contraseña)) {
-
-                               JOptionPane.showMessageDialog(null,"El usuario y/o contraseña ingresados son incorrectos", "Error en el ingreso",JOptionPane.ERROR_MESSAGE);
-                                    
-                           }else{
-                                     login.dispose();
-                                     Interfaz_Principal principal=new Interfaz_Principal();
-                                     CTRL_InterfazPrincipal ctrl_principal=new CTRL_InterfazPrincipal(principal);
-                                     ctrl_principal.Iniciar();
-                                     Cerrar();
-                           }
-                  }else{
-                          JOptionPane.showMessageDialog(null,"No se debe dejar nigún campo vacio","Error en el ingreso", JOptionPane.ERROR_MESSAGE);
-                  }          
-         }
       
     }
 
@@ -146,10 +118,6 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
          if (e.getSource()==login.BTN_ingresar) {
             login.BTN_ingresar.setBackground(new Color(21,24, 30));
             login.BTN_ingresar.setFont(new Font("Consolas",Font.BOLD,16));
-        }
-        if (e.getSource()==login.Ingresar) {
-            login.Ingresar.setBackground(new Color(21,24, 30));
-            login.Ingresar.setFont(new Font("Consolas",Font.BOLD,16));
         }
          
     }
@@ -163,10 +131,7 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
             login.BTN_ingresar.setBackground(new Color(18,18,18));
             login.BTN_ingresar.setFont(new Font("Consolas",Font.PLAIN,16));
         }
-         if (e.getSource()==login.Ingresar) {
-            login.Ingresar.setBackground(new Color(18,18,18));
-            login.Ingresar.setFont(new Font("Consolas",Font.PLAIN,16));
-        }
+
     }
    @Override
     public void mouseDragged(MouseEvent e){

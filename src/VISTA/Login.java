@@ -21,7 +21,6 @@ public class Login extends javax.swing.JFrame {
         BTN_Visibilidad = new javax.swing.JToggleButton();
         Txt_contraseña = new javax.swing.JPasswordField();
         Txt_usuario = new javax.swing.JTextField();
-        Ingresar = new javax.swing.JLabel();
         BTN_cerrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -62,7 +61,7 @@ public class Login extends javax.swing.JFrame {
         BTN_ingresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BTN_ingresar.setFocusPainted(false);
         BTN_ingresar.setFocusable(false);
-        jPanel7.add(BTN_ingresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 100, 30));
+        jPanel7.add(BTN_ingresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 290, 100, 30));
 
         BTN_Visibilidad.setBackground(new java.awt.Color(18, 18, 18));
         BTN_Visibilidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMGS/No_Visible.png"))); // NOI18N
@@ -87,15 +86,6 @@ public class Login extends javax.swing.JFrame {
         Txt_usuario.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         Txt_usuario.setCaretColor(new java.awt.Color(255, 255, 255));
         jPanel7.add(Txt_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 210, 30));
-
-        Ingresar.setBackground(new java.awt.Color(18, 18, 18));
-        Ingresar.setFont(new java.awt.Font("Consolas", 0, 16)); // NOI18N
-        Ingresar.setForeground(new java.awt.Color(255, 255, 255));
-        Ingresar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Ingresar.setText("Ingresar");
-        Ingresar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(123, 216, 80), 2, true));
-        Ingresar.setOpaque(true);
-        jPanel7.add(Ingresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 300, 90, 30));
 
         getContentPane().add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 300, 370));
 
@@ -150,7 +140,6 @@ public class Login extends javax.swing.JFrame {
     public javax.swing.JButton BTN_cerrar;
     public javax.swing.JButton BTN_ingresar;
     public javax.swing.JPanel Barra;
-    public javax.swing.JLabel Ingresar;
     public javax.swing.JPasswordField Txt_contraseña;
     public javax.swing.JTextField Txt_usuario;
     public javax.swing.JLabel jLabel1;
