@@ -9,6 +9,7 @@ import java.awt.Font;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -17,12 +18,15 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.geom.RoundRectangle2D;
+import java.net.URL;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.SwingConstants;
+import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
@@ -181,7 +185,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
         panelDinamico.repaint();
    }
     
-   void mostrarPanel(JPanel panelDinamico,JScrollPane panel,int ancho, int alto ){
+    void mostrarPanel(JPanel panelDinamico,JScrollPane panel,int ancho, int alto ){
         panel.setSize(ancho,alto);
         panel.setLocation(0, 0);
         panelDinamico.removeAll();
@@ -190,21 +194,66 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
         panelDinamico.repaint();
     }
    
-   
+    void Derecha(final int posInicial, final int posFinal,final int delay, final int incremento,final JComponent componente){
+        if(componente.getX()==posInicial){
+            new Thread(){
+                public void run(){
+                    while (componente.getX()<posFinal) {              
+                        for (int i = posInicial; i<=posFinal; i+=incremento) {
+                            try {
+                                Thread.sleep(delay);
+                                componente.setLocation(i, componente.getY());
+                            } catch (InterruptedException e) {
+                                System.out.println("Error: Interrupcion "+e);
+                            }  
+                        }
+                    }
+                    componente.setLocation(posFinal, componente.getY());
+                }
+            }
+            .start();
+        }
+    }
+    
+    void Izquierda(final int posInicial, final int posFinal,final int delay, final int incremento,final JComponent componente){
+        if(componente.getX()==posInicial){   
+            new Thread(){
+                public void run(){
+                    while (componente.getX()>posFinal) {              
+                        for (int i = posInicial; i>=posFinal; i-=incremento) {
+                            try {
+                                Thread.sleep(delay);
+                                componente.setLocation(i, componente.getY());
+                            } catch (InterruptedException e) {
+                                System.out.println("Error: Interrupcion "+e);
+                            }  
+                        }
+                    }
+                    componente.setLocation(posFinal,componente.getY());
+                }
+            }
+            .start();
+        }
+    }
+    
    void generarAsientos(){
+      enum Estado {SELECCIONADO,DISPONIBLE,OCUPADO}
        int x=15;
        int y=80;
        int incremento;
        for (int i = 1; i <=40; i++) {
-            JLabel asiento=new JLabel();
-            asiento.setBounds(x,y,30,30);
-            asiento.setBorder(new LineBorder(Color.BLACK,1));
-            asiento.setOpaque(true);
-            asiento.setBackground(Color.GREEN);
-            asiento.setText(String.valueOf(i));
-            asiento.setFont(new Font("Consolas",Font.BOLD,14));
-            asiento.setHorizontalAlignment(SwingConstants.CENTER);
-             asiento.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                JLabel asiento=new JLabel();
+                URL urlAsientoDisp = getClass().getResource("/IMGS/asientoDisp.png");
+                ImageIcon asientoDisp=new ImageIcon(urlAsientoDisp);
+                URL urlAsientoOcup = getClass().getResource("/IMGS/asientoOcup.png");
+                ImageIcon asientoOcup=new ImageIcon(urlAsientoOcup);
+                URL urlAsientoSele = getClass().getResource("/IMGS/asientoSele.png");
+                ImageIcon asientoSele=new ImageIcon(urlAsientoSele);
+                asiento.setIcon(asientoDisp);
+                asiento.setBounds(x,y,32,32);
+            
+
+            asiento.setCursor(new Cursor(Cursor.HAND_CURSOR));
             ArrayAsientos.add(asiento);
             panelAsientos.Buss.add(asiento);
             if (i%2==0) {
@@ -259,17 +308,6 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
             y=e.getY(); 
         }
         
-        for (JLabel Asiento : ArrayAsientos) {
-                  if (e.getSource()==Asiento) {
-                      if (Asiento.getBackground().equals(Color.GREEN)) {
-                           Asiento.setBackground(Color.RED);
-                           Asiento.setForeground(Color.WHITE);
-                      }else{
-                          Asiento.setBackground(Color.GREEN);
-                          Asiento.setForeground(Color.BLACK);
-                      }
-                  } 
-        }
     }
 
     @Override
@@ -294,6 +332,12 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   btns.setFont(new Font("Consolas",Font.BOLD,14));
                   btns.setBorder(new MatteBorder(0,0,2,0,new Color(123,216,80)));
             }
+            
+            if (e.getSource()==panelAsientos.BTN_cancelar) {
+                  panelAsientos.BTN_cancelar.setBackground(Color.RED);
+                  panelAsientos.BTN_cancelar.setForeground(Color.WHITE);
+                  panelAsientos.BTN_cancelar.setFont(new Font("Consolas",Font.BOLD,18));
+            }
         }
     }
 
@@ -315,6 +359,12 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   btns.setBorder(new EmptyBorder(0, 0, 0, 0));
             }
         }
+        
+         if (e.getSource()==panelAsientos.BTN_cancelar) {
+                  panelAsientos.BTN_cancelar.setBackground(Color.WHITE);
+                  panelAsientos.BTN_cancelar.setForeground(Color.BLACK);
+                  panelAsientos.BTN_cancelar.setFont(new Font("Consolas",Font.PLAIN,18));
+         }
     }
 
     @Override
