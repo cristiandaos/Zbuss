@@ -66,11 +66,11 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
         this.panelAsientos.BTN_siguiente.addActionListener(this);
         this.panelAsientos.BTN_siguiente.addMouseListener(this);
         
-        PlaceHolder Nombre=new PlaceHolder("Nombre",panelPasajeros.TxtNombrePasa);
-        PlaceHolder ApellidoPat=new PlaceHolder("Apellido Paterno",panelPasajeros.TxtApellidoPatePasa);
-        PlaceHolder ApellidoMat=new PlaceHolder("Apellido Materno",panelPasajeros.TxtApellidoMatePasa);
-        PlaceHolder Edad=new PlaceHolder("Edad",panelPasajeros.TxtEdadPasa);
-        PlaceHolder DNI=new PlaceHolder("DNI",panelPasajeros.TxtDniPasa);
+        PlaceHolder Nombre=new PlaceHolder("Nombre",panelPasajeros.TxtNombrePasa,PlaceHolder.Show.ALWAYS);
+        PlaceHolder ApellidoPat=new PlaceHolder("Apellido Paterno",panelPasajeros.TxtApellidoPatePasa,PlaceHolder.Show.ALWAYS);
+        PlaceHolder ApellidoMat=new PlaceHolder("Apellido Materno",panelPasajeros.TxtApellidoMatePasa,PlaceHolder.Show.ALWAYS);
+        PlaceHolder Edad=new PlaceHolder("Edad",panelPasajeros.TxtEdadPasa,PlaceHolder.Show.ALWAYS);
+        PlaceHolder DNI=new PlaceHolder("DNI",panelPasajeros.TxtDniPasa,PlaceHolder.Show.ALWAYS);
         
         ArrayPaneles=new ArrayList<>();
         ArrayBtns=new ArrayList<>();

@@ -17,10 +17,6 @@ public class PlaceHolder extends JLabel implements FocusListener, DocumentListen
 	private Show show;
 	private boolean showPromptOnce;
 	private int focusLost;
-         
-         public PlaceHolder(String text, JTextComponent component) {
-	this(text, component, Show.ALWAYS);
-         }
 
          public PlaceHolder(String text, JTextComponent component, Show show) {
 	this.component = component;

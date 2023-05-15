@@ -37,9 +37,9 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
         this.login.BTN_ingresar.addActionListener(this);
         this.login.BTN_ingresar.addMouseListener(this);
          
-         PlaceHolder Usuario=new PlaceHolder("Usuario", login.Txt_usuario);
+         PlaceHolder Usuario=new PlaceHolder("Usuario", login.Txt_usuario,PlaceHolder.Show.ALWAYS);
         
-         PlaceHolder Contraseña=new PlaceHolder("Contraseña", login.Txt_contraseña);
+         PlaceHolder Contraseña=new PlaceHolder("Contraseña", login.Txt_contraseña,PlaceHolder.Show.ALWAYS);
          //"javax.swing.plaf.metal.MetalLookAndFeel"
     }
     
