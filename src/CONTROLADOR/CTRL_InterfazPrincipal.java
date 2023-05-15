@@ -1,6 +1,7 @@
 
 package CONTROLADOR;
 import VISTA.*;
+import UTILIDADES.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -36,6 +37,8 @@ import javax.swing.border.MatteBorder;
 public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,MouseMotionListener,KeyListener,WindowListener{
     private Interfaz_Principal vistaPrincipal;
     private Panel_Asientos panelAsientos;
+    private  Panel_Pasajeros panelPasajeros;
+    private int cant=5;
     private int x;
     private int y;
     private ArrayList<JPanel>ArrayPaneles;
@@ -46,9 +49,10 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
     private ArrayList<JLabel>ArrayAsientosDisp;
     private ArrayList<JLabel>ArrayAsientos;
     
-    public CTRL_InterfazPrincipal(Interfaz_Principal vistaPrincipal,Panel_Asientos panelAsientos){
+    public CTRL_InterfazPrincipal(Interfaz_Principal vistaPrincipal,Panel_Asientos panelAsientos,Panel_Pasajeros panelPasajeros){
         this.vistaPrincipal=vistaPrincipal;
         this.panelAsientos=panelAsientos;
+        this.panelPasajeros=panelPasajeros;
         this.vistaPrincipal.addWindowListener(this);
         this.vistaPrincipal.Barra.addMouseMotionListener(this);
         this.vistaPrincipal.Barra.addMouseListener(this);
@@ -57,8 +61,16 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
         this.vistaPrincipal.BTN_cerrar.addActionListener(this);
         this.vistaPrincipal.BTN_cerrar.addMouseListener(this);
         
-        this.panelAsientos.BTN_cancelar.addActionListener(this);
-        this.panelAsientos.BTN_cancelar.addMouseListener(this);
+        this.panelAsientos.BTN_anterior.addActionListener(this);
+        this.panelAsientos.BTN_anterior.addMouseListener(this);
+        this.panelAsientos.BTN_siguiente.addActionListener(this);
+        this.panelAsientos.BTN_siguiente.addMouseListener(this);
+        
+        PlaceHolder Nombre=new PlaceHolder("Nombre",panelPasajeros.TxtNombrePasa);
+        PlaceHolder ApellidoPat=new PlaceHolder("Apellido Paterno",panelPasajeros.TxtApellidoPatePasa);
+        PlaceHolder ApellidoMat=new PlaceHolder("Apellido Materno",panelPasajeros.TxtApellidoMatePasa);
+        PlaceHolder Edad=new PlaceHolder("Edad",panelPasajeros.TxtEdadPasa);
+        PlaceHolder DNI=new PlaceHolder("DNI",panelPasajeros.TxtDniPasa);
         
         ArrayPaneles=new ArrayList<>();
         ArrayBtns=new ArrayList<>();
@@ -69,7 +81,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
         
         ArrayAsientos=new ArrayList<>();
         
-        GenerarPaneles(5);
+        GenerarPaneles(cant);
         
         generarAsientos();
         
@@ -102,7 +114,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
     void GenerarPaneles(int cant){
         vistaPrincipal.ScrollBuses.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         int x=140;
-        int y=100;
+        int y=140;
         int ancho=300;
         int alto=400;
         int incremento=500;
@@ -291,9 +303,13 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
             }
         }
         
-        if (e.getSource()==panelAsientos.BTN_cancelar) {
-            mostrarPanel(vistaPrincipal.PanelDinamico, vistaPrincipal.ScrollBuses, vistaPrincipal.PanelDinamico.getWidth(), vistaPrincipal.PanelDinamico.getHeight()); mostrarPanel(vistaPrincipal.PanelDinamico, vistaPrincipal.ScrollBuses, vistaPrincipal.PanelDinamico.getWidth(), vistaPrincipal.PanelDinamico.getHeight());
+        if (e.getSource()==panelAsientos.BTN_anterior) {
+            mostrarPanel(vistaPrincipal.PanelDinamico, vistaPrincipal.ScrollBuses, vistaPrincipal.PanelDinamico.getWidth(), vistaPrincipal.PanelDinamico.getHeight()); 
         }
+        
+        if (e.getSource()==panelAsientos.BTN_siguiente) {
+                   mostrarPanel(vistaPrincipal.PanelDinamico, panelPasajeros, vistaPrincipal.PanelDinamico.getWidth(), vistaPrincipal.PanelDinamico.getHeight());
+            }
     }
 
     @Override
@@ -333,10 +349,16 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   btns.setBorder(new MatteBorder(0,0,2,0,new Color(123,216,80)));
             }
             
-            if (e.getSource()==panelAsientos.BTN_cancelar) {
-                  panelAsientos.BTN_cancelar.setBackground(Color.RED);
-                  panelAsientos.BTN_cancelar.setForeground(Color.WHITE);
-                  panelAsientos.BTN_cancelar.setFont(new Font("Consolas",Font.BOLD,18));
+            if (e.getSource()==panelAsientos.BTN_anterior) {
+                  panelAsientos.BTN_anterior.setBackground(Color.RED);
+                  panelAsientos.BTN_anterior.setForeground(Color.WHITE);
+                  panelAsientos.BTN_anterior.setFont(new Font("Consolas",Font.BOLD,18));
+            }
+            
+            if (e.getSource()==panelAsientos.BTN_siguiente) {
+                  panelAsientos.BTN_siguiente.setBackground(Color.RED);
+                  panelAsientos.BTN_siguiente.setForeground(Color.WHITE);
+                  panelAsientos.BTN_siguiente.setFont(new Font("Consolas",Font.BOLD,18));
             }
         }
     }
@@ -360,10 +382,16 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
             }
         }
         
-         if (e.getSource()==panelAsientos.BTN_cancelar) {
-                  panelAsientos.BTN_cancelar.setBackground(Color.WHITE);
-                  panelAsientos.BTN_cancelar.setForeground(Color.BLACK);
-                  panelAsientos.BTN_cancelar.setFont(new Font("Consolas",Font.PLAIN,18));
+         if (e.getSource()==panelAsientos.BTN_anterior) {
+                  panelAsientos.BTN_anterior.setBackground(new Color(204, 204, 204));
+                  panelAsientos.BTN_anterior.setForeground(Color.BLACK);
+                  panelAsientos.BTN_anterior.setFont(new Font("Consolas",Font.PLAIN,18));
+         }
+         
+         if (e.getSource()==panelAsientos.BTN_siguiente) {
+                  panelAsientos.BTN_siguiente.setBackground(new Color(204, 204, 204));
+                  panelAsientos.BTN_siguiente.setForeground(Color.BLACK);
+                  panelAsientos.BTN_siguiente.setFont(new Font("Consolas",Font.PLAIN,18));
          }
     }
 

@@ -72,7 +72,8 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                                      login.dispose();
                                      Interfaz_Principal principal=new Interfaz_Principal();
                                      Panel_Asientos PanelAsientos=new Panel_Asientos();
-                                     CTRL_InterfazPrincipal ctrl_principal=new CTRL_InterfazPrincipal(principal,PanelAsientos);
+                                     Panel_Pasajeros PanelPasajeros=new Panel_Pasajeros();
+                                     CTRL_InterfazPrincipal ctrl_principal=new CTRL_InterfazPrincipal(principal,PanelAsientos,PanelPasajeros);
                                      ctrl_principal.Iniciar();
                                      Cerrar();
                            }

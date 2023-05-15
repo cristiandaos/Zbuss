@@ -24,6 +24,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         PanelDinamico = new javax.swing.JPanel();
         ScrollBuses = new javax.swing.JScrollPane();
         PanelBuses = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
 
         popupMenu1.setLabel("popupMenu1");
 
@@ -75,17 +76,29 @@ public class Interfaz_Principal extends javax.swing.JFrame {
 
         ScrollBuses.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
+        PanelBuses.setBackground(new java.awt.Color(255, 255, 255));
         PanelBuses.setPreferredSize(new java.awt.Dimension(1100, 670));
+
+        jLabel3.setFont(new java.awt.Font("SansSerif", 1, 48)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setText("Z-Buss");
+        jLabel3.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(123, 216, 80)));
 
         javax.swing.GroupLayout PanelBusesLayout = new javax.swing.GroupLayout(PanelBuses);
         PanelBuses.setLayout(PanelBusesLayout);
         PanelBusesLayout.setHorizontalGroup(
             PanelBusesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1100, Short.MAX_VALUE)
+            .addGroup(PanelBusesLayout.createSequentialGroup()
+                .addGap(140, 140, 140)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(776, Short.MAX_VALUE))
         );
         PanelBusesLayout.setVerticalGroup(
             PanelBusesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 670, Short.MAX_VALUE)
+            .addGroup(PanelBusesLayout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addComponent(jLabel3)
+                .addContainerGap(567, Short.MAX_VALUE))
         );
 
         ScrollBuses.setViewportView(PanelBuses);
@@ -148,6 +161,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
     public javax.swing.JScrollPane ScrollBuses;
     public javax.swing.JLabel jLabel1;
     public javax.swing.JLabel jLabel2;
+    public javax.swing.JLabel jLabel3;
     public javax.swing.JPanel jPanel1;
     public java.awt.PopupMenu popupMenu1;
     // End of variables declaration//GEN-END:variables

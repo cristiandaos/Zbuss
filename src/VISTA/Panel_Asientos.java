@@ -14,7 +14,7 @@ public class Panel_Asientos extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel3 = new javax.swing.JLabel();
-        BTN_cancelar = new javax.swing.JButton();
+        BTN_anterior = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -32,6 +32,7 @@ public class Panel_Asientos extends javax.swing.JPanel {
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
+        BTN_siguiente = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -42,16 +43,16 @@ public class Panel_Asientos extends javax.swing.JPanel {
         jLabel3.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(123, 216, 80)));
         add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, 140, -1));
 
-        BTN_cancelar.setBackground(new java.awt.Color(255, 255, 255));
-        BTN_cancelar.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
-        BTN_cancelar.setForeground(new java.awt.Color(0, 0, 0));
-        BTN_cancelar.setText("Cancelar");
-        BTN_cancelar.setAlignmentX(0.5F);
-        BTN_cancelar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        BTN_cancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BTN_cancelar.setFocusable(false);
-        BTN_cancelar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        add(BTN_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 120, -1));
+        BTN_anterior.setBackground(new java.awt.Color(204, 204, 204));
+        BTN_anterior.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        BTN_anterior.setForeground(new java.awt.Color(0, 0, 0));
+        BTN_anterior.setText("Anterior");
+        BTN_anterior.setAlignmentX(0.5F);
+        BTN_anterior.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        BTN_anterior.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BTN_anterior.setFocusable(false);
+        BTN_anterior.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        add(BTN_anterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 130, 30));
 
         jLabel1.setBackground(new java.awt.Color(0, 255, 0));
         jLabel1.setOpaque(true);
@@ -102,29 +103,32 @@ public class Panel_Asientos extends javax.swing.JPanel {
         jLabel2.setText("TERMINAL/PARADERO DE SALIDA Y LLEGADA");
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, 330, -1));
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("SALIDA");
         add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, -1, -1));
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("LLEGADA");
         add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, -1, -1));
 
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("HORARIO/LLEGADA");
         add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 360, -1, -1));
 
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("HORARIO/SALIDA");
         add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 300, -1, -1));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel12.setText("Asientos Seleccionados:");
+        jLabel12.setText("Asientos Seleccionados(max 6):");
         add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 420, -1, -1));
 
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 0, 0));
         jLabel13.setText("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 460, -1, -1));
@@ -134,7 +138,7 @@ public class Panel_Asientos extends javax.swing.JPanel {
         jLabel14.setText("Precio:");
         add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 520, -1, -1));
 
-        jLabel15.setFont(new java.awt.Font("Consolas", 0, 16)); // NOI18N
+        jLabel15.setFont(new java.awt.Font("Consolas", 1, 16)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(0, 0, 0));
         jLabel15.setText("S/0000");
         add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 520, -1, -1));
@@ -147,11 +151,21 @@ public class Panel_Asientos extends javax.swing.JPanel {
         jLabel17.setForeground(new java.awt.Color(0, 0, 0));
         jLabel17.setText("Seleccionado");
         add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 160, 110, 30));
+
+        BTN_siguiente.setBackground(new java.awt.Color(204, 204, 204));
+        BTN_siguiente.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        BTN_siguiente.setForeground(new java.awt.Color(0, 0, 0));
+        BTN_siguiente.setText("Siguiente");
+        BTN_siguiente.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        BTN_siguiente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BTN_siguiente.setFocusable(false);
+        add(BTN_siguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 600, 180, 30));
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JButton BTN_cancelar;
+    public javax.swing.JButton BTN_anterior;
+    public javax.swing.JButton BTN_siguiente;
     public javax.swing.JPanel Buss;
     public javax.swing.JLabel jLabel1;
     public javax.swing.JLabel jLabel10;
