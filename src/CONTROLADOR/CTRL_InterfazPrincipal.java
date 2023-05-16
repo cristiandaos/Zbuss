@@ -36,9 +36,7 @@ import javax.swing.border.MatteBorder;
 
 public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,MouseMotionListener,KeyListener,WindowListener{
     private Interfaz_Principal vistaPrincipal;
-    private Panel_Asientos panelAsientos;
-    private  Panel_Pasajeros panelPasajeros;
-    private int cant=5;
+    private int cant=7;
     private int x;
     private int y;
     private ArrayList<JPanel>ArrayPaneles;
@@ -49,28 +47,27 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
     private ArrayList<JLabel>ArrayAsientosDisp;
     private ArrayList<JLabel>ArrayAsientos;
     
-    public CTRL_InterfazPrincipal(Interfaz_Principal vistaPrincipal,Panel_Asientos panelAsientos,Panel_Pasajeros panelPasajeros){
+    public CTRL_InterfazPrincipal(Interfaz_Principal vistaPrincipal){
         this.vistaPrincipal=vistaPrincipal;
-        this.panelAsientos=panelAsientos;
-        this.panelPasajeros=panelPasajeros;
         this.vistaPrincipal.addWindowListener(this);
-        this.vistaPrincipal.Barra.addMouseMotionListener(this);
-        this.vistaPrincipal.Barra.addMouseListener(this);
+        this.vistaPrincipal.BarraSuperior.addMouseMotionListener(this);
+        this.vistaPrincipal.BarraSuperior.addMouseListener(this);
         this.vistaPrincipal.BTN_cerrarSesion.addActionListener(this);
         this.vistaPrincipal.BTN_cerrarSesion.addMouseListener(this);
         this.vistaPrincipal.BTN_cerrar.addActionListener(this);
         this.vistaPrincipal.BTN_cerrar.addMouseListener(this);
+        this.vistaPrincipal.BTN_volverBuses.addActionListener(this);
+        this.vistaPrincipal.BTN_volverBuses.addMouseListener(this);
+        this.vistaPrincipal.BTN_siguiente.addActionListener(this);
+        this.vistaPrincipal.BTN_siguiente.addMouseListener(this);
+        this.vistaPrincipal.BTN_volverAsientos.addActionListener(this);
+        this.vistaPrincipal.BTN_volverAsientos.addMouseListener(this);
+        this.vistaPrincipal.BTN_confirmarCompra.addActionListener(this);
+        this.vistaPrincipal.BTN_confirmarCompra.addMouseListener(this);
         
-        this.panelAsientos.BTN_anterior.addActionListener(this);
-        this.panelAsientos.BTN_anterior.addMouseListener(this);
-        this.panelAsientos.BTN_siguiente.addActionListener(this);
-        this.panelAsientos.BTN_siguiente.addMouseListener(this);
-        
-        PlaceHolder Nombre=new PlaceHolder("Nombre",panelPasajeros.TxtNombrePasa,PlaceHolder.Show.ALWAYS);
-        PlaceHolder ApellidoPat=new PlaceHolder("Apellido Paterno",panelPasajeros.TxtApellidoPatePasa,PlaceHolder.Show.ALWAYS);
-        PlaceHolder ApellidoMat=new PlaceHolder("Apellido Materno",panelPasajeros.TxtApellidoMatePasa,PlaceHolder.Show.ALWAYS);
-        PlaceHolder Edad=new PlaceHolder("Edad",panelPasajeros.TxtEdadPasa,PlaceHolder.Show.ALWAYS);
-        PlaceHolder DNI=new PlaceHolder("DNI",panelPasajeros.TxtDniPasa,PlaceHolder.Show.ALWAYS);
+        PlaceHolder Nombre=new PlaceHolder("Nombre", vistaPrincipal.TxtNombrePasa, PlaceHolder.Show.ALWAYS);
+        PlaceHolder ApePat=new PlaceHolder("Apellido Paterno", vistaPrincipal.TxtApellidoPatePasa, PlaceHolder.Show.ALWAYS);
+        PlaceHolder ApeMat=new PlaceHolder("Apellido Materno", vistaPrincipal.TxtApellidoMatePasa, PlaceHolder.Show.ALWAYS);
         
         ArrayPaneles=new ArrayList<>();
         ArrayBtns=new ArrayList<>();
@@ -100,10 +97,11 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
     }
     
     void Iniciar(){
-         Shape redondeado=new RoundRectangle2D.Double(0,0,vistaPrincipal.getBounds().width,vistaPrincipal.getBounds().getHeight(),30,30);
-         vistaPrincipal.setShape(redondeado);
-         vistaPrincipal.revalidate();
+        Shape redondeado=new RoundRectangle2D.Double(0,0,vistaPrincipal.getBounds().width,vistaPrincipal.getBounds().getHeight(),30,30);
+        vistaPrincipal.setShape(redondeado);
+        vistaPrincipal.revalidate();
          vistaPrincipal.setVisible(true);
+         vistaPrincipal.setResizable(false);
          vistaPrincipal.BTN_cerrarSesion.setBackground(new Color(18, 18, 18));
     }
     
@@ -112,7 +110,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
     }
     
     void GenerarPaneles(int cant){
-        vistaPrincipal.ScrollBuses.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+        vistaPrincipal.ScrollPaneBuses.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         int x=140;
         int y=140;
         int ancho=300;
@@ -177,7 +175,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
             
             if (y>vistaPrincipal.PanelBuses.getHeight()-contenido.getHeight()) {
                   vistaPrincipal.PanelBuses.setPreferredSize(new Dimension((int) vistaPrincipal.PanelBuses.getPreferredSize().getWidth(),ArrayPaneles.get(i).getY()+alto+100));
-                  vistaPrincipal.ScrollBuses.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                  vistaPrincipal.ScrollPaneBuses.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
             }
         }   
     }
@@ -205,8 +203,9 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
         panelDinamico.revalidate();
         panelDinamico.repaint();
     }
+    
    
-    void Derecha(final int posInicial, final int posFinal,final int delay, final int incremento,final JComponent componente){
+    void MoverDerecha(final int posInicial, final int posFinal,final int delay, final int incremento,final JComponent componente){
         if(componente.getX()==posInicial){
             new Thread(){
                 public void run(){
@@ -225,9 +224,11 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
             }
             .start();
         }
+        componente.revalidate();
+        componente.repaint();
     }
     
-    void Izquierda(final int posInicial, final int posFinal,final int delay, final int incremento,final JComponent componente){
+    void MoverIzquierda(final int posInicial, final int posFinal,final int delay, final int incremento,final JComponent componente){
         if(componente.getX()==posInicial){   
             new Thread(){
                 public void run(){
@@ -242,6 +243,50 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                         }
                     }
                     componente.setLocation(posFinal,componente.getY());
+                }
+            }
+            .start();
+        }
+        componente.revalidate();
+        componente.repaint();
+    }
+    
+    void MoverAbajo(final int posInicial, final int posFinal,final int delay, final int incremento,final JComponent componente){
+        if(componente.getY()==posInicial){   
+            new Thread(){
+                public void run(){
+                    while (componente.getY()>posFinal) {              
+                        for (int i = posInicial; i>=posFinal; i-=incremento) {
+                            try {
+                                Thread.sleep(delay);
+                                componente.setLocation(i, componente.getX());
+                            } catch (InterruptedException e) {
+                                System.out.println("Error: Interrupcion "+e);
+                            }  
+                        }
+                    }
+                    componente.setLocation(posFinal,componente.getX());
+                }
+            }
+            .start();
+        }
+    }
+    
+    void MoverArriba(final int posInicial, final int posFinal,final int delay, final int incremento,final JComponent componente){
+        if(componente.getY()==posInicial){   
+            new Thread(){
+                public void run(){
+                    while (componente.getY()>posFinal) {              
+                        for (int i = posInicial; i>=posFinal; i-=incremento) {
+                            try {
+                                Thread.sleep(delay);
+                                componente.setLocation(i, componente.getX());
+                            } catch (InterruptedException e) {
+                                System.out.println("Error: Interrupcion "+e);
+                            }  
+                        }
+                    }
+                    componente.setLocation(posFinal,componente.getX());
                 }
             }
             .start();
@@ -267,7 +312,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
 
             asiento.setCursor(new Cursor(Cursor.HAND_CURSOR));
             ArrayAsientos.add(asiento);
-            panelAsientos.Buss.add(asiento);
+            vistaPrincipal.Buss.add(asiento);
             if (i%2==0) {
                 incremento=120;
                 x+=incremento;
@@ -298,17 +343,29 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
         
         for (JButton btns : ArrayBtns) {
             if (e.getSource()==btns) {
-                 
-                  mostrarPanel(vistaPrincipal.PanelDinamico, panelAsientos, vistaPrincipal.PanelDinamico.getWidth(), vistaPrincipal.PanelDinamico.getHeight());
+                  MoverIzquierda(180, -920, 2, 20, vistaPrincipal.ScrollPaneBuses);
+                  MoverIzquierda(1280, 180, 2, 20, vistaPrincipal.PanelAsientos);
+                  MoverIzquierda(2560, 1280, 2, 20,vistaPrincipal.PanelPasajeros);
             }
         }
         
-        if (e.getSource()==panelAsientos.BTN_anterior) {
-            mostrarPanel(vistaPrincipal.PanelDinamico, vistaPrincipal.ScrollBuses, vistaPrincipal.PanelDinamico.getWidth(), vistaPrincipal.PanelDinamico.getHeight()); 
+        
+        if (e.getSource()==vistaPrincipal.BTN_volverBuses) {
+               MoverDerecha(-920, 180, 2, 20, vistaPrincipal.ScrollPaneBuses);
+               MoverDerecha(180, 1280, 2, 20, vistaPrincipal.PanelAsientos);
+               MoverDerecha(1280, 2560, 2, 20, vistaPrincipal.PanelPasajeros);
         }
         
-        if (e.getSource()==panelAsientos.BTN_siguiente) {
-                   mostrarPanel(vistaPrincipal.PanelDinamico, panelPasajeros, vistaPrincipal.PanelDinamico.getWidth(), vistaPrincipal.PanelDinamico.getHeight());
+        if (e.getSource()==vistaPrincipal.BTN_siguiente) {
+                   MoverIzquierda(180, -920, 2, 20, vistaPrincipal.PanelAsientos);
+                  MoverIzquierda(1280, 180, 2, 20, vistaPrincipal.PanelPasajeros);
+                  MoverIzquierda(-920, -2020, 2, 20, vistaPrincipal.ScrollPaneBuses);
+            }
+        
+        if (e.getSource()==vistaPrincipal.BTN_volverAsientos) {
+                  MoverDerecha(-920, 180, 2, 20, vistaPrincipal.PanelAsientos);
+                  MoverDerecha(180, 1280, 2, 20, vistaPrincipal.PanelPasajeros);
+                  MoverDerecha(-2020, -920, 2, 20, vistaPrincipal.ScrollPaneBuses);
             }
     }
 
@@ -319,7 +376,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if (e.getSource()==vistaPrincipal.Barra) {
+        if (e.getSource()==vistaPrincipal.BarraSuperior) {
             x=e.getX();
             y=e.getY(); 
         }
@@ -339,7 +396,8 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
         
         if (e.getSource()==vistaPrincipal.BTN_cerrarSesion) {
             vistaPrincipal.BTN_cerrarSesion.setBackground(new Color(21,24, 30));
-            vistaPrincipal.BTN_cerrarSesion.setFont(new Font("Consolas",Font.BOLD,16));
+
+             
         }
         
         for (JButton btns : ArrayBtns) {
@@ -349,16 +407,14 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   btns.setBorder(new MatteBorder(0,0,2,0,new Color(123,216,80)));
             }
             
-            if (e.getSource()==panelAsientos.BTN_anterior) {
-                  panelAsientos.BTN_anterior.setBackground(Color.RED);
-                  panelAsientos.BTN_anterior.setForeground(Color.WHITE);
-                  panelAsientos.BTN_anterior.setFont(new Font("Consolas",Font.BOLD,18));
+            if (e.getSource()==vistaPrincipal.BTN_volverBuses) {
+                 vistaPrincipal.BTN_volverBuses.setBackground(Color.RED);
+                  vistaPrincipal.BTN_volverBuses.setForeground(Color.WHITE);
             }
             
-            if (e.getSource()==panelAsientos.BTN_siguiente) {
-                  panelAsientos.BTN_siguiente.setBackground(Color.RED);
-                  panelAsientos.BTN_siguiente.setForeground(Color.WHITE);
-                  panelAsientos.BTN_siguiente.setFont(new Font("Consolas",Font.BOLD,18));
+            if (e.getSource()==vistaPrincipal.BTN_siguiente) {
+                  vistaPrincipal.BTN_siguiente.setBackground(Color.RED);
+                  vistaPrincipal.BTN_siguiente.setForeground(Color.WHITE);
             }
         }
     }
@@ -371,7 +427,6 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
         
         if (e.getSource()==vistaPrincipal.BTN_cerrarSesion) {
             vistaPrincipal.BTN_cerrarSesion.setBackground(new Color(18,18,18));
-            vistaPrincipal.BTN_cerrarSesion.setFont(new Font("Consolas",Font.PLAIN,16));
         }
         
         for (JButton btns : ArrayBtns) {
@@ -382,22 +437,20 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
             }
         }
         
-         if (e.getSource()==panelAsientos.BTN_anterior) {
-                  panelAsientos.BTN_anterior.setBackground(new Color(204, 204, 204));
-                  panelAsientos.BTN_anterior.setForeground(Color.BLACK);
-                  panelAsientos.BTN_anterior.setFont(new Font("Consolas",Font.PLAIN,18));
+         if (e.getSource()==vistaPrincipal.BTN_volverBuses) {
+                 vistaPrincipal.BTN_volverBuses.setBackground(new Color(204, 204, 204));
+                  vistaPrincipal.BTN_volverBuses.setForeground(Color.BLACK);
          }
          
-         if (e.getSource()==panelAsientos.BTN_siguiente) {
-                  panelAsientos.BTN_siguiente.setBackground(new Color(204, 204, 204));
-                  panelAsientos.BTN_siguiente.setForeground(Color.BLACK);
-                  panelAsientos.BTN_siguiente.setFont(new Font("Consolas",Font.PLAIN,18));
+         if (e.getSource()==vistaPrincipal.BTN_siguiente) {
+                  vistaPrincipal.BTN_siguiente.setBackground(new Color(204, 204, 204));
+                  vistaPrincipal.BTN_siguiente.setForeground(Color.BLACK);
          }
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        if (e.getSource()==vistaPrincipal.Barra) {
+        if (e.getSource()==vistaPrincipal.BarraSuperior) {
             int MouseX=e.getXOnScreen();
             int MouseY=e.getYOnScreen();
             vistaPrincipal.setLocation(MouseX-x,MouseY-y);
