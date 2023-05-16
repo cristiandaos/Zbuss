@@ -7,6 +7,10 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,12 +35,14 @@ import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
+import javax.swing.plaf.ScrollBarUI;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 
 
 
 public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,MouseMotionListener,KeyListener,WindowListener{
     private Interfaz_Principal vistaPrincipal;
-    private int cant=7;
+    private int cant=2;
     private int x;
     private int y;
     private ArrayList<JPanel>ArrayPaneles;
@@ -54,8 +60,6 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
         this.vistaPrincipal.BarraSuperior.addMouseListener(this);
         this.vistaPrincipal.BTN_cerrarSesion.addActionListener(this);
         this.vistaPrincipal.BTN_cerrarSesion.addMouseListener(this);
-        this.vistaPrincipal.BTN_cerrar.addActionListener(this);
-        this.vistaPrincipal.BTN_cerrar.addMouseListener(this);
         this.vistaPrincipal.BTN_volverBuses.addActionListener(this);
         this.vistaPrincipal.BTN_volverBuses.addMouseListener(this);
         this.vistaPrincipal.BTN_siguiente.addActionListener(this);
@@ -65,6 +69,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
         this.vistaPrincipal.BTN_confirmarCompra.addActionListener(this);
         this.vistaPrincipal.BTN_confirmarCompra.addMouseListener(this);
         
+        DiseñoScroll();
         PlaceHolder Nombre=new PlaceHolder("Nombre", vistaPrincipal.TxtNombrePasa, PlaceHolder.Show.ALWAYS);
         PlaceHolder ApePat=new PlaceHolder("Apellido Paterno", vistaPrincipal.TxtApellidoPatePasa, PlaceHolder.Show.ALWAYS);
         PlaceHolder ApeMat=new PlaceHolder("Apellido Materno", vistaPrincipal.TxtApellidoMatePasa, PlaceHolder.Show.ALWAYS);
@@ -251,47 +256,45 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
         componente.repaint();
     }
     
-    void MoverAbajo(final int posInicial, final int posFinal,final int delay, final int incremento,final JComponent componente){
-        if(componente.getY()==posInicial){   
-            new Thread(){
-                public void run(){
-                    while (componente.getY()>posFinal) {              
-                        for (int i = posInicial; i>=posFinal; i-=incremento) {
-                            try {
-                                Thread.sleep(delay);
-                                componente.setLocation(i, componente.getX());
-                            } catch (InterruptedException e) {
-                                System.out.println("Error: Interrupcion "+e);
-                            }  
-                        }
+    void DiseñoScroll(){
+         ScrollBarUI customScrollBarUI = new BasicScrollBarUI() {
+         @Override
+                    protected void configureScrollBarColors() {
+                        // Establecer el color de la barra de desplazamiento
+                        this.thumbColor = new Color(123,216,80);
+                        // Establecer el color de la pista
+                        this.trackColor = new Color(18,18,18);
+                   }
+         @Override
+                    protected void paintThumb(Graphics g, JComponent c, Rectangle thumbBounds) {
+                        g.setColor(thumbColor);
+                        g.fillRoundRect(thumbBounds.x, thumbBounds.y, thumbBounds.width, thumbBounds.height, 25, 25);
+                        Graphics2D g2 = (Graphics2D) g.create();
+                        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                        g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+                    } 
+                  private JButton BtnScroll() {
+                        JButton btn = new JButton();
+                        btn.setPreferredSize(new Dimension(0, 0));
+                        btn.setMinimumSize(new Dimension(0, 0));
+                        btn.setMaximumSize(new Dimension(0, 0));
+                        return btn;
+                }  
+         @Override
+                    protected JButton createDecreaseButton(int orientation) {
+                        return BtnScroll();
                     }
-                    componente.setLocation(posFinal,componente.getX());
-                }
-            }
-            .start();
-        }
-    }
-    
-    void MoverArriba(final int posInicial, final int posFinal,final int delay, final int incremento,final JComponent componente){
-        if(componente.getY()==posInicial){   
-            new Thread(){
-                public void run(){
-                    while (componente.getY()>posFinal) {              
-                        for (int i = posInicial; i>=posFinal; i-=incremento) {
-                            try {
-                                Thread.sleep(delay);
-                                componente.setLocation(i, componente.getX());
-                            } catch (InterruptedException e) {
-                                System.out.println("Error: Interrupcion "+e);
-                            }  
-                        }
+
+        @Override
+                    protected JButton createIncreaseButton(int orientation) {
+                        return BtnScroll();
                     }
-                    componente.setLocation(posFinal,componente.getX());
-                }
-            }
-            .start();
+            }; 
+        vistaPrincipal.ScrollPaneBuses.getVerticalScrollBar().setUI(customScrollBarUI);
+        vistaPrincipal.ScrollPaneBuses.getVerticalScrollBar().setCursor(new Cursor(Cursor.HAND_CURSOR));
+        vistaPrincipal.ScrollPaneBuses.getVerticalScrollBar().setUnitIncrement(11);
         }
-    }
+        
     
    void generarAsientos(){
       enum Estado {SELECCIONADO,DISPONIBLE,OCUPADO}
@@ -330,9 +333,6 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
    
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource()==vistaPrincipal.BTN_cerrar) {
-            Cerrar();
-        }
 
         if (e.getSource()==vistaPrincipal.BTN_cerrarSesion) {
             Login login=new Login();
@@ -390,9 +390,6 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        if (e.getSource()==vistaPrincipal.BTN_cerrar) {
-            vistaPrincipal.BTN_cerrar.setBackground(Color.red);
-        }
         
         if (e.getSource()==vistaPrincipal.BTN_cerrarSesion) {
             vistaPrincipal.BTN_cerrarSesion.setBackground(new Color(21,24, 30));
@@ -421,9 +418,6 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
 
     @Override
     public void mouseExited(MouseEvent e) {
-        if (e.getSource()==vistaPrincipal.BTN_cerrar) {
-            vistaPrincipal.BTN_cerrar.setBackground(new Color(18,18,18));
-        }
         
         if (e.getSource()==vistaPrincipal.BTN_cerrarSesion) {
             vistaPrincipal.BTN_cerrarSesion.setBackground(new Color(18,18,18));

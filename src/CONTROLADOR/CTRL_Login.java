@@ -15,8 +15,12 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.geom.RoundRectangle2D;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 public class CTRL_Login implements ActionListener,MouseListener,KeyListener,MouseMotionListener,WindowListener{
     
@@ -26,7 +30,7 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
     private String usuario="admin";
     private String contraseña="12345";
     
-    public CTRL_Login(Login login) {
+    public CTRL_Login(Login login)  {
         this.login=login;
         this.login.addWindowListener(this);
         this. login.Barra.addMouseListener(this);
@@ -40,7 +44,12 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
          PlaceHolder Usuario=new PlaceHolder("Usuario", login.Txt_usuario,PlaceHolder.Show.ALWAYS);
         
          PlaceHolder Contraseña=new PlaceHolder("Contraseña", login.Txt_contraseña,PlaceHolder.Show.ALWAYS);
+         /*        try {
          //"javax.swing.plaf.metal.MetalLookAndFeel"
+         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+         } catch (InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException | ClassNotFoundException ex) {
+         Logger.getLogger(CTRL_Login.class.getName()).log(Level.SEVERE, null, ex);
+         }*/
     }
     
      void Iniciar(){
