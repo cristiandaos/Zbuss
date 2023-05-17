@@ -65,7 +65,6 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
         this.vistaPrincipal.BTN_volverAsientos.addMouseListener(this);
         this.vistaPrincipal.BTN_confirmarCompra.addActionListener(this);
         this.vistaPrincipal.BTN_confirmarCompra.addMouseListener(this);
-        
         ArrayPaneles=new ArrayList<>();
         ArrayBtns=new ArrayList<>();
         ArrayDestinos=new ArrayList<>();
@@ -91,6 +90,13 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
     
     public Interfaz_Principal getVista(){
         return vistaPrincipal;
+    }
+    
+    void EstadoInicial(){
+        Interfaz_Principal reinicio_Interfaz=new Interfaz_Principal();
+        CTRL_InterfazPrincipal reinicio_CTRl =new CTRL_InterfazPrincipal(reinicio_Interfaz);
+        reinicio_CTRl.Iniciar();
+        Cerrar();
     }
     
     void Iniciar(){
@@ -330,7 +336,6 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
             }
         }
         
-        
         if (e.getSource()==vistaPrincipal.BTN_volverBuses) {
                     MoverDerecha(-920, 180, 2, 20, vistaPrincipal.ScrollPaneBuses);
                     MoverDerecha(180, 1280, 2, 20, vistaPrincipal.PanelAsientos);
@@ -341,13 +346,17 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                     MoverIzquierda(180, -920, 2, 20, vistaPrincipal.PanelAsientos);
                     MoverIzquierda(1280, 180, 2, 20, vistaPrincipal.PanelPasajeros);
                     MoverIzquierda(-920, -2020, 2, 20, vistaPrincipal.ScrollPaneBuses);
-            }
+         }
         
         if (e.getSource()==vistaPrincipal.BTN_volverAsientos) {
                     MoverDerecha(-920, 180, 2, 20, vistaPrincipal.PanelAsientos);
                     MoverDerecha(180, 1280, 2, 20, vistaPrincipal.PanelPasajeros);
                     MoverDerecha(-2020, -920, 2, 20, vistaPrincipal.ScrollPaneBuses);
-            }
+         }
+        
+        if (e.getSource()==vistaPrincipal.BTN_confirmarCompra) {
+                    EstadoInicial();
+        }
     }
 
     @Override
