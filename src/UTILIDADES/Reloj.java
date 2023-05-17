@@ -19,7 +19,7 @@ public class Reloj extends JTextField implements Runnable{
         setEditable(false);
         setBackground(new Color(18,18,18));
         setForeground(Color.white);
-        setFont(new Font("Consolas",Font.PLAIN,26));
+        setFont(new Font("Consolas",Font.BOLD,26));
         setBorder(new LineBorder(Color.WHITE,1,true));
         setHorizontalAlignment(JLabel.CENTER);
     }

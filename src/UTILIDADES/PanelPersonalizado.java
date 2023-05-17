@@ -79,11 +79,6 @@ public class PanelPersonalizado extends JPanel {
         setOpaque(false);
     }
    
-        
-        @Override
-   public synchronized void addMouseMotionListener(MouseMotionListener e) {
-        super.addMouseMotionListener(e);
-    }
 
     @Override
     public void paintComponent(Graphics grphcs) {
