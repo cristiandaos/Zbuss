@@ -1,7 +1,6 @@
 
 package VISTA;
 
-import java.awt.Color;
 
 public class Interfaz_Principal extends javax.swing.JFrame {
 
@@ -62,6 +61,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         BTN_cerrarSesion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setFocusable(false);
         setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -278,31 +278,16 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         TxtApellidoMatePasa.setBackground(new java.awt.Color(255, 255, 255));
         TxtApellidoMatePasa.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         TxtApellidoMatePasa.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
-        TxtApellidoMatePasa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TxtApellidoMatePasaActionPerformed(evt);
-            }
-        });
         jPanel3.add(TxtApellidoMatePasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 280, 30));
 
         TxtApellidoPatePasa.setBackground(new java.awt.Color(255, 255, 255));
         TxtApellidoPatePasa.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         TxtApellidoPatePasa.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
-        TxtApellidoPatePasa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TxtApellidoPatePasaActionPerformed(evt);
-            }
-        });
         jPanel3.add(TxtApellidoPatePasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 280, 30));
 
         TxtNombrePasa.setBackground(new java.awt.Color(255, 255, 255));
         TxtNombrePasa.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         TxtNombrePasa.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
-        TxtNombrePasa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TxtNombrePasaActionPerformed(evt);
-            }
-        });
         jPanel3.add(TxtNombrePasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 270, 30));
 
         TxtEdadPasa.setBackground(new java.awt.Color(255, 255, 255));
@@ -381,7 +366,6 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         PanelDinamico.add(PanelPasajeros, new org.netbeans.lib.awtextra.AbsoluteConstraints(2560, 0, -1, -1));
 
         BarraLateral.setBackground(new java.awt.Color(18, 18, 18));
-        BarraLateral.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         BTN_cerrarSesion.setBackground(new java.awt.Color(18, 18, 18));
         BTN_cerrarSesion.setFont(new java.awt.Font("Consolas", 1, 16)); // NOI18N
@@ -394,7 +378,21 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         BTN_cerrarSesion.setFocusable(false);
         BTN_cerrarSesion.setMargin(new java.awt.Insets(2, 14, 2, 14));
         BTN_cerrarSesion.setOpaque(true);
-        BarraLateral.add(BTN_cerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 610, 130, 30));
+
+        javax.swing.GroupLayout BarraLateralLayout = new javax.swing.GroupLayout(BarraLateral);
+        BarraLateral.setLayout(BarraLateralLayout);
+        BarraLateralLayout.setHorizontalGroup(
+            BarraLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(BarraLateralLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(BTN_cerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        BarraLateralLayout.setVerticalGroup(
+            BarraLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(BarraLateralLayout.createSequentialGroup()
+                .addGap(610, 610, 610)
+                .addComponent(BTN_cerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         PanelDinamico.setLayer(BarraLateral, javax.swing.JLayeredPane.PALETTE_LAYER);
         PanelDinamico.add(BarraLateral, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 670));
@@ -404,18 +402,6 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void TxtApellidoMatePasaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtApellidoMatePasaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TxtApellidoMatePasaActionPerformed
-
-    private void TxtApellidoPatePasaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtApellidoPatePasaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TxtApellidoPatePasaActionPerformed
-
-    private void TxtNombrePasaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtNombrePasaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TxtNombrePasaActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

@@ -17,8 +17,10 @@ import java.awt.event.WindowListener;
 import java.awt.geom.RoundRectangle2D;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -29,6 +31,7 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
     private int y;
     private String usuario="admin";
     private String contraseña="12345";
+   
     
     public CTRL_Login(Login login)  {
         this.login=login;
@@ -64,8 +67,9 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
      void Cerrar(){
             login.dispose();
      }
-
       
+    
+     
     @Override
         public void actionPerformed(ActionEvent e) {
         if (e.getSource()==login.BTN_cerrar) {

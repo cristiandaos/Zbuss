@@ -14,7 +14,6 @@ import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -24,25 +23,29 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.geom.RoundRectangle2D;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.TimerTask;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.plaf.ScrollBarUI;
 import javax.swing.plaf.basic.BasicScrollBarUI;
+import java.util.Timer;
 
 
 
 public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,MouseMotionListener,KeyListener,WindowListener{
     private Interfaz_Principal vistaPrincipal;
-    private int cant=2;
+    private int cant=5;
     private int x;
     private int y;
     private ArrayList<JPanel>ArrayPaneles;
@@ -52,6 +55,8 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
     private ArrayList<JLabel>ArrayImgs;
     private ArrayList<JLabel>ArrayAsientosDisp;
     private ArrayList<JLabel>ArrayAsientos;
+     private static final int DELAY = 2;
+    private static int INCREMENTO = 20;
     
     public CTRL_InterfazPrincipal(Interfaz_Principal vistaPrincipal){
         this.vistaPrincipal=vistaPrincipal;
@@ -68,7 +73,6 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
         this.vistaPrincipal.BTN_volverAsientos.addMouseListener(this);
         this.vistaPrincipal.BTN_confirmarCompra.addActionListener(this);
         this.vistaPrincipal.BTN_confirmarCompra.addMouseListener(this);
-        
         DiseñoScroll();
         PlaceHolder Nombre=new PlaceHolder("Nombre", vistaPrincipal.TxtNombrePasa, PlaceHolder.Show.ALWAYS);
         PlaceHolder ApePat=new PlaceHolder("Apellido Paterno", vistaPrincipal.TxtApellidoPatePasa, PlaceHolder.Show.ALWAYS);
@@ -108,12 +112,16 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
          vistaPrincipal.setVisible(true);
          vistaPrincipal.setResizable(false);
          vistaPrincipal.BTN_cerrarSesion.setBackground(new Color(18, 18, 18));
+         Reloj reloj=new Reloj();
+         reloj.setBounds(25, 50, 130, 40);
+         vistaPrincipal.BarraLateral.add(reloj);
+         
     }
     
     void Cerrar(){
         vistaPrincipal.dispose();
     }
-    
+ 
     void GenerarPaneles(int cant){
         vistaPrincipal.ScrollPaneBuses.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         int x=140;
@@ -200,7 +208,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
         panelDinamico.repaint();
    }
     
-    void mostrarPanel(JPanel panelDinamico,JScrollPane panel,int ancho, int alto ){
+    void mostrarPanel(JLayeredPane panelDinamico,JScrollPane panel,int ancho, int alto ){
         panel.setSize(ancho,alto);
         panel.setLocation(0, 0);
         panelDinamico.removeAll();
@@ -229,8 +237,6 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
             }
             .start();
         }
-        componente.revalidate();
-        componente.repaint();
     }
     
     void MoverIzquierda(final int posInicial, final int posFinal,final int delay, final int incremento,final JComponent componente){
@@ -252,10 +258,9 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
             }
             .start();
         }
-        componente.revalidate();
-        componente.repaint();
     }
     
+    //Mover a utilidades
     void DiseñoScroll(){
          ScrollBarUI customScrollBarUI = new BasicScrollBarUI() {
          @Override
@@ -343,9 +348,9 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
         
         for (JButton btns : ArrayBtns) {
             if (e.getSource()==btns) {
-                  MoverIzquierda(180, -920, 2, 20, vistaPrincipal.ScrollPaneBuses);
-                  MoverIzquierda(1280, 180, 2, 20, vistaPrincipal.PanelAsientos);
-                  MoverIzquierda(2560, 1280, 2, 20,vistaPrincipal.PanelPasajeros);
+                MoverIzquierda(180, -920, 2, 20, vistaPrincipal.ScrollPaneBuses);
+                MoverIzquierda(1280, 180, 2, 20, vistaPrincipal.PanelAsientos);
+                MoverIzquierda(2560, 1280, 2, 20,vistaPrincipal.PanelPasajeros);
             }
         }
         
@@ -357,7 +362,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
         }
         
         if (e.getSource()==vistaPrincipal.BTN_siguiente) {
-                   MoverIzquierda(180, -920, 2, 20, vistaPrincipal.PanelAsientos);
+                  MoverIzquierda(180, -920, 2, 20, vistaPrincipal.PanelAsientos);
                   MoverIzquierda(1280, 180, 2, 20, vistaPrincipal.PanelPasajeros);
                   MoverIzquierda(-920, -2020, 2, 20, vistaPrincipal.ScrollPaneBuses);
             }
@@ -380,7 +385,6 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
             x=e.getX();
             y=e.getY(); 
         }
-        
     }
 
     @Override
