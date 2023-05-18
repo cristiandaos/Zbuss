@@ -37,26 +37,31 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         BTN_siguiente = new javax.swing.JButton();
         jLabel27 = new javax.swing.JLabel();
+        CONT = new javax.swing.JTextField();
         ScrollPaneBuses = new javax.swing.JScrollPane();
         PanelBuses = new javax.swing.JPanel();
         jLabel26 = new javax.swing.JLabel();
         PanelPasajeros = new javax.swing.JPanel();
         ScrollPanelPasajeros = new javax.swing.JScrollPane();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        RDBTNfem = new javax.swing.JRadioButton();
-        RDBTNmasc = new javax.swing.JRadioButton();
-        TxtApellidoMatePasa = new javax.swing.JTextField();
-        TxtApellidoPatePasa = new javax.swing.JTextField();
-        TxtNombrePasa = new javax.swing.JTextField();
-        TxtEdadPasa = new javax.swing.JFormattedTextField();
-        TxtDniPasa = new javax.swing.JFormattedTextField();
-        LBLnumAsiento = new javax.swing.JLabel();
+        PanelFormPasajeros = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         LBLPrecioTotal = new javax.swing.JLabel();
         BTN_confirmarCompra = new javax.swing.JButton();
         BTN_volverAsientos = new javax.swing.JButton();
         jLabel25 = new javax.swing.JLabel();
+        PanelPasajeroPrincipal = new javax.swing.JPanel();
+        RDBTNfem = new javax.swing.JRadioButton();
+        RDBTNmasc = new javax.swing.JRadioButton();
+        TxtApellidoMatePasa = new javax.swing.JTextField();
+        TxtApellidoPatePasa = new javax.swing.JTextField();
+        TxtNombrePasa = new javax.swing.JTextField();
+        LBLnumAsiento = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        SPNEdadPasa = new javax.swing.JSpinner();
+        jLabel3 = new javax.swing.JLabel();
+        FTxtDNI = new javax.swing.JFormattedTextField();
+        BTN_derechaAcompañantes = new javax.swing.JButton();
+        BTN_IzquiAcompañantes = new javax.swing.JButton();
         BarraLateral = new javax.swing.JPanel();
         BTN_cerrarSesion = new javax.swing.JButton();
 
@@ -161,7 +166,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(0, 0, 0));
         jLabel16.setText("Asientos Seleccionados(max 6):");
-        PanelAsientos.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 390, -1, -1));
+        PanelAsientos.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, -1, -1));
 
         LBLasientosSele.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         LBLasientosSele.setForeground(new java.awt.Color(0, 0, 0));
@@ -202,6 +207,13 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         jLabel27.setText("Z-Buss");
         jLabel27.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 4, 0, new java.awt.Color(123, 216, 80)));
         PanelAsientos.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, -1));
+
+        CONT.setEditable(false);
+        CONT.setBackground(new java.awt.Color(255, 255, 255));
+        CONT.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        CONT.setForeground(new java.awt.Color(0, 0, 0));
+        CONT.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        PanelAsientos.add(CONT, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 380, 40, 30));
 
         PanelDinamico.add(PanelAsientos, new org.netbeans.lib.awtextra.AbsoluteConstraints(1280, 0, 1100, 670));
 
@@ -249,98 +261,34 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         ScrollPanelPasajeros.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         ScrollPanelPasajeros.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setPreferredSize(new java.awt.Dimension(1000, 400));
+        PanelFormPasajeros.setBackground(new java.awt.Color(255, 255, 255));
+        PanelFormPasajeros.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        PanelFormPasajeros.setPreferredSize(new java.awt.Dimension(850, 200));
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Pasajero Principal", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Consolas", 1, 18), new java.awt.Color(0, 0, 0))); // NOI18N
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        BGsexos.add(RDBTNfem);
-        RDBTNfem.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        RDBTNfem.setForeground(new java.awt.Color(0, 0, 0));
-        RDBTNfem.setText("Femenino");
-        RDBTNfem.setFocusable(false);
-        jPanel3.add(RDBTNfem, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 130, -1, -1));
-
-        BGsexos.add(RDBTNmasc);
-        RDBTNmasc.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        RDBTNmasc.setForeground(new java.awt.Color(0, 0, 0));
-        RDBTNmasc.setText("Masculino");
-        RDBTNmasc.setFocusable(false);
-        jPanel3.add(RDBTNmasc, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 130, -1, -1));
-
-        TxtApellidoMatePasa.setBackground(new java.awt.Color(255, 255, 255));
-        TxtApellidoMatePasa.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        TxtApellidoMatePasa.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
-        jPanel3.add(TxtApellidoMatePasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 280, 30));
-
-        TxtApellidoPatePasa.setBackground(new java.awt.Color(255, 255, 255));
-        TxtApellidoPatePasa.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        TxtApellidoPatePasa.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
-        jPanel3.add(TxtApellidoPatePasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 280, 30));
-
-        TxtNombrePasa.setBackground(new java.awt.Color(255, 255, 255));
-        TxtNombrePasa.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        TxtNombrePasa.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
-        jPanel3.add(TxtNombrePasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 270, 30));
-
-        TxtEdadPasa.setBackground(new java.awt.Color(255, 255, 255));
-        TxtEdadPasa.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
-        TxtEdadPasa.setForeground(new java.awt.Color(0, 0, 0));
-        try {
-            TxtEdadPasa.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        jPanel3.add(TxtEdadPasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 30, 270, 30));
-
-        TxtDniPasa.setBackground(new java.awt.Color(255, 255, 255));
-        TxtDniPasa.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
-        TxtDniPasa.setForeground(new java.awt.Color(0, 0, 0));
-        try {
-            TxtDniPasa.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("########")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        jPanel3.add(TxtDniPasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 80, 270, 30));
-
-        LBLnumAsiento.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        LBLnumAsiento.setForeground(new java.awt.Color(0, 0, 0));
-        LBLnumAsiento.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LBLnumAsiento.setText("Asiento");
-        jPanel3.add(LBLnumAsiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 20, 90, -1));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(130, Short.MAX_VALUE))
+        javax.swing.GroupLayout PanelFormPasajerosLayout = new javax.swing.GroupLayout(PanelFormPasajeros);
+        PanelFormPasajeros.setLayout(PanelFormPasajerosLayout);
+        PanelFormPasajerosLayout.setHorizontalGroup(
+            PanelFormPasajerosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 848, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(180, Short.MAX_VALUE))
+        PanelFormPasajerosLayout.setVerticalGroup(
+            PanelFormPasajerosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 198, Short.MAX_VALUE)
         );
 
-        ScrollPanelPasajeros.setViewportView(jPanel2);
+        ScrollPanelPasajeros.setViewportView(PanelFormPasajeros);
 
-        PanelPasajeros.add(ScrollPanelPasajeros, new org.netbeans.lib.awtextra.AbsoluteConstraints(49, 98, 1000, 400));
+        PanelPasajeros.add(ScrollPanelPasajeros, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 340, 850, 200));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 22)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Precio a Pagar:");
-        PanelPasajeros.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 500, 150, 40));
+        PanelPasajeros.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 610, 150, 40));
 
         LBLPrecioTotal.setFont(new java.awt.Font("Consolas", 1, 22)); // NOI18N
         LBLPrecioTotal.setForeground(new java.awt.Color(0, 0, 0));
         LBLPrecioTotal.setText("s/0000");
-        PanelPasajeros.add(LBLPrecioTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(585, 510, 80, 30));
+        PanelPasajeros.add(LBLPrecioTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 620, 80, 30));
 
         BTN_confirmarCompra.setBackground(new java.awt.Color(255, 255, 255));
         BTN_confirmarCompra.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
@@ -349,7 +297,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         BTN_confirmarCompra.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
         BTN_confirmarCompra.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BTN_confirmarCompra.setFocusable(false);
-        PanelPasajeros.add(BTN_confirmarCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 570, 140, 40));
+        PanelPasajeros.add(BTN_confirmarCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 610, 140, 40));
 
         BTN_volverAsientos.setBackground(new java.awt.Color(204, 204, 204));
         BTN_volverAsientos.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
@@ -358,7 +306,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         BTN_volverAsientos.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
         BTN_volverAsientos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BTN_volverAsientos.setFocusable(false);
-        PanelPasajeros.add(BTN_volverAsientos, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 570, 140, 40));
+        PanelPasajeros.add(BTN_volverAsientos, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 610, 140, 40));
 
         jLabel25.setFont(new java.awt.Font("SansSerif", 1, 54)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(0, 0, 0));
@@ -366,6 +314,88 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         jLabel25.setText("Z-Buss");
         jLabel25.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 4, 0, new java.awt.Color(123, 216, 80)));
         PanelPasajeros.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, -1));
+
+        PanelPasajeroPrincipal.setBackground(new java.awt.Color(255, 255, 255));
+        PanelPasajeroPrincipal.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Pasajero Principal", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Consolas", 1, 18), new java.awt.Color(0, 0, 0))); // NOI18N
+        PanelPasajeroPrincipal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        BGsexos.add(RDBTNfem);
+        RDBTNfem.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        RDBTNfem.setForeground(new java.awt.Color(0, 0, 0));
+        RDBTNfem.setText("Femenino");
+        RDBTNfem.setFocusable(false);
+        PanelPasajeroPrincipal.add(RDBTNfem, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 150, 110, 40));
+
+        BGsexos.add(RDBTNmasc);
+        RDBTNmasc.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        RDBTNmasc.setForeground(new java.awt.Color(0, 0, 0));
+        RDBTNmasc.setText("Masculino");
+        RDBTNmasc.setFocusable(false);
+        PanelPasajeroPrincipal.add(RDBTNmasc, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 150, 110, 40));
+
+        TxtApellidoMatePasa.setBackground(new java.awt.Color(255, 255, 255));
+        TxtApellidoMatePasa.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        TxtApellidoMatePasa.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
+        PanelPasajeroPrincipal.add(TxtApellidoMatePasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 280, 30));
+
+        TxtApellidoPatePasa.setBackground(new java.awt.Color(255, 255, 255));
+        TxtApellidoPatePasa.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        TxtApellidoPatePasa.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
+        PanelPasajeroPrincipal.add(TxtApellidoPatePasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 280, 30));
+
+        TxtNombrePasa.setBackground(new java.awt.Color(255, 255, 255));
+        TxtNombrePasa.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        TxtNombrePasa.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
+        PanelPasajeroPrincipal.add(TxtNombrePasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 270, 30));
+
+        LBLnumAsiento.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        LBLnumAsiento.setForeground(new java.awt.Color(0, 0, 0));
+        LBLnumAsiento.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LBLnumAsiento.setText("Asiento");
+        PanelPasajeroPrincipal.add(LBLnumAsiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 30, 90, 20));
+
+        jLabel2.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setText("DNI:");
+        PanelPasajeroPrincipal.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 90, 40, 30));
+
+        SPNEdadPasa.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        SPNEdadPasa.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
+        SPNEdadPasa.setFocusable(false);
+        SPNEdadPasa.setOpaque(true);
+        PanelPasajeroPrincipal.add(SPNEdadPasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 30, 60, 30));
+
+        jLabel3.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setText("Edad:");
+        PanelPasajeroPrincipal.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 30, 50, 30));
+
+        FTxtDNI.setBackground(new java.awt.Color(255, 255, 255));
+        FTxtDNI.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
+        try {
+            FTxtDNI.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("########")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        PanelPasajeroPrincipal.add(FTxtDNI, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 90, 150, 30));
+
+        PanelPasajeros.add(PanelPasajeroPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 110, 850, 200));
+
+        BTN_derechaAcompañantes.setBackground(new java.awt.Color(18, 18, 18));
+        BTN_derechaAcompañantes.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        BTN_derechaAcompañantes.setForeground(new java.awt.Color(255, 255, 255));
+        BTN_derechaAcompañantes.setText(">>>>");
+        BTN_derechaAcompañantes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BTN_derechaAcompañantes.setFocusable(false);
+        PanelPasajeros.add(BTN_derechaAcompañantes, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 540, -1, -1));
+
+        BTN_IzquiAcompañantes.setBackground(new java.awt.Color(18, 18, 18));
+        BTN_IzquiAcompañantes.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        BTN_IzquiAcompañantes.setForeground(new java.awt.Color(255, 255, 255));
+        BTN_IzquiAcompañantes.setText("<<<<");
+        BTN_IzquiAcompañantes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BTN_IzquiAcompañantes.setFocusable(false);
+        PanelPasajeros.add(BTN_IzquiAcompañantes, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 540, -1, -1));
 
         PanelDinamico.add(PanelPasajeros, new org.netbeans.lib.awtextra.AbsoluteConstraints(2560, 0, -1, -1));
 
@@ -441,14 +471,18 @@ public class Interfaz_Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.ButtonGroup BGsexos;
+    public javax.swing.JButton BTN_IzquiAcompañantes;
     public javax.swing.JButton BTN_cerrarSesion;
     public javax.swing.JButton BTN_confirmarCompra;
+    public javax.swing.JButton BTN_derechaAcompañantes;
     public javax.swing.JButton BTN_siguiente;
     public javax.swing.JButton BTN_volverAsientos;
     public javax.swing.JButton BTN_volverBuses;
     public javax.swing.JPanel BarraLateral;
     public javax.swing.JPanel BarraSuperior;
     public javax.swing.JPanel Buss;
+    public javax.swing.JTextField CONT;
+    public javax.swing.JFormattedTextField FTxtDNI;
     public javax.swing.JLabel LBLPrecioTotal;
     public javax.swing.JLabel LBLasientosSele;
     public javax.swing.JLabel LBLhoraLlegada;
@@ -460,31 +494,32 @@ public class Interfaz_Principal extends javax.swing.JFrame {
     public javax.swing.JPanel PanelAsientos;
     public javax.swing.JPanel PanelBuses;
     public javax.swing.JLayeredPane PanelDinamico;
+    public javax.swing.JPanel PanelFormPasajeros;
+    public javax.swing.JPanel PanelPasajeroPrincipal;
     public javax.swing.JPanel PanelPasajeros;
     public javax.swing.JRadioButton RDBTNfem;
     public javax.swing.JRadioButton RDBTNmasc;
+    public javax.swing.JSpinner SPNEdadPasa;
     public javax.swing.JScrollPane ScrollPaneBuses;
     public javax.swing.JScrollPane ScrollPanelPasajeros;
     public javax.swing.JTextField TxtApellidoMatePasa;
     public javax.swing.JTextField TxtApellidoPatePasa;
-    public javax.swing.JFormattedTextField TxtDniPasa;
-    public javax.swing.JFormattedTextField TxtEdadPasa;
     public javax.swing.JTextField TxtNombrePasa;
     public javax.swing.JLabel jLabel1;
     public javax.swing.JLabel jLabel10;
     public javax.swing.JLabel jLabel11;
     public javax.swing.JLabel jLabel16;
     public javax.swing.JLabel jLabel18;
+    public javax.swing.JLabel jLabel2;
     public javax.swing.JLabel jLabel20;
     public javax.swing.JLabel jLabel21;
     public javax.swing.JLabel jLabel25;
     public javax.swing.JLabel jLabel26;
     public javax.swing.JLabel jLabel27;
+    public javax.swing.JLabel jLabel3;
     public javax.swing.JLabel jLabel6;
     public javax.swing.JLabel jLabel7;
     public javax.swing.JLabel jLabel8;
     public javax.swing.JLabel jLabel9;
-    public javax.swing.JPanel jPanel2;
-    public javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
 }

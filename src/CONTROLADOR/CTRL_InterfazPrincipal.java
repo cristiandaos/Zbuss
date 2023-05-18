@@ -21,17 +21,30 @@ import java.awt.event.WindowListener;
 import java.awt.geom.RoundRectangle2D;
 import java.net.URL;
 import java.util.ArrayList;
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.plaf.ScrollBarUI;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
@@ -39,7 +52,8 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 
 public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,MouseMotionListener,KeyListener,WindowListener{
     private Interfaz_Principal vistaPrincipal;
-    private int cant=7;
+    private int cant=3;
+    private int cantPasajeros=0;
     private int x;
     private int y;
     private ArrayList<PanelPersonalizado>ArrayPaneles;
@@ -49,6 +63,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
     private ArrayList<JLabel>ArrayImgs;
     private ArrayList<JLabel>ArrayAsientosDisp;
     private ArrayList<JLabel>ArrayAsientos;
+    private ArrayList<JPanel>ArrayAcompañantesPaneles;
     
     public CTRL_InterfazPrincipal(Interfaz_Principal vistaPrincipal){
         this.vistaPrincipal=vistaPrincipal;
@@ -65,6 +80,9 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
         this.vistaPrincipal.BTN_volverAsientos.addMouseListener(this);
         this.vistaPrincipal.BTN_confirmarCompra.addActionListener(this);
         this.vistaPrincipal.BTN_confirmarCompra.addMouseListener(this);
+        this.vistaPrincipal.BTN_IzquiAcompañantes.addActionListener(this);
+        this.vistaPrincipal.BTN_derechaAcompañantes.addActionListener(this);
+        
         ArrayPaneles=new ArrayList<>();
         ArrayBtns=new ArrayList<>();
         ArrayDestinos=new ArrayList<>();
@@ -74,9 +92,12 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
         
         ArrayAsientos=new ArrayList<>();
         
+        ArrayAcompañantesPaneles=new ArrayList<>();
+        
          GenerarPaneles(cant);
         
          generarAsientos();
+        
         
         for (JButton btns : ArrayBtns) { 
             btns.addActionListener(this);
@@ -85,6 +106,8 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
         for (JLabel asientos : ArrayAsientos) {
             asientos.addMouseListener(this);
         }
+        
+        ((JSpinner.DefaultEditor) vistaPrincipal.SPNEdadPasa.getEditor()).getTextField().setEditable(false);
         
     } 
     
@@ -136,8 +159,6 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
             
             contenedor.setRoundTopRight(40);
             contenedor.setRoundTopLeft(40);
-            contenedor.setRoundBottomLeft(10);
-            contenedor.setRoundBottomRight(10);
             contenedor.setBounds(x, y, ancho, alto);
             contenedor.setColorInicial(new Color(18, 18, 18));
             contenedor.setColorFinal(Color.BLACK);
@@ -150,8 +171,8 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
             contenedor.add(img);
             
             info.setBounds(0, 280, 400, 30);
-            info.setFont(new Font("Consolas",Font.BOLD,16));
-            info.setText("Terminal de Salida/Llegada ");
+            info.setFont(new Font("Consolas",Font.BOLD,20));
+            info.setText("Salida/Llegada ");
             info.setHorizontalAlignment(SwingConstants.CENTER);
             info.setForeground(Color.WHITE);
             contenedor.add(info);
@@ -178,7 +199,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
             ArrayAsientosDisp.add(asientosDispo);
             contenedor.add(asientosDispo);
             
-            btn.setBounds(5, 450, 400, 50);
+            btn.setBounds(0, 450, 400, 50);
             btn.setFocusable(false);
             btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
             btn.setText("Seleccionar");
@@ -205,6 +226,124 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
     
     private int CargarPaneles(){
         return CargarPaneles() ;
+    }
+    
+    void generarFormsAcompañantes(int cantAcomp){
+        int x=0;
+        int y=0;
+        int ancho=850;
+        int alto=200;
+             for (int i = 1; i <cantAcomp; i++) {
+                        JPanel contenedor=new JPanel();
+                        JLabel LBLasiento=new JLabel();
+                        JTextField TXTnombre=new JTextField();
+                        JTextField TXTapePat=new JTextField();
+                        JTextField TXTapeMat=new JTextField();
+                        JLabel LBLedad=new JLabel();
+                        JSpinner SPNedad=new JSpinner();
+                        JLabel LBLdni=new JLabel();
+                        JFormattedTextField FTXTdni=new JFormattedTextField(vistaPrincipal.FTxtDNI.getFormatter());
+                        ButtonGroup BGsexos=new ButtonGroup();
+                        JRadioButton RBfem=new JRadioButton();
+                        JRadioButton RBmasc=new JRadioButton();
+
+                        Border borde = BorderFactory.createLineBorder(Color.BLACK);
+                        TitledBorder Bordeado = BorderFactory.createTitledBorder(borde, "Acompañante "+i, TitledBorder.LEFT, TitledBorder.TOP);
+                        Bordeado.setTitleFont(new Font("Consolas", Font.BOLD, 18));
+                        contenedor.setBorder(Bordeado);
+                        contenedor.setBackground(Color.WHITE);
+                        contenedor.setBounds(x, y, ancho, alto);
+                        contenedor.setLayout(null);
+
+                        LBLasiento.setBounds(720, 20, 200, 40);
+                        LBLasiento.setFont(new Font("Consolas", Font.BOLD, 18));
+                        LBLasiento.setForeground(Color.BLACK);
+                        LBLasiento.setText("Asiento");
+                        contenedor.add(LBLasiento);
+
+                        TXTnombre.setBounds(10, 30, 270, 30);
+                        TXTnombre.setBorder(new MatteBorder(0,0,2,0,Color.BLACK));
+                        TXTnombre.setFont(new Font("Segoe UI",Font.PLAIN,16));
+                        PlaceHolder nom=new PlaceHolder("Nombre",TXTnombre,PlaceHolder.Show.ALWAYS);
+                        contenedor.add(TXTnombre);
+
+                        TXTapePat.setBounds(10, 80, 270, 30);
+                        TXTapePat.setBorder(new MatteBorder(0,0,2,0,Color.BLACK));
+                        TXTapePat.setFont(new Font("Segoe UI",Font.PLAIN,16));
+                        PlaceHolder apePat=new PlaceHolder("Apellido Paterno",TXTapePat,PlaceHolder.Show.ALWAYS);
+                        contenedor.add(TXTapePat);
+
+                        TXTapeMat.setBounds(10, 130, 270, 30);
+                        TXTapeMat.setBorder(new MatteBorder(0,0,2,0,Color.BLACK));
+                        TXTapeMat.setFont(new Font("Segoe UI",Font.PLAIN,16));
+                        PlaceHolder apeMat=new PlaceHolder("Apellido Materno",TXTapeMat,PlaceHolder.Show.ALWAYS);
+                        contenedor.add(TXTapeMat);
+
+                        LBLedad.setBounds(390, 30, 50, 30);
+                        LBLedad.setText("Edad:");
+                        LBLedad.setFont(new Font("Consolas",Font.BOLD,18));
+                        LBLedad.setForeground(Color.BLACK);
+                        contenedor.add(LBLedad);
+
+                        SpinnerNumberModel spinnerModel = (SpinnerNumberModel) SPNedad.getModel();
+                        spinnerModel.setMinimum(0); 
+                        SPNedad.setBounds(440,30,60,30);
+                        SPNedad.setBorder(new MatteBorder(0,0,2,0,Color.BLACK));
+                        ((JSpinner.DefaultEditor) SPNedad.getEditor()).getTextField().setEditable(false);
+                        contenedor.add(SPNedad);
+
+                        LBLdni.setBounds(390, 90, 50, 30);
+                        LBLdni.setText("DNI:");
+                        LBLdni.setFont(new Font("Consolas",Font.BOLD,18));
+                        LBLdni.setForeground(Color.BLACK);
+                        contenedor.add(LBLdni);
+
+                        FTXTdni.setBounds(440, 90, 150, 30);
+                        FTXTdni.setBorder(new MatteBorder(0,0,2,0,Color.BLACK));
+                        FTXTdni.setFont(new Font("Segoe UI",Font.PLAIN,16));
+                        contenedor.add(FTXTdni);
+
+                        RBfem.setBounds(380, 150, 110, 40);
+                        RBfem.setFont(new Font("Segoe UI",Font.PLAIN,18));
+                        RBfem.setForeground(Color.BLACK);
+                        RBfem.setText("Femenino");
+                        RBfem.setFocusable(false);
+                        RBmasc.setBounds(500, 150, 110, 40);
+                        RBmasc.setFont(new Font("Segoe UI",Font.PLAIN,18));
+                        RBmasc.setForeground(Color.BLACK);
+                        RBmasc.setText("Masculino");
+                        RBmasc.setFocusable(false);
+                        BGsexos.add(RBfem);
+                        BGsexos.add(RBmasc);
+                        contenedor.add(RBfem);
+                        contenedor.add(RBmasc);
+                        contenedor.setName("AUX");
+                        ArrayAcompañantesPaneles.add(contenedor);
+
+                        vistaPrincipal.PanelFormPasajeros.add(contenedor);
+
+                        x+=900;
+                        if (x>vistaPrincipal.PanelFormPasajeros.getWidth()-contenedor.getX()) {
+                            vistaPrincipal.PanelFormPasajeros.setPreferredSize(new Dimension(contenedor.getX()+ancho, vistaPrincipal.PanelFormPasajeros.getWidth()));
+                            vistaPrincipal.ScrollPanelPasajeros.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                        }
+                 }
+             
+    }
+    
+    void reinciarFormsAcompañantes(){
+                     vistaPrincipal.PanelFormPasajeros.removeAll();
+                     ArrayAcompañantesPaneles.clear();
+                     vistaPrincipal.PanelFormPasajeros.setPreferredSize(new Dimension(850,200));
+                     vistaPrincipal.ScrollPanelPasajeros.setPreferredSize(new Dimension(850,200));
+                     vistaPrincipal.ScrollPanelPasajeros.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                     vistaPrincipal.ScrollPanelPasajeros.getHorizontalScrollBar().setValue(0);
+                     vistaPrincipal.TxtNombrePasa.setText(null);
+                     vistaPrincipal.TxtApellidoMatePasa.setText(null);
+                     vistaPrincipal.TxtApellidoPatePasa.setText(null);
+                     vistaPrincipal.FTxtDNI.setText(null);
+                     vistaPrincipal.SPNEdadPasa.setValue(0);
+                     vistaPrincipal.BGsexos.clearSelection();
     }
     
     
@@ -286,7 +425,31 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
         vistaPrincipal.ScrollPaneBuses.getVerticalScrollBar().setCursor(new Cursor(Cursor.HAND_CURSOR));
         vistaPrincipal.ScrollPaneBuses.getVerticalScrollBar().setUnitIncrement(15);
         }
-        
+
+    public CTRL_InterfazPrincipal() {
+    }
+    
+     void smoothSlide(JScrollBar scrollBar, int targetValue) {
+        Timer slideTimer = new Timer(5, new ActionListener() {
+            private int increment = (targetValue - scrollBar.getValue()) / 5;
+            private int currentValue = scrollBar.getValue();
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (currentValue != targetValue) {
+                    currentValue += increment;
+                    if ((increment > 0 && currentValue > targetValue) || (increment < 0 && currentValue < targetValue)) {
+                        currentValue = targetValue;
+                    }
+                    scrollBar.setValue(currentValue);
+                } else {
+                    ((Timer) e.getSource()).stop();
+                }
+            }
+        });
+
+        slideTimer.start();
+    }    
     
    void generarAsientos(){
        int x=15;
@@ -346,16 +509,29 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                     MoverIzquierda(180, -920, 2, 20, vistaPrincipal.PanelAsientos);
                     MoverIzquierda(1280, 180, 2, 20, vistaPrincipal.PanelPasajeros);
                     MoverIzquierda(-920, -2020, 2, 20, vistaPrincipal.ScrollPaneBuses);
+                    generarFormsAcompañantes(cantPasajeros);
          }
         
         if (e.getSource()==vistaPrincipal.BTN_volverAsientos) {
                     MoverDerecha(-920, 180, 2, 20, vistaPrincipal.PanelAsientos);
                     MoverDerecha(180, 1280, 2, 20, vistaPrincipal.PanelPasajeros);
                     MoverDerecha(-2020, -920, 2, 20, vistaPrincipal.ScrollPaneBuses);
+                    reinciarFormsAcompañantes();
          }
         
         if (e.getSource()==vistaPrincipal.BTN_confirmarCompra) {
                     EstadoInicial();
+        }
+        if (e.getSource()==vistaPrincipal.BTN_IzquiAcompañantes) {
+             JScrollBar scrollBar = vistaPrincipal.ScrollPanelPasajeros.getHorizontalScrollBar();
+             int izquierda=scrollBar.getValue()-900;
+             smoothSlide(scrollBar, izquierda);
+        }
+        
+        if (e.getSource()==vistaPrincipal.BTN_derechaAcompañantes) {
+            JScrollBar scrollBar = vistaPrincipal.ScrollPanelPasajeros.getHorizontalScrollBar();
+            int derecha=scrollBar.getValue()+900;
+            smoothSlide(scrollBar, derecha);
         }
     }
 
@@ -379,10 +555,14 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                 if (e.getSource()==asientos ) {
                     if (asientos.getName().equals("Disponible")) {
                             asientos.setIcon(asientoSele);
+                            cantPasajeros++;
+                            vistaPrincipal.CONT.setText(String.valueOf(cantPasajeros));
                             asientos.setName("Seleccionado");
                     }else if (asientos.getName().equals("Seleccionado")) {
                             asientos.setIcon(asientoDisp);
                             asientos.setName("Disponible");
+                            cantPasajeros--;
+                            vistaPrincipal.CONT.setText(String.valueOf(cantPasajeros));
                     }
                             
                 }
