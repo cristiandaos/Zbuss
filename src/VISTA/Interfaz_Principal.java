@@ -2,11 +2,12 @@
 package VISTA;
 
 
+
 public class Interfaz_Principal extends javax.swing.JFrame {
 
     public Interfaz_Principal() {
         initComponents();
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -36,11 +37,9 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         BTN_siguiente = new javax.swing.JButton();
-        jLabel27 = new javax.swing.JLabel();
         CONT = new javax.swing.JTextField();
         ScrollPaneBuses = new javax.swing.JScrollPane();
         PanelBuses = new javax.swing.JPanel();
-        jLabel26 = new javax.swing.JLabel();
         PanelPasajeros = new javax.swing.JPanel();
         ScrollPanelPasajeros = new javax.swing.JScrollPane();
         PanelFormPasajeros = new javax.swing.JPanel();
@@ -48,7 +47,6 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         LBLPrecioTotal = new javax.swing.JLabel();
         BTN_confirmarCompra = new javax.swing.JButton();
         BTN_volverAsientos = new javax.swing.JButton();
-        jLabel25 = new javax.swing.JLabel();
         PanelPasajeroPrincipal = new javax.swing.JPanel();
         RDBTNfem = new javax.swing.JRadioButton();
         RDBTNmasc = new javax.swing.JRadioButton();
@@ -64,6 +62,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         BTN_IzquiAcompañantes = new javax.swing.JButton();
         BarraLateral = new javax.swing.JPanel();
         BTN_cerrarSesion = new javax.swing.JButton();
+        Logo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFocusable(false);
@@ -83,12 +82,12 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         PanelAsientos.setPreferredSize(new java.awt.Dimension(1100, 650));
         PanelAsientos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        BTN_volverBuses.setBackground(new java.awt.Color(204, 204, 204));
-        BTN_volverBuses.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        BTN_volverBuses.setBackground(new java.awt.Color(255, 255, 255));
+        BTN_volverBuses.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         BTN_volverBuses.setForeground(new java.awt.Color(0, 0, 0));
         BTN_volverBuses.setText("Anterior");
         BTN_volverBuses.setAlignmentX(0.5F);
-        BTN_volverBuses.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        BTN_volverBuses.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
         BTN_volverBuses.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BTN_volverBuses.setFocusable(false);
         BTN_volverBuses.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -192,25 +191,25 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         jLabel21.setText("Seleccionado");
         PanelAsientos.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 180, 120, 20));
 
-        BTN_siguiente.setBackground(new java.awt.Color(204, 204, 204));
-        BTN_siguiente.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        BTN_siguiente.setBackground(new java.awt.Color(255, 255, 255));
+        BTN_siguiente.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         BTN_siguiente.setForeground(new java.awt.Color(0, 0, 0));
         BTN_siguiente.setText("Siguiente");
-        BTN_siguiente.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        BTN_siguiente.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
         BTN_siguiente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BTN_siguiente.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        BTN_siguiente.setDefaultCapable(false);
+        BTN_siguiente.setEnabled(false);
+        BTN_siguiente.setFocusPainted(false);
         BTN_siguiente.setFocusable(false);
+        BTN_siguiente.setRequestFocusEnabled(false);
+        BTN_siguiente.setRolloverEnabled(false);
+        BTN_siguiente.setVerifyInputWhenFocusTarget(false);
         PanelAsientos.add(BTN_siguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 600, 140, 30));
-
-        jLabel27.setFont(new java.awt.Font("SansSerif", 1, 54)); // NOI18N
-        jLabel27.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel27.setText("Z-Buss");
-        jLabel27.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 4, 0, new java.awt.Color(123, 216, 80)));
-        PanelAsientos.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, -1));
 
         CONT.setEditable(false);
         CONT.setBackground(new java.awt.Color(255, 255, 255));
-        CONT.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        CONT.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         CONT.setForeground(new java.awt.Color(0, 0, 0));
         CONT.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         PanelAsientos.add(CONT, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 380, 40, 30));
@@ -226,26 +225,15 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         PanelBuses.setBackground(new java.awt.Color(255, 255, 255));
         PanelBuses.setPreferredSize(new java.awt.Dimension(1100, 670));
 
-        jLabel26.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel26.setFont(new java.awt.Font("SansSerif", 1, 54)); // NOI18N
-        jLabel26.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel26.setText("Z-Buss");
-        jLabel26.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 4, 0, new java.awt.Color(123, 216, 80)));
-
         javax.swing.GroupLayout PanelBusesLayout = new javax.swing.GroupLayout(PanelBuses);
         PanelBuses.setLayout(PanelBusesLayout);
         PanelBusesLayout.setHorizontalGroup(
             PanelBusesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelBusesLayout.createSequentialGroup()
-                .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 860, Short.MAX_VALUE))
+            .addGap(0, 1100, Short.MAX_VALUE)
         );
         PanelBusesLayout.setVerticalGroup(
             PanelBusesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelBusesLayout.createSequentialGroup()
-                .addComponent(jLabel26)
-                .addGap(0, 597, Short.MAX_VALUE))
+            .addGap(0, 670, Short.MAX_VALUE)
         );
 
         ScrollPaneBuses.setViewportView(PanelBuses);
@@ -260,20 +248,20 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         ScrollPanelPasajeros.setBorder(null);
         ScrollPanelPasajeros.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         ScrollPanelPasajeros.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        ScrollPanelPasajeros.setWheelScrollingEnabled(false);
 
         PanelFormPasajeros.setBackground(new java.awt.Color(255, 255, 255));
-        PanelFormPasajeros.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         PanelFormPasajeros.setPreferredSize(new java.awt.Dimension(850, 200));
 
         javax.swing.GroupLayout PanelFormPasajerosLayout = new javax.swing.GroupLayout(PanelFormPasajeros);
         PanelFormPasajeros.setLayout(PanelFormPasajerosLayout);
         PanelFormPasajerosLayout.setHorizontalGroup(
             PanelFormPasajerosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 848, Short.MAX_VALUE)
+            .addGap(0, 850, Short.MAX_VALUE)
         );
         PanelFormPasajerosLayout.setVerticalGroup(
             PanelFormPasajerosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 198, Short.MAX_VALUE)
+            .addGap(0, 200, Short.MAX_VALUE)
         );
 
         ScrollPanelPasajeros.setViewportView(PanelFormPasajeros);
@@ -288,32 +276,25 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         LBLPrecioTotal.setFont(new java.awt.Font("Consolas", 1, 22)); // NOI18N
         LBLPrecioTotal.setForeground(new java.awt.Color(0, 0, 0));
         LBLPrecioTotal.setText("s/0000");
-        PanelPasajeros.add(LBLPrecioTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 620, 80, 30));
+        PanelPasajeros.add(LBLPrecioTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 620, 80, 30));
 
         BTN_confirmarCompra.setBackground(new java.awt.Color(255, 255, 255));
-        BTN_confirmarCompra.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        BTN_confirmarCompra.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         BTN_confirmarCompra.setForeground(new java.awt.Color(0, 0, 0));
         BTN_confirmarCompra.setText("CONFIRMAR");
         BTN_confirmarCompra.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
         BTN_confirmarCompra.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BTN_confirmarCompra.setFocusable(false);
-        PanelPasajeros.add(BTN_confirmarCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 610, 140, 40));
+        PanelPasajeros.add(BTN_confirmarCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 610, 140, 40));
 
-        BTN_volverAsientos.setBackground(new java.awt.Color(204, 204, 204));
-        BTN_volverAsientos.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        BTN_volverAsientos.setBackground(new java.awt.Color(255, 255, 255));
+        BTN_volverAsientos.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         BTN_volverAsientos.setForeground(new java.awt.Color(0, 0, 0));
         BTN_volverAsientos.setText("ANTERIOR");
         BTN_volverAsientos.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
         BTN_volverAsientos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BTN_volverAsientos.setFocusable(false);
-        PanelPasajeros.add(BTN_volverAsientos, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 610, 140, 40));
-
-        jLabel25.setFont(new java.awt.Font("SansSerif", 1, 54)); // NOI18N
-        jLabel25.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel25.setText("Z-Buss");
-        jLabel25.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 4, 0, new java.awt.Color(123, 216, 80)));
-        PanelPasajeros.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, -1));
+        PanelPasajeros.add(BTN_volverAsientos, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 610, 140, 40));
 
         PanelPasajeroPrincipal.setBackground(new java.awt.Color(255, 255, 255));
         PanelPasajeroPrincipal.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Pasajero Principal", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Consolas", 1, 18), new java.awt.Color(0, 0, 0))); // NOI18N
@@ -385,17 +366,19 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         BTN_derechaAcompañantes.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         BTN_derechaAcompañantes.setForeground(new java.awt.Color(255, 255, 255));
         BTN_derechaAcompañantes.setText(">>>>");
+        BTN_derechaAcompañantes.setBorderPainted(false);
         BTN_derechaAcompañantes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BTN_derechaAcompañantes.setFocusable(false);
-        PanelPasajeros.add(BTN_derechaAcompañantes, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 540, -1, -1));
+        PanelPasajeros.add(BTN_derechaAcompañantes, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 540, 80, 30));
 
         BTN_IzquiAcompañantes.setBackground(new java.awt.Color(18, 18, 18));
         BTN_IzquiAcompañantes.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         BTN_IzquiAcompañantes.setForeground(new java.awt.Color(255, 255, 255));
         BTN_IzquiAcompañantes.setText("<<<<");
+        BTN_IzquiAcompañantes.setBorderPainted(false);
         BTN_IzquiAcompañantes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BTN_IzquiAcompañantes.setFocusable(false);
-        PanelPasajeros.add(BTN_IzquiAcompañantes, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 540, -1, -1));
+        PanelPasajeros.add(BTN_IzquiAcompañantes, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 540, 80, 30));
 
         PanelDinamico.add(PanelPasajeros, new org.netbeans.lib.awtextra.AbsoluteConstraints(2560, 0, -1, -1));
 
@@ -430,6 +413,14 @@ public class Interfaz_Principal extends javax.swing.JFrame {
 
         PanelDinamico.setLayer(BarraLateral, javax.swing.JLayeredPane.PALETTE_LAYER);
         PanelDinamico.add(BarraLateral, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 670));
+
+        Logo.setFont(new java.awt.Font("SansSerif", 1, 54)); // NOI18N
+        Logo.setForeground(new java.awt.Color(0, 0, 0));
+        Logo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Logo.setText("Z-Buss");
+        Logo.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 4, 0, new java.awt.Color(123, 216, 80)));
+        PanelDinamico.setLayer(Logo, javax.swing.JLayeredPane.PALETTE_LAYER);
+        PanelDinamico.add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 0, 240, -1));
 
         getContentPane().add(PanelDinamico, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, -1, -1));
 
@@ -491,6 +482,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
     public javax.swing.JLabel LBLprecio;
     public javax.swing.JLabel LBLtermLlegada;
     public javax.swing.JLabel LBLtermSalida;
+    public javax.swing.JLabel Logo;
     public javax.swing.JPanel PanelAsientos;
     public javax.swing.JPanel PanelBuses;
     public javax.swing.JLayeredPane PanelDinamico;
@@ -513,9 +505,6 @@ public class Interfaz_Principal extends javax.swing.JFrame {
     public javax.swing.JLabel jLabel2;
     public javax.swing.JLabel jLabel20;
     public javax.swing.JLabel jLabel21;
-    public javax.swing.JLabel jLabel25;
-    public javax.swing.JLabel jLabel26;
-    public javax.swing.JLabel jLabel27;
     public javax.swing.JLabel jLabel3;
     public javax.swing.JLabel jLabel6;
     public javax.swing.JLabel jLabel7;
