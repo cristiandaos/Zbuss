@@ -50,7 +50,7 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 
 public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,MouseMotionListener,KeyListener,WindowListener{
     private Interfaz_Principal vista;
-    private int cant=11;
+    private int cant=4;
     private int cantPasajeros=0;
     private int x;
     private int y;
@@ -134,7 +134,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
     }
     
     void Cerrar(){
-        vista.dispose();
+          vista.dispose();
     }
  
     void GenerarPaneles(int cant){

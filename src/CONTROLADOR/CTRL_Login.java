@@ -1,6 +1,6 @@
 
 package CONTROLADOR;
-import UTILIDADES.PlaceHolder;
+import UTILIDADES.*;
 import VISTA.*;
 import java.awt.Color;
 import java.awt.Font;
@@ -66,9 +66,8 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
         if (e.getSource()==login.BTN_ingresar) {
                   if (!login.Txt_usuario.getText().equals("") && !login.Txt_contraseña.getText().equals("") || !login.Txt_usuario.getText().equals("") || !login.Txt_contraseña.getText().equals("")) {     
                            if (!login.Txt_usuario.getText().equals(usuario) &&  !login.Txt_contraseña.getText().equals(contraseña) || !login.Txt_usuario.getText().equals(usuario) || !login.Txt_contraseña.getText().equals(contraseña)) {
-
-                               JOptionPane.showMessageDialog(null,"El usuario y/o contraseña ingresados son incorrectos", "Error en el ingreso",JOptionPane.ERROR_MESSAGE);
-                                    
+                               
+                                    Emergente emergente=new Emergente(null,"Error","El usuario y/o contraseña ingresados son incorrectos");
                            }else{
                                      login.dispose();
                                      Interfaz_Principal principal=new Interfaz_Principal();
@@ -135,11 +134,11 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
     }
    @Override
     public void mouseDragged(MouseEvent e){
-        if (e.getSource()==login.Barra) {
-            int  xMouse=e.getXOnScreen();
-            int  YMouse=e.getYOnScreen();
-            login.setLocation(xMouse-x, YMouse-y);
-       }
+            if (e.getSource()==login.Barra) {
+                int  xMouse=e.getXOnScreen();
+                int  YMouse=e.getYOnScreen();
+                login.setLocation(xMouse-x, YMouse-y);
+            }
     }
      @Override
     public void mouseMoved(MouseEvent e) {
