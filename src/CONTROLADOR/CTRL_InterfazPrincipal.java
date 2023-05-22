@@ -20,7 +20,10 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.geom.RoundRectangle2D;
 import java.net.URL;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -45,6 +48,7 @@ import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.plaf.ScrollBarUI;
 import javax.swing.plaf.basic.BasicScrollBarUI;
+import javax.swing.text.MaskFormatter;
 
 
 
@@ -80,16 +84,6 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
         this.vista.BTN_IzquiAcompañantes.addActionListener(this);
         this.vista.BTN_derechaAcompañantes.addActionListener(this);
         
-        ArrayPaneles=new ArrayList<>();
-        ArrayBtns=new ArrayList<>();
-        ArrayDestinos=new ArrayList<>();
-        ArrayAsientosDisp=new ArrayList<>();
-        ArrayHorarios=new ArrayList<>();
-        ArrayImgs=new ArrayList<>();
-        
-        ArrayAsientos=new ArrayList<>();
-        
-        ArrayAcompañantesPaneles=new ArrayList<>();
         
          GenerarPaneles(cant);
         
@@ -105,6 +99,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
         }
         
         ((JSpinner.DefaultEditor) vistaPrincipal.SPNEdadPasa.getEditor()).getTextField().setEditable(false);
+        ((JSpinner.DefaultEditor) vistaPrincipal.SPNEdadPasa.getEditor()).getTextField().setBackground(Color.WHITE);
         
     } 
     
@@ -138,6 +133,12 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
     }
  
     void GenerarPaneles(int cant){
+        ArrayPaneles=new ArrayList<>();
+        ArrayBtns=new ArrayList<>();
+        ArrayDestinos=new ArrayList<>();
+        ArrayAsientosDisp=new ArrayList<>();
+        ArrayHorarios=new ArrayList<>();
+        ArrayImgs=new ArrayList<>();
         vista.ScrollPaneBuses.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         int x=100;
         int y=120;
@@ -226,11 +227,11 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
     }
     
     void generarFormsAcompañantes(int cantAcomp){
+        ArrayAcompañantesPaneles=new ArrayList<>();
         int x=0;
         int y=0;
         int ancho=850;
         int alto=200;
-        
         if (cantAcomp>2) {
                 vista.BTN_derechaAcompañantes.setVisible(true);
                 vista.BTN_IzquiAcompañantes.setVisible(true);
@@ -247,10 +248,6 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                         JLabel LBLedad=new JLabel();
                         JSpinner SPNedad=new JSpinner();
                         JLabel LBLdni=new JLabel();
-                        JFormattedTextField FTXTdni=new JFormattedTextField(vista.FTxtDNI.getFormatter());
-                        ButtonGroup BGsexos=new ButtonGroup();
-                        JRadioButton RBfem=new JRadioButton();
-                        JRadioButton RBmasc=new JRadioButton();
 
                         Border borde = BorderFactory.createLineBorder(Color.BLACK);
                         TitledBorder Bordeado = BorderFactory.createTitledBorder(borde, "Acompañante "+i, TitledBorder.LEFT, TitledBorder.TOP);
@@ -295,6 +292,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                         SPNedad.setBounds(440,30,60,30);
                         SPNedad.setBorder(new MatteBorder(0,0,2,0,Color.BLACK));
                         ((JSpinner.DefaultEditor) SPNedad.getEditor()).getTextField().setEditable(false);
+                        ((JSpinner.DefaultEditor) SPNedad.getEditor()).getTextField().setBackground(Color.WHITE);
                         contenedor.add(SPNedad);
 
                         LBLdni.setBounds(390, 90, 50, 30);
@@ -303,25 +301,17 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                         LBLdni.setForeground(Color.BLACK);
                         contenedor.add(LBLdni);
 
-                        FTXTdni.setBounds(440, 90, 150, 30);
-                        FTXTdni.setBorder(new MatteBorder(0,0,2,0,Color.BLACK));
-                        FTXTdni.setFont(new Font("Segoe UI",Font.PLAIN,16));
-                        contenedor.add(FTXTdni);
-
-                        RBfem.setBounds(380, 150, 110, 40);
-                        RBfem.setFont(new Font("Segoe UI",Font.PLAIN,18));
-                        RBfem.setForeground(Color.BLACK);
-                        RBfem.setText("Femenino");
-                        RBfem.setFocusable(false);
-                        RBmasc.setBounds(500, 150, 110, 40);
-                        RBmasc.setFont(new Font("Segoe UI",Font.PLAIN,18));
-                        RBmasc.setForeground(Color.BLACK);
-                        RBmasc.setText("Masculino");
-                        RBmasc.setFocusable(false);
-                        BGsexos.add(RBfem);
-                        BGsexos.add(RBmasc);
-                        contenedor.add(RBfem);
-                        contenedor.add(RBmasc);
+                        try {
+                                    MaskFormatter formatoDNI = new MaskFormatter("########");
+                                    JFormattedTextField FTXTdni=new JFormattedTextField(formatoDNI);
+                                    FTXTdni.setBounds(440, 90, 150, 30);
+                                    FTXTdni.setBorder(new MatteBorder(0,0,2,0,Color.BLACK));
+                                    FTXTdni.setFont(new Font("Segoe UI",Font.PLAIN,16));
+                                    contenedor.add(FTXTdni);
+                        } catch (ParseException ex) {
+                                    Logger.getLogger(CTRL_InterfazPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        
                         contenedor.setName("AUX");
                         ArrayAcompañantesPaneles.add(contenedor);
 
@@ -348,7 +338,6 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                      vista.TxtApellidoPatePasa.setText(null);
                      vista.FTxtDNI.setText(null);
                      vista.SPNEdadPasa.setValue(0);
-                     vista.BGsexos.clearSelection();
     }
     
     
@@ -432,29 +421,30 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
         }
 
     
-     void smoothSlide(JScrollBar scrollBar, int targetValue) {
-        Timer slideTimer = new Timer(10, new ActionListener() {
-            private int increment = (targetValue - scrollBar.getValue()) / 5;
-            private int currentValue = scrollBar.getValue();
+   void SliderScroll(JScrollBar scrollBar, int moverValor) {
+        Timer Timer = new Timer(10, new ActionListener() {
+            private int incremento = (moverValor - scrollBar.getValue()) / 5;
+            private int valor = scrollBar.getValue();
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (currentValue != targetValue) {
-                    currentValue += increment;
-                    if ((increment > 0 && currentValue > targetValue) || (increment < 0 && currentValue < targetValue)) {
-                        currentValue = targetValue;
+                if (valor != moverValor) {
+                    valor += incremento;
+                    if ((incremento > 0 && valor > moverValor) || (incremento < 0 && valor < moverValor)) {
+                        valor = moverValor;
                     }
-                    scrollBar.setValue(currentValue);
+                    scrollBar.setValue(valor);
                 } else {
                     ((Timer) e.getSource()).stop();
                 }
             }
         });
 
-        slideTimer.start();
+        Timer.start();
     }    
     
    void generarAsientos(){
+       ArrayAsientos=new ArrayList<>();
        int x=15;
        int y=80;
        int incremento;
@@ -465,7 +455,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                 asiento.setIcon(asientoDisp);
                 asiento.setBounds(x,y,32,32);
                 asiento.setName("Disponible");
-            
+
                 asiento.setCursor(new Cursor(Cursor.HAND_CURSOR));
                 ArrayAsientos.add(asiento);
                 vista.Buss.add(asiento);
@@ -481,7 +471,6 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                     y+=50;
                 }
         }
-
    }
    
     @Override
@@ -513,28 +502,29 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                     MoverIzquierda(1280, 180, 2, 20, vista.PanelPasajeros);
                     MoverIzquierda(-920, -2020, 2, 20, vista.ScrollPaneBuses);
                     generarFormsAcompañantes(cantPasajeros);
-         }
+        }
         
         if (e.getSource()==vista.BTN_volverAsientos) {
                     MoverDerecha(-920, 180, 2, 20, vista.PanelAsientos);
                     MoverDerecha(180, 1280, 2, 20, vista.PanelPasajeros);
                     MoverDerecha(-2020, -920, 2, 20, vista.ScrollPaneBuses);
                     reinciarFormsAcompañantes();
-         }
+        }
         
         if (e.getSource()==vista.BTN_confirmarCompra) {
                     EstadoInicial();
         }
+        
         if (e.getSource()==vista.BTN_IzquiAcompañantes) {
              JScrollBar scrollBar = vista.ScrollPanelPasajeros.getHorizontalScrollBar();
              int izquierda=scrollBar.getValue()-900;
-             smoothSlide(scrollBar, izquierda);
+             SliderScroll(scrollBar, izquierda);
         }
         
         if (e.getSource()==vista.BTN_derechaAcompañantes) {
             JScrollBar scrollBar = vista.ScrollPanelPasajeros.getHorizontalScrollBar();
             int derecha=scrollBar.getValue()+900;
-            smoothSlide(scrollBar, derecha);
+            SliderScroll(scrollBar, derecha);
         }
     }
 
@@ -575,10 +565,10 @@ public void mousePressed(MouseEvent e) {
                                     
                                     if (cantPasajeros==0) {
                                             vista.BTN_siguiente.setEnabled(false);
-                                     }
-                           }
-                 }
-         }
+                                    }
+                            }
+                }
+        }
 }
 
     @Override
