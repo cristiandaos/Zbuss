@@ -3,7 +3,6 @@ package CONTROLADOR;
 import UTILIDADES.*;
 import VISTA.*;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,10 +15,6 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.JComponent;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.MatteBorder;
 
 
 public class CTRL_Login implements ActionListener,MouseListener,KeyListener,MouseMotionListener,WindowListener{
@@ -29,8 +24,9 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
     private int y;
     private String usuario="admin";
     private String contraseña="12345";
-   private String textoIniciarSesion="Accede a tu cuenta para revisar horarios, acumular puntos de fidelidad y disfrutar de beneficios exclusivos. ¡Inicia sesión y descubre todo lo que tenemos preparado para ti!";
-   private String textoRegistrarse="No dejes pasar la oportunidad de disfrutar de tarifas exclusivas y promociones especiales. Regístrate hoy mismo y mantente al tanto de nuestras ofertas irresistibles, diseñadas especialmente para ti."; 
+    private String textoIniciarSesion="Accede a tu cuenta para revisar horarios, acumular puntos de fidelidad y disfrutar de beneficios. ¡Inicia sesión y descubre todo lo que tenemos preparado para ti!";
+    private String textoRegistrarse="No dejes pasar la oportunidad de disfrutar de tarifas exclusivas y promociones especiales. Regístrate hoy mismo y mantente al tanto de nuestras ofertas."; 
+    
     public CTRL_Login(Login login)  {
         this.login=login;
         this.login.addWindowListener(this);
@@ -43,15 +39,13 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
         this.login.BTN_ingresar.addMouseListener(this);
         this.login.BTN_registrar.addActionListener(this);
         this.login.BTN_registrar.addMouseListener(this);
-        this.login.BTNpanelInicio.addActionListener(this);
-        this.login.BTNpanelInicio.addMouseListener(this);
-        this.login.BTNpanelRegistrar.addActionListener(this);
-        this.login.BTNpanelRegistrar.addMouseListener(this);
-        this.login.BTNinvitado.addActionListener(this);
-        this.login.BTNinvitado.addMouseListener(this);
+        this.login.LBL_mostrarLogin.addMouseListener(this);
+        this.login.LBL_mostrarRegistro.addMouseListener(this);
+        this.login.BTN_clienteInvitado.addActionListener(this);
+        this.login.BTN_clienteInvitado.addMouseListener(this);
         
-        login.LBLIniciarSesion.setText(HTML(textoIniciarSesion)); 
-        login.LBLRegistrarse.setText(HTML(textoRegistrarse));
+        login.LBL_infoInicioSesion.setText(HTML(textoIniciarSesion)); 
+        login.LBL_infoRegistrarse.setText(HTML(textoRegistrarse));
         
          PlaceHolder Usuario=new PlaceHolder("Usuario", login.Txt_usuario,PlaceHolder.Show.ALWAYS);
         
@@ -148,17 +142,17 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
     
     
     void HabilitarRegistro(){
-            for (int i = 0; i < login.PanelRegistro.getComponentCount(); i++) {
+         for (int i = 0; i < login.PanelRegistro.getComponentCount(); i++) {
                     login.PanelRegistro.getComponent(i).setEnabled(true);
-            }
+         }
     }
     
     
     void HabilitarInicioSesion(){
-            for (int i = 0; i < login.PanelInicioSesion.getComponentCount(); i++) {
+         for (int i = 0; i < login.PanelInicioSesion.getComponentCount(); i++) {
                     login.PanelInicioSesion.getComponent(i).setEnabled(true);
 
-            }
+         }
     }
     
     
@@ -178,36 +172,12 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
         if (e.getSource()==login.BTN_cerrar) {
                   System.exit(0);
         }
-        if (e.getSource()==login.BTNinvitado) {
+        if (e.getSource()==login.BTN_clienteInvitado) {
                   Cerrar();
                  Interfaz_Principal principal=new Interfaz_Principal();
                  CTRL_InterfazPrincipal ctrl_principal=new CTRL_InterfazPrincipal(principal);
                  ctrl_principal.Iniciar();
                   
-        }
-        if (e.getSource()==login.BTNpanelRegistrar) {
-            MoverDerecha(0, 320, 5, 10, login.PanelIntemediario);
-            MoverIzquierda(100, -120, 5, 10,login.BTNpanelRegistrar);
-            MoverIzquierda(320, 80, 5, 10,login.BTNpanelInicio);
-            MoverIzquierda(320, 40, 5, 10, login.Lbl_tituloRegistrar);
-            MoverIzquierda(40, -240, 5, 10,login.Lbl_tituloIniciarSesion);
-            MoverIzquierda(40, -190, 5, 10,login.LBLIniciarSesion);
-            MoverIzquierda(320, 40, 5, 10,login.LBLRegistrarse);
-            HabilitarRegistro();
-            InhabilitarInicioSesion();
-        }
-        
-        if (e.getSource()==login.BTNpanelInicio) {
-            MoverIzquierda(320, 0, 5, 10, login.PanelIntemediario);
-            MoverDerecha(-120, 100, 5, 10, login.BTNpanelRegistrar);
-            MoverDerecha(80, 320, 5, 10, login.BTNpanelInicio);
-            MoverDerecha(-240, 40, 5, 10, login.Lbl_tituloIniciarSesion);
-            MoverDerecha(40, 320, 5, 10, login.Lbl_tituloRegistrar);
-            MoverDerecha(-190, 40, 5, 10, login.LBLIniciarSesion);
-            MoverDerecha(40, 320, 5, 10, login.LBLRegistrarse);
-            HabilitarInicioSesion();
-            InhabilitarRegistro();
-
         }
         
         if (e.getSource()==login.BTN_ingresar) {
@@ -226,11 +196,12 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                   }          
          }
         if(e.getSource()==login.BTN_Visibilidad){
-            if (login.BTN_Visibilidad.isSelected()) {
-                  login.Txt_contraseña.setEchoChar((char)0);
-            }else{
-                  login.Txt_contraseña.setEchoChar('●');
-            }
+            
+                if (login.BTN_Visibilidad.isSelected()) {
+                            login.Txt_contraseña.setEchoChar((char)0);
+                }else{
+                            login.Txt_contraseña.setEchoChar('●');
+                }
         }
     }
 
@@ -244,6 +215,23 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
         if (e.getSource()==login.Barra) {
             x=e.getX();
             y=e.getY();
+        }
+        
+        if (e.getSource()==login.LBL_mostrarRegistro) {
+                MoverDerecha(0, 320, 5, 10, login.PanelIntemediario);
+                MoverIzquierda(20, -280, 5, 10,login.IniciarSesionPanelAux);
+                MoverIzquierda(320, 20, 5, 10,login.RegistrarPanelAux);
+                HabilitarRegistro();
+                InhabilitarInicioSesion();
+        }
+        
+        if (e.getSource()==login.LBL_mostrarLogin) {
+                MoverIzquierda(320, 0,5, 10, login.PanelIntemediario);
+                MoverDerecha(-280, 20, 5, 10, login.IniciarSesionPanelAux);
+                MoverDerecha(20, 320, 5, 10, login.RegistrarPanelAux);
+                HabilitarInicioSesion();
+                InhabilitarRegistro();
+
         }
     
     }
@@ -259,8 +247,8 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                   login.BTN_cerrar.setBackground(Color.red);
          }
          
-         if (e.getSource()==login.BTNinvitado) {
-                  login.BTNinvitado.setForeground(Color.WHITE);
+         if (e.getSource()==login.BTN_clienteInvitado) {
+                  login.BTN_clienteInvitado.setForeground(Color.WHITE);
         }
          
          if (e.getSource()==login.BTN_ingresar) {
@@ -270,14 +258,13 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
          if (e.getSource()==login.BTN_registrar) {
                 login.BTN_registrar.setBackground(new Color(21,24, 30));
          }
-         
-         if (e.getSource()==login.BTNpanelInicio) {
-             login.BTNpanelInicio.setBackground(new Color(21,24, 30));
+         if (e.getSource()==login.LBL_mostrarLogin) {
+            login.LBL_mostrarLogin.setForeground(Color.GREEN);
          }
-         
-         if (e.getSource()==login.BTNpanelRegistrar) {
-              login.BTNpanelRegistrar.setBackground(new Color(21,24, 30));
-        }
+         if (e.getSource()==login.LBL_mostrarRegistro) {
+            login.LBL_mostrarRegistro.setForeground(Color.GREEN);
+         }
+ 
          
          
     }
@@ -288,8 +275,8 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                 login.BTN_cerrar.setBackground(new Color(12,12,12));
          }
          
-         if (e.getSource()==login.BTNinvitado) {
-                  login.BTNinvitado.setForeground(new Color(120,120,120));
+         if (e.getSource()==login.BTN_clienteInvitado) {
+                  login.BTN_clienteInvitado.setForeground(new Color(120,120,120));
         }
          
          if (e.getSource()==login.BTN_ingresar) {
@@ -299,13 +286,12 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
          if (e.getSource()==login.BTN_registrar) {
                 login.BTN_registrar.setBackground(new Color(18,18,18));
          }
-          if (e.getSource()==login.BTNpanelInicio) {
-                login.BTNpanelInicio.setBackground(new Color(12,12,12));
+          if (e.getSource()==login.LBL_mostrarLogin) {
+            login.LBL_mostrarLogin.setForeground(new Color(123,216,80));
          }
-         
-         if (e.getSource()==login.BTNpanelRegistrar) {
-                login.BTNpanelRegistrar.setBackground(new Color(12,12,12));
-        }
+         if (e.getSource()==login.LBL_mostrarRegistro) {
+            login.LBL_mostrarRegistro.setForeground(new Color(123,216,80));
+         }
 
     }
    @Override
