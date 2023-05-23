@@ -59,9 +59,10 @@ public class Login extends javax.swing.JFrame {
         getContentPane().add(Barra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 590, 40));
 
         BTN_cerrar.setBackground(new java.awt.Color(12, 12, 12));
-        BTN_cerrar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        BTN_cerrar.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         BTN_cerrar.setForeground(new java.awt.Color(255, 255, 255));
         BTN_cerrar.setText("X");
+        BTN_cerrar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         BTN_cerrar.setBorderPainted(false);
         BTN_cerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BTN_cerrar.setFocusable(false);
@@ -73,6 +74,8 @@ public class Login extends javax.swing.JFrame {
         ScrollPanelDinamico.setBorder(null);
         ScrollPanelDinamico.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         ScrollPanelDinamico.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        ScrollPanelDinamico.setFocusable(false);
+        ScrollPanelDinamico.setRequestFocusEnabled(false);
 
         PanelDinamico.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -105,7 +108,7 @@ public class Login extends javax.swing.JFrame {
         PanelInicioSesion.add(Txt_correoElectronico, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 220, 40));
 
         BTN_IniciarSesion.setBackground(new java.awt.Color(18, 18, 18));
-        BTN_IniciarSesion.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        BTN_IniciarSesion.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
         BTN_IniciarSesion.setForeground(new java.awt.Color(255, 255, 255));
         BTN_IniciarSesion.setText("Ingresar");
         BTN_IniciarSesion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(123, 216, 80), 2, true));
@@ -120,8 +123,8 @@ public class Login extends javax.swing.JFrame {
         PanelIntemediario.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         BTN_clienteInvitado.setBackground(new java.awt.Color(12, 12, 12));
-        BTN_clienteInvitado.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
-        BTN_clienteInvitado.setForeground(new java.awt.Color(120, 120, 120));
+        BTN_clienteInvitado.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
+        BTN_clienteInvitado.setForeground(new java.awt.Color(255, 255, 255));
         BTN_clienteInvitado.setText("Continuar como invitado");
         BTN_clienteInvitado.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(51, 204, 0)));
         BTN_clienteInvitado.setContentAreaFilled(false);
@@ -132,20 +135,23 @@ public class Login extends javax.swing.JFrame {
         ScrollPanelInfo.setBorder(null);
         ScrollPanelInfo.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         ScrollPanelInfo.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-        ScrollPanelInfo.setPreferredSize(new java.awt.Dimension(640, 400));
+        ScrollPanelInfo.setFocusable(false);
+        ScrollPanelInfo.setPreferredSize(new java.awt.Dimension(720, 400));
+        ScrollPanelInfo.setRequestFocusEnabled(false);
 
         PanelDinamicoInfo.setBackground(new java.awt.Color(12, 12, 12));
         PanelDinamicoInfo.setMinimumSize(new java.awt.Dimension(560, 400));
-        PanelDinamicoInfo.setPreferredSize(new java.awt.Dimension(640, 400));
+        PanelDinamicoInfo.setPreferredSize(new java.awt.Dimension(880, 400));
         PanelDinamicoInfo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         RegistrarPanelAux.setBackground(new java.awt.Color(12, 12, 12));
         RegistrarPanelAux.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        LBL_infoRegistrarse.setBackground(new java.awt.Color(53, 160, 19));
-        LBL_infoRegistrarse.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        LBL_infoRegistrarse.setBackground(new java.awt.Color(12, 12, 12));
+        LBL_infoRegistrarse.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         LBL_infoRegistrarse.setForeground(new java.awt.Color(255, 255, 255));
-        RegistrarPanelAux.add(LBL_infoRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 180, 130));
+        LBL_infoRegistrarse.setText("<html><p> Registrate y no dejes pasar la oportunidad de disfrutar de tarifas exclusivas y promociones especiales. </p><html>");
+        RegistrarPanelAux.add(LBL_infoRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 210, 150));
 
         Lbl_tituloRegistrar.setBackground(new java.awt.Color(255, 255, 255));
         Lbl_tituloRegistrar.setFont(new java.awt.Font("SansSerif", 1, 32)); // NOI18N
@@ -153,7 +159,7 @@ public class Login extends javax.swing.JFrame {
         Lbl_tituloRegistrar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         Lbl_tituloRegistrar.setText("Registrarse");
         Lbl_tituloRegistrar.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(51, 204, 0)));
-        RegistrarPanelAux.add(Lbl_tituloRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 180, 60));
+        RegistrarPanelAux.add(Lbl_tituloRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 180, 60));
 
         jLabel5.setBackground(new java.awt.Color(255, 255, 255));
         jLabel5.setFont(new java.awt.Font("Segoe UI Emoji", 0, 14)); // NOI18N
@@ -168,16 +174,18 @@ public class Login extends javax.swing.JFrame {
         LBL_mostrarLogin.setText("Inicia Sesión aquí");
         RegistrarPanelAux.add(LBL_mostrarLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 330, 120, 20));
 
-        PanelDinamicoInfo.add(RegistrarPanelAux, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, 280, 400));
+        PanelDinamicoInfo.add(RegistrarPanelAux, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 0, 280, 400));
 
         IniciarSesionPanelAux.setBackground(new java.awt.Color(12, 12, 12));
         IniciarSesionPanelAux.setPreferredSize(new java.awt.Dimension(320, 400));
         IniciarSesionPanelAux.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         LBL_infoInicioSesion.setBackground(new java.awt.Color(0, 0, 0));
-        LBL_infoInicioSesion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        LBL_infoInicioSesion.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         LBL_infoInicioSesion.setForeground(new java.awt.Color(255, 255, 255));
-        IniciarSesionPanelAux.add(LBL_infoInicioSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 180, 130));
+        LBL_infoInicioSesion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LBL_infoInicioSesion.setText("<html><p> Accede a tu cuenta para revisar horarios, acumular puntos de fidelidad y disfrutar de beneficios. </p><html>");
+        IniciarSesionPanelAux.add(LBL_infoInicioSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 170, 150));
 
         Lbl_tituloIniciarSesion.setBackground(new java.awt.Color(255, 255, 255));
         Lbl_tituloIniciarSesion.setFont(new java.awt.Font("SansSerif", 1, 32)); // NOI18N
@@ -192,7 +200,7 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("No tiene una cuenta?");
-        IniciarSesionPanelAux.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 150, 20));
+        IniciarSesionPanelAux.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 140, 20));
 
         LBL_mostrarRegistro.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         LBL_mostrarRegistro.setForeground(new java.awt.Color(123, 216, 80));
@@ -212,7 +220,7 @@ public class Login extends javax.swing.JFrame {
         PanelRegistro.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         BTN_ConfirmarRegistro.setBackground(new java.awt.Color(18, 18, 18));
-        BTN_ConfirmarRegistro.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        BTN_ConfirmarRegistro.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
         BTN_ConfirmarRegistro.setForeground(new java.awt.Color(255, 255, 255));
         BTN_ConfirmarRegistro.setText("Confirmar");
         BTN_ConfirmarRegistro.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(123, 216, 80), 2, true));
@@ -226,11 +234,6 @@ public class Login extends javax.swing.JFrame {
         Txt_ApeMatRegistro.setForeground(new java.awt.Color(255, 255, 255));
         Txt_ApeMatRegistro.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         Txt_ApeMatRegistro.setCaretColor(new java.awt.Color(255, 255, 255));
-        Txt_ApeMatRegistro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Txt_ApeMatRegistroActionPerformed(evt);
-            }
-        });
         PanelRegistro.add(Txt_ApeMatRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, 200, 30));
 
         Txt_ApePatRegistro.setBackground(new java.awt.Color(18, 18, 18));
@@ -285,6 +288,7 @@ public class Login extends javax.swing.JFrame {
         Txt_ConfirmContraRegistro.setForeground(new java.awt.Color(255, 255, 255));
         Txt_ConfirmContraRegistro.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         Txt_ConfirmContraRegistro.setCaretColor(new java.awt.Color(255, 255, 255));
+        Txt_ConfirmContraRegistro.setEchoChar('*');
         PanelRegistro.add(Txt_ConfirmContraRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, 200, 30));
 
         Txt_ContraRegistro.setBackground(new java.awt.Color(18, 18, 18));
@@ -292,6 +296,7 @@ public class Login extends javax.swing.JFrame {
         Txt_ContraRegistro.setForeground(new java.awt.Color(255, 255, 255));
         Txt_ContraRegistro.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         Txt_ContraRegistro.setCaretColor(new java.awt.Color(255, 255, 255));
+        Txt_ContraRegistro.setEchoChar('*');
         PanelRegistro.add(Txt_ContraRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 330, 200, 30));
 
         Txt_FNacRegistro.setBackground(new java.awt.Color(18, 18, 18));
@@ -331,10 +336,6 @@ public class Login extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void Txt_ApeMatRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Txt_ApeMatRegistroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Txt_ApeMatRegistroActionPerformed
 
 
     public static void main(String args[]) {

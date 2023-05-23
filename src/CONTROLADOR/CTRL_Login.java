@@ -3,6 +3,7 @@ package CONTROLADOR;
 import UTILIDADES.*;
 import VISTA.*;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Scrollbar;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
@@ -18,6 +19,7 @@ import java.awt.geom.RoundRectangle2D;
 import javax.swing.JComponent;
 import javax.swing.JScrollBar;
 import javax.swing.Timer;
+import javax.swing.text.JTextComponent;
 
 
 public class CTRL_Login implements ActionListener,MouseListener,KeyListener,MouseMotionListener,WindowListener{
@@ -27,8 +29,6 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
     private int y;
     private String usuario="admin";
     private String contraseña="12345";
-    private String textoIniciarSesion="Accede a tu cuenta para revisar horarios, acumular puntos de fidelidad y disfrutar de beneficios. ¡Inicia sesión y descubre todo lo que tenemos preparado para ti!";
-    private String textoRegistrarse="No dejes pasar la oportunidad de disfrutar de tarifas exclusivas y promociones especiales. Regístrate hoy mismo y mantente al tanto de nuestras ofertas."; 
     
     public CTRL_Login(Login login)  {
         this.login=login;
@@ -46,12 +46,7 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
         this.login.LBL_mostrarRegistro.addMouseListener(this);
         this.login.BTN_clienteInvitado.addActionListener(this);
         this.login.BTN_clienteInvitado.addMouseListener(this);
-        
-        login.LBL_infoInicioSesion.setText(HTML(textoIniciarSesion)); 
-        login.LBL_infoRegistrarse.setText(HTML(textoRegistrarse));
-        
-       JScrollBar scroll=login.ScrollPanelDinamico.getHorizontalScrollBar();
-       scroll.setValue(320);
+        this.login.BTN_VisibilidadRegistro.addActionListener(this);
         
          PlaceHolder CorreoElectronico=new PlaceHolder("Correo Electronico", login.Txt_correoElectronico,PlaceHolder.Show.ALWAYS);
         
@@ -71,68 +66,23 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
   
     }
     
-     void Iniciar(){
-         Shape redondeado=new RoundRectangle2D.Double(0,0,login.getBounds().width,login.getBounds().getHeight(),30,30);
-         login.setShape(redondeado);
-         login.revalidate();
-         login.setVisible(true);  
-         login.Txt_correoElectronico.requestFocus();
-
-    }
+         void Iniciar(){
+                  JScrollBar scroll=login.ScrollPanelDinamico.getHorizontalScrollBar();
+                  scroll.setValue(320);
+                  Shape redondeado=new RoundRectangle2D.Double(0,0,login.getBounds().width,login.getBounds().getHeight(),30,30);
+                  login.setShape(redondeado);
+                  login.revalidate();
+                  login.setVisible(true);  
+         }
      
      
-     public  String HTML(String str){
-         return "<html><p>"+str+"</p><html>";
-     }
      
-     
-    void Cerrar(){
+        void Cerrar(){
             login.dispose();
-    }
+        }
       
     
-    void MoverDerecha(final int posInicial, final int posFinal,final int delay, final int incremento,final JComponent componente){
-        if(componente.getX()==posInicial){
-            new Thread(){
-                public void run(){
-                    while (componente.getX()<posFinal) {              
-                        for (int i = posInicial; i<=posFinal; i+=incremento) {
-                            try {
-                                Thread.sleep(delay);
-                                componente.setLocation(i, componente.getY());
-                            } catch (InterruptedException e) {
-                            }  
-                        }
-                    }
-                    componente.setLocation(posFinal, componente.getY());
-                }
-            } 
-            .start();
-        }
-    }
-    
-    
-    void MoverIzquierda(final int posInicial, final int posFinal,final int delay, final int incremento,final JComponent componente){
-        if(componente.getX()==posInicial){   
-            new Thread(){
-         @Override
-                public void run(){
-                    while (componente.getX()>posFinal) {              
-                        for (int i = posInicial; i>=posFinal; i-=incremento) {
-                            try {
-                                Thread.sleep(delay);
-                                componente.setLocation(i, componente.getY());
-                            } catch (InterruptedException e) {
-                            }  
-                        }
-                    }
-                    componente.setLocation(posFinal,componente.getY());
-                }
-            } 
-            .start();
-        }
-    }
-     void SliderScroll(JScrollBar scrollBar,int delay, int moverValor,int auxiliar) {
+        void SliderScroll(JScrollBar scrollBar,int delay, int moverValor,int auxiliar) {
             Timer Timer = new Timer(delay, new ActionListener() {
             private int incremento = (moverValor - scrollBar.getValue()) / auxiliar;
             private int valor = scrollBar.getValue();
@@ -152,82 +102,95 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
         });
         Timer.start();
     }   
-    
-    void InhabilitarRegistro(){
-        for (int i = 0; i < login.PanelRegistro.getComponentCount(); i++) {
-                    login.PanelRegistro.getComponent(i).setEnabled(false);
-        }
-        login.Txt_NomRegistro.setText(null);
-        login.Txt_ApePatRegistro.setText(null);
-        login.Txt_ApeMatRegistro.setText(null);
-        login.Txt_CorreoRegistro.setText(null);
-        login.Txt_ContraRegistro.setText(null);
-        login.Txt_ConfirmContraRegistro.setText(null);
-    }
-    
-    
-    void HabilitarRegistro(){
-         for (int i = 0; i < login.PanelRegistro.getComponentCount(); i++) {
-                    login.PanelRegistro.getComponent(i).setEnabled(true);
+     
+        void InhabilitarRegistro(){
+                  for (int i = 0; i < login.PanelRegistro.getComponentCount(); i++) {
+                           login.PanelRegistro.getComponent(i).setEnabled(false);
+                  }
+      
+                  login.Txt_NomRegistro.setText(null);
+                  login.Txt_ApePatRegistro.setText(null);
+                  login.Txt_ApeMatRegistro.setText(null);
+                  login.Txt_CorreoRegistro.setText(null);
+                  login.Txt_ContraRegistro.setText(null);
+                  login.Txt_ConfirmContraRegistro.setText(null);
          }
-    }
     
     
-    void HabilitarInicioSesion(){
-         for (int i = 0; i < login.PanelInicioSesion.getComponentCount(); i++) {
-                    login.PanelInicioSesion.getComponent(i).setEnabled(true);
+         void HabilitarRegistro(){
+                  for (int i = 0; i < login.PanelRegistro.getComponentCount(); i++) {
+                           login.PanelRegistro.getComponent(i).setEnabled(true);
+                  }
+         }
+    
+    
+         void HabilitarInicioSesion(){
+                  for (int i = 0; i < login.PanelInicioSesion.getComponentCount(); i++) {
+                           login.PanelInicioSesion.getComponent(i).setEnabled(true);
 
+                  }
          }
-    }
     
     
-    void InhabilitarInicioSesion(){
-            for (int i = 0; i < login.PanelInicioSesion.getComponentCount(); i++) {
-                    login.PanelInicioSesion.getComponent(i).setEnabled(false);
-            }
-            login.Txt_correoElectronico.setText(null);
-            login.Txt_contraseña.setText(null);
-    }
+         void InhabilitarInicioSesion(){
+                  for (int i = 0; i < login.PanelInicioSesion.getComponentCount(); i++) {
+                          login.PanelInicioSesion.getComponent(i).setEnabled(false);
+                  }
+                  login.Txt_correoElectronico.setText(null);
+                  login.Txt_contraseña.setText(null);
+         }
      
      
      
      
     @Override
         public void actionPerformed(ActionEvent e) {
-        if (e.getSource()==login.BTN_cerrar) {
-                  System.exit(0);
-        }
-        if (e.getSource()==login.BTN_clienteInvitado) {
-                  Cerrar();
-                 Interfaz_Principal principal=new Interfaz_Principal();
-                 CTRL_InterfazPrincipal ctrl_principal=new CTRL_InterfazPrincipal(principal);
-                 ctrl_principal.Iniciar();
-                  
-        }
-        
-        if (e.getSource()==login.BTN_IniciarSesion) {
-                  if (!login.Txt_correoElectronico.getText().equals("") && !login.Txt_contraseña.getText().equals("") || !login.Txt_correoElectronico.getText().equals("") || !login.Txt_contraseña.getText().equals("")) {     
-                           if (!login.Txt_correoElectronico.getText().equals(usuario) &&  !login.Txt_contraseña.getText().equals(contraseña) || !login.Txt_correoElectronico.getText().equals(usuario) || !login.Txt_contraseña.getText().equals(contraseña)) {
-                               
-                                    Emergente emergente=new Emergente(null,"Error en el Ingreso","El usuario y/o contraseña ingresados no estan registrados");
-                           }else{
-                                     Interfaz_Principal principal=new Interfaz_Principal();
-                                     CTRL_InterfazPrincipal ctrl_principal=new CTRL_InterfazPrincipal(principal);
-                                     ctrl_principal.Iniciar();
-                                     Cerrar();
-                           }
-                  }else{
-                          Emergente emergente=new Emergente(null,"Error en el ingreso","No se debe dejar ningún campo vacio");
-                  }          
-         }
-        if(e.getSource()==login.BTN_Visibilidad){
             
-                if (login.BTN_Visibilidad.isSelected()) {
-                            login.Txt_contraseña.setEchoChar((char)0);
-                }else{
-                            login.Txt_contraseña.setEchoChar('*');
-                }
-        }
+                  if (e.getSource()==login.BTN_cerrar) {
+                           System.exit(0);
+                  }
+                  
+                  if (e.getSource()==login.BTN_clienteInvitado) {
+                           Cerrar();
+                           Interfaz_Principal principal=new Interfaz_Principal();
+                           CTRL_InterfazPrincipal ctrl_principal=new CTRL_InterfazPrincipal(principal);
+                           ctrl_principal.Iniciar();
+
+                  }
+        
+                  if (e.getSource()==login.BTN_IniciarSesion) {
+                           if (!login.Txt_correoElectronico.getText().equals("") && !login.Txt_contraseña.getText().equals("") || !login.Txt_correoElectronico.getText().equals("") || !login.Txt_contraseña.getText().equals("")) {     
+                                    if (!login.Txt_correoElectronico.getText().equals(usuario) &&  !login.Txt_contraseña.getText().equals(contraseña) || !login.Txt_correoElectronico.getText().equals(usuario) || !login.Txt_contraseña.getText().equals(contraseña)) {
+
+                                             Emergente emergente=new Emergente(null,"Error en el Ingreso","El usuario y/o contraseña ingresados no estan registrados");
+                                    }else{
+                                             Interfaz_Principal principal=new Interfaz_Principal();
+                                             CTRL_InterfazPrincipal ctrl_principal=new CTRL_InterfazPrincipal(principal);
+                                             ctrl_principal.Iniciar();
+                                             Cerrar();
+                                    }
+                           }else{
+                                    Emergente emergente=new Emergente(null,"Error en el ingreso","No se debe dejar ningún campo vacio");
+                           }          
+                  }
+        
+                  if(e.getSource()==login.BTN_Visibilidad){
+                           if (login.BTN_Visibilidad.isSelected()) {
+                                    login.Txt_contraseña.setEchoChar((char)0);
+                           }else{
+                                    login.Txt_contraseña.setEchoChar('*');
+                           }
+                  }
+                  
+                  
+                  if(e.getSource()==login.BTN_VisibilidadRegistro){
+
+                          if (login.BTN_VisibilidadRegistro.isSelected()) {
+                                    login.Txt_ContraRegistro.setEchoChar((char)0);
+                           }else{
+                                    login.Txt_ContraRegistro.setEchoChar('*');
+                           }
+                  }
     }
 
     @Override
@@ -246,8 +209,8 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                 JScrollBar scrollPaneles=login.ScrollPanelDinamico.getHorizontalScrollBar();
                 JScrollBar scrollInfo=login.ScrollPanelInfo.getHorizontalScrollBar();
                 int izquierdaPaneles=scrollPaneles.getValue()-320;
-                int izquierdaInfo=scrollInfo.getValue()+320;
-                SliderScroll(scrollInfo, 10, izquierdaInfo, 10);
+                int izquierdaInfo=scrollInfo.getValue()+440;
+                SliderScroll(scrollInfo, 5, izquierdaInfo, 11);
                 SliderScroll(scrollPaneles, 5, izquierdaPaneles, 5);
                 HabilitarRegistro();
                 InhabilitarInicioSesion();
@@ -257,8 +220,8 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                 JScrollBar scrollPaneles=login.ScrollPanelDinamico.getHorizontalScrollBar();
                 JScrollBar scrollInfo=login.ScrollPanelInfo.getHorizontalScrollBar();
                 int izquierdaPaneles=scrollPaneles.getValue()+320;
-                int DerechaInfo=scrollInfo.getValue()-320;
-                SliderScroll(scrollInfo, 10, DerechaInfo, 10);
+                int DerechaInfo=scrollInfo.getValue()-440;
+                SliderScroll(scrollInfo, 5, DerechaInfo, 11);
                 SliderScroll(scrollPaneles, 5, izquierdaPaneles, 5);
                 HabilitarInicioSesion();
                 InhabilitarRegistro();
@@ -273,66 +236,74 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
     }
 
     @Override
-    public void mouseEntered(MouseEvent e) {
-         if (e.getSource()==login.BTN_cerrar) {
-                  login.BTN_cerrar.setBackground(Color.red);
-         }
+         public void mouseEntered(MouseEvent e) {
+        
+                  if (e.getSource()==login.BTN_cerrar) {
+                           login.BTN_cerrar.setBackground(Color.red);
+                  }
          
-         if (e.getSource()==login.BTN_clienteInvitado) {
-                  login.BTN_clienteInvitado.setForeground(Color.WHITE);
-        }
+                  if (e.getSource()==login.BTN_clienteInvitado) {
+                           login.BTN_clienteInvitado.setFont(new Font("Consolas",Font.BOLD,14));
+                  }
          
-         if (e.getSource()==login.BTN_IniciarSesion) {
-                login.BTN_IniciarSesion.setBackground(new Color(21,24, 30));
-         }
+                  if (e.getSource()==login.BTN_IniciarSesion) {
+                           login.BTN_IniciarSesion.setBackground(new Color(21,24, 30));
+                           login.BTN_IniciarSesion.setFont(new Font("Consolas",Font.BOLD,18));
+                  }
          
-         if (e.getSource()==login.BTN_ConfirmarRegistro) {
-                login.BTN_ConfirmarRegistro.setBackground(new Color(21,24, 30));
+                  if (e.getSource()==login.BTN_ConfirmarRegistro) {
+                           login.BTN_ConfirmarRegistro.setBackground(new Color(21,24, 30));
+                           login.BTN_ConfirmarRegistro.setFont(new Font("Consolas",Font.BOLD,18));
+                  }
+                  
+                  if (e.getSource()==login.LBL_mostrarLogin) {
+                           login.LBL_mostrarLogin.setForeground(Color.GREEN);
+                  }
+                  
+                  if (e.getSource()==login.LBL_mostrarRegistro) {
+                          login.LBL_mostrarRegistro.setForeground(Color.GREEN);
+                  }
+     
          }
-         if (e.getSource()==login.LBL_mostrarLogin) {
-            login.LBL_mostrarLogin.setForeground(Color.GREEN);
-         }
-         if (e.getSource()==login.LBL_mostrarRegistro) {
-            login.LBL_mostrarRegistro.setForeground(Color.GREEN);
-         }
- 
-         
-         
-    }
 
     @Override
-    public void mouseExited(MouseEvent e) {
-         if (e.getSource()==login.BTN_cerrar) {
-                login.BTN_cerrar.setBackground(new Color(12,12,12));
-         }
-         
-         if (e.getSource()==login.BTN_clienteInvitado) {
-                  login.BTN_clienteInvitado.setForeground(new Color(120,120,120));
-        }
-         
-         if (e.getSource()==login.BTN_IniciarSesion) {
-                login.BTN_IniciarSesion.setBackground(new Color(18,18,18));
-         }
-         
-         if (e.getSource()==login.BTN_ConfirmarRegistro) {
-                login.BTN_ConfirmarRegistro.setBackground(new Color(18,18,18));
-         }
-          if (e.getSource()==login.LBL_mostrarLogin) {
-            login.LBL_mostrarLogin.setForeground(new Color(123,216,80));
-         }
-         if (e.getSource()==login.LBL_mostrarRegistro) {
-            login.LBL_mostrarRegistro.setForeground(new Color(123,216,80));
-         }
+         public void mouseExited(MouseEvent e) {
+                  if (e.getSource()==login.BTN_cerrar) {
+                           login.BTN_cerrar.setBackground(new Color(12,12,12));
+                  }
 
-    }
+                  if (e.getSource()==login.BTN_clienteInvitado) {
+                           login.BTN_clienteInvitado.setFont(new Font("Consolas",Font.PLAIN,14));
+                  }
+
+                  if (e.getSource()==login.BTN_IniciarSesion) {
+                           login.BTN_IniciarSesion.setBackground(new Color(18,18,18));
+                           login.BTN_IniciarSesion.setFont(new Font("Consolas",Font.PLAIN,18));
+                  }
+
+                  if (e.getSource()==login.BTN_ConfirmarRegistro) {
+                           login.BTN_ConfirmarRegistro.setBackground(new Color(18,18,18));
+                           login.BTN_ConfirmarRegistro.setFont(new Font("Consolas",Font.PLAIN,18));
+                  }
+                  
+                  if (e.getSource()==login.LBL_mostrarLogin) {
+                           login.LBL_mostrarLogin.setForeground(new Color(123,216,80));
+                  }
+                  
+                  if (e.getSource()==login.LBL_mostrarRegistro) {
+                           login.LBL_mostrarRegistro.setForeground(new Color(123,216,80));
+                  }
+
+        }
    @Override
-    public void mouseDragged(MouseEvent e){
-            if (e.getSource()==login.Barra) {
-                int  xMouse=e.getXOnScreen();
-                int  YMouse=e.getYOnScreen();
-                login.setLocation(xMouse-x, YMouse-y);
-            }
-    }
+        public void mouseDragged(MouseEvent e){
+                  if (e.getSource()==login.Barra) {
+                           int  xMouse=e.getXOnScreen();
+                           int  YMouse=e.getYOnScreen();
+                           login.setLocation(xMouse-x, YMouse-y);
+                  }
+         }
+        
      @Override
     public void mouseMoved(MouseEvent e) {
        
