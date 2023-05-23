@@ -8,6 +8,7 @@ import java.util.Date;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
 
 public class Reloj extends JTextField implements Runnable{
     private SimpleDateFormat formato = new SimpleDateFormat("HH:mm:ss");
@@ -19,8 +20,8 @@ public class Reloj extends JTextField implements Runnable{
         setEditable(false);
         setBackground(new Color(18,18,18));
         setForeground(Color.white);
-        setFont(new Font("Consolas",Font.BOLD,26));
-        setBorder(new LineBorder(Color.WHITE,1,true));
+        setFont(new Font("Consolas",Font.BOLD,28));
+        setBorder(new MatteBorder(0,0, 2,0, Color.GREEN));
         setHorizontalAlignment(JLabel.CENTER);
     }
     

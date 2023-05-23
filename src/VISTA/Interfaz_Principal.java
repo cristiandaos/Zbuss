@@ -1,5 +1,6 @@
 
 package VISTA;
+import UTILIDADES.*;
 
 
 
@@ -59,6 +60,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         BTN_IzquiAcompañantes = new javax.swing.JButton();
         BarraLateral = new javax.swing.JPanel();
         BTN_cerrarSesion = new javax.swing.JButton();
+        reloj2 = new UTILIDADES.Reloj();
         Logo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -339,6 +341,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         PanelDinamico.add(PanelPasajeros, new org.netbeans.lib.awtextra.AbsoluteConstraints(2560, 0, -1, -1));
 
         BarraLateral.setBackground(new java.awt.Color(18, 18, 18));
+        BarraLateral.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         BTN_cerrarSesion.setBackground(new java.awt.Color(18, 18, 18));
         BTN_cerrarSesion.setFont(new java.awt.Font("Consolas", 1, 16)); // NOI18N
@@ -349,21 +352,8 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         BTN_cerrarSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BTN_cerrarSesion.setFocusPainted(false);
         BTN_cerrarSesion.setFocusable(false);
-
-        javax.swing.GroupLayout BarraLateralLayout = new javax.swing.GroupLayout(BarraLateral);
-        BarraLateral.setLayout(BarraLateralLayout);
-        BarraLateralLayout.setHorizontalGroup(
-            BarraLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(BarraLateralLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(BTN_cerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        BarraLateralLayout.setVerticalGroup(
-            BarraLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(BarraLateralLayout.createSequentialGroup()
-                .addGap(610, 610, 610)
-                .addComponent(BTN_cerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        BarraLateral.add(BTN_cerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 610, 140, 30));
+        BarraLateral.add(reloj2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 140, -1));
 
         PanelDinamico.setLayer(BarraLateral, javax.swing.JLayeredPane.PALETTE_LAYER);
         PanelDinamico.add(BarraLateral, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 670));
@@ -463,5 +453,6 @@ public class Interfaz_Principal extends javax.swing.JFrame {
     public javax.swing.JLabel jLabel7;
     public javax.swing.JLabel jLabel8;
     public javax.swing.JLabel jLabel9;
+    public UTILIDADES.Reloj reloj2;
     // End of variables declaration//GEN-END:variables
 }

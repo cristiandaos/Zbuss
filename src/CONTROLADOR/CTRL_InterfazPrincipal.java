@@ -2,6 +2,7 @@
 package CONTROLADOR;
 import VISTA.*;
 import UTILIDADES.*;
+import com.sun.source.tree.BreakTree;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -119,9 +120,6 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
             PlaceHolder Nombre=new PlaceHolder("Nombre", vista.TxtNombrePasa, PlaceHolder.Show.ALWAYS);
             PlaceHolder ApePat=new PlaceHolder("Apellido Paterno", vista.TxtApellidoPatePasa, PlaceHolder.Show.ALWAYS);
             PlaceHolder ApeMat=new PlaceHolder("Apellido Materno", vista.TxtApellidoMatePasa, PlaceHolder.Show.ALWAYS);
-            Reloj reloj=new Reloj();
-            reloj.setBounds(25, 50, 130, 40);
-            vista.BarraLateral.add(reloj);
             Shape redondeado=new RoundRectangle2D.Double(0,0,vista.getBounds().width,vista.getBounds().getHeight(),30,30);
             vista.setShape(redondeado);
             vista.revalidate();
@@ -341,46 +339,100 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
     }
     
     
-    void MoverDerecha(final int posInicial, final int posFinal,final int delay, final int incremento,final JComponent componente){
-        if(componente.getX()==posInicial){
-            new Thread(){
-                public void run(){
-                    while (componente.getX()<posFinal) {              
-                        for (int i = posInicial; i<=posFinal; i+=incremento) {
-                            try {
-                                Thread.sleep(delay);
-                                componente.setLocation(i, componente.getY());
-                            } catch (InterruptedException e) {
-                                System.out.println("Error: Interrupcion "+e);
-                            }  
+    void MoverDerecha(final int posInicial, final int posFinal, final int delay, final int incremento, final JComponent componente) {
+    if (componente.getX() == posInicial) {
+        Thread thread = new Thread() {
+            public void run() {
+                while (!Thread.interrupted() && componente.getX() < posFinal) {
+                    for (int i = posInicial; i <= posFinal; i += incremento) {
+                        try {
+                            Thread.sleep(delay);
+                            componente.setLocation(i, componente.getY());
+                        } catch (InterruptedException e) {
+                            System.out.println("Error: Interrupcion " + e);
+                            return; // Salir del método run() al recibir una interrupción
                         }
                     }
-                    componente.setLocation(posFinal, componente.getY());
                 }
-            } .start();
-        }
+            }
+        };
+        thread.start();
+
+        // Detener el hilo después de que el componente alcance la posición final
+        new Thread(() -> {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                System.out.println("Error: Interrupcion " + e);
+            }
+            thread.interrupt();
+        }).start();
     }
+}
+    void MoverDerechaTimer(final int posInicial, final int posFinal, final int delay, final int incremento, final JComponent componente) {
+    if (componente.getX() == posInicial) {
+        Timer timer = new Timer(delay, new ActionListener() {
+            int currentX = posInicial;
+
+            public void actionPerformed(ActionEvent e) {
+                currentX += incremento;
+                componente.setLocation(currentX, componente.getY());
+                if (currentX >= posFinal) {
+                    ((Timer) e.getSource()).stop(); // Detener el temporizador cuando se alcance la posición final
+                }
+            }
+        });
+        timer.start();
+    }
+}
     
-    void MoverIzquierda(final int posInicial, final int posFinal,final int delay, final int incremento,final JComponent componente){
-        if(componente.getX()==posInicial){   
-            new Thread(){
-         @Override
-                public void run(){
-                    while (componente.getX()>posFinal) {              
-                        for (int i = posInicial; i>=posFinal; i-=incremento) {
-                            try {
-                                Thread.sleep(delay);
-                                componente.setLocation(i, componente.getY());
-                            } catch (InterruptedException e) {
-                                System.out.println("Error: Interrupcion "+e);
-                            }  
+    void MoverIzquierda(final int posInicial, final int posFinal, final int delay, final int incremento, final JComponent componente) {
+    if (componente.getX() == posInicial) {
+        Thread thread = new Thread() {
+            public void run() {
+                while (!Thread.interrupted() && componente.getX() > posFinal) {
+                    for (int i = posInicial; i >= posFinal; i -= incremento) {
+                        try {
+                            Thread.sleep(delay);
+                            componente.setLocation(i, componente.getY());
+                        } catch (InterruptedException e) {
+                            System.out.println("Error: Interrupcion " + e);
+                            return; // Salir del método run() al recibir una interrupción
                         }
                     }
-                    componente.setLocation(posFinal,componente.getY());
                 }
-            } .start();
-        }
+            }
+        };
+        thread.start();
+
+        // Detener el hilo después de que el componente alcance la posición final
+        new Thread(() -> {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                System.out.println("Error: Interrupcion " + e);
+            }
+            thread.interrupt();
+        }).start();
     }
+}
+    
+    void MoverIzquierdaTimer(final int posInicial, final int posFinal, final int delay, final int incremento, final JComponent componente) {
+    if (componente.getX() == posInicial) {
+        Timer timer = new Timer(delay, new ActionListener() {
+            int currentX = posInicial;
+
+            public void actionPerformed(ActionEvent e) {
+                currentX -= incremento;
+                componente.setLocation(currentX, componente.getY());
+                if (currentX <= posFinal) {
+                    ((Timer) e.getSource()).stop(); // Detener el temporizador cuando se alcance la posición final
+                }
+            }
+        });
+        timer.start();
+    }
+}
     
     //Mover a utilidades
     void DiseñoScroll(Color Barra,Color Pista){
@@ -485,29 +537,29 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
         
         for (JButton btns : ArrayBtns) {
             if (e.getSource()==btns) {
-                    MoverIzquierda(180, -920, 2, 20, vista.ScrollPaneBuses);
-                    MoverIzquierda(1280, 180, 2, 20, vista.PanelAsientos);
-                    MoverIzquierda(2560, 1280, 2, 20,vista.PanelPasajeros);
+                    MoverIzquierdaTimer(180, -920, 2, 110, vista.ScrollPaneBuses);
+                    MoverIzquierdaTimer(1280, 180, 2, 110, vista.PanelAsientos);
+                    MoverIzquierdaTimer(2560, 1280, 2, 110,vista.PanelPasajeros);
             }
         }
         
         if (e.getSource()==vista.BTN_volverBuses) {
-                    MoverDerecha(-920, 180, 2, 20, vista.ScrollPaneBuses);
-                    MoverDerecha(180, 1280, 2, 20, vista.PanelAsientos);
-                    MoverDerecha(1280, 2560, 2, 20, vista.PanelPasajeros);
+                    MoverDerechaTimer(-920, 180, 2, 110, vista.ScrollPaneBuses);
+                    MoverDerechaTimer(180, 1280, 2, 110, vista.PanelAsientos);
+                    MoverDerechaTimer(1280, 2560, 2,110, vista.PanelPasajeros);
         }
         
         if (e.getSource()==vista.BTN_siguiente) {
-                    MoverIzquierda(180, -920, 2, 20, vista.PanelAsientos);
-                    MoverIzquierda(1280, 180, 2, 20, vista.PanelPasajeros);
-                    MoverIzquierda(-920, -2020, 2, 20, vista.ScrollPaneBuses);
+                    MoverIzquierdaTimer(180, -920, 2, 110, vista.PanelAsientos);
+                    MoverIzquierdaTimer(1280, 180, 2, 110, vista.PanelPasajeros);
+                    MoverIzquierdaTimer(-920, -2020, 2, 110, vista.ScrollPaneBuses);
                     generarFormsAcompañantes(cantPasajeros);
         }
         
         if (e.getSource()==vista.BTN_volverAsientos) {
-                    MoverDerecha(-920, 180, 2, 20, vista.PanelAsientos);
-                    MoverDerecha(180, 1280, 2, 20, vista.PanelPasajeros);
-                    MoverDerecha(-2020, -920, 2, 20, vista.ScrollPaneBuses);
+                    MoverDerechaTimer(-920, 180, 2, 110, vista.PanelAsientos);
+                    MoverDerechaTimer(180, 1280, 2, 110, vista.PanelPasajeros);
+                    MoverDerechaTimer(-2020, -920, 2, 110, vista.ScrollPaneBuses);
                     reinciarFormsAcompañantes();
         }
         
