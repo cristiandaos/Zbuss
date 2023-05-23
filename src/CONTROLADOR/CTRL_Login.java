@@ -3,6 +3,7 @@ package CONTROLADOR;
 import UTILIDADES.*;
 import VISTA.*;
 import java.awt.Color;
+import java.awt.Scrollbar;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +16,8 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.JComponent;
+import javax.swing.JScrollBar;
+import javax.swing.Timer;
 
 
 public class CTRL_Login implements ActionListener,MouseListener,KeyListener,MouseMotionListener,WindowListener{
@@ -46,6 +49,9 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
         
         login.LBL_infoInicioSesion.setText(HTML(textoIniciarSesion)); 
         login.LBL_infoRegistrarse.setText(HTML(textoRegistrarse));
+        
+       JScrollBar scroll=login.ScrollPanelDinamico.getHorizontalScrollBar();
+       scroll.setValue(320);
         
          PlaceHolder CorreoElectronico=new PlaceHolder("Correo Electronico", login.Txt_correoElectronico,PlaceHolder.Show.ALWAYS);
         
@@ -126,7 +132,26 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
             .start();
         }
     }
-     
+     void SliderScroll(JScrollBar scrollBar,int delay, int moverValor,int auxiliar) {
+            Timer Timer = new Timer(delay, new ActionListener() {
+            private int incremento = (moverValor - scrollBar.getValue()) / auxiliar;
+            private int valor = scrollBar.getValue();
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (valor != moverValor) {
+                    valor += incremento;
+                    if ((incremento > 0 && valor > moverValor) || (incremento < 0 && valor < moverValor)) {
+                        valor = moverValor;
+                    }
+                    scrollBar.setValue(valor);
+                } else {
+                    ((Timer) e.getSource()).stop();
+                }
+            }
+        });
+        Timer.start();
+    }   
     
     void InhabilitarRegistro(){
         for (int i = 0; i < login.PanelRegistro.getComponentCount(); i++) {
@@ -218,17 +243,23 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
         }
         
         if (e.getSource()==login.LBL_mostrarRegistro) {
-                MoverDerecha(0, 320, 5, 10, login.PanelIntemediario);
-                MoverIzquierda(20, -280, 5, 10,login.IniciarSesionPanelAux);
-                MoverIzquierda(320, 20, 5, 10,login.RegistrarPanelAux);
+                JScrollBar scrollPaneles=login.ScrollPanelDinamico.getHorizontalScrollBar();
+                JScrollBar scrollInfo=login.ScrollPanelInfo.getHorizontalScrollBar();
+                int izquierdaPaneles=scrollPaneles.getValue()-320;
+                int izquierdaInfo=scrollInfo.getValue()+320;
+                SliderScroll(scrollInfo, 10, izquierdaInfo, 10);
+                SliderScroll(scrollPaneles, 5, izquierdaPaneles, 5);
                 HabilitarRegistro();
                 InhabilitarInicioSesion();
         }
         
         if (e.getSource()==login.LBL_mostrarLogin) {
-                MoverIzquierda(320, 0,5, 10, login.PanelIntemediario);
-                MoverDerecha(-280, 20, 5, 10, login.IniciarSesionPanelAux);
-                MoverDerecha(20, 320, 5, 10, login.RegistrarPanelAux);
+                JScrollBar scrollPaneles=login.ScrollPanelDinamico.getHorizontalScrollBar();
+                JScrollBar scrollInfo=login.ScrollPanelInfo.getHorizontalScrollBar();
+                int izquierdaPaneles=scrollPaneles.getValue()+320;
+                int DerechaInfo=scrollInfo.getValue()-320;
+                SliderScroll(scrollInfo, 10, DerechaInfo, 10);
+                SliderScroll(scrollPaneles, 5, izquierdaPaneles, 5);
                 HabilitarInicioSesion();
                 InhabilitarRegistro();
 

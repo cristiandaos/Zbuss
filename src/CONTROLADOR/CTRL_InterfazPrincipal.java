@@ -338,102 +338,6 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                      vista.SPNEdadPasa.setValue(0);
     }
     
-    
-    void MoverDerecha(final int posInicial, final int posFinal, final int delay, final int incremento, final JComponent componente) {
-    if (componente.getX() == posInicial) {
-        Thread thread = new Thread() {
-            public void run() {
-                while (!Thread.interrupted() && componente.getX() < posFinal) {
-                    for (int i = posInicial; i <= posFinal; i += incremento) {
-                        try {
-                            Thread.sleep(delay);
-                            componente.setLocation(i, componente.getY());
-                        } catch (InterruptedException e) {
-                            System.out.println("Error: Interrupcion " + e);
-                            return; // Salir del método run() al recibir una interrupción
-                        }
-                    }
-                }
-            }
-        };
-        thread.start();
-
-        // Detener el hilo después de que el componente alcance la posición final
-        new Thread(() -> {
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-                System.out.println("Error: Interrupcion " + e);
-            }
-            thread.interrupt();
-        }).start();
-    }
-}
-    void MoverDerechaTimer(final int posInicial, final int posFinal, final int delay, final int incremento, final JComponent componente) {
-    if (componente.getX() == posInicial) {
-        Timer timer = new Timer(delay, new ActionListener() {
-            int currentX = posInicial;
-
-            public void actionPerformed(ActionEvent e) {
-                currentX += incremento;
-                componente.setLocation(currentX, componente.getY());
-                if (currentX >= posFinal) {
-                    ((Timer) e.getSource()).stop(); // Detener el temporizador cuando se alcance la posición final
-                }
-            }
-        });
-        timer.start();
-    }
-}
-    
-    void MoverIzquierda(final int posInicial, final int posFinal, final int delay, final int incremento, final JComponent componente) {
-    if (componente.getX() == posInicial) {
-        Thread thread = new Thread() {
-            public void run() {
-                while (!Thread.interrupted() && componente.getX() > posFinal) {
-                    for (int i = posInicial; i >= posFinal; i -= incremento) {
-                        try {
-                            Thread.sleep(delay);
-                            componente.setLocation(i, componente.getY());
-                        } catch (InterruptedException e) {
-                            System.out.println("Error: Interrupcion " + e);
-                            return; // Salir del método run() al recibir una interrupción
-                        }
-                    }
-                }
-            }
-        };
-        thread.start();
-
-        // Detener el hilo después de que el componente alcance la posición final
-        new Thread(() -> {
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-                System.out.println("Error: Interrupcion " + e);
-            }
-            thread.interrupt();
-        }).start();
-    }
-}
-    
-    void MoverIzquierdaTimer(final int posInicial, final int posFinal, final int delay, final int incremento, final JComponent componente) {
-    if (componente.getX() == posInicial) {
-        Timer timer = new Timer(delay, new ActionListener() {
-            int currentX = posInicial;
-
-            public void actionPerformed(ActionEvent e) {
-                currentX -= incremento;
-                componente.setLocation(currentX, componente.getY());
-                if (currentX <= posFinal) {
-                    ((Timer) e.getSource()).stop(); // Detener el temporizador cuando se alcance la posición final
-                }
-            }
-        });
-        timer.start();
-    }
-}
-    
     //Mover a utilidades
     void DiseñoScroll(Color Barra,Color Pista){
          ScrollBarUI customScrollBarUI = new BasicScrollBarUI() {
@@ -473,9 +377,9 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
         }
 
     
-   void SliderScroll(JScrollBar scrollBar, int moverValor) {
-        Timer Timer = new Timer(10, new ActionListener() {
-            private int incremento = (moverValor - scrollBar.getValue()) / 5;
+   void SliderScroll(JScrollBar scrollBar,int delay, int moverValor,int auxiliar) {
+            Timer Timer = new Timer(delay, new ActionListener() {
+            private int incremento = (moverValor - scrollBar.getValue()) / auxiliar;
             private int valor = scrollBar.getValue();
 
             @Override
@@ -491,7 +395,6 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                 }
             }
         });
-
         Timer.start();
     }    
     
@@ -537,30 +440,30 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
         
         for (JButton btns : ArrayBtns) {
             if (e.getSource()==btns) {
-                    MoverIzquierdaTimer(180, -920, 2, 110, vista.ScrollPaneBuses);
-                    MoverIzquierdaTimer(1280, 180, 2, 110, vista.PanelAsientos);
-                    MoverIzquierdaTimer(2560, 1280, 2, 110,vista.PanelPasajeros);
+                JScrollBar scrollBar = vista.ScrollPanelDinamico.getHorizontalScrollBar();
+                int derecha=scrollBar.getValue()+1100;
+                SliderScroll(scrollBar,5,derecha,10);
             }
         }
         
         if (e.getSource()==vista.BTN_volverBuses) {
-                    MoverDerechaTimer(-920, 180, 2, 110, vista.ScrollPaneBuses);
-                    MoverDerechaTimer(180, 1280, 2, 110, vista.PanelAsientos);
-                    MoverDerechaTimer(1280, 2560, 2,110, vista.PanelPasajeros);
+                    JScrollBar scrollBar = vista.ScrollPanelDinamico.getHorizontalScrollBar();
+                    int izquierda=scrollBar.getValue()-1100;
+                    SliderScroll(scrollBar, 5,izquierda,10);
         }
         
         if (e.getSource()==vista.BTN_siguiente) {
-                    MoverIzquierdaTimer(180, -920, 2, 110, vista.PanelAsientos);
-                    MoverIzquierdaTimer(1280, 180, 2, 110, vista.PanelPasajeros);
-                    MoverIzquierdaTimer(-920, -2020, 2, 110, vista.ScrollPaneBuses);
-                    generarFormsAcompañantes(cantPasajeros);
+                  JScrollBar scrollBar = vista.ScrollPanelDinamico.getHorizontalScrollBar();
+                  int derecha=scrollBar.getValue()+1100;
+                  SliderScroll(scrollBar,5, derecha,10);
+                  generarFormsAcompañantes(cantPasajeros);
         }
         
         if (e.getSource()==vista.BTN_volverAsientos) {
-                    MoverDerechaTimer(-920, 180, 2, 110, vista.PanelAsientos);
-                    MoverDerechaTimer(180, 1280, 2, 110, vista.PanelPasajeros);
-                    MoverDerechaTimer(-2020, -920, 2, 110, vista.ScrollPaneBuses);
-                    reinciarFormsAcompañantes();
+                  JScrollBar scrollBar = vista.ScrollPanelDinamico.getHorizontalScrollBar();
+                  int izquierda=scrollBar.getValue()-1100;
+                  SliderScroll(scrollBar,5,izquierda,10);
+                  reinciarFormsAcompañantes();
         }
         
         if (e.getSource()==vista.BTN_confirmarCompra) {
@@ -570,13 +473,13 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
         if (e.getSource()==vista.BTN_IzquiAcompañantes) {
              JScrollBar scrollBar = vista.ScrollPanelPasajeros.getHorizontalScrollBar();
              int izquierda=scrollBar.getValue()-900;
-             SliderScroll(scrollBar, izquierda);
+             SliderScroll(scrollBar,10, izquierda,5);
         }
         
         if (e.getSource()==vista.BTN_derechaAcompañantes) {
             JScrollBar scrollBar = vista.ScrollPanelPasajeros.getHorizontalScrollBar();
             int derecha=scrollBar.getValue()+900;
-            SliderScroll(scrollBar, derecha);
+            SliderScroll(scrollBar,10, derecha,5);
         }
     }
 
@@ -633,6 +536,7 @@ public void mousePressed(MouseEvent e) {
         
         if (e.getSource()==vista.BTN_cerrarSesion) {
             vista.BTN_cerrarSesion.setBackground(new Color(21,24, 30));
+            vista.BTN_cerrarSesion.setFont(new  Font("Consolas",Font.BOLD,16));
 
         }
         
@@ -673,6 +577,7 @@ public void mousePressed(MouseEvent e) {
         
         if (e.getSource()==vista.BTN_cerrarSesion) {
             vista.BTN_cerrarSesion.setBackground(new Color(18,18,18));
+            vista.BTN_cerrarSesion.setFont(new  Font("Consolas",Font.PLAIN,16));
         }
         
         for (JButton btns : ArrayBtns) {

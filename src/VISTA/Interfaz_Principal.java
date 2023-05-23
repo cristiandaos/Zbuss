@@ -16,7 +16,15 @@ public class Interfaz_Principal extends javax.swing.JFrame {
     private void initComponents() {
 
         BarraSuperior = new javax.swing.JPanel();
-        PanelDinamico = new javax.swing.JLayeredPane();
+        PanelLayer = new javax.swing.JLayeredPane();
+        BarraLateral = new javax.swing.JPanel();
+        BTN_cerrarSesion = new javax.swing.JButton();
+        reloj2 = new UTILIDADES.Reloj();
+        Logo = new javax.swing.JLabel();
+        ScrollPanelDinamico = new javax.swing.JScrollPane();
+        PanelDinamico = new javax.swing.JPanel();
+        ScrollPaneBuses = new javax.swing.JScrollPane();
+        PanelBuses = new javax.swing.JPanel();
         PanelAsientos = new javax.swing.JPanel();
         BTN_volverBuses = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
@@ -38,8 +46,6 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         BTN_siguiente = new javax.swing.JButton();
         CONT = new javax.swing.JTextField();
-        ScrollPaneBuses = new javax.swing.JScrollPane();
-        PanelBuses = new javax.swing.JPanel();
         PanelPasajeros = new javax.swing.JPanel();
         ScrollPanelPasajeros = new javax.swing.JScrollPane();
         PanelFormPasajeros = new javax.swing.JPanel();
@@ -58,10 +64,6 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         FTxtDNI = new javax.swing.JFormattedTextField();
         BTN_derechaAcompañantes = new javax.swing.JButton();
         BTN_IzquiAcompañantes = new javax.swing.JButton();
-        BarraLateral = new javax.swing.JPanel();
-        BTN_cerrarSesion = new javax.swing.JButton();
-        reloj2 = new UTILIDADES.Reloj();
-        Logo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFocusable(false);
@@ -73,9 +75,69 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         BarraSuperior.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(BarraSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 50));
 
-        PanelDinamico.setMaximumSize(new java.awt.Dimension(1280, 670));
-        PanelDinamico.setPreferredSize(new java.awt.Dimension(1280, 670));
+        PanelLayer.setMaximumSize(new java.awt.Dimension(1280, 670));
+        PanelLayer.setPreferredSize(new java.awt.Dimension(1280, 670));
+        PanelLayer.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        BarraLateral.setBackground(new java.awt.Color(18, 18, 18));
+        BarraLateral.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        BTN_cerrarSesion.setBackground(new java.awt.Color(18, 18, 18));
+        BTN_cerrarSesion.setFont(new java.awt.Font("Consolas", 0, 16)); // NOI18N
+        BTN_cerrarSesion.setForeground(new java.awt.Color(255, 255, 255));
+        BTN_cerrarSesion.setText("Cerrar Sesión");
+        BTN_cerrarSesion.setAlignmentX(0.5F);
+        BTN_cerrarSesion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(123, 216, 80), 2, true));
+        BTN_cerrarSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BTN_cerrarSesion.setFocusPainted(false);
+        BTN_cerrarSesion.setFocusable(false);
+        BarraLateral.add(BTN_cerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 610, 140, 30));
+        BarraLateral.add(reloj2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 140, -1));
+
+        PanelLayer.setLayer(BarraLateral, javax.swing.JLayeredPane.PALETTE_LAYER);
+        PanelLayer.add(BarraLateral, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 670));
+
+        Logo.setBackground(new java.awt.Color(255, 255, 255));
+        Logo.setFont(new java.awt.Font("SansSerif", 1, 54)); // NOI18N
+        Logo.setForeground(new java.awt.Color(0, 0, 0));
+        Logo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Logo.setText("Z-Buss");
+        Logo.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 4, 0, new java.awt.Color(123, 216, 80)));
+        PanelLayer.setLayer(Logo, javax.swing.JLayeredPane.PALETTE_LAYER);
+        PanelLayer.add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 0, 240, -1));
+
+        ScrollPanelDinamico.setBackground(new java.awt.Color(102, 204, 0));
+        ScrollPanelDinamico.setBorder(null);
+        ScrollPanelDinamico.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        ScrollPanelDinamico.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        ScrollPanelDinamico.setPreferredSize(new java.awt.Dimension(1100, 670));
+
+        PanelDinamico.setBackground(new java.awt.Color(255, 255, 255));
         PanelDinamico.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        ScrollPaneBuses.setBorder(null);
+        ScrollPaneBuses.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        ScrollPaneBuses.setFocusable(false);
+        ScrollPaneBuses.setMaximumSize(new java.awt.Dimension(1100, 670));
+        ScrollPaneBuses.setPreferredSize(new java.awt.Dimension(1100, 670));
+
+        PanelBuses.setBackground(new java.awt.Color(255, 255, 255));
+        PanelBuses.setPreferredSize(new java.awt.Dimension(1100, 670));
+
+        javax.swing.GroupLayout PanelBusesLayout = new javax.swing.GroupLayout(PanelBuses);
+        PanelBuses.setLayout(PanelBusesLayout);
+        PanelBusesLayout.setHorizontalGroup(
+            PanelBusesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1100, Short.MAX_VALUE)
+        );
+        PanelBusesLayout.setVerticalGroup(
+            PanelBusesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 670, Short.MAX_VALUE)
+        );
+
+        ScrollPaneBuses.setViewportView(PanelBuses);
+
+        PanelDinamico.add(ScrollPaneBuses, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, -1));
 
         PanelAsientos.setBackground(new java.awt.Color(255, 255, 255));
         PanelAsientos.setPreferredSize(new java.awt.Dimension(1100, 650));
@@ -198,31 +260,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         CONT.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         PanelAsientos.add(CONT, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 380, 40, 30));
 
-        PanelDinamico.add(PanelAsientos, new org.netbeans.lib.awtextra.AbsoluteConstraints(1280, 0, 1100, 670));
-
-        ScrollPaneBuses.setBorder(null);
-        ScrollPaneBuses.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        ScrollPaneBuses.setFocusable(false);
-        ScrollPaneBuses.setMaximumSize(new java.awt.Dimension(1100, 670));
-        ScrollPaneBuses.setPreferredSize(new java.awt.Dimension(1100, 670));
-
-        PanelBuses.setBackground(new java.awt.Color(255, 255, 255));
-        PanelBuses.setPreferredSize(new java.awt.Dimension(1100, 670));
-
-        javax.swing.GroupLayout PanelBusesLayout = new javax.swing.GroupLayout(PanelBuses);
-        PanelBuses.setLayout(PanelBusesLayout);
-        PanelBusesLayout.setHorizontalGroup(
-            PanelBusesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1100, Short.MAX_VALUE)
-        );
-        PanelBusesLayout.setVerticalGroup(
-            PanelBusesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 670, Short.MAX_VALUE)
-        );
-
-        ScrollPaneBuses.setViewportView(PanelBuses);
-
-        PanelDinamico.add(ScrollPaneBuses, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 0, 1100, 670));
+        PanelDinamico.add(PanelAsientos, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 0, 1100, 670));
 
         PanelPasajeros.setBackground(new java.awt.Color(255, 255, 255));
         PanelPasajeros.setPreferredSize(new java.awt.Dimension(1100, 670));
@@ -338,36 +376,13 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         BTN_IzquiAcompañantes.setFocusable(false);
         PanelPasajeros.add(BTN_IzquiAcompañantes, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 540, 80, 30));
 
-        PanelDinamico.add(PanelPasajeros, new org.netbeans.lib.awtextra.AbsoluteConstraints(2560, 0, -1, -1));
+        PanelDinamico.add(PanelPasajeros, new org.netbeans.lib.awtextra.AbsoluteConstraints(2200, 0, -1, -1));
 
-        BarraLateral.setBackground(new java.awt.Color(18, 18, 18));
-        BarraLateral.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        ScrollPanelDinamico.setViewportView(PanelDinamico);
 
-        BTN_cerrarSesion.setBackground(new java.awt.Color(18, 18, 18));
-        BTN_cerrarSesion.setFont(new java.awt.Font("Consolas", 1, 16)); // NOI18N
-        BTN_cerrarSesion.setForeground(new java.awt.Color(255, 255, 255));
-        BTN_cerrarSesion.setText("Cerrar Sesión");
-        BTN_cerrarSesion.setAlignmentX(0.5F);
-        BTN_cerrarSesion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(123, 216, 80), 2, true));
-        BTN_cerrarSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BTN_cerrarSesion.setFocusPainted(false);
-        BTN_cerrarSesion.setFocusable(false);
-        BarraLateral.add(BTN_cerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 610, 140, 30));
-        BarraLateral.add(reloj2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 140, -1));
+        PanelLayer.add(ScrollPanelDinamico, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 0, 1100, 670));
 
-        PanelDinamico.setLayer(BarraLateral, javax.swing.JLayeredPane.PALETTE_LAYER);
-        PanelDinamico.add(BarraLateral, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 670));
-
-        Logo.setBackground(new java.awt.Color(255, 255, 255));
-        Logo.setFont(new java.awt.Font("SansSerif", 1, 54)); // NOI18N
-        Logo.setForeground(new java.awt.Color(0, 0, 0));
-        Logo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Logo.setText("Z-Buss");
-        Logo.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 4, 0, new java.awt.Color(123, 216, 80)));
-        PanelDinamico.setLayer(Logo, javax.swing.JLayeredPane.PALETTE_LAYER);
-        PanelDinamico.add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 0, 240, -1));
-
-        getContentPane().add(PanelDinamico, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, -1, -1));
+        getContentPane().add(PanelLayer, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, -1, -1));
 
         pack();
         setLocationRelativeTo(null);
@@ -430,12 +445,14 @@ public class Interfaz_Principal extends javax.swing.JFrame {
     public javax.swing.JLabel Logo;
     public javax.swing.JPanel PanelAsientos;
     public javax.swing.JPanel PanelBuses;
-    public javax.swing.JLayeredPane PanelDinamico;
+    public javax.swing.JPanel PanelDinamico;
     public javax.swing.JPanel PanelFormPasajeros;
+    public javax.swing.JLayeredPane PanelLayer;
     public javax.swing.JPanel PanelPasajeroPrincipal;
     public javax.swing.JPanel PanelPasajeros;
     public javax.swing.JSpinner SPNEdadPasa;
     public javax.swing.JScrollPane ScrollPaneBuses;
+    public javax.swing.JScrollPane ScrollPanelDinamico;
     public javax.swing.JScrollPane ScrollPanelPasajeros;
     public javax.swing.JTextField TxtApellidoMatePasa;
     public javax.swing.JTextField TxtApellidoPatePasa;
