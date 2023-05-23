@@ -35,10 +35,10 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
         this.login.BTN_cerrar.addActionListener(this);
         this.login.BTN_cerrar.addMouseListener(this);
         this.login.BTN_Visibilidad.addActionListener(this);
-        this.login.BTN_ingresar.addActionListener(this);
-        this.login.BTN_ingresar.addMouseListener(this);
-        this.login.BTN_registrar.addActionListener(this);
-        this.login.BTN_registrar.addMouseListener(this);
+        this.login.BTN_IniciarSesion.addActionListener(this);
+        this.login.BTN_IniciarSesion.addMouseListener(this);
+        this.login.BTN_ConfirmarRegistro.addActionListener(this);
+        this.login.BTN_ConfirmarRegistro.addMouseListener(this);
         this.login.LBL_mostrarLogin.addMouseListener(this);
         this.login.LBL_mostrarRegistro.addMouseListener(this);
         this.login.BTN_clienteInvitado.addActionListener(this);
@@ -47,7 +47,7 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
         login.LBL_infoInicioSesion.setText(HTML(textoIniciarSesion)); 
         login.LBL_infoRegistrarse.setText(HTML(textoRegistrarse));
         
-         PlaceHolder Usuario=new PlaceHolder("Usuario", login.Txt_usuario,PlaceHolder.Show.ALWAYS);
+         PlaceHolder CorreoElectronico=new PlaceHolder("Correo Electronico", login.Txt_correoElectronico,PlaceHolder.Show.ALWAYS);
         
          PlaceHolder Contraseña=new PlaceHolder("Contraseña", login.Txt_contraseña,PlaceHolder.Show.ALWAYS);
          
@@ -70,7 +70,7 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
          login.setShape(redondeado);
          login.revalidate();
          login.setVisible(true);  
-         login.Txt_usuario.requestFocus();
+         login.Txt_correoElectronico.requestFocus();
 
     }
      
@@ -160,7 +160,7 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
             for (int i = 0; i < login.PanelInicioSesion.getComponentCount(); i++) {
                     login.PanelInicioSesion.getComponent(i).setEnabled(false);
             }
-            login.Txt_usuario.setText(null);
+            login.Txt_correoElectronico.setText(null);
             login.Txt_contraseña.setText(null);
     }
      
@@ -180,9 +180,9 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                   
         }
         
-        if (e.getSource()==login.BTN_ingresar) {
-                  if (!login.Txt_usuario.getText().equals("") && !login.Txt_contraseña.getText().equals("") || !login.Txt_usuario.getText().equals("") || !login.Txt_contraseña.getText().equals("")) {     
-                           if (!login.Txt_usuario.getText().equals(usuario) &&  !login.Txt_contraseña.getText().equals(contraseña) || !login.Txt_usuario.getText().equals(usuario) || !login.Txt_contraseña.getText().equals(contraseña)) {
+        if (e.getSource()==login.BTN_IniciarSesion) {
+                  if (!login.Txt_correoElectronico.getText().equals("") && !login.Txt_contraseña.getText().equals("") || !login.Txt_correoElectronico.getText().equals("") || !login.Txt_contraseña.getText().equals("")) {     
+                           if (!login.Txt_correoElectronico.getText().equals(usuario) &&  !login.Txt_contraseña.getText().equals(contraseña) || !login.Txt_correoElectronico.getText().equals(usuario) || !login.Txt_contraseña.getText().equals(contraseña)) {
                                
                                     Emergente emergente=new Emergente(null,"Error en el Ingreso","El usuario y/o contraseña ingresados no estan registrados");
                            }else{
@@ -200,7 +200,7 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                 if (login.BTN_Visibilidad.isSelected()) {
                             login.Txt_contraseña.setEchoChar((char)0);
                 }else{
-                            login.Txt_contraseña.setEchoChar('●');
+                            login.Txt_contraseña.setEchoChar('*');
                 }
         }
     }
@@ -251,12 +251,12 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                   login.BTN_clienteInvitado.setForeground(Color.WHITE);
         }
          
-         if (e.getSource()==login.BTN_ingresar) {
-                login.BTN_ingresar.setBackground(new Color(21,24, 30));
+         if (e.getSource()==login.BTN_IniciarSesion) {
+                login.BTN_IniciarSesion.setBackground(new Color(21,24, 30));
          }
          
-         if (e.getSource()==login.BTN_registrar) {
-                login.BTN_registrar.setBackground(new Color(21,24, 30));
+         if (e.getSource()==login.BTN_ConfirmarRegistro) {
+                login.BTN_ConfirmarRegistro.setBackground(new Color(21,24, 30));
          }
          if (e.getSource()==login.LBL_mostrarLogin) {
             login.LBL_mostrarLogin.setForeground(Color.GREEN);
@@ -279,12 +279,12 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                   login.BTN_clienteInvitado.setForeground(new Color(120,120,120));
         }
          
-         if (e.getSource()==login.BTN_ingresar) {
-                login.BTN_ingresar.setBackground(new Color(18,18,18));
+         if (e.getSource()==login.BTN_IniciarSesion) {
+                login.BTN_IniciarSesion.setBackground(new Color(18,18,18));
          }
          
-         if (e.getSource()==login.BTN_registrar) {
-                login.BTN_registrar.setBackground(new Color(18,18,18));
+         if (e.getSource()==login.BTN_ConfirmarRegistro) {
+                login.BTN_ConfirmarRegistro.setBackground(new Color(18,18,18));
          }
           if (e.getSource()==login.LBL_mostrarLogin) {
             login.LBL_mostrarLogin.setForeground(new Color(123,216,80));
@@ -329,7 +329,7 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                   float f=(float) i;
                   login.setOpacity(f);
                   try {
-                           Thread.sleep(25);
+                           Thread.sleep(20);
                   } catch (InterruptedException ex) {
                   }
             }

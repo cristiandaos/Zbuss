@@ -16,14 +16,12 @@ public class Login extends javax.swing.JFrame {
         BTN_cerrar = new javax.swing.JButton();
         PanelDinamico = new javax.swing.JLayeredPane();
         PanelInicioSesion = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         BTN_Visibilidad = new javax.swing.JToggleButton();
         Txt_contraseña = new javax.swing.JPasswordField();
-        Txt_usuario = new javax.swing.JTextField();
-        BTN_ingresar = new javax.swing.JButton();
+        Txt_correoElectronico = new javax.swing.JTextField();
+        BTN_IniciarSesion = new javax.swing.JButton();
         PanelRegistro = new javax.swing.JPanel();
-        BTN_registrar = new javax.swing.JButton();
+        BTN_ConfirmarRegistro = new javax.swing.JButton();
         Txt_ApeMatRegistro = new javax.swing.JTextField();
         Txt_ApePatRegistro = new javax.swing.JTextField();
         Txt_CorreoRegistro = new javax.swing.JTextField();
@@ -71,19 +69,6 @@ public class Login extends javax.swing.JFrame {
         PanelInicioSesion.setBackground(new java.awt.Color(18, 18, 18));
         PanelInicioSesion.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 20)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel1.setText("Correo Electrónico:");
-        PanelInicioSesion.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 210, 30));
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI Emoji", 1, 20)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel2.setText("Contraseña:");
-        PanelInicioSesion.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 130, 30));
-
         BTN_Visibilidad.setBackground(new java.awt.Color(18, 18, 18));
         BTN_Visibilidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMGS/No_Visible.png"))); // NOI18N
         BTN_Visibilidad.setBorderPainted(false);
@@ -99,24 +84,25 @@ public class Login extends javax.swing.JFrame {
         Txt_contraseña.setForeground(new java.awt.Color(255, 255, 255));
         Txt_contraseña.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         Txt_contraseña.setCaretColor(new java.awt.Color(255, 255, 255));
+        Txt_contraseña.setEchoChar('*');
         PanelInicioSesion.add(Txt_contraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 220, 40));
 
-        Txt_usuario.setBackground(new java.awt.Color(18, 18, 18));
-        Txt_usuario.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
-        Txt_usuario.setForeground(new java.awt.Color(255, 255, 255));
-        Txt_usuario.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
-        Txt_usuario.setCaretColor(new java.awt.Color(255, 255, 255));
-        PanelInicioSesion.add(Txt_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 260, 40));
+        Txt_correoElectronico.setBackground(new java.awt.Color(18, 18, 18));
+        Txt_correoElectronico.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
+        Txt_correoElectronico.setForeground(new java.awt.Color(255, 255, 255));
+        Txt_correoElectronico.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        Txt_correoElectronico.setCaretColor(new java.awt.Color(255, 255, 255));
+        PanelInicioSesion.add(Txt_correoElectronico, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 220, 40));
 
-        BTN_ingresar.setBackground(new java.awt.Color(18, 18, 18));
-        BTN_ingresar.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
-        BTN_ingresar.setForeground(new java.awt.Color(255, 255, 255));
-        BTN_ingresar.setText("Ingresar");
-        BTN_ingresar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(123, 216, 80), 2, true));
-        BTN_ingresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BTN_ingresar.setFocusPainted(false);
-        BTN_ingresar.setFocusable(false);
-        PanelInicioSesion.add(BTN_ingresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 350, 120, 30));
+        BTN_IniciarSesion.setBackground(new java.awt.Color(18, 18, 18));
+        BTN_IniciarSesion.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        BTN_IniciarSesion.setForeground(new java.awt.Color(255, 255, 255));
+        BTN_IniciarSesion.setText("Ingresar");
+        BTN_IniciarSesion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(123, 216, 80), 2, true));
+        BTN_IniciarSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BTN_IniciarSesion.setFocusPainted(false);
+        BTN_IniciarSesion.setFocusable(false);
+        PanelInicioSesion.add(BTN_IniciarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 350, 120, 30));
 
         PanelDinamico.add(PanelInicioSesion);
         PanelInicioSesion.setBounds(320, 0, 320, 520);
@@ -124,15 +110,15 @@ public class Login extends javax.swing.JFrame {
         PanelRegistro.setBackground(new java.awt.Color(18, 18, 18));
         PanelRegistro.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        BTN_registrar.setBackground(new java.awt.Color(18, 18, 18));
-        BTN_registrar.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
-        BTN_registrar.setForeground(new java.awt.Color(255, 255, 255));
-        BTN_registrar.setText("Confirmar");
-        BTN_registrar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(123, 216, 80), 2, true));
-        BTN_registrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BTN_registrar.setFocusPainted(false);
-        BTN_registrar.setFocusable(false);
-        PanelRegistro.add(BTN_registrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 440, 120, 30));
+        BTN_ConfirmarRegistro.setBackground(new java.awt.Color(18, 18, 18));
+        BTN_ConfirmarRegistro.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        BTN_ConfirmarRegistro.setForeground(new java.awt.Color(255, 255, 255));
+        BTN_ConfirmarRegistro.setText("Confirmar");
+        BTN_ConfirmarRegistro.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(123, 216, 80), 2, true));
+        BTN_ConfirmarRegistro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BTN_ConfirmarRegistro.setFocusPainted(false);
+        BTN_ConfirmarRegistro.setFocusable(false);
+        PanelRegistro.add(BTN_ConfirmarRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 440, 120, 30));
 
         Txt_ApeMatRegistro.setBackground(new java.awt.Color(18, 18, 18));
         Txt_ApeMatRegistro.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
@@ -360,12 +346,12 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton BTN_ConfirmarRegistro;
+    public javax.swing.JButton BTN_IniciarSesion;
     public javax.swing.JToggleButton BTN_Visibilidad;
     public javax.swing.JToggleButton BTN_VisibilidadRegistro;
     public javax.swing.JButton BTN_cerrar;
     public javax.swing.JButton BTN_clienteInvitado;
-    public javax.swing.JButton BTN_ingresar;
-    public javax.swing.JButton BTN_registrar;
     public javax.swing.JPanel Barra;
     public javax.swing.JPanel IniciarSesionPanelAux;
     public javax.swing.JLabel LBL_infoInicioSesion;
@@ -388,10 +374,8 @@ public class Login extends javax.swing.JFrame {
     public javax.swing.JFormattedTextField Txt_FNacRegistro;
     public javax.swing.JTextField Txt_NomRegistro;
     public javax.swing.JPasswordField Txt_contraseña;
-    public javax.swing.JTextField Txt_usuario;
-    public javax.swing.JLabel jLabel1;
+    public javax.swing.JTextField Txt_correoElectronico;
     public javax.swing.JLabel jLabel11;
-    public javax.swing.JLabel jLabel2;
     public javax.swing.JLabel jLabel3;
     public javax.swing.JLabel jLabel5;
     public javax.swing.JLabel jLabel9;
