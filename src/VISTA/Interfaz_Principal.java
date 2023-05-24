@@ -19,9 +19,10 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         PanelLayer = new javax.swing.JLayeredPane();
         BarraLateral = new javax.swing.JPanel();
         BTN_cerrarSesion = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
+        UsuarioLBL = new javax.swing.JLabel();
         Logo = new javax.swing.JLabel();
         reloj1 = new UTILIDADES.Reloj();
+        jLabel4 = new javax.swing.JLabel();
         ScrollPanelDinamico = new javax.swing.JScrollPane();
         PanelDinamico = new javax.swing.JPanel();
         ScrollPaneBuses = new javax.swing.JScrollPane();
@@ -62,7 +63,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         SPNEdadPasa = new javax.swing.JSpinner();
         jLabel3 = new javax.swing.JLabel();
-        FTxtDNI = new javax.swing.JFormattedTextField();
+        TxtDNIpasa = new javax.swing.JFormattedTextField();
         BTN_derechaAcompañantes = new javax.swing.JButton();
         BTN_IzquiAcompañantes = new javax.swing.JButton();
 
@@ -94,10 +95,10 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         BTN_cerrarSesion.setFocusable(false);
         BarraLateral.add(BTN_cerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 610, 140, 30));
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI Emoji", 1, 24)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Usuario");
-        BarraLateral.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 90, -1));
+        UsuarioLBL.setFont(new java.awt.Font("Segoe UI Emoji", 1, 24)); // NOI18N
+        UsuarioLBL.setForeground(new java.awt.Color(51, 204, 0));
+        UsuarioLBL.setText("Usuario");
+        BarraLateral.add(UsuarioLBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 90, -1));
 
         Logo.setBackground(new java.awt.Color(255, 255, 255));
         Logo.setFont(new java.awt.Font("SansSerif", 1, 48)); // NOI18N
@@ -108,7 +109,12 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         BarraLateral.add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, -1));
 
         reloj1.setBorder(null);
-        BarraLateral.add(reloj1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 73, 130, 40));
+        BarraLateral.add(reloj1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 130, 40));
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI Emoji", 1, 26)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Hola otra vez,");
+        BarraLateral.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, -1, 40));
 
         PanelLayer.setLayer(BarraLateral, javax.swing.JLayeredPane.PALETTE_LAYER);
         PanelLayer.add(BarraLateral, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 670));
@@ -347,17 +353,14 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         PanelPasajeroPrincipal.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Pasajero Principal", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Consolas", 1, 18), new java.awt.Color(0, 0, 0))); // NOI18N
         PanelPasajeroPrincipal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        TxtApellidoMatePasa.setBackground(null);
         TxtApellidoMatePasa.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         TxtApellidoMatePasa.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
         PanelPasajeroPrincipal.add(TxtApellidoMatePasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 280, 30));
 
-        TxtApellidoPatePasa.setBackground(null);
         TxtApellidoPatePasa.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         TxtApellidoPatePasa.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
         PanelPasajeroPrincipal.add(TxtApellidoPatePasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 280, 30));
 
-        TxtNombrePasa.setBackground(null);
         TxtNombrePasa.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         TxtNombrePasa.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
         PanelPasajeroPrincipal.add(TxtNombrePasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 270, 30));
@@ -383,14 +386,14 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         jLabel3.setText("Edad:");
         PanelPasajeroPrincipal.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 30, 50, 30));
 
-        FTxtDNI.setBackground(new java.awt.Color(255, 255, 255));
-        FTxtDNI.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
+        TxtDNIpasa.setBackground(new java.awt.Color(255, 255, 255));
+        TxtDNIpasa.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
         try {
-            FTxtDNI.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("########")));
+            TxtDNIpasa.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("########")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        PanelPasajeroPrincipal.add(FTxtDNI, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 90, 150, 30));
+        PanelPasajeroPrincipal.add(TxtDNIpasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 90, 150, 30));
 
         PanelPasajeros.add(PanelPasajeroPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 110, 850, 200));
 
@@ -469,7 +472,6 @@ public class Interfaz_Principal extends javax.swing.JFrame {
     public javax.swing.JPanel BarraSuperior;
     public javax.swing.JPanel Buss;
     public javax.swing.JTextField CONT;
-    public javax.swing.JFormattedTextField FTxtDNI;
     public javax.swing.JLabel LBLPrecioTotal;
     public javax.swing.JLabel LBLasientosSele;
     public javax.swing.JLabel LBLhoraLlegada;
@@ -492,7 +494,9 @@ public class Interfaz_Principal extends javax.swing.JFrame {
     public javax.swing.JScrollPane ScrollPanelPasajeros;
     public javax.swing.JTextField TxtApellidoMatePasa;
     public javax.swing.JTextField TxtApellidoPatePasa;
+    public javax.swing.JFormattedTextField TxtDNIpasa;
     public javax.swing.JTextField TxtNombrePasa;
+    public javax.swing.JLabel UsuarioLBL;
     public javax.swing.JLabel jLabel1;
     public javax.swing.JLabel jLabel10;
     public javax.swing.JLabel jLabel11;

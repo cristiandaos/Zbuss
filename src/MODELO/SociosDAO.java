@@ -1,6 +1,8 @@
 
 package MODELO;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SociosDAO extends Conexion {
          public boolean registrar(Socios socio){
@@ -29,8 +31,79 @@ public class SociosDAO extends Conexion {
                                     System.out.println(ex);
                            }
                   }
-
         }
+         
+         public  boolean ValidaSocio(String correo, String contraseña){
+                  PreparedStatement ps=null;
+                  Connection con=getConnection();
+                  ResultSet rs=null;
+                  try {
+                           ps=con.prepareStatement("SELECT * FROM Socios WHERE socio_correo=? AND socio_contraseña=?");
+                           ps.setString(1, correo);
+                           ps.setString(2,contraseña);
+                           rs=ps.executeQuery();
+                           if (rs.next()) {
+                               /*Socios socio=new Socios(rs.getString("socio_dni"),
+                               rs.getString("socio_nombre"),
+                               rs.getString("socio_apellido_paterno"),
+                               rs.getString("socio_apellido_materno"),
+                               rs.getString("socio_correo"),
+                               rs.getString("socio_nacimiento"),
+                               rs.getString("socio_numero"),
+                               rs.getString("socio_contraseña"),
+                               rs.getInt("socio_puntos")); */
+                                    return true;
+                           }
+
+                  } catch (SQLException e) {
+                            System.out.println(e);
+                  }finally{
+                           try {
+                                    con.close();
+                                    System.out.println("Conexion cerrada con la BD:ZBUSSBD");
+                           } catch (SQLException ex) {
+                                    System.out.println(ex);
+                           }
+                  }
+                  return false;
+         }
+         
+         public Socios ObtenerDatos(String correo, String contraseña){
+                  PreparedStatement ps=null;
+                  Connection con=getConnection();
+                  ResultSet rs=null;
+                  try {
+                           ps=con.prepareStatement("SELECT * FROM Socios WHERE socio_correo=? AND socio_contraseña=?");
+                           ps.setString(1, correo);
+                           ps.setString(2,contraseña);
+                           rs=ps.executeQuery();
+                           if (rs.next()) {
+                                    Socios socio=new Socios(rs.getString("socio_dni"),
+                                                                               rs.getString("socio_nombre"),
+                                                                               rs.getString("socio_apellido_paterno"),
+                                                                               rs.getString("socio_apellido_materno"),
+                                                                               rs.getString("socio_correo"),
+                                                                               rs.getString("socio_nacimiento"),
+                                                                               rs.getString("socio_numero"),
+                                                                               rs.getString("socio_contraseña"),
+                                                                               rs.getInt("socio_puntos")); 
+                                    return socio ;
+                           }
+
+                  } catch (SQLException e) {
+                            System.out.println(e);
+                  }finally{
+                           try {
+                                    con.close();
+                                    System.out.println("Conexion cerrada con la BD:ZBUSSBD");
+                           } catch (SQLException ex) {
+                                    System.out.println(ex);
+                           }
+                  }
+             return null;
+
+         }
+         }
     
     
-}
+

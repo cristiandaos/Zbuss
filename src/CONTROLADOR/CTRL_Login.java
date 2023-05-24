@@ -28,8 +28,6 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
          private  Login login;
          private int x;
          private int y;
-         private String usuario="admin";
-         private String contraseña="12345";
     
          public CTRL_Login(Login login)  {
                   this.login=login;
@@ -49,6 +47,10 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                   this.login.BTN_clienteInvitado.addMouseListener(this);
                   this.login.BTN_VisibilidadRegistro.addActionListener(this);
 
+ 
+         }
+    
+         void Iniciar(){
                   PlaceHolder CorreoElectronico=new PlaceHolder("Correo Electronico", this.login.Txt_correoElectronico,PlaceHolder.Show.ALWAYS);
 
                   PlaceHolder Contraseña=new PlaceHolder("Contraseña", this.login.Txt_contraseña,PlaceHolder.Show.ALWAYS);
@@ -64,11 +66,7 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                   PlaceHolder contraRegistro=new PlaceHolder("Contraseña",this.login.Txt_ContraRegistro, PlaceHolder.Show.ALWAYS);
 
                   PlaceHolder confirmRegistro=new PlaceHolder("Confirmar Contraseña",this.login.Txt_ConfirmContraRegistro, PlaceHolder.Show.ALWAYS);
-
-            
-         }
-    
-         void Iniciar(){
+                  
                   JScrollBar scroll=login.ScrollPanelDinamico.getHorizontalScrollBar();
                   scroll.setValue(320);
                   Shape redondeado=new RoundRectangle2D.Double(0,0,login.getBounds().width,login.getBounds().getHeight(),30,30);
@@ -78,12 +76,11 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
          }
      
      
-     
          void Cerrar(){
             login.dispose();
          }
       
-    
+         
         void SliderScroll(JScrollBar scrollBar,int delay, int moverValor,int auxiliar) {
                   Timer Timer = new Timer(delay, new ActionListener() {
                   private int incremento = (moverValor - scrollBar.getValue()) / auxiliar;
@@ -105,6 +102,7 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                   );
                   Timer.start();
          }   
+        
      
          void InhabilitarRegistro(){
                   for (int i = 0; i < login.PanelRegistro.getComponentCount(); i++) {
@@ -155,6 +153,7 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                            System.exit(0);
                   }
                   
+                  
                   if (e.getSource()==login.BTN_clienteInvitado) {
                            Cerrar();
                            Interfaz_Principal principal=new Interfaz_Principal();
@@ -162,23 +161,34 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                            ctrl_principal.Iniciar();
 
                   }
+                  
         
                   if (e.getSource()==login.BTN_IniciarSesion) {
-                           if (!login.Txt_correoElectronico.getText().equals("") && !login.Txt_contraseña.getText().equals("") || !login.Txt_correoElectronico.getText().equals("") || !login.Txt_contraseña.getText().equals("")) {     
-                                    if (!login.Txt_correoElectronico.getText().equals(usuario) &&  !login.Txt_contraseña.getText().equals(contraseña) || !login.Txt_correoElectronico.getText().equals(usuario) || !login.Txt_contraseña.getText().equals(contraseña)) {
-
-                                             Emergente emergente=new Emergente(null,"Error en el Ingreso","El usuario y/o contraseña ingresados no estan registrados");
-                                    }else{
+                           SociosDAO dao=new SociosDAO();
+                           if ( login.Txt_contraseña.getText() != null && login.Txt_correoElectronico.getText() != null) {
+                               
+                                    if (dao.ValidaSocio(login.Txt_correoElectronico.getText(), login.Txt_contraseña.getText())) {
+                                        
+                                             Socios sesionSocio= dao.ObtenerDatos(login.Txt_correoElectronico.getText(), login.Txt_contraseña.getText());
                                              Interfaz_Principal principal=new Interfaz_Principal();
-                                             CTRL_InterfazPrincipal ctrl_principal=new CTRL_InterfazPrincipal(principal);
-                                             ctrl_principal.Iniciar();
+                                             CTRL_InterfazPrincipal ctrl_principal=new CTRL_InterfazPrincipal(principal);                                          
+                                             ctrl_principal.Iniciar(sesionSocio);
                                              Cerrar();
+                                             
+                                    }else{
+                                        
+                                             Emergente msg=new Emergente(null, "Error en el ingreso","El correo y/o contraseña ingresados son incorrectos");
+                                    
                                     }
+                                    
                            }else{
-                                    Emergente emergente=new Emergente(null,"Error en el ingreso","No se debe dejar ningún campo vacio");
+                               
+                                    Emergente msg=new Emergente(null,"Error en el ingreso","No se debe dejar ningún campo vacio");
+                           
                            }          
                   }
         
+                  
                   if(e.getSource()==login.BTN_Visibilidad){
                            if (login.BTN_Visibilidad.isSelected()) {
                                     login.Txt_contraseña.setEchoChar((char)0);
@@ -187,19 +197,22 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                            }
                   }
                   
+                  
                   if (e.getSource()==login.BTN_ConfirmarRegistro) {
                            if (login.Txt_ContraRegistro.getText().equals(login.Txt_ConfirmContraRegistro.getText())) {
                                     SociosDAO dao=new SociosDAO();
                                     Socios socio=new Socios(login.Txt_DniRegistro.getText(), 
-                                                                            login.Txt_NomRegistro.getText(), 
-                                                                            login.Txt_ApePatRegistro.getText(), 
-                                                                            login.Txt_ApeMatRegistro.getText(), 
-                                                                            login.Txt_CorreoRegistro.getText(),
-                                                                            login.Txt_FNacRegistro.getText(), 
-                                                                            login.Txt_NumRegistro.getText(), 
-                                                                            login.Txt_ContraRegistro.getText(), 
-                                                                             0);
+                                                                               login.Txt_NomRegistro.getText(), 
+                                                                               login.Txt_ApePatRegistro.getText(), 
+                                                                               login.Txt_ApeMatRegistro.getText(), 
+                                                                               login.Txt_CorreoRegistro.getText(),
+                                                                               login.Txt_FNacRegistro.getText(), 
+                                                                               login.Txt_NumRegistro.getText(), 
+                                                                               login.Txt_ContraRegistro.getText(), 
+                                                                               0);
                                     dao.registrar(socio);
+                                    InhabilitarRegistro();
+                                    HabilitarRegistro();
                                     Emergente msg=new Emergente(login, "Socio registrado correctamente", "Bienvenido a socios Z-buss");
                            }else{
                                     Emergente msg=new Emergente(login, "Error en el registro","La contraseñas no coinciden");
@@ -215,7 +228,7 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                                     login.Txt_ContraRegistro.setEchoChar('*');
                            }
                   }
-    }
+         }
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -349,18 +362,18 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
     }
 
     @Override
-    public void windowOpened(WindowEvent e) {
-        if (e.getSource()==login) {
-              for (double  i = 0.0; i <= 1; i=i+0.1) {
-                  float f=(float) i;
-                  login.setOpacity(f);
-                  try {
-                           Thread.sleep(20);
-                  } catch (InterruptedException ex) {
+        public void windowOpened(WindowEvent e) {
+                  if (e.getSource()==login) {
+                           for (double  i = 0.0; i <= 1; i=i+0.1) {
+                                    float f=(float) i;
+                                    login.setOpacity(f);
+                                    try {
+                                             Thread.sleep(20);
+                                    } catch (InterruptedException ex) {
+                                    }
+                           }
                   }
-            }
-        }
-    }
+         }
 
     @Override
     public void windowClosing(WindowEvent e) {

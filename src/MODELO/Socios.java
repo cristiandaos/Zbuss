@@ -1,6 +1,10 @@
 
 package MODELO;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+
 
 public class Socios {
          private String dni;
@@ -95,6 +99,17 @@ public class Socios {
 
     public void setPuntos(int puntos) {
         this.puntos = puntos;
+    }
+    
+   
+    
+    public int calcularEdad(){
+        LocalDate fechaActual = LocalDate.now();
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate fechaNac = LocalDate.parse(nacimiento, formato);
+        Period periodo = Period.between(fechaNac, fechaActual);
+        return periodo.getYears();
+    
     }
     
          

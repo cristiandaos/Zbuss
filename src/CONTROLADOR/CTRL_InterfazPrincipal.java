@@ -1,5 +1,6 @@
 
 package CONTROLADOR;
+import MODELO.Socios;
 import VISTA.*;
 import UTILIDADES.*;
 import com.sun.source.tree.BreakTree;
@@ -53,6 +54,7 @@ import javax.swing.text.MaskFormatter;
 
 public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,MouseMotionListener,KeyListener,WindowListener{
          private Interfaz_Principal vista;
+         private Socios usuario=null;
          private int cant=3;
          private int cantPasajeros=0;
          private int x;
@@ -110,18 +112,38 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   Cerrar();
          }
     
+         void Iniciar(Socios socioIngresado){
+                  usuario=socioIngresado;
+                  vista.UsuarioLBL.setText(usuario.getNombre());
+                  vista.TxtNombrePasa.setText(usuario.getNombre());
+                  vista.TxtApellidoPatePasa.setText(usuario.getApellidoPaterno());
+                  vista.TxtApellidoMatePasa.setText(usuario.getApellidoMaterno());
+                  vista.SPNEdadPasa.setValue(usuario.calcularEdad());
+                  vista.TxtDNIpasa.setText(usuario.getDni());
+                  ((JSpinner.DefaultEditor) vista.SPNEdadPasa.getEditor()).getTextField().setEditable(false);
+                  ((JSpinner.DefaultEditor) vista.SPNEdadPasa.getEditor()).getTextField().setBackground(Color.WHITE);
+                  DiseñoScroll(new Color(43,255,0), new Color(18, 18, 18));
+                  PlaceHolder Nombre=new PlaceHolder("Nombre", vista.TxtNombrePasa, PlaceHolder.Show.ALWAYS);
+                  PlaceHolder ApePat=new PlaceHolder("Apellido Paterno", vista.TxtApellidoPatePasa, PlaceHolder.Show.ALWAYS);
+                  PlaceHolder ApeMat=new PlaceHolder("Apellido Materno", vista.TxtApellidoMatePasa, PlaceHolder.Show.ALWAYS);
+                  Shape redondeado=new RoundRectangle2D.Double(0,0,vista.getBounds().width,vista.getBounds().getHeight(),30,30);  
+                  vista.setShape(redondeado);
+                  vista.revalidate();
+                  vista.setVisible(true);
+        }
+         
          void Iniciar(){
-            ((JSpinner.DefaultEditor) vista.SPNEdadPasa.getEditor()).getTextField().setEditable(false);
-            ((JSpinner.DefaultEditor) vista.SPNEdadPasa.getEditor()).getTextField().setBackground(Color.WHITE);
-            DiseñoScroll(new Color(43,255,0), new Color(18, 18, 18));
-            PlaceHolder Nombre=new PlaceHolder("Nombre", vista.TxtNombrePasa, PlaceHolder.Show.ALWAYS);
-            PlaceHolder ApePat=new PlaceHolder("Apellido Paterno", vista.TxtApellidoPatePasa, PlaceHolder.Show.ALWAYS);
-            PlaceHolder ApeMat=new PlaceHolder("Apellido Materno", vista.TxtApellidoMatePasa, PlaceHolder.Show.ALWAYS);
-            Shape redondeado=new RoundRectangle2D.Double(0,0,vista.getBounds().width,vista.getBounds().getHeight(),30,30);  
-            vista.setShape(redondeado);
-            vista.revalidate();
-            vista.setVisible(true);
-    }
+                  ((JSpinner.DefaultEditor) vista.SPNEdadPasa.getEditor()).getTextField().setEditable(false);
+                  ((JSpinner.DefaultEditor) vista.SPNEdadPasa.getEditor()).getTextField().setBackground(Color.WHITE);
+                  DiseñoScroll(new Color(43,255,0), new Color(18, 18, 18));
+                  PlaceHolder Nombre=new PlaceHolder("Nombre", vista.TxtNombrePasa, PlaceHolder.Show.ALWAYS);
+                  PlaceHolder ApePat=new PlaceHolder("Apellido Paterno", vista.TxtApellidoPatePasa, PlaceHolder.Show.ALWAYS);
+                  PlaceHolder ApeMat=new PlaceHolder("Apellido Materno", vista.TxtApellidoMatePasa, PlaceHolder.Show.ALWAYS);
+                  Shape redondeado=new RoundRectangle2D.Double(0,0,vista.getBounds().width,vista.getBounds().getHeight(),30,30);  
+                  vista.setShape(redondeado);
+                  vista.revalidate();
+                  vista.setVisible(true); 
+         }
     
          void Cerrar(){
           vista.dispose();
@@ -322,17 +344,18 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
          }
     
          void reinciarFormsAcompañantes(){
-                     vista.PanelFormPasajeros.removeAll();
-                     ArrayAcompañantesPaneles.clear();
-                     vista.PanelFormPasajeros.setPreferredSize(new Dimension(850,200));
-                     vista.ScrollPanelPasajeros.setPreferredSize(new Dimension(850,200));
-                     vista.ScrollPanelPasajeros.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-                     vista.ScrollPanelPasajeros.getHorizontalScrollBar().setValue(0);
-                     vista.TxtNombrePasa.setText(null);
-                     vista.TxtApellidoMatePasa.setText(null);
-                     vista.TxtApellidoPatePasa.setText(null);
-                     vista.FTxtDNI.setText(null);
-                     vista.SPNEdadPasa.setValue(0);
+                  vista.PanelFormPasajeros.removeAll();
+                  ArrayAcompañantesPaneles.clear();
+                  vista.PanelFormPasajeros.setPreferredSize(new Dimension(850,200));
+                  vista.ScrollPanelPasajeros.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                  vista.ScrollPanelPasajeros.getHorizontalScrollBar().setValue(0);
+                  if (usuario==null) {
+                           vista.TxtNombrePasa.setText(null);
+                           vista.TxtApellidoMatePasa.setText(null);
+                           vista.TxtApellidoPatePasa.setText(null);
+                           vista.TxtDNIpasa.setText(null);
+                           vista.SPNEdadPasa.setValue(0);
+                  }
     }
     
     //Mover a utilidades
