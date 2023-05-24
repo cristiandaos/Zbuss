@@ -10,15 +10,13 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
-public class Reloj extends JTextField implements Runnable{
+public class Reloj extends JLabel implements Runnable{
     private SimpleDateFormat formato = new SimpleDateFormat("HH:mm:ss");
     private Thread thread;
 
     public Reloj() {
         thread = new Thread(this);
         thread.start();
-        setEditable(false);
-        setBackground(new Color(18,18,18));
         setForeground(Color.white);
         setFont(new Font("Consolas",Font.BOLD,28));
         setHorizontalAlignment(JLabel.CENTER);

@@ -21,9 +21,9 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         BTN_cerrarSesion = new javax.swing.JButton();
         UsuarioLBL = new javax.swing.JLabel();
         Logo = new javax.swing.JLabel();
-        reloj = new UTILIDADES.Reloj();
         jLabel4 = new javax.swing.JLabel();
         LBLinfoCuenta = new javax.swing.JLabel();
+        PanelReloj = new javax.swing.JPanel();
         ScrollPanelDinamico = new javax.swing.JScrollPane();
         PanelDinamico = new javax.swing.JPanel();
         ScrollPaneBuses = new javax.swing.JScrollPane();
@@ -109,10 +109,6 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         Logo.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 4, 0, new java.awt.Color(123, 216, 80)));
         BarraLateral.add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, -1));
 
-        reloj.setBackground(new java.awt.Color(12, 12, 12));
-        reloj.setBorder(null);
-        BarraLateral.add(reloj, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 130, 40));
-
         jLabel4.setFont(new java.awt.Font("Segoe UI Emoji", 1, 22)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Hola otra vez,");
@@ -126,6 +122,21 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         LBLinfoCuenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         LBLinfoCuenta.setOpaque(true);
         BarraLateral.add(LBLinfoCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 460, 180, 80));
+
+        PanelReloj.setBackground(new java.awt.Color(12, 12, 12));
+
+        javax.swing.GroupLayout PanelRelojLayout = new javax.swing.GroupLayout(PanelReloj);
+        PanelReloj.setLayout(PanelRelojLayout);
+        PanelRelojLayout.setHorizontalGroup(
+            PanelRelojLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 180, Short.MAX_VALUE)
+        );
+        PanelRelojLayout.setVerticalGroup(
+            PanelRelojLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 60, Short.MAX_VALUE)
+        );
+
+        BarraLateral.add(PanelReloj, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 180, 60));
 
         PanelLayer.setLayer(BarraLateral, javax.swing.JLayeredPane.PALETTE_LAYER);
         PanelLayer.add(BarraLateral, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 670));
@@ -504,6 +515,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
     public javax.swing.JLayeredPane PanelLayer;
     public javax.swing.JPanel PanelPasajeroPrincipal;
     public javax.swing.JPanel PanelPasajeros;
+    public javax.swing.JPanel PanelReloj;
     public javax.swing.JSpinner SPNEdadPasa;
     public javax.swing.JScrollPane ScrollPaneBuses;
     public javax.swing.JScrollPane ScrollPanelDinamico;
@@ -527,6 +539,5 @@ public class Interfaz_Principal extends javax.swing.JFrame {
     public javax.swing.JLabel jLabel7;
     public javax.swing.JLabel jLabel8;
     public javax.swing.JLabel jLabel9;
-    public UTILIDADES.Reloj reloj;
     // End of variables declaration//GEN-END:variables
 }

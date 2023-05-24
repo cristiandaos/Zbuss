@@ -222,14 +222,14 @@ public class Login extends javax.swing.JFrame {
         PanelRegistro.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         BTN_ConfirmarRegistro.setBackground(new java.awt.Color(18, 18, 18));
-        BTN_ConfirmarRegistro.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        BTN_ConfirmarRegistro.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
         BTN_ConfirmarRegistro.setForeground(new java.awt.Color(255, 255, 255));
         BTN_ConfirmarRegistro.setText("Confirmar");
         BTN_ConfirmarRegistro.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(123, 216, 80), 2, true));
         BTN_ConfirmarRegistro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BTN_ConfirmarRegistro.setFocusPainted(false);
         BTN_ConfirmarRegistro.setFocusable(false);
-        PanelRegistro.add(BTN_ConfirmarRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 470, 120, 30));
+        PanelRegistro.add(BTN_ConfirmarRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 480, 120, 30));
 
         Txt_ApeMatRegistro.setBackground(new java.awt.Color(18, 18, 18));
         Txt_ApeMatRegistro.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N

@@ -280,7 +280,7 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                   }
          
                   if (e.getSource()==login.BTN_clienteInvitado) {
-                           login.BTN_clienteInvitado.setFont(new Font("Consolas",Font.BOLD,14));
+                           login.BTN_clienteInvitado.setFont(new Font("Segoe",Font.BOLD,14));
                   }
          
                   if (e.getSource()==login.BTN_IniciarSesion) {
@@ -290,7 +290,7 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
          
                   if (e.getSource()==login.BTN_ConfirmarRegistro) {
                            login.BTN_ConfirmarRegistro.setBackground(new Color(21,24, 30));
-                           login.BTN_ConfirmarRegistro.setFont(new Font("Consolas",Font.BOLD,18));
+                           login.BTN_ConfirmarRegistro.setFont(new Font("Consolas",Font.BOLD,14));
                   }
                   
                   if (e.getSource()==login.LBL_mostrarLogin) {
@@ -320,7 +320,7 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
 
                   if (e.getSource()==login.BTN_ConfirmarRegistro) {
                            login.BTN_ConfirmarRegistro.setBackground(new Color(18,18,18));
-                           login.BTN_ConfirmarRegistro.setFont(new Font("Consolas",Font.PLAIN,18));
+                           login.BTN_ConfirmarRegistro.setFont(new Font("Consolas",Font.PLAIN,14));
                   }
                   
                   if (e.getSource()==login.LBL_mostrarLogin) {

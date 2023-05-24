@@ -56,7 +56,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
          private Interfaz_Principal vista;
          private Socios usuario=null;
          private int cant=3;
-         private int cantPasajeros=0;
+         private int cantPasajeros;
          private int x;
          private int y;
          private ArrayList<PanelPersonalizado>ArrayPaneles;
@@ -99,10 +99,10 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            asientos.addMouseListener(this);
                   }
                   
-        } 
+         } 
     
          public Interfaz_Principal getVista(){
-            return vista;
+                  return vista;
          }
     
          void EstadoInicial(){
@@ -122,11 +122,14 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   vista.TxtDNIpasa.setText(usuario.getDni());
                   ((JSpinner.DefaultEditor) vista.SPNEdadPasa.getEditor()).getTextField().setEditable(false);
                   ((JSpinner.DefaultEditor) vista.SPNEdadPasa.getEditor()).getTextField().setBackground(Color.WHITE);
-                  DiseñoScroll(new Color(43,255,0), new Color(18, 18, 18));
+                  DiseñoScroll(new Color(43,255,0), new Color(12, 12, 12));
                   PlaceHolder Nombre=new PlaceHolder("Nombre", vista.TxtNombrePasa, PlaceHolder.Show.ALWAYS);
                   PlaceHolder ApePat=new PlaceHolder("Apellido Paterno", vista.TxtApellidoPatePasa, PlaceHolder.Show.ALWAYS);
                   PlaceHolder ApeMat=new PlaceHolder("Apellido Materno", vista.TxtApellidoMatePasa, PlaceHolder.Show.ALWAYS);
                   Shape redondeado=new RoundRectangle2D.Double(0,0,vista.getBounds().width,vista.getBounds().getHeight(),30,30);  
+                  Reloj reloj=new Reloj();
+                  reloj.setBounds(20, 10, 140, 40);
+                  vista.PanelReloj.add(reloj);
                   vista.setShape(redondeado);
                   vista.revalidate();
                   vista.setVisible(true);
@@ -140,14 +143,17 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   PlaceHolder ApePat=new PlaceHolder("Apellido Paterno", vista.TxtApellidoPatePasa, PlaceHolder.Show.ALWAYS);
                   PlaceHolder ApeMat=new PlaceHolder("Apellido Materno", vista.TxtApellidoMatePasa, PlaceHolder.Show.ALWAYS);
                   Shape redondeado=new RoundRectangle2D.Double(0,0,vista.getBounds().width,vista.getBounds().getHeight(),30,30);  
+                  Reloj reloj=new Reloj();
+                  reloj.setBounds(20, 10, 140, 40);
+                  vista.PanelReloj.add(reloj);
                   vista.setShape(redondeado);
                   vista.revalidate();
                   vista.setVisible(true); 
          }
     
          void Cerrar(){
-          vista.dispose();
-    }
+                  vista.dispose();
+         }
  
          void GenerarPaneles(int cant){
                   ArrayPaneles=new ArrayList<>();
@@ -402,7 +408,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   private int incremento = (moverValor - scrollBar.getValue()) / auxiliar;
                   private int valor = scrollBar.getValue();
 
-            @Override
+                 @Override
                   public void actionPerformed(ActionEvent e) {
                            if (valor != moverValor) {
                                     valor += incremento;
@@ -452,7 +458,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   }
          }
    
-    @Override
+        @Override
         public void actionPerformed(ActionEvent e) {
 
                   if (e.getSource()==vista.BTN_cerrarSesion) {

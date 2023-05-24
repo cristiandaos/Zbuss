@@ -78,7 +78,7 @@ public  class Emergente extends JDialog implements ActionListener,MouseMotionLis
                 Titulo=new JLabel(titulo);
                 Titulo.setBounds(10,0, BarraSuperior.getWidth()-btnCerrar.getWidth(),40);
                 Titulo.setForeground(Color.WHITE);
-                Titulo.setFont(new Font("Consolas",Font.PLAIN,16));
+                Titulo.setFont(new Font("Segou UI",Font.PLAIN,16));
                 BarraSuperior.add(Titulo);
                 
                 contenido=new JPanel(null);
@@ -86,7 +86,7 @@ public  class Emergente extends JDialog implements ActionListener,MouseMotionLis
                 contenido.setBackground(new Color(14,14,14));    
                 
                 mensaje=new JLabel(msg);
-                mensaje.setFont(new Font("Consolas",Font.BOLD,13));
+                mensaje.setFont(new Font("Segou UI",Font.BOLD,13));
                 mensaje.setForeground(Color.WHITE);
                 mensaje.setBounds((contenido.getWidth() - (int) mensaje.getPreferredSize().getWidth())/2,(contenido.getHeight()-((int)mensaje.getPreferredSize().getHeight())/2)-110, (int) mensaje.getPreferredSize().getWidth(), (int)mensaje.getPreferredSize().getHeight());
                 contenido.add(mensaje);
