@@ -49,6 +49,8 @@ public class Login extends javax.swing.JFrame {
         Txt_ContraRegistro = new javax.swing.JPasswordField();
         Txt_FNacRegistro = new javax.swing.JFormattedTextField();
         Txt_DniRegistro = new javax.swing.JFormattedTextField();
+        jLabel12 = new javax.swing.JLabel();
+        Txt_NumRegistro = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -227,7 +229,7 @@ public class Login extends javax.swing.JFrame {
         BTN_ConfirmarRegistro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BTN_ConfirmarRegistro.setFocusPainted(false);
         BTN_ConfirmarRegistro.setFocusable(false);
-        PanelRegistro.add(BTN_ConfirmarRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 440, 120, 30));
+        PanelRegistro.add(BTN_ConfirmarRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 470, 120, 30));
 
         Txt_ApeMatRegistro.setBackground(new java.awt.Color(18, 18, 18));
         Txt_ApeMatRegistro.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
@@ -281,7 +283,7 @@ public class Login extends javax.swing.JFrame {
         BTN_VisibilidadRegistro.setFocusPainted(false);
         BTN_VisibilidadRegistro.setFocusable(false);
         BTN_VisibilidadRegistro.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMGS/Visible.png"))); // NOI18N
-        PanelRegistro.add(BTN_VisibilidadRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 330, 30, 30));
+        PanelRegistro.add(BTN_VisibilidadRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 380, 30, 30));
 
         Txt_ConfirmContraRegistro.setBackground(new java.awt.Color(18, 18, 18));
         Txt_ConfirmContraRegistro.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
@@ -289,7 +291,7 @@ public class Login extends javax.swing.JFrame {
         Txt_ConfirmContraRegistro.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         Txt_ConfirmContraRegistro.setCaretColor(new java.awt.Color(255, 255, 255));
         Txt_ConfirmContraRegistro.setEchoChar('*');
-        PanelRegistro.add(Txt_ConfirmContraRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, 200, 30));
+        PanelRegistro.add(Txt_ConfirmContraRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 420, 200, 30));
 
         Txt_ContraRegistro.setBackground(new java.awt.Color(18, 18, 18));
         Txt_ContraRegistro.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
@@ -297,7 +299,7 @@ public class Login extends javax.swing.JFrame {
         Txt_ContraRegistro.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         Txt_ContraRegistro.setCaretColor(new java.awt.Color(255, 255, 255));
         Txt_ContraRegistro.setEchoChar('*');
-        PanelRegistro.add(Txt_ContraRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 330, 200, 30));
+        PanelRegistro.add(Txt_ContraRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, 200, 30));
 
         Txt_FNacRegistro.setBackground(new java.awt.Color(18, 18, 18));
         Txt_FNacRegistro.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
@@ -323,6 +325,26 @@ public class Login extends javax.swing.JFrame {
         Txt_DniRegistro.setCaretColor(new java.awt.Color(255, 255, 255));
         Txt_DniRegistro.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         PanelRegistro.add(Txt_DniRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, 160, 30));
+
+        jLabel12.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel12.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel12.setText("Num: ");
+        jLabel12.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        PanelRegistro.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 330, 40, 30));
+
+        Txt_NumRegistro.setBackground(new java.awt.Color(18, 18, 18));
+        Txt_NumRegistro.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        Txt_NumRegistro.setForeground(new java.awt.Color(255, 255, 255));
+        try {
+            Txt_NumRegistro.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#########")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        Txt_NumRegistro.setCaretColor(new java.awt.Color(255, 255, 255));
+        Txt_NumRegistro.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
+        PanelRegistro.add(Txt_NumRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 330, 160, 30));
 
         PanelDinamico.add(PanelRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, 520));
 
@@ -403,9 +425,11 @@ public class Login extends javax.swing.JFrame {
     public javax.swing.JFormattedTextField Txt_DniRegistro;
     public javax.swing.JFormattedTextField Txt_FNacRegistro;
     public javax.swing.JTextField Txt_NomRegistro;
+    public javax.swing.JFormattedTextField Txt_NumRegistro;
     public javax.swing.JPasswordField Txt_contraseña;
     public javax.swing.JTextField Txt_correoElectronico;
     public javax.swing.JLabel jLabel11;
+    public javax.swing.JLabel jLabel12;
     public javax.swing.JLabel jLabel3;
     public javax.swing.JLabel jLabel5;
     public javax.swing.JLabel jLabel9;

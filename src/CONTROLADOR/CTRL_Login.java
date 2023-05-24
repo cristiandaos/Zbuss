@@ -2,6 +2,7 @@
 package CONTROLADOR;
 import UTILIDADES.*;
 import VISTA.*;
+import MODELO.*;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Scrollbar;
@@ -114,6 +115,8 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                   login.Txt_ApePatRegistro.setText(null);
                   login.Txt_ApeMatRegistro.setText(null);
                   login.Txt_CorreoRegistro.setText(null);
+                  login.Txt_FNacRegistro.setText(null);
+                  login.Txt_NumRegistro.setText(null);
                   login.Txt_ContraRegistro.setText(null);
                   login.Txt_ConfirmContraRegistro.setText(null);
          }
@@ -182,6 +185,25 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                            }else{
                                     login.Txt_contraseña.setEchoChar('*');
                            }
+                  }
+                  
+                  if (e.getSource()==login.BTN_ConfirmarRegistro) {
+                           if (login.Txt_ContraRegistro.getText().equals(login.Txt_ConfirmContraRegistro.getText())) {
+                                    SociosDAO dao=new SociosDAO();
+                                    Socios socio=new Socios(login.Txt_DniRegistro.getText(), 
+                                                                            login.Txt_NomRegistro.getText(), 
+                                                                            login.Txt_ApePatRegistro.getText(), 
+                                                                            login.Txt_ApeMatRegistro.getText(), 
+                                                                            login.Txt_CorreoRegistro.getText(),
+                                                                            login.Txt_FNacRegistro.getText(), 
+                                                                            login.Txt_NumRegistro.getText(), 
+                                                                            login.Txt_ContraRegistro.getText(), 
+                                                                             0);
+                                    dao.registrar(socio);
+                                    Emergente msg=new Emergente(login, "Socio registrado correctamente", "Bienvenido a socios Z-buss");
+                           }else{
+                                    Emergente msg=new Emergente(login, "Error en el registro","La contraseñas no coinciden");
+                           }   
                   }
                   
                   
