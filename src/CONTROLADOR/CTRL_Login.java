@@ -213,7 +213,7 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                                     dao.registrar(socio);
                                     InhabilitarRegistro();
                                     HabilitarRegistro();
-                                    Emergente msg=new Emergente(login, "Socio registrado correctamente", "Bienvenido a socios Z-buss");
+                                    Emergente msg=new Emergente(login, "Socio registrado correctamente", "Bienvenido a socios Z-buss, "+socio.getNombre());
                            }else{
                                     Emergente msg=new Emergente(login, "Error en el registro","La contraseñas no coinciden");
                            }   
