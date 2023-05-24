@@ -311,6 +311,7 @@ public class Login extends javax.swing.JFrame {
         }
         Txt_FNacRegistro.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Txt_FNacRegistro.setCaretColor(new java.awt.Color(255, 255, 255));
+        Txt_FNacRegistro.setFocusLostBehavior(javax.swing.JFormattedTextField.COMMIT);
         Txt_FNacRegistro.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         PanelRegistro.add(Txt_FNacRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 280, 140, 30));
 
@@ -323,6 +324,7 @@ public class Login extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         Txt_DniRegistro.setCaretColor(new java.awt.Color(255, 255, 255));
+        Txt_DniRegistro.setFocusLostBehavior(javax.swing.JFormattedTextField.COMMIT);
         Txt_DniRegistro.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         PanelRegistro.add(Txt_DniRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, 160, 30));
 
@@ -343,6 +345,7 @@ public class Login extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         Txt_NumRegistro.setCaretColor(new java.awt.Color(255, 255, 255));
+        Txt_NumRegistro.setFocusLostBehavior(javax.swing.JFormattedTextField.COMMIT);
         Txt_NumRegistro.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         PanelRegistro.add(Txt_NumRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 330, 160, 30));
 

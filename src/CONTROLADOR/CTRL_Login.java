@@ -113,8 +113,9 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                   login.Txt_ApePatRegistro.setText(null);
                   login.Txt_ApeMatRegistro.setText(null);
                   login.Txt_CorreoRegistro.setText(null);
-                  login.Txt_FNacRegistro.setText(null);
-                  login.Txt_NumRegistro.setText(null);
+                  login.Txt_DniRegistro.setText("");
+                  login.Txt_FNacRegistro.setText("");
+                  login.Txt_NumRegistro.setText("");
                   login.Txt_ContraRegistro.setText(null);
                   login.Txt_ConfirmContraRegistro.setText(null);
          }
@@ -124,6 +125,7 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                   for (int i = 0; i < login.PanelRegistro.getComponentCount(); i++) {
                            login.PanelRegistro.getComponent(i).setEnabled(true);
                   }
+                  login.Txt_NomRegistro.requestFocus();
          }
     
     
@@ -132,6 +134,7 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                            login.PanelInicioSesion.getComponent(i).setEnabled(true);
 
                   }
+                  login.Txt_correoElectronico.requestFocus();
          }
     
     
@@ -200,20 +203,24 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                   
                   if (e.getSource()==login.BTN_ConfirmarRegistro) {
                            if (login.Txt_ContraRegistro.getText().equals(login.Txt_ConfirmContraRegistro.getText())) {
-                                    SociosDAO dao=new SociosDAO();
                                     Socios socio=new Socios(login.Txt_DniRegistro.getText(), 
-                                                                               login.Txt_NomRegistro.getText(), 
-                                                                               login.Txt_ApePatRegistro.getText(), 
-                                                                               login.Txt_ApeMatRegistro.getText(), 
-                                                                               login.Txt_CorreoRegistro.getText(),
-                                                                               login.Txt_FNacRegistro.getText(), 
-                                                                               login.Txt_NumRegistro.getText(), 
-                                                                               login.Txt_ContraRegistro.getText(), 
-                                                                               0);
-                                    dao.registrar(socio);
-                                    InhabilitarRegistro();
-                                    HabilitarRegistro();
-                                    Emergente msg=new Emergente(login, "Socio registrado correctamente", "Bienvenido a socios Z-buss, "+socio.getNombre());
+                                                                                       login.Txt_NomRegistro.getText(), 
+                                                                                       login.Txt_ApePatRegistro.getText(), 
+                                                                                       login.Txt_ApeMatRegistro.getText(), 
+                                                                                       login.Txt_CorreoRegistro.getText(),
+                                                                                       login.Txt_FNacRegistro.getText(), 
+                                                                                       login.Txt_NumRegistro.getText(), 
+                                                                                       login.Txt_ContraRegistro.getText(), 
+                                                                                       0);
+                                    if (socio.ConAtributosVacios()) {
+                                             Emergente mg=new Emergente(null, "Error en el registro ", "No debe dejar campos vacios");
+                                    }else{
+                                             SociosDAO dao=new SociosDAO();
+                                             dao.registrar(socio);
+                                             InhabilitarRegistro();
+                                             HabilitarRegistro();
+                                             Emergente msg=new Emergente(login, "Socio registrado correctamente", "Bienvenido a socios Z-buss, "+socio.getNombre());
+                                    }
                            }else{
                                     Emergente msg=new Emergente(login, "Error en el registro","La contraseñas no coinciden");
                            }   

@@ -102,15 +102,25 @@ public class Socios {
     }
     
    
-    
+    //calcula la edad mediante el dato de nacimiento
     public int calcularEdad(){
-        LocalDate fechaActual = LocalDate.now();
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate fechaNac = LocalDate.parse(nacimiento, formato);
-        Period periodo = Period.between(fechaNac, fechaActual);
-        return periodo.getYears();
-    
+         LocalDate fechaActual = LocalDate.now();
+         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+         LocalDate fechaNac = LocalDate.parse(nacimiento, formato);
+         Period periodo = Period.between(fechaNac, fechaActual);
+         return periodo.getYears();
     }
+    
+    //retorna true si algun atributo es una cadena vacia o un null
+    public boolean ConAtributosVacios() {
+                  return !(nombre != null && !nombre.isBlank())
+                           || !(apellidoPaterno != null && !apellidoPaterno.isBlank())
+                           || !(apellidoMaterno != null && !apellidoMaterno.isBlank())
+                           || !(correo != null && !correo.isBlank())
+                           || !(nacimiento != null && !nacimiento.isBlank())
+                           || !(numero != null && !numero.isBlank())
+                           || !(contraseña != null && !contraseña.isBlank());
+}
     
          
 }
