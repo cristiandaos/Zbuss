@@ -24,47 +24,48 @@ import javax.swing.text.JTextComponent;
 
 public class CTRL_Login implements ActionListener,MouseListener,KeyListener,MouseMotionListener,WindowListener{
     
-    private  Login login;
-    private int x;
-    private int y;
-    private String usuario="admin";
-    private String contraseña="12345";
+         private  Login login;
+         private int x;
+         private int y;
+         private String usuario="admin";
+         private String contraseña="12345";
     
-    public CTRL_Login(Login login)  {
-        this.login=login;
-        this.login.addWindowListener(this);
-        this.login.Barra.addMouseListener(this);
-        this.login.Barra.addMouseMotionListener(this);
-        this.login.BTN_cerrar.addActionListener(this);
-        this.login.BTN_cerrar.addMouseListener(this);
-        this.login.BTN_Visibilidad.addActionListener(this);
-        this.login.BTN_IniciarSesion.addActionListener(this);
-        this.login.BTN_IniciarSesion.addMouseListener(this);
-        this.login.BTN_ConfirmarRegistro.addActionListener(this);
-        this.login.BTN_ConfirmarRegistro.addMouseListener(this);
-        this.login.LBL_mostrarLogin.addMouseListener(this);
-        this.login.LBL_mostrarRegistro.addMouseListener(this);
-        this.login.BTN_clienteInvitado.addActionListener(this);
-        this.login.BTN_clienteInvitado.addMouseListener(this);
-        this.login.BTN_VisibilidadRegistro.addActionListener(this);
-        
-         PlaceHolder CorreoElectronico=new PlaceHolder("Correo Electronico", login.Txt_correoElectronico,PlaceHolder.Show.ALWAYS);
-        
-         PlaceHolder Contraseña=new PlaceHolder("Contraseña", login.Txt_contraseña,PlaceHolder.Show.ALWAYS);
-         
-         PlaceHolder nomRegistro=new PlaceHolder("Nombre", login.Txt_NomRegistro, PlaceHolder.Show.ALWAYS);
-         
-         PlaceHolder apePatRegistro=new PlaceHolder("Apellido Paterno", login.Txt_ApePatRegistro, PlaceHolder.Show.ALWAYS);
-         
-         PlaceHolder apeMatRegistro=new PlaceHolder("Apellido Materno", login.Txt_ApeMatRegistro, PlaceHolder.Show.ALWAYS);
-         
-         PlaceHolder correoRegistro=new PlaceHolder("Correo Electrónico", login.Txt_CorreoRegistro, PlaceHolder.Show.ALWAYS);
-         
-         PlaceHolder contraRegistro=new PlaceHolder("Contraseña",login.Txt_ContraRegistro, PlaceHolder.Show.ALWAYS);
-         
-         PlaceHolder confirmRegistro=new PlaceHolder("Confirmar Contraseña",login.Txt_ConfirmContraRegistro, PlaceHolder.Show.ALWAYS);
-  
-    }
+         public CTRL_Login(Login login)  {
+                  this.login=login;
+                  this.login.addWindowListener(this);
+                  this.login.Barra.addMouseListener(this);
+                  this.login.Barra.addMouseMotionListener(this);
+                  this.login.BTN_cerrar.addActionListener(this);
+                  this.login.BTN_cerrar.addMouseListener(this);
+                  this.login.BTN_Visibilidad.addActionListener(this);
+                  this.login.BTN_IniciarSesion.addActionListener(this);
+                  this.login.BTN_IniciarSesion.addMouseListener(this);
+                  this.login.BTN_ConfirmarRegistro.addActionListener(this);
+                  this.login.BTN_ConfirmarRegistro.addMouseListener(this);
+                  this.login.LBL_mostrarLogin.addMouseListener(this);
+                  this.login.LBL_mostrarRegistro.addMouseListener(this);
+                  this.login.BTN_clienteInvitado.addActionListener(this);
+                  this.login.BTN_clienteInvitado.addMouseListener(this);
+                  this.login.BTN_VisibilidadRegistro.addActionListener(this);
+
+                  PlaceHolder CorreoElectronico=new PlaceHolder("Correo Electronico", this.login.Txt_correoElectronico,PlaceHolder.Show.ALWAYS);
+
+                  PlaceHolder Contraseña=new PlaceHolder("Contraseña", this.login.Txt_contraseña,PlaceHolder.Show.ALWAYS);
+
+                  PlaceHolder nomRegistro=new PlaceHolder("Nombre", this.login.Txt_NomRegistro, PlaceHolder.Show.ALWAYS);
+
+                  PlaceHolder apePatRegistro=new PlaceHolder("Apellido Paterno", this.login.Txt_ApePatRegistro, PlaceHolder.Show.ALWAYS);
+
+                  PlaceHolder apeMatRegistro=new PlaceHolder("Apellido Materno", this.login.Txt_ApeMatRegistro, PlaceHolder.Show.ALWAYS);
+
+                  PlaceHolder correoRegistro=new PlaceHolder("Correo Electrónico", this.login.Txt_CorreoRegistro, PlaceHolder.Show.ALWAYS);
+
+                  PlaceHolder contraRegistro=new PlaceHolder("Contraseña",this.login.Txt_ContraRegistro, PlaceHolder.Show.ALWAYS);
+
+                  PlaceHolder confirmRegistro=new PlaceHolder("Confirmar Contraseña",this.login.Txt_ConfirmContraRegistro, PlaceHolder.Show.ALWAYS);
+
+            
+         }
     
          void Iniciar(){
                   JScrollBar scroll=login.ScrollPanelDinamico.getHorizontalScrollBar();
@@ -77,33 +78,34 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
      
      
      
-        void Cerrar(){
+         void Cerrar(){
             login.dispose();
-        }
+         }
       
     
         void SliderScroll(JScrollBar scrollBar,int delay, int moverValor,int auxiliar) {
-            Timer Timer = new Timer(delay, new ActionListener() {
-            private int incremento = (moverValor - scrollBar.getValue()) / auxiliar;
-            private int valor = scrollBar.getValue();
+                  Timer Timer = new Timer(delay, new ActionListener() {
+                  private int incremento = (moverValor - scrollBar.getValue()) / auxiliar;
+                  private int valor = scrollBar.getValue();
 
             @Override
-            public void actionPerformed(ActionEvent e) {
-                if (valor != moverValor) {
-                    valor += incremento;
-                    if ((incremento > 0 && valor > moverValor) || (incremento < 0 && valor < moverValor)) {
-                        valor = moverValor;
-                    }
-                    scrollBar.setValue(valor);
-                } else {
-                    ((Timer) e.getSource()).stop();
-                }
-            }
-        });
-        Timer.start();
-    }   
+                  public void actionPerformed(ActionEvent e) {
+                           if (valor != moverValor) {
+                                    valor += incremento;
+                                    if ((incremento > 0 && valor > moverValor) || (incremento < 0 && valor < moverValor)) {
+                                             valor = moverValor;
+                                    }
+                                scrollBar.setValue(valor);
+                           } else {
+                                    ((Timer) e.getSource()).stop();
+                           }
+                  }
+                  }
+                  );
+                  Timer.start();
+         }   
      
-        void InhabilitarRegistro(){
+         void InhabilitarRegistro(){
                   for (int i = 0; i < login.PanelRegistro.getComponentCount(); i++) {
                            login.PanelRegistro.getComponent(i).setEnabled(false);
                   }
@@ -199,36 +201,36 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
-        if (e.getSource()==login.Barra) {
-            x=e.getX();
-            y=e.getY();
-        }
-        
-        if (e.getSource()==login.LBL_mostrarRegistro) {
-                JScrollBar scrollPaneles=login.ScrollPanelDinamico.getHorizontalScrollBar();
-                JScrollBar scrollInfo=login.ScrollPanelInfo.getHorizontalScrollBar();
-                int izquierdaPaneles=scrollPaneles.getValue()-320;
-                int izquierdaInfo=scrollInfo.getValue()+440;
-                SliderScroll(scrollInfo, 5, izquierdaInfo, 11);
-                SliderScroll(scrollPaneles, 5, izquierdaPaneles, 5);
-                HabilitarRegistro();
-                InhabilitarInicioSesion();
-        }
-        
-        if (e.getSource()==login.LBL_mostrarLogin) {
-                JScrollBar scrollPaneles=login.ScrollPanelDinamico.getHorizontalScrollBar();
-                JScrollBar scrollInfo=login.ScrollPanelInfo.getHorizontalScrollBar();
-                int izquierdaPaneles=scrollPaneles.getValue()+320;
-                int DerechaInfo=scrollInfo.getValue()-440;
-                SliderScroll(scrollInfo, 5, DerechaInfo, 11);
-                SliderScroll(scrollPaneles, 5, izquierdaPaneles, 5);
-                HabilitarInicioSesion();
-                InhabilitarRegistro();
+         public void mousePressed(MouseEvent e) {
+                  if (e.getSource()==login.Barra) {
+                           x=e.getX();
+                           y=e.getY();
+                  }
 
-        }
-    
-    }
+                  if (e.getSource()==login.LBL_mostrarRegistro) {
+                           JScrollBar scrollPaneles=login.ScrollPanelDinamico.getHorizontalScrollBar();
+                           JScrollBar scrollInfo=login.ScrollPanelInfo.getHorizontalScrollBar();
+                           int izquierdaPaneles=scrollPaneles.getValue()-320;
+                           int izquierdaInfo=scrollInfo.getValue()+440;
+                           SliderScroll(scrollInfo, 5, izquierdaInfo, 11);
+                           SliderScroll(scrollPaneles, 5, izquierdaPaneles, 5);
+                           HabilitarRegistro();
+                           InhabilitarInicioSesion();
+                  }
+
+                  if (e.getSource()==login.LBL_mostrarLogin) {
+                           JScrollBar scrollPaneles=login.ScrollPanelDinamico.getHorizontalScrollBar();
+                           JScrollBar scrollInfo=login.ScrollPanelInfo.getHorizontalScrollBar();
+                           int izquierdaPaneles=scrollPaneles.getValue()+320;
+                           int DerechaInfo=scrollInfo.getValue()-440;
+                           SliderScroll(scrollInfo, 5, DerechaInfo, 11);
+                           SliderScroll(scrollPaneles, 5, izquierdaPaneles, 5);
+                           HabilitarInicioSesion();
+                           InhabilitarRegistro();
+
+                  }
+
+         }
 
     @Override
     public void mouseReleased(MouseEvent e) {

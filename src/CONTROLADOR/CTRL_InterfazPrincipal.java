@@ -53,7 +53,7 @@ import javax.swing.text.MaskFormatter;
 
 public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,MouseMotionListener,KeyListener,WindowListener{
          private Interfaz_Principal vista;
-         private int cant=11;
+         private int cant=3;
          private int cantPasajeros=0;
          private int x;
          private int y;
@@ -117,7 +117,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
             PlaceHolder Nombre=new PlaceHolder("Nombre", vista.TxtNombrePasa, PlaceHolder.Show.ALWAYS);
             PlaceHolder ApePat=new PlaceHolder("Apellido Paterno", vista.TxtApellidoPatePasa, PlaceHolder.Show.ALWAYS);
             PlaceHolder ApeMat=new PlaceHolder("Apellido Materno", vista.TxtApellidoMatePasa, PlaceHolder.Show.ALWAYS);
-            Shape redondeado=new RoundRectangle2D.Double(0,0,vista.getBounds().width,vista.getBounds().getHeight(),30,30);
+            Shape redondeado=new RoundRectangle2D.Double(0,0,vista.getBounds().width,vista.getBounds().getHeight(),30,30);  
             vista.setShape(redondeado);
             vista.revalidate();
             vista.setVisible(true);
@@ -210,8 +210,8 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                                     y+=incrementoY;
                            }
 
-                           if (y>vista.PanelBuses.getHeight()-contenedor.getHeight()) {
-                                    vista.PanelBuses.setPreferredSize(new Dimension((int) vista.PanelBuses.getPreferredSize().getWidth(),ArrayPaneles.get(i).getY()+alto+80));
+                           if (y>vista.PanelBuses.getHeight()) {
+                                    vista.PanelBuses.setPreferredSize(new Dimension((int) vista.PanelBuses.getPreferredSize().getWidth(),ArrayPaneles.get(i).getY()+alto+50));
                                     vista.ScrollPaneBuses.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
                            }
                   }   
@@ -348,7 +348,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
          @Override
                     protected void paintThumb(Graphics g, JComponent c, Rectangle thumbBounds) {
                         g.setColor(Barra);
-                        g.fillRoundRect(thumbBounds.x, thumbBounds.y, thumbBounds.width, thumbBounds.height, 25, 25);
+                        g.fillRoundRect(thumbBounds.x, thumbBounds.y, thumbBounds.width, thumbBounds.height, 10, 10);
                     } 
                     
                   private JButton BtnScroll() {
@@ -442,7 +442,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            if (e.getSource()==btns) {
                                     JScrollBar scrollBar = vista.ScrollPanelDinamico.getHorizontalScrollBar();
                                     int derecha=scrollBar.getValue()+1100;
-                                     SliderScroll(scrollBar,5,derecha,10);
+                                    SliderScroll(scrollBar,5,derecha,10);
                            }
                   }
 
