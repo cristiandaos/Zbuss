@@ -33,7 +33,7 @@ public class SociosDAO extends Conexion {
                   }
         }
          
-         public  boolean ValidaSocio(String correo, String contraseña){
+         public  boolean ValidarSocio(String correo, String contraseña){
                   PreparedStatement ps=null;
                   Connection con=getConnection();
                   ResultSet rs=null;
@@ -43,15 +43,6 @@ public class SociosDAO extends Conexion {
                            ps.setString(2,contraseña);
                            rs=ps.executeQuery();
                            if (rs.next()) {
-                               /*Socios socio=new Socios(rs.getString("socio_dni"),
-                               rs.getString("socio_nombre"),
-                               rs.getString("socio_apellido_paterno"),
-                               rs.getString("socio_apellido_materno"),
-                               rs.getString("socio_correo"),
-                               rs.getString("socio_nacimiento"),
-                               rs.getString("socio_numero"),
-                               rs.getString("socio_contraseña"),
-                               rs.getInt("socio_puntos")); */
                                     return true;
                            }
 
@@ -60,7 +51,7 @@ public class SociosDAO extends Conexion {
                   }finally{
                            try {
                                     con.close();
-                                    System.out.println("Conexion cerrada con la BD:ZBUSSBD");
+                                    System.out.println("Conexion cerrada con la BD: ZBUSSBD");
                            } catch (SQLException ex) {
                                     System.out.println(ex);
                            }

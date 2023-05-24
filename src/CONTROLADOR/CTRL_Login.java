@@ -167,7 +167,7 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                            SociosDAO dao=new SociosDAO();
                            if ( login.Txt_contraseña.getText() != null && login.Txt_correoElectronico.getText() != null) {
                                
-                                    if (dao.ValidaSocio(login.Txt_correoElectronico.getText(), login.Txt_contraseña.getText())) {
+                                    if (dao.ValidarSocio(login.Txt_correoElectronico.getText(), login.Txt_contraseña.getText())) {
                                         
                                              Socios sesionSocio= dao.ObtenerDatos(login.Txt_correoElectronico.getText(), login.Txt_contraseña.getText());
                                              Interfaz_Principal principal=new Interfaz_Principal();

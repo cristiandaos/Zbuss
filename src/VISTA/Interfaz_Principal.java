@@ -21,8 +21,9 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         BTN_cerrarSesion = new javax.swing.JButton();
         UsuarioLBL = new javax.swing.JLabel();
         Logo = new javax.swing.JLabel();
-        reloj1 = new UTILIDADES.Reloj();
+        reloj = new UTILIDADES.Reloj();
         jLabel4 = new javax.swing.JLabel();
+        LBLinfoCuenta = new javax.swing.JLabel();
         ScrollPanelDinamico = new javax.swing.JScrollPane();
         PanelDinamico = new javax.swing.JPanel();
         ScrollPaneBuses = new javax.swing.JScrollPane();
@@ -73,7 +74,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        BarraSuperior.setBackground(new java.awt.Color(18, 18, 18));
+        BarraSuperior.setBackground(new java.awt.Color(12, 12, 12));
         BarraSuperior.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(BarraSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 50));
 
@@ -81,10 +82,10 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         PanelLayer.setPreferredSize(new java.awt.Dimension(1280, 670));
         PanelLayer.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        BarraLateral.setBackground(new java.awt.Color(18, 18, 18));
+        BarraLateral.setBackground(new java.awt.Color(12, 12, 12));
         BarraLateral.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        BTN_cerrarSesion.setBackground(new java.awt.Color(18, 18, 18));
+        BTN_cerrarSesion.setBackground(new java.awt.Color(12, 12, 12));
         BTN_cerrarSesion.setFont(new java.awt.Font("Consolas", 0, 16)); // NOI18N
         BTN_cerrarSesion.setForeground(new java.awt.Color(255, 255, 255));
         BTN_cerrarSesion.setText("Cerrar Sesión");
@@ -101,20 +102,30 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         BarraLateral.add(UsuarioLBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 90, -1));
 
         Logo.setBackground(new java.awt.Color(255, 255, 255));
-        Logo.setFont(new java.awt.Font("SansSerif", 1, 48)); // NOI18N
+        Logo.setFont(new java.awt.Font("SansSerif", 1, 40)); // NOI18N
         Logo.setForeground(new java.awt.Color(255, 255, 255));
-        Logo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Logo.setText("Z-Buss");
+        Logo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        Logo.setText(" Z-Buss");
         Logo.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 4, 0, new java.awt.Color(123, 216, 80)));
         BarraLateral.add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, -1));
 
-        reloj1.setBorder(null);
-        BarraLateral.add(reloj1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 130, 40));
+        reloj.setBackground(new java.awt.Color(12, 12, 12));
+        reloj.setBorder(null);
+        BarraLateral.add(reloj, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 130, 40));
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI Emoji", 1, 26)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI Emoji", 1, 22)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Hola otra vez,");
         BarraLateral.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, -1, 40));
+
+        LBLinfoCuenta.setBackground(new java.awt.Color(12, 12, 12));
+        LBLinfoCuenta.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        LBLinfoCuenta.setForeground(new java.awt.Color(255, 255, 255));
+        LBLinfoCuenta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LBLinfoCuenta.setText("Mi cuenta");
+        LBLinfoCuenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        LBLinfoCuenta.setOpaque(true);
+        BarraLateral.add(LBLinfoCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 460, 180, 80));
 
         PanelLayer.setLayer(BarraLateral, javax.swing.JLayeredPane.PALETTE_LAYER);
         PanelLayer.add(BarraLateral, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 670));
@@ -138,6 +149,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         ScrollPaneBuses.setVerifyInputWhenFocusTarget(false);
 
         PanelBuses.setBackground(new java.awt.Color(255, 255, 255));
+        PanelBuses.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(12, 12, 12)));
         PanelBuses.setPreferredSize(new java.awt.Dimension(1100, 670));
 
         javax.swing.GroupLayout PanelBusesLayout = new javax.swing.GroupLayout(PanelBuses);
@@ -148,7 +160,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         );
         PanelBusesLayout.setVerticalGroup(
             PanelBusesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 670, Short.MAX_VALUE)
+            .addGap(0, 667, Short.MAX_VALUE)
         );
 
         ScrollPaneBuses.setViewportView(PanelBuses);
@@ -156,6 +168,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         PanelDinamico.add(ScrollPaneBuses, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, 670));
 
         PanelAsientos.setBackground(new java.awt.Color(255, 255, 255));
+        PanelAsientos.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(12, 12, 12)));
         PanelAsientos.setPreferredSize(new java.awt.Dimension(1100, 650));
         PanelAsientos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -242,12 +255,11 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         jLabel16.setFont(new java.awt.Font("Segoe UI Emoji", 0, 16)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(0, 0, 0));
         jLabel16.setText("Asientos Seleccionados:");
-        PanelAsientos.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, 170, -1));
+        PanelAsientos.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, 170, 30));
 
-        LBLasientosSele.setFont(new java.awt.Font("Segoe UI Emoji", 1, 16)); // NOI18N
+        LBLasientosSele.setFont(new java.awt.Font("Segoe UI Emoji", 0, 14)); // NOI18N
         LBLasientosSele.setForeground(new java.awt.Color(0, 0, 0));
-        LBLasientosSele.setText("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        PanelAsientos.add(LBLasientosSele, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 350, -1, -1));
+        PanelAsientos.add(LBLasientosSele, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 330, -1, 30));
 
         jLabel18.setFont(new java.awt.Font("Segoe UI Emoji", 0, 16)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(0, 0, 0));
@@ -286,14 +298,17 @@ public class Interfaz_Principal extends javax.swing.JFrame {
 
         CONT.setEditable(false);
         CONT.setBackground(new java.awt.Color(255, 255, 255));
-        CONT.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
+        CONT.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
         CONT.setForeground(new java.awt.Color(0, 0, 0));
+        CONT.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        CONT.setText("0");
         CONT.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        PanelAsientos.add(CONT, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 300, 40, 30));
+        PanelAsientos.add(CONT, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 300, 30, 30));
 
         PanelDinamico.add(PanelAsientos, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 0, 1100, 670));
 
         PanelPasajeros.setBackground(new java.awt.Color(255, 255, 255));
+        PanelPasajeros.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(12, 12, 12)));
         PanelPasajeros.setPreferredSize(new java.awt.Dimension(1100, 670));
         PanelPasajeros.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -476,6 +491,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
     public javax.swing.JLabel LBLasientosSele;
     public javax.swing.JLabel LBLhoraLlegada;
     public javax.swing.JLabel LBLhoraSalida;
+    public javax.swing.JLabel LBLinfoCuenta;
     public javax.swing.JLabel LBLnumAsiento;
     public javax.swing.JLabel LBLprecio;
     public javax.swing.JLabel LBLtermLlegada;
@@ -511,6 +527,6 @@ public class Interfaz_Principal extends javax.swing.JFrame {
     public javax.swing.JLabel jLabel7;
     public javax.swing.JLabel jLabel8;
     public javax.swing.JLabel jLabel9;
-    public UTILIDADES.Reloj reloj1;
+    public UTILIDADES.Reloj reloj;
     // End of variables declaration//GEN-END:variables
 }

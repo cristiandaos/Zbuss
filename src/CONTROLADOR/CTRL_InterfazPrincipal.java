@@ -84,7 +84,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   this.vista.BTN_confirmarCompra.addMouseListener(this);
                   this.vista.BTN_IzquiAcompañantes.addActionListener(this);
                   this.vista.BTN_derechaAcompañantes.addActionListener(this);
-
+                  this.vista.LBLinfoCuenta.addMouseListener(this);
 
                   GenerarPaneles(cant);
 
@@ -433,6 +433,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            asiento.setIcon(asientoDisp);
                            asiento.setBounds(x,y,32,32);
                            asiento.setName("Disponible");
+                           asiento.setToolTipText("A"+i);
 
                            asiento.setCursor(new Cursor(Cursor.HAND_CURSOR));
                            ArrayAsientos.add(asiento);
@@ -533,6 +534,12 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                                              asientos.setName("Seleccionado");
                                              vista.BTN_siguiente.setEnabled(true);
                                              vista.BTN_siguiente.addMouseListener(this);
+                                             String texto=asientos.getToolTipText();
+                                             if (vista.LBLasientosSele.getText().isEmpty()) {
+                                                      vista.LBLasientosSele.setText(texto);
+                                             }else{
+                                                      vista.LBLasientosSele.setText(vista.LBLasientosSele.getText()+","+texto);
+                                             }
 
                                     }else if (asientos.getName().equals("Seleccionado")) {
                                              vista.BTN_siguiente.removeMouseListener(this);
@@ -563,6 +570,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
 
                   }
 
+                  
                   for (JButton btns : ArrayBtns) {
                           if (e.getSource()==btns) {
                                     btns.setContentAreaFilled(true);
@@ -572,28 +580,38 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            }
                   }
 
+                  
                   if (e.getSource()==vista.BTN_volverBuses) {
                            vista.BTN_volverBuses.setBackground(Color.RED);
                            vista.BTN_volverBuses.setForeground(Color.WHITE);
                            vista.BTN_volverBuses.setFont(new  Font("Consolas",Font.BOLD,18));
                   }
 
+                  
                   if (e.getSource()==vista.BTN_siguiente) {
                            vista.BTN_siguiente.setBackground(Color.RED);
                            vista.BTN_siguiente.setForeground(Color.WHITE);
                            vista.BTN_siguiente.setFont(new  Font("Consolas",Font.BOLD,18));
                   }
 
+                  
                   if (e.getSource()==vista.BTN_volverAsientos) {
                            vista.BTN_volverAsientos.setBackground(Color.RED);
                            vista.BTN_volverAsientos.setForeground(Color.WHITE);
                            vista.BTN_volverAsientos.setFont(new  Font("Consolas",Font.BOLD,18));
                   }
 
+                  
                   if (e.getSource()==vista.BTN_confirmarCompra) {
                            vista.BTN_confirmarCompra.setBackground(Color.RED);
                            vista.BTN_confirmarCompra.setForeground(Color.WHITE);
                            vista.BTN_confirmarCompra.setFont(new  Font("Consolas",Font.BOLD,18));
+                  }
+                  
+                  
+                  if (e.getSource()==vista.LBLinfoCuenta) {
+                           vista.LBLinfoCuenta.setBackground(new Color(21,24, 30));
+                           vista.LBLinfoCuenta.setFont(new Font("Consolas",Font.BOLD,18)); 
                   }
             
          }
@@ -603,7 +621,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
          public void mouseExited(MouseEvent e) {
         
                   if (e.getSource()==vista.BTN_cerrarSesion) {
-                           vista.BTN_cerrarSesion.setBackground(new Color(18,18,18));
+                           vista.BTN_cerrarSesion.setBackground(new Color(12,12,12));
                            vista.BTN_cerrarSesion.setFont(new  Font("Consolas",Font.PLAIN,16));
                   }
         
@@ -637,6 +655,11 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            vista.BTN_confirmarCompra.setBackground(Color.WHITE);
                            vista.BTN_confirmarCompra.setForeground(Color.BLACK);
                            vista.BTN_confirmarCompra.setFont(new  Font("Consolas",Font.PLAIN,18));
+                  }
+                  
+                  if (e.getSource()==vista.LBLinfoCuenta) {
+                           vista.LBLinfoCuenta.setBackground(new Color(12,12,12));
+                           vista.LBLinfoCuenta.setFont(new Font("Consolas",Font.PLAIN,18)); 
                   }
     }
 
