@@ -110,14 +110,14 @@ public class Login extends javax.swing.JFrame {
         PanelInicioSesion.add(Txt_correoElectronico, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 220, 40));
 
         BTN_IniciarSesion.setBackground(new java.awt.Color(18, 18, 18));
-        BTN_IniciarSesion.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        BTN_IniciarSesion.setFont(new java.awt.Font("Consolas", 0, 16)); // NOI18N
         BTN_IniciarSesion.setForeground(new java.awt.Color(255, 255, 255));
         BTN_IniciarSesion.setText("Ingresar");
-        BTN_IniciarSesion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(123, 216, 80), 2, true));
+        BTN_IniciarSesion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(123, 216, 80), 1, true));
         BTN_IniciarSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BTN_IniciarSesion.setFocusPainted(false);
         BTN_IniciarSesion.setFocusable(false);
-        PanelInicioSesion.add(BTN_IniciarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 350, 120, 30));
+        PanelInicioSesion.add(BTN_IniciarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 350, 120, 30));
 
         PanelDinamico.add(PanelInicioSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 0, 320, 520));
 
@@ -125,7 +125,7 @@ public class Login extends javax.swing.JFrame {
         PanelIntemediario.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         BTN_clienteInvitado.setBackground(new java.awt.Color(12, 12, 12));
-        BTN_clienteInvitado.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
+        BTN_clienteInvitado.setFont(new java.awt.Font("Consolas", 0, 16)); // NOI18N
         BTN_clienteInvitado.setForeground(new java.awt.Color(255, 255, 255));
         BTN_clienteInvitado.setText("Continuar como invitado");
         BTN_clienteInvitado.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(51, 204, 0)));
@@ -150,10 +150,10 @@ public class Login extends javax.swing.JFrame {
         RegistrarPanelAux.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         LBL_infoRegistrarse.setBackground(new java.awt.Color(12, 12, 12));
-        LBL_infoRegistrarse.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        LBL_infoRegistrarse.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         LBL_infoRegistrarse.setForeground(new java.awt.Color(255, 255, 255));
-        LBL_infoRegistrarse.setText("<html><p> Registrate y no dejes pasar la oportunidad de disfrutar de tarifas exclusivas y promociones especiales. </p><html>");
-        RegistrarPanelAux.add(LBL_infoRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 210, 150));
+        LBL_infoRegistrarse.setText("<html><p align=\"justify\"> Registrate y no dejes pasar la oportunidad de disfrutar de tarifas exclusivas y promociones especiales. </p><html>");
+        RegistrarPanelAux.add(LBL_infoRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 160, 150));
 
         Lbl_tituloRegistrar.setBackground(new java.awt.Color(255, 255, 255));
         Lbl_tituloRegistrar.setFont(new java.awt.Font("SansSerif", 1, 32)); // NOI18N
@@ -161,33 +161,33 @@ public class Login extends javax.swing.JFrame {
         Lbl_tituloRegistrar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         Lbl_tituloRegistrar.setText("Registrarse");
         Lbl_tituloRegistrar.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(51, 204, 0)));
-        RegistrarPanelAux.add(Lbl_tituloRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 180, 60));
+        RegistrarPanelAux.add(Lbl_tituloRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 180, 60));
 
         jLabel5.setBackground(new java.awt.Color(255, 255, 255));
         jLabel5.setFont(new java.awt.Font("Segoe UI Emoji", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Tiene una cuenta?");
-        RegistrarPanelAux.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 130, 20));
+        RegistrarPanelAux.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, 130, 20));
 
         LBL_mostrarLogin.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         LBL_mostrarLogin.setForeground(new java.awt.Color(123, 216, 80));
         LBL_mostrarLogin.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         LBL_mostrarLogin.setText("Inicia Sesión aquí");
-        RegistrarPanelAux.add(LBL_mostrarLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 330, 120, 20));
+        RegistrarPanelAux.add(LBL_mostrarLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 330, 120, 20));
 
-        PanelDinamicoInfo.add(RegistrarPanelAux, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 0, 280, 400));
+        PanelDinamicoInfo.add(RegistrarPanelAux, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 0, 320, 400));
 
         IniciarSesionPanelAux.setBackground(new java.awt.Color(12, 12, 12));
         IniciarSesionPanelAux.setPreferredSize(new java.awt.Dimension(320, 400));
         IniciarSesionPanelAux.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         LBL_infoInicioSesion.setBackground(new java.awt.Color(0, 0, 0));
-        LBL_infoInicioSesion.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        LBL_infoInicioSesion.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         LBL_infoInicioSesion.setForeground(new java.awt.Color(255, 255, 255));
         LBL_infoInicioSesion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LBL_infoInicioSesion.setText("<html><p> Accede a tu cuenta para revisar horarios, acumular puntos de fidelidad y disfrutar de beneficios. </p><html>");
-        IniciarSesionPanelAux.add(LBL_infoInicioSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 170, 150));
+        LBL_infoInicioSesion.setText("<html><p align=\"justify\"> Accede a tu cuenta para revisar horarios, acumular puntos de fidelidad y disfrutar de beneficios. </p><html>");
+        IniciarSesionPanelAux.add(LBL_infoInicioSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, 160, 150));
 
         Lbl_tituloIniciarSesion.setBackground(new java.awt.Color(255, 255, 255));
         Lbl_tituloIniciarSesion.setFont(new java.awt.Font("SansSerif", 1, 32)); // NOI18N
@@ -195,22 +195,22 @@ public class Login extends javax.swing.JFrame {
         Lbl_tituloIniciarSesion.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         Lbl_tituloIniciarSesion.setText("Iniciar Sesión");
         Lbl_tituloIniciarSesion.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(51, 204, 0)));
-        IniciarSesionPanelAux.add(Lbl_tituloIniciarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 210, 60));
+        IniciarSesionPanelAux.add(Lbl_tituloIniciarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 210, 60));
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Segoe UI Emoji", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("No tiene una cuenta?");
-        IniciarSesionPanelAux.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 140, 20));
+        IniciarSesionPanelAux.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 330, 140, 20));
 
         LBL_mostrarRegistro.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         LBL_mostrarRegistro.setForeground(new java.awt.Color(123, 216, 80));
         LBL_mostrarRegistro.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         LBL_mostrarRegistro.setText("Registrate aquí.");
-        IniciarSesionPanelAux.add(LBL_mostrarRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 330, 120, 20));
+        IniciarSesionPanelAux.add(LBL_mostrarRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 330, 120, 20));
 
-        PanelDinamicoInfo.add(IniciarSesionPanelAux, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 280, 400));
+        PanelDinamicoInfo.add(IniciarSesionPanelAux, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, 400));
 
         ScrollPanelInfo.setViewportView(PanelDinamicoInfo);
 
@@ -222,14 +222,15 @@ public class Login extends javax.swing.JFrame {
         PanelRegistro.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         BTN_ConfirmarRegistro.setBackground(new java.awt.Color(18, 18, 18));
-        BTN_ConfirmarRegistro.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
+        BTN_ConfirmarRegistro.setFont(new java.awt.Font("Consolas", 0, 16)); // NOI18N
         BTN_ConfirmarRegistro.setForeground(new java.awt.Color(255, 255, 255));
         BTN_ConfirmarRegistro.setText("Confirmar");
-        BTN_ConfirmarRegistro.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(123, 216, 80), 2, true));
+        BTN_ConfirmarRegistro.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(123, 216, 80), 1, true));
         BTN_ConfirmarRegistro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BTN_ConfirmarRegistro.setFocusPainted(false);
         BTN_ConfirmarRegistro.setFocusable(false);
-        PanelRegistro.add(BTN_ConfirmarRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 480, 120, 30));
+        BTN_ConfirmarRegistro.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        PanelRegistro.add(BTN_ConfirmarRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 470, 110, 30));
 
         Txt_ApeMatRegistro.setBackground(new java.awt.Color(18, 18, 18));
         Txt_ApeMatRegistro.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N

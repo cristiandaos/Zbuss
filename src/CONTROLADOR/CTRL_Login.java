@@ -69,7 +69,8 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                   
                   JScrollBar scroll=login.ScrollPanelDinamico.getHorizontalScrollBar();
                   scroll.setValue(320);
-                  Shape redondeado=new RoundRectangle2D.Double(0,0,login.getBounds().width,login.getBounds().getHeight(),30,30);
+                  Shape redondeado=new RoundRectangle2D.Double(0,0,login.getBounds().width,login.getBounds().getHeight(),25,25);
+                  login.Txt_correoElectronico.requestFocus();
                   login.setShape(redondeado);
                   login.revalidate();
                   login.setVisible(true);  
@@ -83,8 +84,8 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
          
         void SliderScroll(JScrollBar scrollBar,int delay, int moverValor,int auxiliar) {
                   Timer Timer = new Timer(delay, new ActionListener() {
-                  private int incremento = (moverValor - scrollBar.getValue()) / auxiliar;
-                  private int valor = scrollBar.getValue();
+                  int incremento = (moverValor - scrollBar.getValue()) / auxiliar;
+                  int valor = scrollBar.getValue();
 
             @Override
                   public void actionPerformed(ActionEvent e) {
@@ -93,7 +94,7 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                                     if ((incremento > 0 && valor > moverValor) || (incremento < 0 && valor < moverValor)) {
                                              valor = moverValor;
                                     }
-                                scrollBar.setValue(valor);
+                                    scrollBar.setValue(valor);
                            } else {
                                     ((Timer) e.getSource()).stop();
                            }
@@ -162,15 +163,19 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                            Interfaz_Principal principal=new Interfaz_Principal();
                            CTRL_InterfazPrincipal ctrl_principal=new CTRL_InterfazPrincipal(principal);
                            ctrl_principal.Iniciar();
-
                   }
                   
         
                   if (e.getSource()==login.BTN_IniciarSesion) {
                            SociosDAO dao=new SociosDAO();
-                           if ( login.Txt_contraseña.getText() != null && login.Txt_correoElectronico.getText() != null) {
-                               
-                                    if (dao.ValidarSocio(login.Txt_correoElectronico.getText(), login.Txt_contraseña.getText())) {
+                           String correo=login.Txt_correoElectronico.getText();
+                           String contraseña=login.Txt_contraseña.getText();
+                           if ( (correo.isBlank() && contraseña.isBlank()) || (!correo.isBlank() && contraseña.isBlank()) || (!contraseña.isBlank() && correo.isBlank()) ) {
+
+                                    Emergente msg=new Emergente(null,"Error en el ingreso","No se debe dejar ningún campo vacio");        
+                                    
+                           }else{
+                                    if (dao.ValidarSocio(correo, contraseña)) {
                                         
                                              Socios sesionSocio= dao.ObtenerDatos(login.Txt_correoElectronico.getText(), login.Txt_contraseña.getText());
                                              Interfaz_Principal principal=new Interfaz_Principal();
@@ -181,13 +186,8 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                                     }else{
                                         
                                              Emergente msg=new Emergente(null, "Error en el ingreso","El correo y/o contraseña ingresados son incorrectos");
-                                    
+                                             
                                     }
-                                    
-                           }else{
-                               
-                                    Emergente msg=new Emergente(null,"Error en el ingreso","No se debe dejar ningún campo vacio");
-                           
                            }          
                   }
         
@@ -287,17 +287,17 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                   }
          
                   if (e.getSource()==login.BTN_clienteInvitado) {
-                           login.BTN_clienteInvitado.setFont(new Font("Segoe",Font.BOLD,14));
+                           login.BTN_clienteInvitado.setFont(new Font("Consolas",Font.BOLD,16));
                   }
          
                   if (e.getSource()==login.BTN_IniciarSesion) {
                            login.BTN_IniciarSesion.setBackground(new Color(21,24, 30));
-                           login.BTN_IniciarSesion.setFont(new Font("Consolas",Font.BOLD,18));
+                           login.BTN_IniciarSesion.setFont(new Font("Consolas",Font.BOLD,16));
                   }
          
                   if (e.getSource()==login.BTN_ConfirmarRegistro) {
                            login.BTN_ConfirmarRegistro.setBackground(new Color(21,24, 30));
-                           login.BTN_ConfirmarRegistro.setFont(new Font("Consolas",Font.BOLD,14));
+                           login.BTN_ConfirmarRegistro.setFont(new Font("Consolas",Font.BOLD,16));
                   }
                   
                   if (e.getSource()==login.LBL_mostrarLogin) {
@@ -317,17 +317,17 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                   }
 
                   if (e.getSource()==login.BTN_clienteInvitado) {
-                           login.BTN_clienteInvitado.setFont(new Font("Consolas",Font.PLAIN,14));
-                  }
+                           login.BTN_clienteInvitado.setFont(new Font("Consolas",Font.PLAIN,16));
+                  } 
 
                   if (e.getSource()==login.BTN_IniciarSesion) {
                            login.BTN_IniciarSesion.setBackground(new Color(18,18,18));
-                           login.BTN_IniciarSesion.setFont(new Font("Consolas",Font.PLAIN,18));
+                           login.BTN_IniciarSesion.setFont(new Font("Consolas",Font.PLAIN,16));
                   }
 
                   if (e.getSource()==login.BTN_ConfirmarRegistro) {
                            login.BTN_ConfirmarRegistro.setBackground(new Color(18,18,18));
-                           login.BTN_ConfirmarRegistro.setFont(new Font("Consolas",Font.PLAIN,14));
+                           login.BTN_ConfirmarRegistro.setFont(new Font("Consolas",Font.PLAIN,16));
                   }
                   
                   if (e.getSource()==login.LBL_mostrarLogin) {

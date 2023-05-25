@@ -78,7 +78,7 @@ public  class Emergente extends JDialog implements ActionListener,MouseMotionLis
                 Titulo=new JLabel(titulo);
                 Titulo.setBounds(10,0, BarraSuperior.getWidth()-btnCerrar.getWidth(),40);
                 Titulo.setForeground(Color.WHITE);
-                Titulo.setFont(new Font("Segou UI",Font.PLAIN,16));
+                Titulo.setFont(new Font("Segou UI",Font.BOLD,16));
                 BarraSuperior.add(Titulo);
                 
                 contenido=new JPanel(null);
@@ -97,7 +97,7 @@ public  class Emergente extends JDialog implements ActionListener,MouseMotionLis
                 btnConfirmar.setFocusable(false);
                 btnConfirmar.setCursor(new Cursor(Cursor.HAND_CURSOR));
                 btnConfirmar.setBorder(new MatteBorder(0,0,2,0,new Color(123,216,80)));
-                btnConfirmar.setBackground(new Color(18,18,18));
+                btnConfirmar.setBackground(new Color(14,14,14));
                 btnConfirmar.setBounds((contenido.getWidth()-50)/2, mensaje.getY()+mensaje.getHeight()+20, 50, 30);
                 btnConfirmar.addMouseListener(this);
                 btnConfirmar.addActionListener(this);
