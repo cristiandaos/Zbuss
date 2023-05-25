@@ -78,6 +78,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   this.vista.BTN_volverBuses.addActionListener(this);
                   this.vista.BTN_volverBuses.addMouseListener(this);
                   this.vista.BTN_siguiente.addActionListener(this);
+                  this.vista.BTN_siguiente.addMouseListener(this);
                   this.vista.BTN_volverAsientos.addActionListener(this);
                   this.vista.BTN_volverAsientos.addMouseListener(this);
                   this.vista.BTN_confirmarCompra.addActionListener(this);
@@ -138,13 +139,13 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
          
          void Iniciar(){
                   ((JSpinner.DefaultEditor) vista.SPNEdadPasa.getEditor()).getTextField().setEditable(false);
-                  ((JSpinner.DefaultEditor) vista.SPNEdadPasa.getEditor()).getTextField().setBackground(new Color(12,12,12));
+                  ((JSpinner.DefaultEditor) vista.SPNEdadPasa.getEditor()).getTextField().setBackground(new Color(10,10,10));
                   ((JSpinner.DefaultEditor) vista.SPNEdadPasa.getEditor()).getTextField().setForeground(Color.WHITE);
-                  DiseñoScroll(new Color(43,255,0), new Color(16, 16, 16));
+                  DiseñoScroll(new Color(43,255,0), new Color(6, 6, 6));
                   PlaceHolder Nombre=new PlaceHolder("Nombre", vista.TxtNombrePasa, PlaceHolder.Show.ALWAYS);
                   PlaceHolder ApePat=new PlaceHolder("Apellido Paterno", vista.TxtApellidoPatePasa, PlaceHolder.Show.ALWAYS);
                   PlaceHolder ApeMat=new PlaceHolder("Apellido Materno", vista.TxtApellidoMatePasa, PlaceHolder.Show.ALWAYS);
-                  Shape redondeado=new RoundRectangle2D.Double(0,0,vista.getBounds().width,vista.getBounds().getHeight(),30,30);  
+                  Shape redondeado=new RoundRectangle2D.Double(0,0,vista.getBounds().width,vista.getBounds().getHeight(),25,25);  
                   Reloj reloj=new Reloj();
                   reloj.setBounds(20, 10, 140, 40);
                   vista.PanelReloj.add(reloj);
@@ -183,13 +184,14 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            contenedor.setRoundTopRight(40);
                            contenedor.setRoundTopLeft(40);
                            contenedor.setBounds(x, y, ancho, alto);
-                           contenedor.setColorInicial(new Color(18, 18, 18));
+                           contenedor.setColorInicial(new Color(12,12,12));
                            contenedor.setColorFinal(Color.BLACK);
                            contenedor.setLayout(null);
+                           contenedor.setBorder(new LineBorder(new Color(123,216,80),1,true));
                            ArrayPaneles.add(contenedor);
 
                            img.setBounds(20, 20, 360, 250);
-                           img.setBorder(new LineBorder(Color.WHITE,2,true));
+                           img.setBorder(new LineBorder(Color.WHITE,1));
                            ArrayImgs.add(img);
                            contenedor.add(img);
 
@@ -218,7 +220,6 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            asientosDispo.setText(" Asientos Disponibles: ");
                            asientosDispo.setForeground(Color.WHITE);
                            asientosDispo.setFont(new Font("consolas",Font.PLAIN,16));
-                           asientosDispo.setBorder(new MatteBorder(0,0,2,0,new Color(123,216,80)));
                            ArrayAsientosDisp.add(asientosDispo);
                            contenedor.add(asientosDispo);
 
@@ -279,7 +280,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            Bordeado.setTitleFont(new Font("Consolas", Font.BOLD, 18));
                            Bordeado.setTitleColor(Color.WHITE);
                            contenedor.setBorder(Bordeado);
-                           contenedor.setBackground(new Color(12,12,12));
+                           contenedor.setBackground(new Color(10,10,10));
                            contenedor.setBounds(x, y, ancho, alto);
                            contenedor.setLayout(null);
 
@@ -291,6 +292,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
 
                            TXTnombre.setBounds(10, 30, 270, 30);
                            TXTnombre.setBorder(new MatteBorder(0,0,2,0,Color.WHITE));
+                           TXTnombre.setBackground(new Color(10,10,10));
                            TXTnombre.setFont(new Font("Segoe UI",Font.PLAIN,16));
                            PlaceHolder nom=new PlaceHolder("Nombre",TXTnombre,PlaceHolder.Show.ALWAYS);
                            contenedor.add(TXTnombre);
@@ -298,12 +300,14 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            TXTapePat.setBounds(10, 80, 270, 30);
                            TXTapePat.setBorder(new MatteBorder(0,0,2,0,Color.WHITE));
                            TXTapePat.setFont(new Font("Segoe UI",Font.PLAIN,16));
+                           TXTapePat.setBackground(new Color(10,10,10));
                            PlaceHolder apePat=new PlaceHolder("Apellido Paterno",TXTapePat,PlaceHolder.Show.ALWAYS);
                            contenedor.add(TXTapePat);
 
                            TXTapeMat.setBounds(10, 130, 270, 30);
                            TXTapeMat.setBorder(new MatteBorder(0,0,2,0,Color.WHITE));
                            TXTapeMat.setFont(new Font("Segoe UI",Font.PLAIN,16));
+                           TXTapeMat.setBackground(new Color(10,10,10));
                            PlaceHolder apeMat=new PlaceHolder("Apellido Materno",TXTapeMat,PlaceHolder.Show.ALWAYS);
                            contenedor.add(TXTapeMat);
 
@@ -316,23 +320,24 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            SpinnerNumberModel spinnerModel = (SpinnerNumberModel) SPNedad.getModel();
                            spinnerModel.setMinimum(0); 
                            SPNedad.setBounds(440,30,60,30);
-                           SPNedad.setBorder(new MatteBorder(0,0,2,0,Color.BLACK));
+                           SPNedad.setBorder(new MatteBorder(0,0,2,0,Color.WHITE));
                            ((JSpinner.DefaultEditor) SPNedad.getEditor()).getTextField().setEditable(false);
-                           ((JSpinner.DefaultEditor) SPNedad.getEditor()).getTextField().setBackground(new Color(12,12,12));
+                           ((JSpinner.DefaultEditor) SPNedad.getEditor()).getTextField().setBackground(new Color(10,10,10));
                            ((JSpinner.DefaultEditor) SPNedad.getEditor()).getTextField().setForeground(Color.WHITE);
                            contenedor.add(SPNedad);
 
                            LBLdni.setBounds(390, 90, 50, 30);
                            LBLdni.setText("DNI:");
                            LBLdni.setFont(new Font("Segoe UI",Font.PLAIN,18));
-                           LBLdni.setForeground(Color.BLACK);
+                           LBLdni.setForeground(Color.WHITE);
                            contenedor.add(LBLdni);
 
                            try {
                                     MaskFormatter formatoDNI = new MaskFormatter("########");
                                     JFormattedTextField FTXTdni=new JFormattedTextField(formatoDNI);
                                     FTXTdni.setBounds(440, 90, 150, 30);
-                                    FTXTdni.setBorder(new MatteBorder(0,0,2,0,Color.BLACK));
+                                    FTXTdni.setBackground(new Color(10,10,10));
+                                    FTXTdni.setBorder(new MatteBorder(0,0,2,0,Color.WHITE));
                                     FTXTdni.setFont(new Font("Segoe UI",Font.PLAIN,16));
                                     contenedor.add(FTXTdni);
                            } catch (ParseException ex) {
@@ -503,6 +508,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                                     JScrollBar scrollBar = vista.ScrollPanelDinamico.getHorizontalScrollBar();
                                     int derecha=scrollBar.getValue()+1100;
                                     SliderScroll(scrollBar,10,derecha,5);
+                                    vista.BTN_siguiente.setVisible(false);
                            }
                   }
 
@@ -568,8 +574,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                                              asientos.setIcon(asientoSele);
                                              cantPasajeros++;
                                              vista.CONT.setText(String.valueOf(cantPasajeros));
-                                             vista.BTN_siguiente.setEnabled(true);
-                                             vista.BTN_siguiente.addMouseListener(this);
+                                             vista.BTN_siguiente.setVisible(true);
                                              String texto=asientos.getName();
                                              
                                              if (vista.LBLasientosSeleccionados.getText().isEmpty()) {
@@ -581,13 +586,12 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                                     }else if (asientos.getBackground().equals(Color.BLUE)) {
                                              asientos.setBackground(Color.GREEN);
                                              asientos.setIcon(asientoDisp);
-                                             vista.BTN_siguiente.removeMouseListener(this);
                                              cantPasajeros--;
                                              vista.CONT.setText(String.valueOf(cantPasajeros));
                                              deseleccionarAsiento(asientos.getName());
                                              
                                             if (cantPasajeros==0) {
-                                                      vista.BTN_siguiente.setEnabled(false);
+                                                      vista.BTN_siguiente.setVisible(false);
                                             }
                                     }
                            }
@@ -614,36 +618,36 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                                     btns.setContentAreaFilled(true);
                                     btns.setBackground(new Color(21,24, 30));
                                     btns.setFont(new Font("Consolas",Font.BOLD,18));
-                                    btns.setBorder(new MatteBorder(0,0,2,0,new Color(123,216,80)));
+                                    btns.setBorder(new LineBorder(new Color(123,216,80),1));
                            }
                   }
 
                   
                   if (e.getSource()==vista.BTN_volverBuses) {
                            vista.BTN_volverBuses.setBackground(new Color(21,24, 30));
-                           vista.BTN_volverBuses.setBorder(new MatteBorder(0,0,1,0,Color.GREEN));
+                           vista.BTN_volverBuses.setBorder(new MatteBorder(0,0,2,0,Color.GREEN));
                            vista.BTN_volverBuses.setFont(new Font("Consolas",Font.BOLD,18));
                   }
 
                   
                   if (e.getSource()==vista.BTN_siguiente) {
                            vista.BTN_siguiente.setBackground(new Color(21,24, 30));
-                           vista.BTN_siguiente.setBorder(new MatteBorder(0,0,1,0,Color.GREEN));
+                           vista.BTN_siguiente.setBorder(new MatteBorder(0,0,2,0,Color.GREEN));
                            vista.BTN_siguiente.setFont(new Font("Consolas",Font.BOLD,18));
                   }
 
                   
                   if (e.getSource()==vista.BTN_volverAsientos) {
-                           vista.BTN_volverAsientos.setBackground(Color.RED);
-                           vista.BTN_volverAsientos.setForeground(Color.WHITE);
+                           vista.BTN_volverAsientos.setBackground(new Color(21,24, 30));
                            vista.BTN_volverAsientos.setFont(new  Font("Consolas",Font.BOLD,18));
+                           vista.BTN_volverAsientos.setBorder(new MatteBorder(0,0,2,0,Color.GREEN));
                   }
 
                   
                   if (e.getSource()==vista.BTN_confirmarCompra) {
-                           vista.BTN_confirmarCompra.setBackground(Color.RED);
-                           vista.BTN_confirmarCompra.setForeground(Color.WHITE);
+                           vista.BTN_confirmarCompra.setBackground(new Color(21,24, 30));
                            vista.BTN_confirmarCompra.setFont(new  Font("Consolas",Font.BOLD,18));
+                           vista.BTN_confirmarCompra.setBorder(new MatteBorder(0,0,2,0,Color.GREEN));
                   }
                   
                   
@@ -667,36 +671,36 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            if (e.getSource()==btns) {
                                     btns.setContentAreaFilled(false);
                                     btns.setFont(new Font("Consolas",Font.PLAIN,18));
-                                    btns.setBorder(new EmptyBorder(0, 0, 0, 0));
+                                    btns.setBorder(null);
                            }
                   }
         
                   if (e.getSource()==vista.BTN_volverBuses) {
                            vista.BTN_volverBuses.setBackground(new Color(6,6,6));
-                           vista.BTN_volverBuses.setBorder(null);
+                           vista.BTN_volverBuses.setBorder(new MatteBorder(0,0,1,0, new Color(123,216,80)));
                            vista.BTN_volverBuses.setFont(new Font("Consolas",Font.PLAIN,18));
                   }
          
                   if (e.getSource()==vista.BTN_siguiente) {
                            vista.BTN_siguiente.setBackground(new Color(6,6,6));
-                           vista.BTN_siguiente.setBorder(null);
+                           vista.BTN_siguiente.setBorder(new MatteBorder(0,0,1,0, new Color(123,216,80)));
                            vista.BTN_siguiente.setFont(new Font("Consolas",Font.PLAIN,18));
                   }
          
                   if (e.getSource()==vista.BTN_volverAsientos) {
-                           vista.BTN_volverAsientos.setBackground(Color.WHITE);
-                           vista.BTN_volverAsientos.setForeground(Color.BLACK);
+                           vista.BTN_volverAsientos.setBackground(new Color(6,6,6));
                            vista.BTN_volverAsientos.setFont(new  Font("Consolas",Font.PLAIN,18));
+                           vista.BTN_volverAsientos.setBorder(new MatteBorder(0,0,1,0, new Color(123,216,80)));
                   }
          
                   if (e.getSource()==vista.BTN_confirmarCompra) {
-                           vista.BTN_confirmarCompra.setBackground(Color.WHITE);
-                           vista.BTN_confirmarCompra.setForeground(Color.BLACK);
+                           vista.BTN_confirmarCompra.setBackground(new Color(6,6,6));
                            vista.BTN_confirmarCompra.setFont(new  Font("Consolas",Font.PLAIN,18));
+                           vista.BTN_confirmarCompra.setBorder(new MatteBorder(0,0,1,0, new Color(123,216,80)));
                   }
                   
                   if (e.getSource()==vista.LBLinfoCuenta) {
-                           vista.LBLinfoCuenta.setBackground(new Color(12,12,12));
+                           vista.LBLinfoCuenta.setBackground(Color.BLACK);
                            vista.LBLinfoCuenta.setFont(new Font("Consolas",Font.PLAIN,18)); 
                   }
     }
