@@ -5,10 +5,13 @@ import VISTA.*;
 import UTILIDADES.*;
 import com.sun.source.tree.BreakTree;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
@@ -43,13 +46,18 @@ import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
+import javax.swing.ToolTipManager;
+import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.plaf.ScrollBarUI;
+import javax.swing.plaf.SpinnerUI;
+import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.plaf.basic.BasicScrollBarUI;
+import javax.swing.plaf.basic.BasicSpinnerUI;
 import javax.swing.text.MaskFormatter;
 
 
@@ -110,16 +118,18 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            asientos.addMouseListener(this);
                   }
                   
-                  Shape redondeado=new RoundRectangle2D.Double(0,0,vista.getBounds().width,vista.getBounds().getHeight(),25,25);  
-                  vista.setShape(redondeado);
                   
                   InicializarReloj();
                   
-                  DiseñoScroll(new Color(43,255,0), new Color(12, 12, 12));
+                  DiseñoScroll(new Color(123,216,80), Color.BLACK);
                   
                   vista.BTN_ConfirmarAsientos.setVisible(false);
                   
                   vista.BTN_confirmarCompra.setVisible(false);
+                  
+                  Shape redondeado=new RoundRectangle2D.Double(0,0,vista.getBounds().width,vista.getBounds().getHeight(),30,30);
+                  vista.setShape(redondeado);
+                  vista.revalidate();
          } 
     
          
@@ -187,15 +197,14 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   }
          
          
-         
          void Iniciar(){
                   ((JSpinner.DefaultEditor) vista.SPNEdadPasajero.getEditor()).getTextField().setEditable(false);
                   ((JSpinner.DefaultEditor) vista.SPNEdadPasajero.getEditor()).getTextField().setBackground(new Color(10,10,10));
                   ((JSpinner.DefaultEditor) vista.SPNEdadPasajero.getEditor()).getTextField().setForeground(Color.WHITE);
                   
-                  PlaceHolder Nombre=new PlaceHolder("Nombre", vista.TxtNombrePasajero, PlaceHolder.Show.ALWAYS);
-                  PlaceHolder ApePat=new PlaceHolder("Apellido Paterno", vista.TxtApellidoPatePasajero, PlaceHolder.Show.ALWAYS);
-                  PlaceHolder ApeMat=new PlaceHolder("Apellido Materno", vista.TxtApellidoMatePasajero, PlaceHolder.Show.ALWAYS);
+                  PlaceHolder Nombre=new PlaceHolder("Nombre", vista.TxtNombrePasajero, PlaceHolder.Visibilidad.ALWAYS);
+                  PlaceHolder ApePat=new PlaceHolder("Apellido Paterno", vista.TxtApellidoPatePasajero, PlaceHolder.Visibilidad.ALWAYS);
+                  PlaceHolder ApeMat=new PlaceHolder("Apellido Materno", vista.TxtApellidoMatePasajero, PlaceHolder.Visibilidad.ALWAYS);
                   
                   vista.setVisible(true); 
          }
@@ -355,7 +364,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            TXTnombre.setFont(new Font("Segoe UI",Font.PLAIN,16));
                            TXTnombre.setForeground(Color.WHITE);
                            TXTnombre.setCaretColor(Color.WHITE);
-                           PlaceHolder nom=new PlaceHolder("Nombre",TXTnombre,PlaceHolder.Show.ALWAYS);
+                           PlaceHolder nom=new PlaceHolder("Nombre",TXTnombre,PlaceHolder.Visibilidad.ALWAYS);
                            TXTnombre.setName("TXTnombre");
                            contenedor.add(TXTnombre);
                            ArrayAcompañantesNombres.add(TXTnombre);
@@ -366,7 +375,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            TXTapePat.setBackground(new Color(10,10,10));
                            TXTapePat.setForeground(Color.WHITE);
                            TXTapePat.setCaretColor(Color.WHITE);
-                           PlaceHolder apePat=new PlaceHolder("Apellido Paterno",TXTapePat,PlaceHolder.Show.ALWAYS);
+                           PlaceHolder apePat=new PlaceHolder("Apellido Paterno",TXTapePat,PlaceHolder.Visibilidad.ALWAYS);
                            TXTapePat.setName("TXTapePat");
                            contenedor.add(TXTapePat);
                            ArrayAcompañantesApellidosPat.add(TXTapePat);
@@ -377,7 +386,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            TXTapeMat.setBackground(new Color(10,10,10));
                            TXTapeMat.setForeground(Color.WHITE);
                            TXTapeMat.setCaretColor(Color.WHITE);
-                           PlaceHolder apeMat=new PlaceHolder("Apellido Materno",TXTapeMat,PlaceHolder.Show.ALWAYS);
+                           PlaceHolder apeMat=new PlaceHolder("Apellido Materno",TXTapeMat,PlaceHolder.Visibilidad.ALWAYS);
                            TXTapeMat.setName("TXTapePat");
                            ArrayAcompañantesApellidosMat.add(TXTapeMat);
                            contenedor.add(TXTapeMat);
@@ -520,8 +529,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            asiento.setBounds(x,y,32,32);
                            asiento.setBackground(Color.GREEN);
                            asiento.setName("A"+i);
-                           asiento.setToolTipText("A"+i);
-
+                           asiento.setText("A+i");
                            asiento.setCursor(new Cursor(Cursor.HAND_CURSOR));
                            ArrayAsientos.add(asiento);
                            vista.Buss.add(asiento);
@@ -564,7 +572,14 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   }
                   vista.LBLasientosSeleccionados.setText(txt);
          }
-   
+        
+         private void seleccionarAsiento(String asiento){
+                  if (vista.LBLasientosSeleccionados.getText().isEmpty()) {
+                           vista.LBLasientosSeleccionados.setText(asiento);
+                   }else{
+                            vista.LBLasientosSeleccionados.setText(vista.LBLasientosSeleccionados.getText()+","+asiento);
+                  }
+         }
          
          void asignarAsientos(){
                   String texto=vista.LBLasientosSeleccionados.getText();
@@ -663,21 +678,15 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                                              asientos.setBackground(Color.BLUE);
                                              asientos.setIcon(asientoSele);
                                              cantPasajeros++;
-                                             vista.CONT.setText(String.valueOf(cantPasajeros));
+                                             vista.LBLasientosCont.setText(String.valueOf(cantPasajeros));
                                              vista.BTN_ConfirmarAsientos.setVisible(true);
-                                             String texto=asientos.getName();
-                                             
-                                             if (vista.LBLasientosSeleccionados.getText().isEmpty()) {
-                                                      vista.LBLasientosSeleccionados.setText(texto);
-                                             }else{
-                                                      vista.LBLasientosSeleccionados.setText(vista.LBLasientosSeleccionados.getText()+","+texto);
-                                             }
+                                             seleccionarAsiento(asientos.getName()); 
 
                                     }else if (asientos.getBackground().equals(Color.BLUE)) {
                                              asientos.setBackground(Color.GREEN);
                                              asientos.setIcon(asientoDisp);
                                              cantPasajeros--;
-                                             vista.CONT.setText(String.valueOf(cantPasajeros));
+                                             vista.LBLasientosCont.setText(String.valueOf(cantPasajeros));
                                              deseleccionarAsiento(asientos.getName());
                                              
                                             if (cantPasajeros==0) {
@@ -709,6 +718,12 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                                     btns.setBackground(new Color(21,24, 30));
                                     btns.setFont(new Font("Consolas",Font.BOLD,18));
                                     btns.setBorder(new LineBorder(new Color(123,216,80),1));
+                           }
+                  }
+                  
+                  for (JLabel asiento : ArrayAsientos) {
+                           if (e.getSource()==asiento) {
+                                    vista.LBLasientoName.setText(asiento.getName());
                            }
                   }
 
@@ -762,6 +777,12 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                                     btns.setContentAreaFilled(false);
                                     btns.setFont(new Font("Consolas",Font.PLAIN,18));
                                     btns.setBorder(null);
+                           }
+                  }
+                  
+                  for (JLabel asiento : ArrayAsientos) {
+                           if (e.getSource()==asiento) {
+                                    vista.LBLasientoName.setText("");
                            }
                   }
         

@@ -9,18 +9,16 @@ import javax.swing.event.*;
 import javax.swing.text.*;
 
 public class PlaceHolder extends JLabel implements FocusListener, DocumentListener {
-                  public enum Show {
+                  public enum Visibilidad {
                       ALWAYS, FOCUS_GAINED, FOCUS_LOST;
                    }
 	private JTextComponent component;
 	private Document document;
-	private Show show;
-	private boolean showPromptOnce;
-	private int focusLost;
+	private Visibilidad show;
 
-         public PlaceHolder(String text, JTextComponent component, Show show) {
+         public PlaceHolder(String text, JTextComponent component, Visibilidad show) {
 	this.component = component;
-	setShow(show);
+	setVisibilidad(show);
 	document = component.getDocument();
 	setText(text);
 	setFont(component.getFont());
@@ -33,20 +31,12 @@ public class PlaceHolder extends JLabel implements FocusListener, DocumentListen
 	checkForPrompt();
          }
          
-         public Show getShow() {
+         public Visibilidad getVisibilidad() {
 	return show;
          }
 
-         public void setShow(Show show) {
+         public void setVisibilidad(Visibilidad show) {
 	this.show = show;
-         }
-
-         public boolean getShowPromptOnce() {
-                  return showPromptOnce;
-         }
-
-         public void setShowPromptOnce(boolean showPromptOnce) {
-	this.showPromptOnce = showPromptOnce;
          }
 
         private void checkForPrompt() {
@@ -55,23 +45,18 @@ public class PlaceHolder extends JLabel implements FocusListener, DocumentListen
                             return;
 	}
 
-                   if (showPromptOnce && focusLost > 0) {
-                            setVisible(false);
-                            return;
-	}
-
 	if (component.hasFocus()) {
-                            if (show == Show.ALWAYS || show == Show.FOCUS_GAINED){
+                           if (show == Visibilidad.ALWAYS || show == Visibilidad.FOCUS_GAINED){
 		setVisible(true);
-                            } else{
+                           } else{
 		setVisible(false);
-                            }
+                           }
 	} else {
-                            if (show == Show.ALWAYS || show == Show.FOCUS_LOST){
+                           if (show == Visibilidad.ALWAYS || show == Visibilidad.FOCUS_LOST){
 		setVisible(true);
-                            }else{
+                           }else{
 		setVisible(false);
-                            }
+                           }
 	}
          }
 
@@ -81,7 +66,6 @@ public class PlaceHolder extends JLabel implements FocusListener, DocumentListen
 	}
 
 	public void focusLost(FocusEvent e) {
-		focusLost++;
 		checkForPrompt();
 	}
 

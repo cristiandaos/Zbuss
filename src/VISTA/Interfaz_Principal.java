@@ -33,6 +33,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         PanelAsientos = new javax.swing.JPanel();
         Buss = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
+        LBLasientoName = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         LBLasientosSeleccionados = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -49,7 +50,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         LBLhoraLlegada = new javax.swing.JLabel();
         LBLhoraSalida = new javax.swing.JLabel();
-        CONT = new javax.swing.JLabel();
+        LBLasientosCont = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         BTN_cancelarAsientos = new javax.swing.JButton();
         BTN_ConfirmarAsientos = new javax.swing.JButton();
@@ -165,7 +166,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         ScrollPaneBuses.setRequestFocusEnabled(false);
         ScrollPaneBuses.setVerifyInputWhenFocusTarget(false);
 
-        PanelBuses.setBackground(new java.awt.Color(6, 6, 6));
+        PanelBuses.setBackground(new java.awt.Color(7, 7, 7));
         PanelBuses.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         PanelBuses.setPreferredSize(new java.awt.Dimension(1100, 670));
 
@@ -184,7 +185,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
 
         PanelDinamico.add(ScrollPaneBuses, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, 670));
 
-        PanelAsientos.setBackground(new java.awt.Color(6, 6, 6));
+        PanelAsientos.setBackground(new java.awt.Color(7, 7, 7));
         PanelAsientos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         PanelAsientos.setPreferredSize(new java.awt.Dimension(1100, 650));
         PanelAsientos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -196,24 +197,34 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Conductor");
 
+        LBLasientoName.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        LBLasientoName.setForeground(new java.awt.Color(255, 255, 255));
+        LBLasientoName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LBLasientoName.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+
         javax.swing.GroupLayout BussLayout = new javax.swing.GroupLayout(Buss);
         Buss.setLayout(BussLayout);
         BussLayout.setHorizontalGroup(
             BussLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(BussLayout.createSequentialGroup()
-                .addGap(104, 104, 104)
+                .addContainerGap()
+                .addComponent(LBLasientoName, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65)
                 .addComponent(jLabel9)
-                .addContainerGap(114, Short.MAX_VALUE))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
         BussLayout.setVerticalGroup(
             BussLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(BussLayout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jLabel9)
-                .addContainerGap(580, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(BussLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(LBLasientoName, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(562, Short.MAX_VALUE))
         );
 
-        PanelAsientos.add(Buss, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 30, 310, 610));
+        PanelAsientos.add(Buss, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 30, 310, 610));
 
         jPanel1.setBackground(new java.awt.Color(12, 12, 12));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -293,11 +304,11 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         LBLhoraSalida.setText("HORARIO/SALIDA");
         jPanel1.add(LBLhoraSalida, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 240, 140, -1));
 
-        CONT.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
-        CONT.setForeground(new java.awt.Color(255, 255, 255));
-        CONT.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        CONT.setText("0");
-        jPanel1.add(CONT, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 340, 40, 30));
+        LBLasientosCont.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
+        LBLasientosCont.setForeground(new java.awt.Color(255, 255, 255));
+        LBLasientosCont.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LBLasientosCont.setText("0");
+        jPanel1.add(LBLasientosCont, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 340, 40, 30));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -305,7 +316,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         jLabel5.setText("Seleccione sus asientos");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 270, -1));
 
-        PanelAsientos.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, 430, 550));
+        PanelAsientos.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 500, 550));
 
         BTN_cancelarAsientos.setBackground(new java.awt.Color(6, 6, 6));
         BTN_cancelarAsientos.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
@@ -316,7 +327,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         BTN_cancelarAsientos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BTN_cancelarAsientos.setFocusable(false);
         BTN_cancelarAsientos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        PanelAsientos.add(BTN_cancelarAsientos, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 600, 140, 30));
+        PanelAsientos.add(BTN_cancelarAsientos, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 590, 140, 30));
 
         BTN_ConfirmarAsientos.setBackground(new java.awt.Color(6, 6, 6));
         BTN_ConfirmarAsientos.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
@@ -331,11 +342,11 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         BTN_ConfirmarAsientos.setRequestFocusEnabled(false);
         BTN_ConfirmarAsientos.setRolloverEnabled(false);
         BTN_ConfirmarAsientos.setVerifyInputWhenFocusTarget(false);
-        PanelAsientos.add(BTN_ConfirmarAsientos, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 600, 140, 30));
+        PanelAsientos.add(BTN_ConfirmarAsientos, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 590, 140, 30));
 
         PanelDinamico.add(PanelAsientos, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 0, 1100, 670));
 
-        PanelPasajeros.setBackground(new java.awt.Color(6, 6, 6));
+        PanelPasajeros.setBackground(new java.awt.Color(7, 7, 7));
         PanelPasajeros.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         PanelPasajeros.setPreferredSize(new java.awt.Dimension(1100, 670));
         PanelPasajeros.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -346,7 +357,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         ScrollPanelPasajeros.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         ScrollPanelPasajeros.setWheelScrollingEnabled(false);
 
-        PanelFormPasajeros.setBackground(new java.awt.Color(6, 6, 6));
+        PanelFormPasajeros.setBackground(new java.awt.Color(7, 7, 7));
         PanelFormPasajeros.setPreferredSize(new java.awt.Dimension(850, 200));
 
         javax.swing.GroupLayout PanelFormPasajerosLayout = new javax.swing.GroupLayout(PanelFormPasajeros);
@@ -526,9 +537,10 @@ public class Interfaz_Principal extends javax.swing.JFrame {
     public javax.swing.JPanel BarraLateral;
     public javax.swing.JPanel BarraSuperior;
     public javax.swing.JPanel Buss;
-    public javax.swing.JLabel CONT;
     public javax.swing.JLabel LBLPrecioTotal;
+    public javax.swing.JLabel LBLasientoName;
     public javax.swing.JLabel LBLasientoPasajero;
+    public javax.swing.JLabel LBLasientosCont;
     public javax.swing.JLabel LBLasientosSeleccionados;
     public javax.swing.JLabel LBLfecha;
     public javax.swing.JLabel LBLhora;
