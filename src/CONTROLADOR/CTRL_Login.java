@@ -46,11 +46,8 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                   this.login.BTN_clienteInvitado.addActionListener(this);
                   this.login.BTN_clienteInvitado.addMouseListener(this);
                   this.login.BTN_VisibilidadRegistro.addActionListener(this);
-
- 
-         }
-    
-         void Iniciar(){
+                  
+                  
                   PlaceHolder CorreoElectronico=new PlaceHolder("Correo Electronico", this.login.Txt_correoElectronico,PlaceHolder.Show.ALWAYS);
 
                   PlaceHolder Contraseña=new PlaceHolder("Contraseña", this.login.Txt_contraseña,PlaceHolder.Show.ALWAYS);
@@ -67,13 +64,17 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
 
                   PlaceHolder confirmRegistro=new PlaceHolder("Confirmar Contraseña",this.login.Txt_ConfirmContraRegistro, PlaceHolder.Show.ALWAYS);
                   
+ 
+         }
+    
+         void Iniciar(){
                   JScrollBar scroll=login.ScrollPanelDinamico.getHorizontalScrollBar();
                   scroll.setValue(320);
                   Shape redondeado=new RoundRectangle2D.Double(0,0,login.getBounds().width,login.getBounds().getHeight(),25,25);
-                  login.Txt_correoElectronico.requestFocus();
                   login.setShape(redondeado);
                   login.revalidate();
                   login.setVisible(true);  
+                  login.Txt_correoElectronico.requestFocus();
          }
      
      
@@ -313,7 +314,7 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
     @Override
          public void mouseExited(MouseEvent e) {
                   if (e.getSource()==login.BTN_cerrar) {
-                           login.BTN_cerrar.setBackground(new Color(12,12,12));
+                           login.BTN_cerrar.setBackground(new Color(6,6,6));
                   }
 
                   if (e.getSource()==login.BTN_clienteInvitado) {

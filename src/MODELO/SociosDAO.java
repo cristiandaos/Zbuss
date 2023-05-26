@@ -77,7 +77,6 @@ public class SociosDAO extends Conexion {
                   }finally{
                            try {
                                     con.close();
-                                    System.out.println("Conexion cerrada con la BD: ZBUSSBD");
                            } catch (SQLException ex) {
                                     System.out.println(ex);
                            }
@@ -112,7 +111,6 @@ public class SociosDAO extends Conexion {
                   }finally{
                            try {
                                     con.close();
-                                    System.out.println("Conexion cerrada con la BD:ZBUSSBD");
                            } catch (SQLException ex) {
                                     System.out.println(ex);
                            }

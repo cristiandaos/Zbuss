@@ -10,11 +10,11 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
-public class Reloj extends JLabel implements Runnable{
+public class FechaHora extends JLabel implements Runnable{
     private SimpleDateFormat formato = new SimpleDateFormat("HH:mm:ss");
     private Thread thread;
 
-    public Reloj() {
+    public FechaHora() {
         thread = new Thread(this);
         thread.start();
         setForeground(Color.white);
