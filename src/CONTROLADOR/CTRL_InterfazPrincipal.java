@@ -3,16 +3,10 @@ package CONTROLADOR;
 import MODELO.Socios;
 import VISTA.*;
 import UTILIDADES.*;
-import com.sun.source.tree.BreakTree;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,7 +28,6 @@ import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -42,22 +35,15 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
-import javax.swing.ToolTipManager;
-import javax.swing.UIManager;
 import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.plaf.ScrollBarUI;
-import javax.swing.plaf.SpinnerUI;
-import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.plaf.basic.BasicScrollBarUI;
-import javax.swing.plaf.basic.BasicSpinnerUI;
 import javax.swing.text.MaskFormatter;
 
 
@@ -65,12 +51,12 @@ import javax.swing.text.MaskFormatter;
 public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,MouseMotionListener,KeyListener,WindowListener{
          private Interfaz_Principal vista;
          private Socios usuario=null;
-         private int cant=3;
+         private int cant=10;
          private int cantPasajeros;
          private int x;
          private int y;
+         
          private ArrayList<PanelPersonalizado>ArrayPaneles;
-         private ArrayList<JButton>ArrayBtns;
          private ArrayList<JLabel>ArrayHorarios;
          private ArrayList<JLabel>ArrayDestinos;
          private ArrayList<JLabel>ArrayImgs;
@@ -89,29 +75,38 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
          public CTRL_InterfazPrincipal(Interfaz_Principal vistaPrincipal){
                   this.vista=vistaPrincipal;
                   this.vista.addWindowListener(this);
+                  
                   this.vista.BarraSuperior.addMouseMotionListener(this);
                   this.vista.BarraSuperior.addMouseListener(this);
+                  
                   this.vista.BTN_cerrarSesion.addActionListener(this);
                   this.vista.BTN_cerrarSesion.addMouseListener(this);
+                  
                   this.vista.BTN_cancelarAsientos.addActionListener(this);
                   this.vista.BTN_cancelarAsientos.addMouseListener(this);
+                  
                   this.vista.BTN_ConfirmarAsientos.addActionListener(this);
                   this.vista.BTN_ConfirmarAsientos.addMouseListener(this);
+                  
                   this.vista.BTN_cancelarPasajeros.addActionListener(this);
                   this.vista.BTN_cancelarPasajeros.addMouseListener(this);
+                  
                   this.vista.BTN_confirmarCompra.addActionListener(this);
                   this.vista.BTN_confirmarCompra.addMouseListener(this);
+                  
                   this.vista.BTN_IzquiAcompañantes.addActionListener(this);
                   this.vista.BTN_derechaAcompañantes.addActionListener(this);
-                  this.vista.LBLinfoCuenta.addMouseListener(this);
-
+                  
+                  this.vista.LBLinfoUsuario.addMouseListener(this);
+                  
+                  this.vista.LBLhistorialUsuario.addMouseListener(this);
+                  
                   GenerarPaneles(cant);
 
                   generarAsientos();
-
-                  for (JButton btns : ArrayBtns) { 
-                           btns.addActionListener(this);
-                           btns.addMouseListener(this);
+                  
+                  for (PanelPersonalizado paneles : ArrayPaneles) {
+                           paneles.addMouseListener(this);
                   }
                   
                   for (JLabel asientos : ArrayAsientos) {
@@ -121,11 +116,15 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   
                   InicializarReloj();
                   
-                  DiseñoScroll(new Color(123,216,80), Color.BLACK);
+                  DiseñoScroll(Color.GREEN, Color.BLACK);
                   
                   vista.BTN_ConfirmarAsientos.setVisible(false);
                   
                   vista.BTN_confirmarCompra.setVisible(false);
+                  
+                  ((JSpinner.DefaultEditor) vista.SPNEdadPasajero.getEditor()).getTextField().setEditable(false);
+                  ((JSpinner.DefaultEditor) vista.SPNEdadPasajero.getEditor()).getTextField().setBackground(new Color(10,10,10));
+                  ((JSpinner.DefaultEditor) vista.SPNEdadPasajero.getEditor()).getTextField().setForeground(Color.WHITE);
                   
                   Shape redondeado=new RoundRectangle2D.Double(0,0,vista.getBounds().width,vista.getBounds().getHeight(),30,30);
                   vista.setShape(redondeado);
@@ -148,18 +147,13 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
          
          void Iniciar(Socios socioIngresado){
                   usuario=socioIngresado;
-                  vista.UsuarioLBL.setText(usuario.getNombre());
+                  vista.LBLusuario.setText(usuario.getNombre());
                   vista.TxtNombrePasajero.setText(usuario.getNombre());
                   vista.TxtApellidoPatePasajero.setText(usuario.getApellidoPaterno());
                   vista.TxtApellidoMatePasajero.setText(usuario.getApellidoMaterno());
                   vista.SPNEdadPasajero.setValue(usuario.calcularEdad());
                   vista.TxtDNIpasajero.setText(usuario.getDni());
-                  
-                  ((JSpinner.DefaultEditor) vista.SPNEdadPasajero.getEditor()).getTextField().setEditable(false);
-                  ((JSpinner.DefaultEditor) vista.SPNEdadPasajero.getEditor()).getTextField().setBackground(new Color(10,10,10));
-                  ((JSpinner.DefaultEditor) vista.SPNEdadPasajero.getEditor()).getTextField().setForeground(Color.WHITE);
-                  
-                  
+                  vista.LBLpuntosUsuario.setText(String.valueOf(usuario.getPuntos()));
                   vista.setVisible(true);
          }
          
@@ -169,7 +163,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   Date fechaActual=new Date();
 
                   SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
-                   SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+                  SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
 
                    String horaActualTexto = formatoHora.format(horaActual);
                   String FechaActualTexto=formatoFecha.format(fechaActual);
@@ -198,13 +192,13 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
          
          
          void Iniciar(){
-                  ((JSpinner.DefaultEditor) vista.SPNEdadPasajero.getEditor()).getTextField().setEditable(false);
-                  ((JSpinner.DefaultEditor) vista.SPNEdadPasajero.getEditor()).getTextField().setBackground(new Color(10,10,10));
-                  ((JSpinner.DefaultEditor) vista.SPNEdadPasajero.getEditor()).getTextField().setForeground(Color.WHITE);
                   
                   PlaceHolder Nombre=new PlaceHolder("Nombre", vista.TxtNombrePasajero, PlaceHolder.Visibilidad.ALWAYS);
                   PlaceHolder ApePat=new PlaceHolder("Apellido Paterno", vista.TxtApellidoPatePasajero, PlaceHolder.Visibilidad.ALWAYS);
                   PlaceHolder ApeMat=new PlaceHolder("Apellido Materno", vista.TxtApellidoMatePasajero, PlaceHolder.Visibilidad.ALWAYS);
+                  
+                  vista.LBLusuario.setText("No registrado");
+                  vista.PanelUsuario.setVisible(false);
                   
                   vista.setVisible(true); 
          }
@@ -217,18 +211,16 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
          
          private void GenerarPaneles(int cant){
                   ArrayPaneles=new ArrayList<>();
-                  ArrayBtns=new ArrayList<>();
                   ArrayDestinos=new ArrayList<>();
                   ArrayAsientosDisp=new ArrayList<>();
                   ArrayHorarios=new ArrayList<>();
                   ArrayImgs=new ArrayList<>();
-                  vista.ScrollPaneBuses.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
                   int x=100;
-                  int y=120;
+                  int y=200;
                   int ancho=400;
-                  int alto=500;
+                  int alto=460;
                   int incrementoX=500;
-                  int incrementoY=600;
+                  int incrementoY=550;
                   for (int i = 0; i < cant; i++) {
                            PanelPersonalizado contenedor=new PanelPersonalizado();
                            JLabel info=new JLabel();
@@ -236,15 +228,13 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            JLabel  horario=new JLabel();
                            JLabel destino=new JLabel();
                            JLabel  asientosDispo=new JLabel();
-                           JButton btn=new JButton();
 
-                           contenedor.setRoundTopRight(40);
-                           contenedor.setRoundTopLeft(40);
                            contenedor.setBounds(x, y, ancho, alto);
                            contenedor.setColorInicial(new Color(12,12,12));
                            contenedor.setColorFinal(Color.BLACK);
                            contenedor.setLayout(null);
                            contenedor.setBorder(new LineBorder(new Color(123,216,80),1,true));
+                           contenedor.setCursor(new Cursor(Cursor.HAND_CURSOR));
                            ArrayPaneles.add(contenedor);
 
                            img.setBounds(20, 20, 360, 250);
@@ -280,27 +270,16 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            ArrayAsientosDisp.add(asientosDispo);
                            contenedor.add(asientosDispo);
 
-                           btn.setBounds(0, 450, 400, 50);
-                           btn.setFocusable(false);
-                           btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
-                           btn.setText("Seleccionar");
-                           btn.setFont(new Font("Consolas",Font.PLAIN,18));
-                           btn.setBorder(new EmptyBorder(0,0,0,0));
-                           btn.setForeground(Color.WHITE);
-                           btn.setContentAreaFilled(false);
-                           ArrayBtns.add(btn);
-                           contenedor.add(btn);
-
-                           vista.PanelBuses.add(contenedor);
+                           vista.PanelDestinos.add(contenedor);
                            x+=incrementoX;
-                           if(x>vista.PanelBuses.getWidth()-contenedor.getWidth()){
+                           if(x>vista.PanelDestinos.getWidth()-contenedor.getWidth()){
                                     x=100;
                                     y+=incrementoY;
                            }
 
-                           if (y>vista.PanelBuses.getHeight()) {
-                                    vista.PanelBuses.setPreferredSize(new Dimension((int) vista.PanelBuses.getPreferredSize().getWidth(),ArrayPaneles.get(i).getY()+alto+50));
-                                    vista.ScrollPaneBuses.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                           if (y>vista.PanelDestinos.getHeight()) {
+                                    vista.PanelDestinos.setPreferredSize(new Dimension((int) vista.PanelDestinos.getPreferredSize().getWidth(),ArrayPaneles.get(i).getY()+alto+50));
+                                    vista.ScrollPaneDestinos.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
                            }
                   }   
          }
@@ -486,9 +465,9 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                         return BtnScroll();
                     }
             }; 
-        vista.ScrollPaneBuses.getVerticalScrollBar().setUI(customScrollBarUI);
-        vista.ScrollPaneBuses.getVerticalScrollBar().setCursor(new Cursor(Cursor.HAND_CURSOR));
-        vista.ScrollPaneBuses.getVerticalScrollBar().setUnitIncrement(15);
+        vista.ScrollPaneDestinos.getVerticalScrollBar().setUI(customScrollBarUI);
+        vista.ScrollPaneDestinos.getVerticalScrollBar().setCursor(new Cursor(Cursor.HAND_CURSOR));
+        vista.ScrollPaneDestinos.getVerticalScrollBar().setUnitIncrement(15);
         }
 
     
@@ -601,15 +580,6 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   }
 
                   
-                  for (JButton btns : ArrayBtns) {
-                           if (e.getSource()==btns) {
-                                    JScrollBar scrollBar = vista.ScrollPanelDinamico.getHorizontalScrollBar();
-                                    int derecha=scrollBar.getValue()+1100;
-                                    SliderScroll(scrollBar,10,derecha,5);
-                           }
-                  }
-
-                  
                   if (e.getSource()==vista.BTN_cancelarAsientos) {
                            JScrollBar scrollBar = vista.ScrollPanelDinamico.getHorizontalScrollBar();
                            int izquierda=scrollBar.getValue()-1100;
@@ -656,7 +626,14 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
 
     @Override
          public void mouseClicked(MouseEvent e) {
-     
+             
+                  for (PanelPersonalizado paneles : ArrayPaneles) {
+                           if (e.getSource()==paneles) {
+                                    JScrollBar scrollBar = vista.ScrollPanelDinamico.getHorizontalScrollBar();
+                                    int derecha=scrollBar.getValue()+1100;
+                                    SliderScroll(scrollBar,10,derecha,5);
+                           }
+                  }
         
          }
 
@@ -708,16 +685,16 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   if (e.getSource()==vista.BTN_cerrarSesion) {
                         vista.BTN_cerrarSesion.setBackground(new Color(21,24, 30));
                         vista.BTN_cerrarSesion.setFont(new  Font("Consolas",Font.BOLD,16));
+                        vista.BTN_cerrarSesion.setBorder(new MatteBorder(2,2,2,2,Color.GREEN));
 
                   }
 
                   
-                  for (JButton btns : ArrayBtns) {
-                          if (e.getSource()==btns) {
-                                    btns.setContentAreaFilled(true);
-                                    btns.setBackground(new Color(21,24, 30));
-                                    btns.setFont(new Font("Consolas",Font.BOLD,18));
-                                    btns.setBorder(new LineBorder(new Color(123,216,80),1));
+                  for (PanelPersonalizado paneles : ArrayPaneles) {
+                          if (e.getSource()==paneles) {
+                                    paneles.setColorInicial(new Color(21,24, 30));
+                                    paneles.setColorFinal(Color.BLACK);
+                                    paneles.setBorder(new LineBorder(Color.GREEN,2,true));
                            }
                   }
                   
@@ -730,14 +707,14 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   
                   if (e.getSource()==vista.BTN_cancelarAsientos) {
                            vista.BTN_cancelarAsientos.setBackground(new Color(21,24, 30));
-                           vista.BTN_cancelarAsientos.setBorder(new MatteBorder(0,0,2,0,Color.GREEN));
+                           vista.BTN_cancelarAsientos.setBorder(new MatteBorder(2,2,2,2,Color.GREEN));
                            vista.BTN_cancelarAsientos.setFont(new Font("Consolas",Font.BOLD,18));
                   }
 
                   
                   if (e.getSource()==vista.BTN_ConfirmarAsientos) {
                            vista.BTN_ConfirmarAsientos.setBackground(new Color(21,24, 30));
-                           vista.BTN_ConfirmarAsientos.setBorder(new MatteBorder(0,0,2,0,Color.GREEN));
+                           vista.BTN_ConfirmarAsientos.setBorder(new MatteBorder(2,2,2,2,Color.GREEN));
                            vista.BTN_ConfirmarAsientos.setFont(new Font("Consolas",Font.BOLD,18));
                   }
 
@@ -745,20 +722,25 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   if (e.getSource()==vista.BTN_cancelarPasajeros) {
                            vista.BTN_cancelarPasajeros.setBackground(new Color(21,24, 30));
                            vista.BTN_cancelarPasajeros.setFont(new  Font("Consolas",Font.BOLD,18));
-                           vista.BTN_cancelarPasajeros.setBorder(new MatteBorder(0,0,2,0,Color.GREEN));
+                           vista.BTN_cancelarPasajeros.setBorder(new MatteBorder(2,2,2,2,Color.GREEN));
                   }
 
                   
                   if (e.getSource()==vista.BTN_confirmarCompra) {
                            vista.BTN_confirmarCompra.setBackground(new Color(21,24, 30));
                            vista.BTN_confirmarCompra.setFont(new  Font("Consolas",Font.BOLD,18));
-                           vista.BTN_confirmarCompra.setBorder(new MatteBorder(0,0,2,0,Color.GREEN));
+                           vista.BTN_confirmarCompra.setBorder(new MatteBorder(2,2,2,2,Color.GREEN));
                   }
                   
                   
-                  if (e.getSource()==vista.LBLinfoCuenta) {
-                           vista.LBLinfoCuenta.setBackground(new Color(21,24, 30));
-                           vista.LBLinfoCuenta.setFont(new Font("Consolas",Font.BOLD,18)); 
+                  if (e.getSource()==vista.LBLinfoUsuario) {
+                           vista.LBLinfoUsuario.setBackground(new Color(21,24, 30));
+                           vista.LBLinfoUsuario.setFont(new Font("Consolas",Font.BOLD,18)); 
+                  }
+                  
+                  if (e.getSource()==vista.LBLhistorialUsuario) {
+                           vista.LBLhistorialUsuario.setBackground(new Color(21,24, 30));
+                           vista.LBLhistorialUsuario.setFont(new Font("Consolas",Font.BOLD,18)); 
                   }
             
          }
@@ -768,15 +750,16 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
          public void mouseExited(MouseEvent e) {
         
                   if (e.getSource()==vista.BTN_cerrarSesion) {
-                           vista.BTN_cerrarSesion.setBackground(new Color(12,12,12));
+                           vista.BTN_cerrarSesion.setBackground(Color.BLACK);
                            vista.BTN_cerrarSesion.setFont(new  Font("Consolas",Font.PLAIN,16));
+                           vista.BTN_cerrarSesion.setBorder(new MatteBorder(1,1,1,1,new Color(123,216,80)));
                   }
         
-                  for (JButton btns : ArrayBtns) {
-                           if (e.getSource()==btns) {
-                                    btns.setContentAreaFilled(false);
-                                    btns.setFont(new Font("Consolas",Font.PLAIN,18));
-                                    btns.setBorder(null);
+                  for (PanelPersonalizado paneles : ArrayPaneles) {
+                          if (e.getSource()==paneles) {
+                                    paneles.setColorInicial(new Color(12,12,12));
+                                    paneles.setColorFinal(Color.BLACK);
+                                    paneles.setBorder(new LineBorder(new Color(123,216,80),1,true));
                            }
                   }
                   
@@ -788,31 +771,36 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
         
                   if (e.getSource()==vista.BTN_cancelarAsientos) {
                            vista.BTN_cancelarAsientos.setBackground(new Color(6,6,6));
-                           vista.BTN_cancelarAsientos.setBorder(new MatteBorder(0,0,1,0, new Color(123,216,80)));
+                           vista.BTN_cancelarAsientos.setBorder(new MatteBorder(1,1,1,1, new Color(123,216,80)));
                            vista.BTN_cancelarAsientos.setFont(new Font("Consolas",Font.PLAIN,18));
                   }
          
                   if (e.getSource()==vista.BTN_ConfirmarAsientos) {
                            vista.BTN_ConfirmarAsientos.setBackground(new Color(6,6,6));
-                           vista.BTN_ConfirmarAsientos.setBorder(new MatteBorder(0,0,1,0, new Color(123,216,80)));
+                           vista.BTN_ConfirmarAsientos.setBorder(new MatteBorder(1,1,1,1, new Color(123,216,80)));
                            vista.BTN_ConfirmarAsientos.setFont(new Font("Consolas",Font.PLAIN,18));
                   }
          
                   if (e.getSource()==vista.BTN_cancelarPasajeros) {
                            vista.BTN_cancelarPasajeros.setBackground(new Color(6,6,6));
                            vista.BTN_cancelarPasajeros.setFont(new  Font("Consolas",Font.PLAIN,18));
-                           vista.BTN_cancelarPasajeros.setBorder(new MatteBorder(0,0,1,0, new Color(123,216,80)));
+                           vista.BTN_cancelarPasajeros.setBorder(new MatteBorder(1,1,1,1, new Color(123,216,80)));
                   }
          
                   if (e.getSource()==vista.BTN_confirmarCompra) {
                            vista.BTN_confirmarCompra.setBackground(new Color(6,6,6));
                            vista.BTN_confirmarCompra.setFont(new  Font("Consolas",Font.PLAIN,18));
-                           vista.BTN_confirmarCompra.setBorder(new MatteBorder(0,0,1,0, new Color(123,216,80)));
+                           vista.BTN_confirmarCompra.setBorder(new MatteBorder(1,1,1,1, new Color(123,216,80)));
                   }
                   
-                  if (e.getSource()==vista.LBLinfoCuenta) {
-                           vista.LBLinfoCuenta.setBackground(Color.BLACK);
-                           vista.LBLinfoCuenta.setFont(new Font("Consolas",Font.PLAIN,18)); 
+                  if (e.getSource()==vista.LBLinfoUsuario) {
+                           vista.LBLinfoUsuario.setBackground(Color.BLACK);
+                           vista.LBLinfoUsuario.setFont(new Font("Consolas",Font.PLAIN,18)); 
+                  }
+                  
+                  if (e.getSource()==vista.LBLhistorialUsuario) {
+                           vista.LBLhistorialUsuario.setBackground(Color.BLACK);
+                           vista.LBLhistorialUsuario.setFont(new Font("Consolas",Font.PLAIN,18)); 
                   }
     }
 

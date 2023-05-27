@@ -302,6 +302,7 @@
                           <Dimension value="[720, 400]"/>
                         </Property>
                         <Property name="requestFocusEnabled" type="boolean" value="false"/>
+                        <Property name="wheelScrollingEnabled" type="boolean" value="false"/>
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -359,7 +360,7 @@
                                   </Properties>
                                   <Constraints>
                                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                                      <AbsoluteConstraints x="70" y="90" width="160" height="150"/>
+                                      <AbsoluteConstraints x="70" y="90" width="180" height="150"/>
                                     </Constraint>
                                   </Constraints>
                                 </Component>

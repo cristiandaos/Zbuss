@@ -140,6 +140,7 @@ public class Login extends javax.swing.JFrame {
         ScrollPanelInfo.setFocusable(false);
         ScrollPanelInfo.setPreferredSize(new java.awt.Dimension(720, 400));
         ScrollPanelInfo.setRequestFocusEnabled(false);
+        ScrollPanelInfo.setWheelScrollingEnabled(false);
 
         PanelDinamicoInfo.setBackground(new java.awt.Color(6, 6, 6));
         PanelDinamicoInfo.setMinimumSize(new java.awt.Dimension(560, 400));
@@ -153,7 +154,7 @@ public class Login extends javax.swing.JFrame {
         LBL_infoRegistrarse.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         LBL_infoRegistrarse.setForeground(new java.awt.Color(255, 255, 255));
         LBL_infoRegistrarse.setText("<html><p align=\"justify\"> Registrate y no dejes pasar la oportunidad de disfrutar de tarifas exclusivas y promociones especiales. </p><html>");
-        RegistrarPanelAux.add(LBL_infoRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 160, 150));
+        RegistrarPanelAux.add(LBL_infoRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 180, 150));
 
         Lbl_tituloRegistrar.setBackground(new java.awt.Color(255, 255, 255));
         Lbl_tituloRegistrar.setFont(new java.awt.Font("SansSerif", 1, 32)); // NOI18N
