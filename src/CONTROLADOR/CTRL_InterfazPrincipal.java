@@ -37,7 +37,10 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
@@ -72,63 +75,75 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
          private ArrayList<JSpinner>ArrayAcompañantesEdad;
          private ArrayList<JFormattedTextField>ArrayAcompañantesDNI;
 
-         public CTRL_InterfazPrincipal(Interfaz_Principal vistaPrincipal){
-                  this.vista=vistaPrincipal;
-                  this.vista.addWindowListener(this);
-                  
-                  this.vista.BarraSuperior.addMouseMotionListener(this);
-                  this.vista.BarraSuperior.addMouseListener(this);
-                  
-                  this.vista.BTN_cerrarSesion.addActionListener(this);
-                  this.vista.BTN_cerrarSesion.addMouseListener(this);
-                  
-                  this.vista.BTN_cancelarAsientos.addActionListener(this);
-                  this.vista.BTN_cancelarAsientos.addMouseListener(this);
-                  
-                  this.vista.BTN_ConfirmarAsientos.addActionListener(this);
-                  this.vista.BTN_ConfirmarAsientos.addMouseListener(this);
-                  
-                  this.vista.BTN_cancelarPasajeros.addActionListener(this);
-                  this.vista.BTN_cancelarPasajeros.addMouseListener(this);
-                  
-                  this.vista.BTN_confirmarCompra.addActionListener(this);
-                  this.vista.BTN_confirmarCompra.addMouseListener(this);
-                  
-                  this.vista.BTN_IzquiAcompañantes.addActionListener(this);
-                  this.vista.BTN_derechaAcompañantes.addActionListener(this);
-                  
-                  this.vista.LBLinfoUsuario.addMouseListener(this);
-                  
-                  this.vista.LBLhistorialUsuario.addMouseListener(this);
-                  
-                  GenerarPaneles(cant);
-
-                  generarAsientos();
-                  
-                  for (PanelPersonalizado paneles : ArrayPaneles) {
-                           paneles.addMouseListener(this);
-                  }
-                  
-                  for (JLabel asientos : ArrayAsientos) {
-                           asientos.addMouseListener(this);
-                  }
-                  
-                  
-                  InicializarReloj();
-                  
-                  DiseñoScroll(Color.GREEN, Color.BLACK);
-                  
-                  vista.BTN_ConfirmarAsientos.setVisible(false);
-                  
-                  vista.BTN_confirmarCompra.setVisible(false);
-                  
-                  ((JSpinner.DefaultEditor) vista.SPNEdadPasajero.getEditor()).getTextField().setEditable(false);
-                  ((JSpinner.DefaultEditor) vista.SPNEdadPasajero.getEditor()).getTextField().setBackground(new Color(10,10,10));
-                  ((JSpinner.DefaultEditor) vista.SPNEdadPasajero.getEditor()).getTextField().setForeground(Color.WHITE);
-                  
-                  Shape redondeado=new RoundRectangle2D.Double(0,0,vista.getBounds().width,vista.getBounds().getHeight(),30,30);
-                  vista.setShape(redondeado);
-                  vista.revalidate();
+         public CTRL_InterfazPrincipal(Interfaz_Principal vistaPrincipal)  {
+             try {
+                 this.vista=vistaPrincipal;
+                 this.vista.addWindowListener(this);
+                 
+                 this.vista.BarraSuperior.addMouseMotionListener(this);
+                 this.vista.BarraSuperior.addMouseListener(this);
+                 
+                 this.vista.BTN_cerrarSesion.addActionListener(this);
+                 this.vista.BTN_cerrarSesion.addMouseListener(this);
+                 
+                 this.vista.BTN_cancelarAsientos.addActionListener(this);
+                 this.vista.BTN_cancelarAsientos.addMouseListener(this);
+                 
+                 this.vista.BTN_ConfirmarAsientos.addActionListener(this);
+                 this.vista.BTN_ConfirmarAsientos.addMouseListener(this);
+                 
+                 this.vista.BTN_cancelarPasajeros.addActionListener(this);
+                 this.vista.BTN_cancelarPasajeros.addMouseListener(this);
+                 
+                 this.vista.BTN_confirmarCompra.addActionListener(this);
+                 this.vista.BTN_confirmarCompra.addMouseListener(this);
+                 
+                 this.vista.BTN_IzquiAcompañantes.addActionListener(this);
+                 this.vista.BTN_derechaAcompañantes.addActionListener(this);
+                 
+                 this.vista.LBLinfoUsuario.addMouseListener(this);
+                 
+                 this.vista.LBLhistorialUsuario.addMouseListener(this);
+                 
+                 GenerarPaneles(cant);
+                 
+                 generarAsientos();
+                 
+                 for (PanelPersonalizado paneles : ArrayPaneles) {
+                     paneles.addMouseListener(this);
+                 }
+                 
+                 for (JLabel asientos : ArrayAsientos) {
+                     asientos.addMouseListener(this);
+                 }
+                 
+                 
+                 InicializarReloj();
+                 
+                 DiseñoScroll(Color.GREEN, Color.BLACK);
+                 
+                 vista.BTN_ConfirmarAsientos.setVisible(false);
+                 
+                 vista.BTN_confirmarCompra.setVisible(false);
+                 
+                 ((JSpinner.DefaultEditor) vista.SPNEdadPasajero.getEditor()).getTextField().setEditable(false);
+                 ((JSpinner.DefaultEditor) vista.SPNEdadPasajero.getEditor()).getTextField().setBackground(new Color(10,10,10));
+                 ((JSpinner.DefaultEditor) vista.SPNEdadPasajero.getEditor()).getTextField().setForeground(Color.WHITE);
+                 
+                 Shape redondeado=new RoundRectangle2D.Double(0,0,vista.getBounds().width,vista.getBounds().getHeight(),30,30);
+                 vista.setShape(redondeado);
+                 vista.revalidate();
+                 
+                 try {
+                     UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+                 } catch (UnsupportedLookAndFeelException ex) {
+                     Logger.getLogger(CTRL_InterfazPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                 }
+             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+                 Logger.getLogger(CTRL_InterfazPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+             }
+             
+             UIManager.put("Button.focus", Color.GREEN);
          } 
     
          
