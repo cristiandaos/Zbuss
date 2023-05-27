@@ -79,30 +79,30 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
      
      
          void Cerrar(){
-            login.dispose();
+                  login.dispose();
          }
       
          
         void SliderScroll(JScrollBar scrollBar,int delay, int moverValor,int auxiliar) {
-                  Timer Timer = new Timer(delay, new ActionListener() {
+                  Timer Temporizador = new Timer(delay, new ActionListener() {
                   int incremento = (moverValor - scrollBar.getValue()) / auxiliar;
                   int valor = scrollBar.getValue();
 
             @Override
-                  public void actionPerformed(ActionEvent e) {
-                           if (valor != moverValor) {
-                                    valor += incremento;
-                                    if ((incremento > 0 && valor > moverValor) || (incremento < 0 && valor < moverValor)) {
-                                             valor = moverValor;
+                           public void actionPerformed(ActionEvent e) {
+                                    if (valor != moverValor) {
+                                             valor += incremento;
+                                             if ((incremento > 0 && valor > moverValor) || (incremento < 0 && valor < moverValor)) {
+                                                       valor = moverValor;
+                                             }
+                                             scrollBar.setValue(valor);
+                                    } else {
+                                             ((Timer) e.getSource()).stop();
                                     }
-                                    scrollBar.setValue(valor);
-                           } else {
-                                    ((Timer) e.getSource()).stop();
-                           }
-                  }
+                            }
                   }
                   );
-                  Timer.start();
+                  Temporizador.start();
          }   
         
      
@@ -171,25 +171,22 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                            SociosDAO dao=new SociosDAO();
                            String correo=login.Txt_correoElectronico.getText();
                            String contraseña=login.Txt_contraseña.getText();
+                           
                            if ( (correo.isBlank() && contraseña.isBlank()) || (!correo.isBlank() && contraseña.isBlank()) || (!contraseña.isBlank() && correo.isBlank()) ) {
-
                                     Emergente msg=new Emergente(null,"Error en el ingreso","No se debe dejar ningún campo vacio");        
-                                    
-                           }else{
-                                    if (dao.ValidarSocio(correo, contraseña)) {
-                                        
-                                             Socios sesionSocio= dao.ObtenerDatos(login.Txt_correoElectronico.getText(), login.Txt_contraseña.getText());
-                                             Interfaz_Principal principal=new Interfaz_Principal();
-                                             CTRL_InterfazPrincipal ctrl_principal=new CTRL_InterfazPrincipal(principal);                                          
-                                             ctrl_principal.Iniciar(sesionSocio);
-                                             Cerrar();
-                                             
-                                    }else{
-                                        
-                                             Emergente msg=new Emergente(null, "Error en el ingreso","El correo y/o contraseña ingresados son incorrectos");
-                                             
-                                    }
-                           }          
+                                    return;
+                           }
+                           
+                          if (!dao.ValidarSocio(correo, contraseña)) {
+                                    Emergente msg=new Emergente(null, "Error en el ingreso","El correo y/o contraseña ingresados son incorrectos");
+                                    return;
+                           }
+                          
+                           Socios sesionSocio= dao.ObtenerDatos(correo, contraseña);
+                           Interfaz_Principal principal=new Interfaz_Principal();
+                           CTRL_InterfazPrincipal ctrl_principal=new CTRL_InterfazPrincipal(principal);                                          
+                           ctrl_principal.Iniciar(sesionSocio);
+                           Cerrar();                           
                   }
         
                   
@@ -203,29 +200,38 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                   
                   
                   if (e.getSource()==login.BTN_ConfirmarRegistro) {
-                           if (login.Txt_ContraRegistro.getText().equals(login.Txt_ConfirmContraRegistro.getText())) {
-                                    Socios socio=new Socios(login.Txt_DniRegistro.getText(), 
-                                                                                       login.Txt_NomRegistro.getText(), 
-                                                                                       login.Txt_ApePatRegistro.getText(), 
-                                                                                       login.Txt_ApeMatRegistro.getText(), 
-                                                                                       login.Txt_CorreoRegistro.getText(),
-                                                                                       login.Txt_FNacRegistro.getText(), 
-                                                                                       login.Txt_NumRegistro.getText(), 
-                                                                                       login.Txt_ContraRegistro.getText(), 
-                                                                                       0);
-                                    if (socio.ConAtributosVacios()) {
-                                             Emergente mg=new Emergente(null, "Error en el registro ", "No debe dejar campos vacios");
-                                    }else{
-                                             SociosDAO dao=new SociosDAO();
-                                             dao.registrar(socio);
-                                             InhabilitarRegistro();
-                                             HabilitarRegistro();
-                                             Emergente msg=new Emergente(login, "Socio registrado correctamente", "Bienvenido a socios Z-buss, "+socio.getNombre());
-                                    }
-                           }else{
+                           String contraseña=login.Txt_ContraRegistro.getText();
+                           String contraseñaConfirmada=login.Txt_ConfirmContraRegistro.getText();
+                           
+                           Socios socio=new Socios(login.Txt_DniRegistro.getText(), 
+                                                                       login.Txt_NomRegistro.getText(), 
+                                                                       login.Txt_ApePatRegistro.getText(), 
+                                                                       login.Txt_ApeMatRegistro.getText(), 
+                                                                       login.Txt_CorreoRegistro.getText(),
+                                                                       login.Txt_FNacRegistro.getText(), 
+                                                                       login.Txt_NumRegistro.getText(), 
+                                                                       login.Txt_ContraRegistro.getText(), 
+                                                                       0);
+                           
+                           if (socio.ConAtributosVacios()) {
+                                    Emergente mg=new Emergente(null, "Error en el registro ", "No debe dejar campos vacios");
+                                    return;
+                           }
+                           
+                           if (!contraseña.equals(contraseñaConfirmada)) {
                                     Emergente msg=new Emergente(login, "Error en el registro","La contraseñas no coinciden");
-                           }   
+                                    return;
+                           }
+                           
+                           
+                           SociosDAO dao=new SociosDAO();
+                           dao.registrar(socio);
+                           InhabilitarRegistro();
+                           HabilitarRegistro();
+                           Emergente msg=new Emergente(login, "Socio registrado correctamente", "Bienvenido a socios Z-buss, "+socio.getNombre());
                   }
+          
+                  
                   
                   
                   if(e.getSource()==login.BTN_VisibilidadRegistro){

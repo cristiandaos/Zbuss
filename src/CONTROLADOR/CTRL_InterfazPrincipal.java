@@ -439,55 +439,54 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
     
     //Mover a utilidades
         void DiseñoScroll(Color Barra,Color Pista){
-         ScrollBarUI customScrollBarUI = new BasicScrollBarUI() {
-         @Override
-                    protected void configureScrollBarColors() {
-                        // Establecer el color de la barra de desplazamiento
-                        this.thumbColor =Barra;
-                        // Establecer el color de la pista
-                        this.trackColor = Pista;
-                   }
-                    
-                  private JButton BtnScroll() {
-                        JButton btn = new JButton();
-                        btn.setPreferredSize(new Dimension(0, 0));
-                        btn.setMinimumSize(new Dimension(0, 0));
-                        btn.setMaximumSize(new Dimension(0, 0));
-                        return btn;
-                }  
-         @Override
-                    protected JButton createDecreaseButton(int orientation) {
-                        return BtnScroll();
-                    }
+                ScrollBarUI customScrollBarUI = new BasicScrollBarUI() {
+                @Override
+                           protected void configureScrollBarColors() {
+                               // Establecer el color de la barra de desplazamiento
+                               this.thumbColor =Barra;
+                               // Establecer el color de la pista
+                               this.trackColor = Pista;
+                           }
 
-        @Override
-                    protected JButton createIncreaseButton(int orientation) {
-                        return BtnScroll();
-                    }
-            }; 
-        vista.ScrollPaneDestinos.getVerticalScrollBar().setUI(customScrollBarUI);
-        vista.ScrollPaneDestinos.getVerticalScrollBar().setCursor(new Cursor(Cursor.HAND_CURSOR));
-        vista.ScrollPaneDestinos.getVerticalScrollBar().setUnitIncrement(15);
+                           JButton BtnScroll() {
+                                    JButton btn = new JButton();
+                                    btn.setPreferredSize(new Dimension(0, 0));
+                                    btn.setMinimumSize(new Dimension(0, 0));
+                                    btn.setMaximumSize(new Dimension(0, 0));
+                                    return btn;
+                           }    
+                @Override
+                           protected JButton createDecreaseButton(int orientation) {
+                                    return BtnScroll();
+                           }
+
+               @Override
+                           protected JButton createIncreaseButton(int orientation) {
+                                    return BtnScroll();
+                           }
+                  }; 
+                  vista.ScrollPaneDestinos.getVerticalScrollBar().setUI(customScrollBarUI);
+                  vista.ScrollPaneDestinos.getVerticalScrollBar().setCursor(new Cursor(Cursor.HAND_CURSOR));
+                  vista.ScrollPaneDestinos.getVerticalScrollBar().setUnitIncrement(15);
         }
 
     
          private void SliderScroll(JScrollBar scrollBar,int delay, int moverValor,int auxiliar) {
                   Timer Timer = new Timer(delay, new ActionListener() {
-                  private int incremento = (moverValor - scrollBar.getValue()) / auxiliar;
-                  private int valor = scrollBar.getValue();
-
+                           int incremento = (moverValor - scrollBar.getValue()) / auxiliar;
+                           int valor = scrollBar.getValue();
                  @Override
-                  public void actionPerformed(ActionEvent e) {
-                           if (valor != moverValor) {
-                                    valor += incremento;
-                                    if ((incremento > 0 && valor > moverValor) || (incremento < 0 && valor < moverValor)) {
-                                             valor = moverValor;
+                           public void actionPerformed(ActionEvent e) {
+                                    if (valor != moverValor) {
+                                             valor += incremento;
+                                             if ((incremento > 0 && valor > moverValor) || (incremento < 0 && valor < moverValor)) {
+                                                      valor = moverValor;
+                                            }
+                                            scrollBar.setValue(valor);
+                                    } else {
+                                             ((Timer) e.getSource()).stop();
                                     }
-                                scrollBar.setValue(valor);
-                           } else {
-                                    ((Timer) e.getSource()).stop();
                            }
-                  }
                   }
                   );
                   Timer.start();
@@ -519,6 +518,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                                     incremento=60;
                                     x+=incremento;
                            }
+                           
                            if (i%4==0) {
                                     x=15;
                                     y+=50;
@@ -658,17 +658,20 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                                              vista.LBLasientosCont.setText(String.valueOf(cantPasajeros));
                                              vista.BTN_ConfirmarAsientos.setVisible(true);
                                              seleccionarAsiento(asientos.getName()); 
-
-                                    }else if (asientos.getBackground().equals(Color.BLUE)) {
+                                             return;
+                                    }
+                                    
+                                    if (asientos.getBackground().equals(Color.BLUE)) {
                                              asientos.setBackground(Color.GREEN);
                                              asientos.setIcon(asientoDisp);
                                              cantPasajeros--;
                                              vista.LBLasientosCont.setText(String.valueOf(cantPasajeros));
                                              deseleccionarAsiento(asientos.getName());
                                              
-                                            if (cantPasajeros==0) {
+                                    }
+                                    
+                                    if (cantPasajeros==0) {
                                                       vista.BTN_ConfirmarAsientos.setVisible(false);
-                                            }
                                     }
                            }
                   }
@@ -683,9 +686,9 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
     public void mouseEntered(MouseEvent e) {
         
                   if (e.getSource()==vista.BTN_cerrarSesion) {
-                        vista.BTN_cerrarSesion.setBackground(new Color(21,24, 30));
-                        vista.BTN_cerrarSesion.setFont(new  Font("Consolas",Font.BOLD,16));
-                        vista.BTN_cerrarSesion.setBorder(new MatteBorder(2,2,2,2,Color.GREEN));
+                           vista.BTN_cerrarSesion.setBackground(new Color(21,24, 30));
+                           vista.BTN_cerrarSesion.setFont(new  Font("Consolas",Font.BOLD,16));
+                           vista.BTN_cerrarSesion.setBorder(new MatteBorder(2,2,2,2,Color.GREEN));
 
                   }
 

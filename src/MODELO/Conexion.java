@@ -16,11 +16,13 @@ public class Conexion {
          try {
                   Class.forName("com.mysql.cj.jdbc.Driver");
                   con = DriverManager.getConnection(url, user, password);
-                  System.out.println("Conexion exitosa con la base de datos: " + base);
+                  
                   } catch (ClassNotFoundException e) {
                   System.out.println("Error al cargar el driver de MySQL: " + e.getMessage());
+                  
                   } catch (SQLException e) {
                   System.out.println("Error al establecer la conexión: " + e.getMessage());
+                  
                   }
                   return con;
          }
