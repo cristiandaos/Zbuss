@@ -5,7 +5,7 @@ import java.sql.*;
 
 
 
-public class DAOadministradores extends Conexion{
+public class AdministradoresDAO extends Conexion{
     
     public boolean registrar(Administrador admin){
          PreparedStatement ps=null;

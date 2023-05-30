@@ -5,7 +5,6 @@ import VISTA.*;
 import MODELO.*;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Scrollbar;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,10 +16,10 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.geom.RoundRectangle2D;
-import javax.swing.JComponent;
 import javax.swing.JScrollBar;
 import javax.swing.Timer;
-import javax.swing.text.JTextComponent;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 
 public class CTRL_Login implements ActionListener,MouseListener,KeyListener,MouseMotionListener,WindowListener{
@@ -28,25 +27,37 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
          private  Login login;
          private int x;
          private int y;
+         private SociosDAO sociosDAO=new SociosDAO();
+         private ViajesDAO viajesDAO=new ViajesDAO();
     
          public CTRL_Login(Login login)  {
                   this.login=login;
                   this.login.addWindowListener(this);
+                  
                   this.login.Barra.addMouseListener(this);
                   this.login.Barra.addMouseMotionListener(this);
+                  
                   this.login.BTN_cerrar.addActionListener(this);
                   this.login.BTN_cerrar.addMouseListener(this);
+                  
                   this.login.BTN_Visibilidad.addActionListener(this);
+                  
                   this.login.BTN_IniciarSesion.addActionListener(this);
                   this.login.BTN_IniciarSesion.addMouseListener(this);
+                  
                   this.login.BTN_ConfirmarRegistro.addActionListener(this);
                   this.login.BTN_ConfirmarRegistro.addMouseListener(this);
+                  
                   this.login.LBL_mostrarLogin.addMouseListener(this);
+                  
                   this.login.LBL_mostrarRegistro.addMouseListener(this);
+                  
                   this.login.BTN_clienteInvitado.addActionListener(this);
                   this.login.BTN_clienteInvitado.addMouseListener(this);
+                  
                   this.login.BTN_VisibilidadRegistro.addActionListener(this);
                   
+                  this.login.BTN_administrador.addActionListener(this);
                   
                   PlaceHolder CorreoElectronico=new PlaceHolder("Correo Electronico", this.login.Txt_correoElectronico,PlaceHolder.Visibilidad.ALWAYS);
 
@@ -64,6 +75,11 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
 
                   PlaceHolder confirmRegistro=new PlaceHolder("Confirmar Contraseña",this.login.Txt_ConfirmContraRegistro, PlaceHolder.Visibilidad.ALWAYS);
                   
+                  try {
+                           UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+                  } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex ) {
+                           System.out.println(ex);
+                  }
  
          }
     
@@ -158,17 +174,23 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                            System.exit(0);
                   }
                   
+                  if (e.getSource()==login.BTN_administrador) {
+                           Interfaz_Administrador interfazAdmin=new Interfaz_Administrador();
+                           CTRL_InterfazAdministrador ctrl_admin=new CTRL_InterfazAdministrador(interfazAdmin);
+                           ctrl_admin.Iniciar();
+                  }
                   
                   if (e.getSource()==login.BTN_clienteInvitado) {
-                           Cerrar();
+                           int cantViajes=viajesDAO.CantidadViajes();
                            Interfaz_Principal principal=new Interfaz_Principal();
-                           CTRL_InterfazPrincipal ctrl_principal=new CTRL_InterfazPrincipal(principal);
+                           CTRL_InterfazPrincipal ctrl_principal=new CTRL_InterfazPrincipal(principal,cantViajes);
                            ctrl_principal.Iniciar();
+                           Cerrar();
                   }
                   
         
                   if (e.getSource()==login.BTN_IniciarSesion) {
-                           SociosDAO dao=new SociosDAO();
+                      
                            String correo=login.Txt_correoElectronico.getText();
                            String contraseña=login.Txt_contraseña.getText();
                            
@@ -177,25 +199,30 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                                     return;
                            }
                            
-                          if (!dao.ValidarSocio(correo, contraseña)) {
+                          if (!sociosDAO.ValidarSocio(correo, contraseña)) {
                                     Emergente msg=new Emergente(null, "Error en el ingreso","El correo y/o contraseña ingresados son incorrectos");
                                     return;
                            }
                           
-                           Socios sesionSocio= dao.ObtenerDatos(correo, contraseña);
+                           Socios sesionSocio= sociosDAO.ObtenerDatos(correo, contraseña);
+                           int cantViajes=viajesDAO.CantidadViajes();
+                           
                            Interfaz_Principal principal=new Interfaz_Principal();
-                           CTRL_InterfazPrincipal ctrl_principal=new CTRL_InterfazPrincipal(principal);                                          
+                           CTRL_InterfazPrincipal ctrl_principal=new CTRL_InterfazPrincipal(principal,cantViajes);                                          
                            ctrl_principal.Iniciar(sesionSocio);
+                           
                            Cerrar();                           
                   }
         
                   
                   if(e.getSource()==login.BTN_Visibilidad){
+                      
                            if (login.BTN_Visibilidad.isSelected()) {
                                     login.Txt_contraseña.setEchoChar((char)0);
                            }else{
                                     login.Txt_contraseña.setEchoChar('*');
                            }
+                           
                   }
                   
                   
@@ -223,11 +250,10 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                                     return;
                            }
                            
-                           
-                           SociosDAO dao=new SociosDAO();
-                           dao.registrar(socio);
+                           sociosDAO.registrar(socio);
                            InhabilitarRegistro();
                            HabilitarRegistro();
+                           
                            Emergente msg=new Emergente(login, "Socio registrado correctamente", "Bienvenido a socios Z-buss, "+socio.getNombre());
                   }
           
@@ -257,23 +283,15 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                   }
 
                   if (e.getSource()==login.LBL_mostrarRegistro) {
-                           JScrollBar scrollPaneles=login.ScrollPanelDinamico.getHorizontalScrollBar();
-                           JScrollBar scrollInfo=login.ScrollPanelInfo.getHorizontalScrollBar();
-                           int izquierdaPaneles=scrollPaneles.getValue()-320;
-                           int izquierdaInfo=scrollInfo.getValue()+440;
-                           SliderScroll(scrollInfo, 5, izquierdaInfo, 11);
-                           SliderScroll(scrollPaneles, 5, izquierdaPaneles, 5);
+                           SliderScroll(login.ScrollPanelInfo.getHorizontalScrollBar(), 10, 440, 10);
+                           SliderScroll(login.ScrollPanelDinamico.getHorizontalScrollBar(), 10, 0, 5);
                            HabilitarRegistro();
                            InhabilitarInicioSesion();
                   }
 
                   if (e.getSource()==login.LBL_mostrarLogin) {
-                           JScrollBar scrollPaneles=login.ScrollPanelDinamico.getHorizontalScrollBar();
-                           JScrollBar scrollInfo=login.ScrollPanelInfo.getHorizontalScrollBar();
-                           int izquierdaPaneles=scrollPaneles.getValue()+320;
-                           int DerechaInfo=scrollInfo.getValue()-440;
-                           SliderScroll(scrollInfo, 5, DerechaInfo, 11);
-                           SliderScroll(scrollPaneles, 5, izquierdaPaneles, 5);
+                           SliderScroll(login.ScrollPanelInfo.getHorizontalScrollBar(), 10, 0, 10);
+                           SliderScroll(login.ScrollPanelDinamico.getHorizontalScrollBar(), 10, 320, 5);
                            HabilitarInicioSesion();
                            InhabilitarRegistro();
 

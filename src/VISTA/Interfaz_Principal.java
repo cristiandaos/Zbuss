@@ -1,7 +1,5 @@
 
 package VISTA;
-import UTILIDADES.*;
-
 
 
 public class Interfaz_Principal extends javax.swing.JFrame {
@@ -36,7 +34,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         PanelDestinos = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        BTN_aplicarFiltro = new javax.swing.JButton();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         CBterminalDestino = new javax.swing.JComboBox<>();
         CBterminalSalida = new javax.swing.JComboBox<>();
@@ -138,7 +136,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
 
         BarraLateral.add(PanelTiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 180, 80));
 
-        LBLusuario.setFont(new java.awt.Font("Segoe UI Emoji", 1, 16)); // NOI18N
+        LBLusuario.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         LBLusuario.setForeground(new java.awt.Color(102, 204, 0));
         LBLusuario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LBLusuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMGS/usuario.png"))); // NOI18N
@@ -213,15 +211,15 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         jLabel13.setText("Nuestros Destinos");
         jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, 50));
 
-        jButton1.setBackground(new java.awt.Color(18, 18, 18));
-        jButton1.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMGS/lupa .png"))); // NOI18N
-        jButton1.setText("Aplicar Filtros");
-        jButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 204, 0), 1, true));
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.setFocusable(false);
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 70, 160, 30));
+        BTN_aplicarFiltro.setBackground(new java.awt.Color(18, 18, 18));
+        BTN_aplicarFiltro.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
+        BTN_aplicarFiltro.setForeground(new java.awt.Color(255, 255, 255));
+        BTN_aplicarFiltro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMGS/lupa .png"))); // NOI18N
+        BTN_aplicarFiltro.setText("Aplicar Filtros");
+        BTN_aplicarFiltro.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 204, 0), 1, true));
+        BTN_aplicarFiltro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BTN_aplicarFiltro.setFocusable(false);
+        jPanel2.add(BTN_aplicarFiltro, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 70, 160, 30));
         jPanel2.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 70, 160, 30));
 
         CBterminalDestino.setBackground(new java.awt.Color(18, 18, 18));
@@ -233,7 +231,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         CBterminalDestino.setDoubleBuffered(true);
         CBterminalDestino.setFocusable(false);
         CBterminalDestino.setLightWeightPopupEnabled(false);
-        jPanel2.add(CBterminalDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 70, 100, 30));
+        jPanel2.add(CBterminalDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 70, 110, 30));
 
         CBterminalSalida.setBackground(new java.awt.Color(18, 18, 18));
         CBterminalSalida.setFont(new java.awt.Font("Segoe UI Emoji", 0, 14)); // NOI18N
@@ -242,7 +240,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         CBterminalSalida.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         CBterminalSalida.setFocusable(false);
         CBterminalSalida.setLightWeightPopupEnabled(false);
-        jPanel2.add(CBterminalSalida, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 100, 30));
+        jPanel2.add(CBterminalSalida, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 110, 30));
 
         javax.swing.GroupLayout PanelDestinosLayout = new javax.swing.GroupLayout(PanelDestinos);
         PanelDestinos.setLayout(PanelDestinosLayout);
@@ -253,8 +251,8 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         PanelDestinosLayout.setVerticalGroup(
             PanelDestinosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelDestinosLayout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 516, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 558, Short.MAX_VALUE))
         );
 
         ScrollPaneDestinos.setViewportView(PanelDestinos);
@@ -607,6 +605,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton BTN_ConfirmarAsientos;
     public javax.swing.JButton BTN_IzquiAcompañantes;
+    public javax.swing.JButton BTN_aplicarFiltro;
     public javax.swing.JButton BTN_cancelarAsientos;
     public javax.swing.JButton BTN_cancelarPasajeros;
     public javax.swing.JButton BTN_cerrarSesion;
@@ -651,7 +650,6 @@ public class Interfaz_Principal extends javax.swing.JFrame {
     public javax.swing.JTextField TxtApellidoPatePasajero;
     public javax.swing.JFormattedTextField TxtDNIpasajero;
     public javax.swing.JTextField TxtNombrePasajero;
-    public javax.swing.JButton jButton1;
     public com.toedter.calendar.JDateChooser jDateChooser1;
     public javax.swing.JLabel jLabel1;
     public javax.swing.JLabel jLabel10;

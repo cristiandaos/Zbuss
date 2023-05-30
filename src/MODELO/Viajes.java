@@ -2,6 +2,6 @@
 package MODELO;
 
 
-public class Viaje {
+public class Viajes {
     
 }

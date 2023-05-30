@@ -36,6 +36,7 @@ public class Login extends javax.swing.JFrame {
         Lbl_tituloIniciarSesion = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         LBL_mostrarRegistro = new javax.swing.JLabel();
+        BTN_administrador = new javax.swing.JButton();
         PanelRegistro = new javax.swing.JPanel();
         BTN_ConfirmarRegistro = new javax.swing.JButton();
         Txt_ApeMatRegistro = new javax.swing.JTextField();
@@ -216,6 +217,9 @@ public class Login extends javax.swing.JFrame {
         ScrollPanelInfo.setViewportView(PanelDinamicoInfo);
 
         PanelIntemediario.add(ScrollPanelInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 320, 400));
+
+        BTN_administrador.setText("Administrador");
+        PanelIntemediario.add(BTN_administrador, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 490, -1, -1));
 
         PanelDinamico.add(PanelIntemediario, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 0, 320, 520));
 
@@ -403,6 +407,7 @@ public class Login extends javax.swing.JFrame {
     public javax.swing.JButton BTN_IniciarSesion;
     public javax.swing.JToggleButton BTN_Visibilidad;
     public javax.swing.JToggleButton BTN_VisibilidadRegistro;
+    public javax.swing.JButton BTN_administrador;
     public javax.swing.JButton BTN_cerrar;
     public javax.swing.JButton BTN_clienteInvitado;
     public javax.swing.JPanel Barra;
