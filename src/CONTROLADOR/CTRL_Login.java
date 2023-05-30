@@ -3,6 +3,7 @@ package CONTROLADOR;
 import UTILIDADES.*;
 import VISTA.*;
 import MODELO.*;
+import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Shape;
@@ -16,6 +17,8 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.geom.RoundRectangle2D;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JScrollBar;
 import javax.swing.Timer;
 import javax.swing.UIManager;
@@ -31,55 +34,58 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
          private ViajesDAO viajesDAO=new ViajesDAO();
     
          public CTRL_Login(Login login)  {
-                  this.login=login;
-                  this.login.addWindowListener(this);
-                  
-                  this.login.Barra.addMouseListener(this);
-                  this.login.Barra.addMouseMotionListener(this);
-                  
-                  this.login.BTN_cerrar.addActionListener(this);
-                  this.login.BTN_cerrar.addMouseListener(this);
-                  
-                  this.login.BTN_Visibilidad.addActionListener(this);
-                  
-                  this.login.BTN_IniciarSesion.addActionListener(this);
-                  this.login.BTN_IniciarSesion.addMouseListener(this);
-                  
-                  this.login.BTN_ConfirmarRegistro.addActionListener(this);
-                  this.login.BTN_ConfirmarRegistro.addMouseListener(this);
-                  
-                  this.login.LBL_mostrarLogin.addMouseListener(this);
-                  
-                  this.login.LBL_mostrarRegistro.addMouseListener(this);
-                  
-                  this.login.BTN_clienteInvitado.addActionListener(this);
-                  this.login.BTN_clienteInvitado.addMouseListener(this);
-                  
-                  this.login.BTN_VisibilidadRegistro.addActionListener(this);
-                  
-                  this.login.BTN_administrador.addActionListener(this);
-                  
-                  PlaceHolder CorreoElectronico=new PlaceHolder("Correo Electronico", this.login.Txt_correoElectronico,PlaceHolder.Visibilidad.ALWAYS);
 
-                  PlaceHolder Contraseña=new PlaceHolder("Contraseña", this.login.Txt_contraseña,PlaceHolder.Visibilidad.ALWAYS);
-
-                  PlaceHolder nomRegistro=new PlaceHolder("Nombre", this.login.Txt_NomRegistro, PlaceHolder.Visibilidad.ALWAYS);
-
-                  PlaceHolder apePatRegistro=new PlaceHolder("Apellido Paterno", this.login.Txt_ApePatRegistro, PlaceHolder.Visibilidad.ALWAYS);
-
-                  PlaceHolder apeMatRegistro=new PlaceHolder("Apellido Materno", this.login.Txt_ApeMatRegistro, PlaceHolder.Visibilidad.ALWAYS);
-
-                  PlaceHolder correoRegistro=new PlaceHolder("Correo Electrónico", this.login.Txt_CorreoRegistro, PlaceHolder.Visibilidad.ALWAYS);
-
-                  PlaceHolder contraRegistro=new PlaceHolder("Contraseña",this.login.Txt_ContraRegistro, PlaceHolder.Visibilidad.ALWAYS);
-
-                  PlaceHolder confirmRegistro=new PlaceHolder("Confirmar Contraseña",this.login.Txt_ConfirmContraRegistro, PlaceHolder.Visibilidad.ALWAYS);
+                 this.login=login;
+                 this.login.addWindowListener(this);
+                 
+                 this.login.Barra.addMouseListener(this);
+                 this.login.Barra.addMouseMotionListener(this);
+                 
+                 this.login.BTN_cerrar.addActionListener(this);
+                 this.login.BTN_cerrar.addMouseListener(this);
+                 
+                 this.login.BTN_Visibilidad.addActionListener(this);
+                 
+                 this.login.BTN_IniciarSesion.addActionListener(this);
+                 this.login.BTN_IniciarSesion.addMouseListener(this);
+                 
+                 this.login.BTN_ConfirmarRegistro.addActionListener(this);
+                 this.login.BTN_ConfirmarRegistro.addMouseListener(this);
+                 
+                 this.login.LBL_mostrarLogin.addMouseListener(this);
+                 
+                 this.login.LBL_mostrarRegistro.addMouseListener(this);
+                 
+                 this.login.BTN_clienteInvitado.addActionListener(this);
+                 this.login.BTN_clienteInvitado.addMouseListener(this);
+                 
+                 this.login.BTN_VisibilidadRegistro.addActionListener(this);
+                 
+                 this.login.BTN_administrador.addActionListener(this);
+                 
+                 PlaceHolder CorreoElectronico=new PlaceHolder("Correo Electronico", this.login.Txt_correoElectronico,PlaceHolder.Visibilidad.ALWAYS);
+                 
+                 PlaceHolder Contraseña=new PlaceHolder("Contraseña", this.login.Txt_contraseña,PlaceHolder.Visibilidad.ALWAYS);
+                 
+                 PlaceHolder nomRegistro=new PlaceHolder("Nombre", this.login.Txt_NomRegistro, PlaceHolder.Visibilidad.ALWAYS);
+                 
+                 PlaceHolder apePatRegistro=new PlaceHolder("Apellido Paterno", this.login.Txt_ApePatRegistro, PlaceHolder.Visibilidad.ALWAYS);
+                 
+                 PlaceHolder apeMatRegistro=new PlaceHolder("Apellido Materno", this.login.Txt_ApeMatRegistro, PlaceHolder.Visibilidad.ALWAYS);
+                 
+                 PlaceHolder correoRegistro=new PlaceHolder("Correo Electrónico", this.login.Txt_CorreoRegistro, PlaceHolder.Visibilidad.ALWAYS);
+                 
+                 PlaceHolder contraRegistro=new PlaceHolder("Contraseña",this.login.Txt_ContraRegistro, PlaceHolder.Visibilidad.ALWAYS);
+                 
+                 PlaceHolder confirmRegistro=new PlaceHolder("Confirmar Contraseña",this.login.Txt_ConfirmContraRegistro, PlaceHolder.Visibilidad.ALWAYS);
                   
-                  try {
-                           UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-                  } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex ) {
-                           System.out.println(ex);
+                 try {
+                           UIManager.setLookAndFeel( new FlatLightLaf() );
+                  } catch( Exception ex ) {
+                           System.err.println( "Failed to initialize LaF" );
                   }
+
+              
  
          }
     

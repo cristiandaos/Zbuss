@@ -5,6 +5,7 @@ import VISTA.*;
 import UTILIDADES.*;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -16,17 +17,21 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.sql.*;
 import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.BorderFactory;
+import javax.swing.GroupLayout;
 import javax.swing.JScrollBar;
-import javax.swing.ListSelectionModel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.Timer;
-import javax.swing.UIClientPropertyKey;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
+import javax.swing.plaf.metal.MetalBorders;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
 
 public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,MouseMotionListener,WindowListener,KeyListener{
          private Interfaz_Administrador vista;
@@ -50,22 +55,33 @@ public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,
                   this.vista.BTN_gestionTerminales.addMouseListener(this);
 
                   this.vista.BTN_infoSocios.addMouseListener(this);
-                  
+                  DiseñoTabla();
                   InicializarReloj();
-                  Tabla();
-             try {
-                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-                 Logger.getLogger(CTRL_InterfazAdministrador.class.getName()).log(Level.SEVERE, null, ex);
-             }
+
          
          }
          
          
-         void Tabla(){
-                vista.TBLviajes.getTableHeader().setOpaque(false);
-                vista.TBLviajes.getTableHeader().setBackground(new Color(10,10,10));
-                vista.TBLviajes.getTableHeader().setBorder(new LineBorder(Color.BLACK,1));
+         void DiseñoTabla(){
+   
+                 JTableHeader header=vista.TBLviajes.getTableHeader();
+                 DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer(){
+                   @Override
+                   public void paintComponent(Graphics g) {
+                           super.paintComponent(g);
+                           g.setColor(Color.BLACK);
+                           g.drawRect(0, 0, getWidth() - 1, getHeight() - 1); 
+                  }
+                 
+                 
+                 };
+                 headerRenderer.setBackground(new Color(10,10,10));
+                 headerRenderer.setForeground(Color.WHITE);
+                 headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+                 header.setDefaultRenderer(headerRenderer);
+                  vista.TBLviajes.setBorder(new LineBorder(Color.BLACK));
+                  vista.TBLviajes.setBackground(Color.BLACK);
+                  vista.TBLviajes.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
                 
          }
          

@@ -27,8 +27,6 @@ public class Interfaz_Administrador extends javax.swing.JFrame {
         Scroll = new javax.swing.JScrollPane();
         PanelDinamico = new javax.swing.JPanel();
         PanelViajes = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        TBLviajes = new javax.swing.JTable();
         TXTcodigoViaje = new javax.swing.JTextField();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -37,6 +35,8 @@ public class Interfaz_Administrador extends javax.swing.JFrame {
         jSpinner3 = new javax.swing.JSpinner();
         TXTcodigoViaje1 = new javax.swing.JTextField();
         jComboBox3 = new javax.swing.JComboBox<>();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        TBLviajes = new javax.swing.JTable();
         PanelTerminales = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TBLterminales = new javax.swing.JTable();
@@ -172,21 +172,6 @@ public class Interfaz_Administrador extends javax.swing.JFrame {
         PanelViajes.setBackground(new java.awt.Color(20, 20, 20));
         PanelViajes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        TBLviajes.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane3.setViewportView(TBLviajes);
-
-        PanelViajes.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 230, 510, -1));
-
         TXTcodigoViaje.setBackground(new java.awt.Color(18, 18, 18));
         TXTcodigoViaje.setFont(new java.awt.Font("Segoe UI Emoji", 0, 16)); // NOI18N
         TXTcodigoViaje.setForeground(new java.awt.Color(255, 255, 255));
@@ -229,6 +214,26 @@ public class Interfaz_Administrador extends javax.swing.JFrame {
         jComboBox3.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(51, 204, 0)));
         jComboBox3.setFocusable(false);
         PanelViajes.add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 142, 210, 30));
+
+        TBLviajes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        TBLviajes.setFont(new java.awt.Font("Consolas", 1, 12)); // NOI18N
+        TBLviajes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        TBLviajes.setSelectionBackground(new java.awt.Color(51, 102, 255));
+        TBLviajes.getTableHeader().setResizingAllowed(false);
+        TBLviajes.getTableHeader().setReorderingAllowed(false);
+        jScrollPane3.setViewportView(TBLviajes);
+
+        PanelViajes.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 180, 760, 470));
 
         PanelDinamico.add(PanelViajes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1060, 670));
 
