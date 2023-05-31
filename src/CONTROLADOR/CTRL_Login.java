@@ -17,12 +17,8 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.geom.RoundRectangle2D;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JScrollBar;
 import javax.swing.Timer;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 
 public class CTRL_Login implements ActionListener,MouseListener,KeyListener,MouseMotionListener,WindowListener{
@@ -78,15 +74,8 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                  PlaceHolder contraRegistro=new PlaceHolder("Contraseña",this.login.Txt_ContraRegistro, PlaceHolder.Visibilidad.ALWAYS);
                  
                  PlaceHolder confirmRegistro=new PlaceHolder("Confirmar Contraseña",this.login.Txt_ConfirmContraRegistro, PlaceHolder.Visibilidad.ALWAYS);
-                  
-                 try {
-                           UIManager.setLookAndFeel( new FlatLightLaf() );
-                  } catch( Exception ex ) {
-                           System.err.println( "Failed to initialize LaF" );
-                  }
-
-              
- 
+                 
+                 
          }
     
          void Iniciar(){
@@ -184,6 +173,7 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                            Interfaz_Administrador interfazAdmin=new Interfaz_Administrador();
                            CTRL_InterfazAdministrador ctrl_admin=new CTRL_InterfazAdministrador(interfazAdmin);
                            ctrl_admin.Iniciar();
+                           Cerrar();
                   }
                   
                   if (e.getSource()==login.BTN_clienteInvitado) {
@@ -302,6 +292,14 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                            InhabilitarRegistro();
 
                   }
+                  
+                  if (e.getSource()==login.BTN_ConfirmarRegistro) {
+                          login.BTN_ConfirmarRegistro.setBackground(new Color(51,54, 80));
+                  }
+                  
+                  if (e.getSource()==login.BTN_IniciarSesion) {
+                          login.BTN_IniciarSesion.setBackground(new Color(51,54, 80));
+                  }
 
          }
 
@@ -322,13 +320,13 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                   }
          
                   if (e.getSource()==login.BTN_IniciarSesion) {
-                           login.BTN_IniciarSesion.setBackground(new Color(21,24, 30));
                            login.BTN_IniciarSesion.setFont(new Font("Consolas",Font.BOLD,16));
+                            login.BTN_IniciarSesion.setBackground(new Color(21,24, 30));
                   }
          
                   if (e.getSource()==login.BTN_ConfirmarRegistro) {
-                           login.BTN_ConfirmarRegistro.setBackground(new Color(21,24, 30));
                            login.BTN_ConfirmarRegistro.setFont(new Font("Consolas",Font.BOLD,16));
+                           login.BTN_ConfirmarRegistro.setBackground(new Color(21,24, 30));
                   }
                   
                   if (e.getSource()==login.LBL_mostrarLogin) {
@@ -352,13 +350,13 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                   } 
 
                   if (e.getSource()==login.BTN_IniciarSesion) {
-                           login.BTN_IniciarSesion.setBackground(new Color(18,18,18));
                            login.BTN_IniciarSesion.setFont(new Font("Consolas",Font.PLAIN,16));
+                           login.BTN_IniciarSesion.setBackground(new Color(12,12,12));
                   }
 
                   if (e.getSource()==login.BTN_ConfirmarRegistro) {
-                           login.BTN_ConfirmarRegistro.setBackground(new Color(18,18,18));
                            login.BTN_ConfirmarRegistro.setFont(new Font("Consolas",Font.PLAIN,16));
+                           login.BTN_ConfirmarRegistro.setBackground(new Color(12,12,12));
                   }
                   
                   if (e.getSource()==login.LBL_mostrarLogin) {

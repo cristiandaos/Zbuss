@@ -1,11 +1,15 @@
 
 package CONTROLADOR;
-import MODELO.*;
+import MODELO.Conexion;
+import MODELO.Terminales;
+import MODELO.TerminalesDAO;
+import MODELO.Viajes;
+import MODELO.ViajesDAO;
+import UTILIDADES.Emergente;
 import VISTA.*;
-import UTILIDADES.*;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
+import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -15,28 +19,40 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.sql.*;
+import java.awt.geom.RoundRectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import javax.swing.BorderFactory;
-import javax.swing.GroupLayout;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
 import javax.swing.Timer;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
-import javax.swing.plaf.metal.MetalBorders;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableCellRenderer;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,MouseMotionListener,WindowListener,KeyListener{
          private Interfaz_Administrador vista;
          private int x;
          private int y;
+         private byte [] binario;
+         private File archivo;
+         private ViajesDAO viajeDAO=new ViajesDAO();
+         private TerminalesDAO terminalDAO=new TerminalesDAO();
+         private Conexion cone=new Conexion();
          
          public CTRL_InterfazAdministrador(Interfaz_Administrador vista) {
                   this.vista=vista;
@@ -47,6 +63,16 @@ public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,
                   
                   this.vista.BTN_cerrarSesion.addActionListener(this);
                   this.vista.BTN_cerrarSesion.addMouseListener(this);
+                  
+                  this.vista.BTN_img_referencial.addActionListener(this);
+                  
+                  this.vista.BTN_guardar_viajes.addActionListener(this);
+                  
+                  this.vista.BTN_guardar_Terminales.addActionListener(this);
+                  
+                  this.vista.BTN_eliminar_viajes.addActionListener(this);
+                  
+                  this.vista.BTN_nuevo_viajes.addActionListener(this);
 
                   this.vista.BTN_gestionViajes.addMouseListener(this);
 
@@ -55,47 +81,70 @@ public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,
                   this.vista.BTN_gestionTerminales.addMouseListener(this);
 
                   this.vista.BTN_infoSocios.addMouseListener(this);
-                  DiseñoTabla();
+                  
+                  DiseñadoTabla();
                   InicializarReloj();
-
-         
+                  
+                  vista.BTN_cerrarSesion.putClientProperty("JButton.buttonType", "roundRect");
+                  
+                  Shape redondeado=new RoundRectangle2D.Double(0,0,this.vista.getBounds().width,this.vista.getBounds().getHeight(),30,30);
+                  this.vista.setShape(redondeado);      
          }
          
          
-         void DiseñoTabla(){
-   
-                 JTableHeader header=vista.TBLviajes.getTableHeader();
-                 DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer(){
-                   @Override
-                   public void paintComponent(Graphics g) {
-                           super.paintComponent(g);
-                           g.setColor(Color.BLACK);
-                           g.drawRect(0, 0, getWidth() - 1, getHeight() - 1); 
+          private void CodigosTerminales(){
+                  try {     
+                           PreparedStatement ps=null;
+                           ResultSet rs=null;
+                           Connection con= cone.getConnection();
+                           ps=con.prepareStatement("SELECT terminal_cod FROM Terminales WHERE terminal_estado='Habilitado'");
+                           rs=ps.executeQuery();
+                           while (rs.next()) {
+                                   vista.CBviaje_terminal_salida.addItem(rs.getString("terminal_cod"));
+                                   vista.CBviaje_terminal_llegada.addItem(rs.getString("terminal_cod"));
+                           }
+                  } catch (SQLException e) {
+                           System.err.println(e.toString());
+                  }    
+    
+    }
+         
+         void DiseñadoTabla(){
+                  vista.TBLviajes.getTableHeader().setBackground(new Color(10, 10, 10));
+                  vista.TBLviajes.getTableHeader().setForeground(Color.WHITE);
+                  vista.TBLviajes.getTableHeader().setBorder(new LineBorder(Color.GREEN));
+         }
+         
+         
+         void AbrirFileChooser() {
+                  JFileChooser FC = new JFileChooser();
+                  FC.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                  FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos de imagen", "jpg", "jpeg", "png");
+                  FC.setFileFilter(filtro);
+                  int sele = FC.showOpenDialog(null);
+                  if (sele == JFileChooser.APPROVE_OPTION) {
+                           archivo = FC.getSelectedFile();
+                           try {
+                                    binario = Files.readAllBytes(archivo.toPath());
+                                    ImageIcon imagen = new ImageIcon(binario);
+                                     vista.LBL_img_referencial.setIcon(imagen);
+                           } catch (IOException ex) {
+                           }
                   }
-                 
-                 
-                 };
-                 headerRenderer.setBackground(new Color(10,10,10));
-                 headerRenderer.setForeground(Color.WHITE);
-                 headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-                 header.setDefaultRenderer(headerRenderer);
-                  vista.TBLviajes.setBorder(new LineBorder(Color.BLACK));
-                  vista.TBLviajes.setBackground(Color.BLACK);
-                  vista.TBLviajes.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-                
          }
+      
          
-         void SliderScroll(JScrollBar scrollBar,int delay, int moverValor,int auxiliar) {
+         void SliderScroll(JScrollBar scrollBar,int delay, int ValorDestino,int auxiliar) {
                   Timer Temporizador = new Timer(delay, new ActionListener() {
-                  int incremento = (moverValor - scrollBar.getValue()) / auxiliar;
+                  int incremento = (ValorDestino - scrollBar.getValue()) / auxiliar;
                   int valor = scrollBar.getValue();
 
                   @Override
                            public void actionPerformed(ActionEvent e) {
-                                    if (valor != moverValor) {
+                                    if (valor != ValorDestino) {
                                              valor += incremento;
-                                             if ((incremento > 0 && valor > moverValor) || (incremento < 0 && valor < moverValor)) {
-                                                       valor = moverValor;
+                                             if ((incremento > 0 && valor > ValorDestino) || (incremento < 0 && valor < ValorDestino)) {
+                                                       valor = ValorDestino;
                                              }
                                              scrollBar.setValue(valor);
                                     } else {
@@ -111,6 +160,7 @@ public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,
          void Iniciar(){
                   vista.setVisible(true);
          }
+         
          
          void Cerrar(){
                   vista.dispose();
@@ -149,6 +199,7 @@ public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,
                   timer.start();
          }
 
+         
     @Override
     public void actionPerformed(ActionEvent e) {
         
@@ -158,6 +209,45 @@ public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,
                            Cerrar();
                            ctrlLogin.Iniciar();
                   }  
+                  
+                  if (e.getSource()==vista.BTN_img_referencial) {
+                           AbrirFileChooser();
+                 }
+                  
+                  if (e.getSource()==vista.BTN_guardar_viajes) {
+                           Viajes viaje=new Viajes(vista.TXTviaje_codigo.getText(), 
+                                                                    vista.CBviaje_terminal_salida.getSelectedItem().toString(),
+                                                                    vista.CBviaje_terminal_llegada.getSelectedItem().toString(), 
+                                                                    vista.SPNviaje_fecha_salida.toString(),
+                                                                    vista.SPNviaje_fecha_llegada.getValue().toString(), 
+                                                                    vista.TXTviaje_distancia.getText(), 
+                                                                    40, 
+                                                                    (double) vista.SPNviaje_precio.getValue(), 
+                                                                    binario);
+                           if(viaje.ConAtributosVacios()){
+                                    Emergente msg=new Emergente(null, "Error en el registro del Viaje", "No debe dejar campos vacios");
+                                    
+                           }else{
+                                    viajeDAO.RegistrarViaje(viaje);
+                                    Emergente msg=new Emergente(null,"Registro exitoso","Nuevo Viaje Programado");
+                           }
+            
+                  }
+                  if (e.getSource()==vista.BTN_guardar_Terminales) {
+                           Terminales terminales=new Terminales(vista.TXTcodigoTerminal.getText(),
+                                                                                              vista.TXTnombreTerminal.getText(), 
+                                                                                              vista.TXTdireccionTerminal.getText(), 
+                                                                                              vista.CBestadoTerminal.getSelectedItem().toString());
+                           
+                           if (terminales.ConAtributosVacios()) {
+                                    Emergente msg=new Emergente(null, "Error en el registro de la terminal", "No debe dejar campos vacios ");
+                           }else{
+                                    terminalDAO.RegistrarTerminal(terminales);
+                                    Emergente msg=new Emergente(null, "Registro Exitoso", "Nueva terminal agregada");
+                                    CodigosTerminales();
+                           }
+            
+                  }
     }
 
     @Override

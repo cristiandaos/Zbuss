@@ -61,7 +61,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         LBLasientosCont = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         BTN_cancelarAsientos = new javax.swing.JButton();
-        BTN_ConfirmarAsientos = new javax.swing.JButton();
+        BTN_confirmarAsientos = new javax.swing.JButton();
         PanelPasajeros = new javax.swing.JPanel();
         ScrollPanelPasajeros = new javax.swing.JScrollPane();
         PanelFormPasajeros = new javax.swing.JPanel();
@@ -100,16 +100,16 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         BarraLateral.setBackground(new java.awt.Color(0, 0, 0));
         BarraLateral.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        BTN_cerrarSesion.setBackground(new java.awt.Color(0, 0, 0));
+        BTN_cerrarSesion.setBackground(new java.awt.Color(6, 6, 6));
         BTN_cerrarSesion.setFont(new java.awt.Font("Consolas", 0, 16)); // NOI18N
         BTN_cerrarSesion.setForeground(new java.awt.Color(255, 255, 255));
         BTN_cerrarSesion.setText("Cerrar Sesión");
         BTN_cerrarSesion.setAlignmentX(0.5F);
-        BTN_cerrarSesion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(123, 216, 80), 1, true));
+        BTN_cerrarSesion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(123, 216, 80)));
         BTN_cerrarSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BTN_cerrarSesion.setFocusPainted(false);
         BTN_cerrarSesion.setFocusable(false);
-        BarraLateral.add(BTN_cerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 610, 140, 30));
+        BarraLateral.add(BTN_cerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 610, 150, 30));
 
         Logo.setBackground(new java.awt.Color(255, 255, 255));
         Logo.setFont(new java.awt.Font("SansSerif", 1, 40)); // NOI18N
@@ -136,7 +136,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
 
         BarraLateral.add(PanelTiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 180, 80));
 
-        LBLusuario.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
+        LBLusuario.setFont(new java.awt.Font("Segoe UI Emoji", 1, 18)); // NOI18N
         LBLusuario.setForeground(new java.awt.Color(102, 204, 0));
         LBLusuario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LBLusuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMGS/usuario.png"))); // NOI18N
@@ -203,56 +203,69 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         PanelDestinos.setPreferredSize(new java.awt.Dimension(1100, 670));
 
         jPanel2.setBackground(new java.awt.Color(18, 18, 18));
+        jPanel2.setPreferredSize(new java.awt.Dimension(1000, 100));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel13.setFont(new java.awt.Font("Segoe UI Emoji", 1, 24)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setText("Nuestros Destinos");
-        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, 50));
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1020, 50));
 
         BTN_aplicarFiltro.setBackground(new java.awt.Color(18, 18, 18));
         BTN_aplicarFiltro.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
         BTN_aplicarFiltro.setForeground(new java.awt.Color(255, 255, 255));
         BTN_aplicarFiltro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMGS/lupa .png"))); // NOI18N
         BTN_aplicarFiltro.setText("Aplicar Filtros");
-        BTN_aplicarFiltro.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 204, 0), 1, true));
+        BTN_aplicarFiltro.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(123, 216, 80)));
         BTN_aplicarFiltro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BTN_aplicarFiltro.setFocusable(false);
         jPanel2.add(BTN_aplicarFiltro, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 70, 160, 30));
-        jPanel2.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 70, 160, 30));
 
-        CBterminalDestino.setBackground(new java.awt.Color(18, 18, 18));
+        jDateChooser1.setBackground(new java.awt.Color(18, 18, 18));
+        jDateChooser1.setForeground(new java.awt.Color(255, 255, 255));
+        jDateChooser1.setDateFormatString("dd MM yyyy");
+        jDateChooser1.setFocusable(false);
+        jDateChooser1.setOpaque(false);
+        jPanel2.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 70, 180, 30));
+
+        CBterminalDestino.setBackground(new java.awt.Color(10, 10, 10));
         CBterminalDestino.setFont(new java.awt.Font("Segoe UI Emoji", 0, 14)); // NOI18N
         CBterminalDestino.setForeground(new java.awt.Color(255, 255, 255));
         CBterminalDestino.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        CBterminalDestino.setBorder(null);
+        CBterminalDestino.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(123, 216, 80)));
+        CBterminalDestino.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         CBterminalDestino.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
         CBterminalDestino.setDoubleBuffered(true);
         CBterminalDestino.setFocusable(false);
         CBterminalDestino.setLightWeightPopupEnabled(false);
-        jPanel2.add(CBterminalDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 70, 110, 30));
+        jPanel2.add(CBterminalDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 70, 150, 30));
 
-        CBterminalSalida.setBackground(new java.awt.Color(18, 18, 18));
+        CBterminalSalida.setBackground(new java.awt.Color(10, 10, 10));
         CBterminalSalida.setFont(new java.awt.Font("Segoe UI Emoji", 0, 14)); // NOI18N
         CBterminalSalida.setForeground(new java.awt.Color(255, 255, 255));
         CBterminalSalida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        CBterminalSalida.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        CBterminalSalida.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(123, 216, 80)));
+        CBterminalSalida.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         CBterminalSalida.setFocusable(false);
         CBterminalSalida.setLightWeightPopupEnabled(false);
-        jPanel2.add(CBterminalSalida, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 110, 30));
+        jPanel2.add(CBterminalSalida, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 140, 30));
 
         javax.swing.GroupLayout PanelDestinosLayout = new javax.swing.GroupLayout(PanelDestinos);
         PanelDestinos.setLayout(PanelDestinosLayout);
         PanelDestinosLayout.setHorizontalGroup(
             PanelDestinosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelDestinosLayout.createSequentialGroup()
+                .addContainerGap(58, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 980, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60))
         );
         PanelDestinosLayout.setVerticalGroup(
             PanelDestinosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelDestinosLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 558, Short.MAX_VALUE))
+                .addContainerGap(552, Short.MAX_VALUE))
         );
 
         ScrollPaneDestinos.setViewportView(PanelDestinos);
@@ -397,26 +410,22 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         BTN_cancelarAsientos.setForeground(new java.awt.Color(255, 255, 255));
         BTN_cancelarAsientos.setText("Cancelar");
         BTN_cancelarAsientos.setAlignmentX(0.5F);
-        BTN_cancelarAsientos.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(123, 216, 80)));
+        BTN_cancelarAsientos.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(123, 216, 80), 1, true));
         BTN_cancelarAsientos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BTN_cancelarAsientos.setFocusable(false);
         BTN_cancelarAsientos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel1.add(BTN_cancelarAsientos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 610, 140, 30));
 
-        BTN_ConfirmarAsientos.setBackground(new java.awt.Color(6, 6, 6));
-        BTN_ConfirmarAsientos.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
-        BTN_ConfirmarAsientos.setForeground(new java.awt.Color(255, 255, 255));
-        BTN_ConfirmarAsientos.setText("Confirmar");
-        BTN_ConfirmarAsientos.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(123, 216, 80)));
-        BTN_ConfirmarAsientos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BTN_ConfirmarAsientos.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
-        BTN_ConfirmarAsientos.setDefaultCapable(false);
-        BTN_ConfirmarAsientos.setFocusPainted(false);
-        BTN_ConfirmarAsientos.setFocusable(false);
-        BTN_ConfirmarAsientos.setRequestFocusEnabled(false);
-        BTN_ConfirmarAsientos.setRolloverEnabled(false);
-        BTN_ConfirmarAsientos.setVerifyInputWhenFocusTarget(false);
-        jPanel1.add(BTN_ConfirmarAsientos, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 610, 140, 30));
+        BTN_confirmarAsientos.setBackground(new java.awt.Color(6, 6, 6));
+        BTN_confirmarAsientos.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        BTN_confirmarAsientos.setForeground(new java.awt.Color(255, 255, 255));
+        BTN_confirmarAsientos.setText("Confirmar");
+        BTN_confirmarAsientos.setAlignmentX(0.5F);
+        BTN_confirmarAsientos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(123, 216, 80)));
+        BTN_confirmarAsientos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BTN_confirmarAsientos.setFocusable(false);
+        BTN_confirmarAsientos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(BTN_confirmarAsientos, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 610, 140, 30));
 
         PanelAsientos.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 450, 650));
 
@@ -465,7 +474,6 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         BTN_confirmarCompra.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
         BTN_confirmarCompra.setForeground(new java.awt.Color(255, 255, 255));
         BTN_confirmarCompra.setText("Confirmar");
-        BTN_confirmarCompra.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(123, 216, 80)));
         BTN_confirmarCompra.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BTN_confirmarCompra.setFocusable(false);
         PanelPasajeros.add(BTN_confirmarCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 620, 120, 30));
@@ -474,7 +482,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         BTN_cancelarPasajeros.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
         BTN_cancelarPasajeros.setForeground(new java.awt.Color(255, 255, 255));
         BTN_cancelarPasajeros.setText("Cancelar");
-        BTN_cancelarPasajeros.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(123, 216, 80)));
+        BTN_cancelarPasajeros.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(123, 216, 80)));
         BTN_cancelarPasajeros.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BTN_cancelarPasajeros.setFocusable(false);
         PanelPasajeros.add(BTN_cancelarPasajeros, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 620, 120, 30));
@@ -603,12 +611,12 @@ public class Interfaz_Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JButton BTN_ConfirmarAsientos;
     public javax.swing.JButton BTN_IzquiAcompañantes;
     public javax.swing.JButton BTN_aplicarFiltro;
     public javax.swing.JButton BTN_cancelarAsientos;
     public javax.swing.JButton BTN_cancelarPasajeros;
     public javax.swing.JButton BTN_cerrarSesion;
+    public javax.swing.JButton BTN_confirmarAsientos;
     public javax.swing.JButton BTN_confirmarCompra;
     public javax.swing.JButton BTN_derechaAcompañantes;
     public javax.swing.JPanel BarraLateral;

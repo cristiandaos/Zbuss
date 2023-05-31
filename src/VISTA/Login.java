@@ -79,6 +79,7 @@ public class Login extends javax.swing.JFrame {
         ScrollPanelDinamico.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         ScrollPanelDinamico.setFocusable(false);
         ScrollPanelDinamico.setRequestFocusEnabled(false);
+        ScrollPanelDinamico.setWheelScrollingEnabled(false);
 
         PanelDinamico.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -110,11 +111,10 @@ public class Login extends javax.swing.JFrame {
         Txt_correoElectronico.setCaretColor(new java.awt.Color(255, 255, 255));
         PanelInicioSesion.add(Txt_correoElectronico, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 220, 40));
 
-        BTN_IniciarSesion.setBackground(new java.awt.Color(18, 18, 18));
+        BTN_IniciarSesion.setBackground(new java.awt.Color(12, 12, 12));
         BTN_IniciarSesion.setFont(new java.awt.Font("Consolas", 0, 16)); // NOI18N
         BTN_IniciarSesion.setForeground(new java.awt.Color(255, 255, 255));
         BTN_IniciarSesion.setText("Ingresar");
-        BTN_IniciarSesion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(123, 216, 80), 1, true));
         BTN_IniciarSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BTN_IniciarSesion.setFocusPainted(false);
         BTN_IniciarSesion.setFocusable(false);
@@ -129,11 +129,11 @@ public class Login extends javax.swing.JFrame {
         BTN_clienteInvitado.setFont(new java.awt.Font("Consolas", 0, 16)); // NOI18N
         BTN_clienteInvitado.setForeground(new java.awt.Color(255, 255, 255));
         BTN_clienteInvitado.setText("Continuar como invitado");
-        BTN_clienteInvitado.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(51, 204, 0)));
+        BTN_clienteInvitado.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(123, 216, 80)));
         BTN_clienteInvitado.setContentAreaFilled(false);
         BTN_clienteInvitado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BTN_clienteInvitado.setFocusable(false);
-        PanelIntemediario.add(BTN_clienteInvitado, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 440, 210, 40));
+        PanelIntemediario.add(BTN_clienteInvitado, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 430, 210, 40));
 
         ScrollPanelInfo.setBorder(null);
         ScrollPanelInfo.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -196,7 +196,7 @@ public class Login extends javax.swing.JFrame {
         Lbl_tituloIniciarSesion.setForeground(new java.awt.Color(255, 255, 255));
         Lbl_tituloIniciarSesion.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         Lbl_tituloIniciarSesion.setText("Iniciar Sesión");
-        Lbl_tituloIniciarSesion.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(51, 204, 0)));
+        Lbl_tituloIniciarSesion.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(123, 216, 80)));
         IniciarSesionPanelAux.add(Lbl_tituloIniciarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 210, 60));
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -218,24 +218,25 @@ public class Login extends javax.swing.JFrame {
 
         PanelIntemediario.add(ScrollPanelInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 320, 400));
 
+        BTN_administrador.setFont(new java.awt.Font("Consolas", 0, 16)); // NOI18N
         BTN_administrador.setText("Administrador");
-        PanelIntemediario.add(BTN_administrador, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 490, -1, -1));
+        PanelIntemediario.add(BTN_administrador, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 480, 150, 30));
 
         PanelDinamico.add(PanelIntemediario, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 0, 320, 520));
 
         PanelRegistro.setBackground(new java.awt.Color(12, 12, 12));
         PanelRegistro.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        BTN_ConfirmarRegistro.setBackground(new java.awt.Color(18, 18, 18));
+        BTN_ConfirmarRegistro.setBackground(new java.awt.Color(12, 12, 12));
         BTN_ConfirmarRegistro.setFont(new java.awt.Font("Consolas", 0, 16)); // NOI18N
         BTN_ConfirmarRegistro.setForeground(new java.awt.Color(255, 255, 255));
         BTN_ConfirmarRegistro.setText("Confirmar");
-        BTN_ConfirmarRegistro.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(123, 216, 80), 1, true));
         BTN_ConfirmarRegistro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BTN_ConfirmarRegistro.setFocusPainted(false);
         BTN_ConfirmarRegistro.setFocusable(false);
         BTN_ConfirmarRegistro.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        PanelRegistro.add(BTN_ConfirmarRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 470, 110, 30));
+        BTN_ConfirmarRegistro.setOpaque(true);
+        PanelRegistro.add(BTN_ConfirmarRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 470, 130, 30));
 
         Txt_ApeMatRegistro.setBackground(new java.awt.Color(12, 12, 12));
         Txt_ApeMatRegistro.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
