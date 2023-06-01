@@ -30,11 +30,11 @@ public class Socios {
     }
 
     public String getDni() {
-        return dni;
+        return dni; //get ->obtenr el atributo del objeto
     }
 
     public void setDni(String dni) {
-        this.dni = dni;
+        this.dni = dni; //set -> modificar
     }
 
     public String getNombre() {
@@ -113,13 +113,13 @@ public class Socios {
     
     //retorna true si algun atributo es una cadena vacia o un null
     public boolean ConAtributosVacios() {
-                  return !(nombre != null && !nombre.isBlank())
-                           || !(apellidoPaterno != null && !apellidoPaterno.isBlank())
-                           || !(apellidoMaterno != null && !apellidoMaterno.isBlank())
-                           || !(correo != null && !correo.isBlank())
-                           || !(nacimiento != null && !nacimiento.isBlank())
-                           || !(numero != null && !numero.isBlank())
-                           || !(contraseña != null && !contraseña.isBlank());
+                  return !(nombre != null && !nombre.isEmpty())
+                           || !(apellidoPaterno != null && !apellidoPaterno.isEmpty())
+                           || !(apellidoMaterno != null && !apellidoMaterno.isEmpty())
+                           || !(correo != null && !correo.isEmpty())
+                           || !(nacimiento != null && !nacimiento.isEmpty())
+                           || !(numero != null && !numero.isEmpty())
+                           || !(contraseña != null && !contraseña.isEmpty());
 }
     
          
