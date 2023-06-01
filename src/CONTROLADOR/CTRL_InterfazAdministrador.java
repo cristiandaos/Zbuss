@@ -32,16 +32,24 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JScrollBar;
+import javax.swing.JSpinner;
+import javax.swing.JSpinner.DateEditor;
+import javax.swing.SpinnerDateModel;
 import javax.swing.Timer;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,MouseMotionListener,WindowListener,KeyListener{
@@ -82,7 +90,8 @@ public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,
 
                   this.vista.BTN_infoSocios.addMouseListener(this);
                   
-                  DiseñadoTabla();
+                  InstanciarModeloSpinner(vista.SPNviaje_horaSalida);
+                  InstanciarModeloSpinner(vista.SPNviaje_duracion);
                   InicializarReloj();
                   
                   vista.BTN_cerrarSesion.putClientProperty("JButton.buttonType", "roundRect");
@@ -92,7 +101,7 @@ public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,
          }
          
          
-          private void CodigosTerminales(){
+          private void CargarCodigosTerminales(){
                   try {     
                            PreparedStatement ps=null;
                            ResultSet rs=null;
@@ -109,12 +118,35 @@ public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,
     
     }
          
-         void DiseñadoTabla(){
-                  vista.TBLviajes.getTableHeader().setBackground(new Color(10, 10, 10));
-                  vista.TBLviajes.getTableHeader().setForeground(Color.WHITE);
-                  vista.TBLviajes.getTableHeader().setBorder(new LineBorder(Color.GREEN));
+         void InstanciarModeloSpinner(JSpinner spn){
+                  SpinnerDateModel model = new SpinnerDateModel();
+                  spn.setModel(model);
+                  DateEditor editor = new DateEditor(spn, "HH:mm");
+                  spn.setEditor(editor);
+                  spn.addChangeListener(new ChangeListener() {
+            @Override
+                  public void stateChanged(ChangeEvent e) {
+                           Date selectedDate = (Date)  spn.getValue();
+                           Calendar calendar = Calendar.getInstance();
+                           calendar.setTime(selectedDate);
+                  }
+                  });
+                  SimpleDateFormat formato = new SimpleDateFormat("HH:mm");
+                  Date horaInicial;
+                  try {
+                           horaInicial = formato.parse("00:00");
+                           spn.setValue(horaInicial);
+                 } catch (ParseException ex) {
+                           System.out.println(ex);
+                  }
          }
          
+         
+         void CalcularHoraLlegada(){
+         }
+         
+         void CalcularFechaSalida(){
+         }
          
          void AbrirFileChooser() {
                   JFileChooser FC = new JFileChooser();
@@ -215,20 +247,8 @@ public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,
                  }
                   
                   if (e.getSource()==vista.BTN_guardar_viajes) {
-                           Viajes viaje=new Viajes( vista.CBviaje_terminal_salida.getSelectedItem().toString(),
-                                                                    vista.CBviaje_terminal_llegada.getSelectedItem().toString(), 
-                                                                    vista.SPNviaje_fecha_salida.toString(), vista.SPNviaje_fecha_llegada.getValue().toString(), 
-                                                                    vista.TXTviaje_distancia.getText(), 
-                                                                    40, 
-                                                                    (double) vista.SPNviaje_precio.getValue(), 
-                                                                    binario);
-                           if(viaje.ConAtributosVacios()){
-                                    Emergente msg=new Emergente(null, "Error en el registro del Viaje", "No debe dejar campos vacios");
-                                    
-                           }else{
-                                    viajeDAO.RegistrarViaje(viaje);
-                                    Emergente msg=new Emergente(null,"Registro exitoso","Nuevo Viaje Programado");
-                           }
+
+      
             
                   }
                   if (e.getSource()==vista.BTN_guardar_Terminales) {
@@ -241,7 +261,6 @@ public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,
                            }else{
                                     terminalDAO.RegistrarTerminal(terminales);
                                     Emergente msg=new Emergente(null, "Registro Exitoso", "Nueva terminal agregada");
-                                    CodigosTerminales();
                            }
             
                   }
