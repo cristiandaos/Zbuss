@@ -196,14 +196,14 @@ public class Interfaz_Administrador extends javax.swing.JFrame {
         SPNviaje_fecha_llegada.setFocusable(false);
         PanelViajes.add(SPNviaje_fecha_llegada, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, 140, -1));
 
-        SPNviaje_fecha_salida.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(2287620180000L), new java.util.Date(1688004180000L), new java.util.Date(2287620180000L), java.util.Calendar.HOUR));
+        SPNviaje_fecha_salida.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), new java.util.Date(), null, java.util.Calendar.HOUR_OF_DAY));
         SPNviaje_fecha_salida.setFocusable(false);
         SPNviaje_fecha_salida.setOpaque(true);
         PanelViajes.add(SPNviaje_fecha_salida, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 330, 140, -1));
 
         SPNviaje_precio.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, null, 1.0d));
         SPNviaje_precio.setFocusable(false);
-        PanelViajes.add(SPNviaje_precio, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 430, 80, -1));
+        PanelViajes.add(SPNviaje_precio, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 490, 80, -1));
 
         TXTviaje_codigo.setBackground(new java.awt.Color(14, 14, 14));
         TXTviaje_codigo.setFont(new java.awt.Font("Segoe UI Emoji", 0, 16)); // NOI18N

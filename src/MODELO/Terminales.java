@@ -5,24 +5,14 @@ import java.util.Objects;
 
 
 public class Terminales {
-         private String codigo;
          private String nombre;
          private String direccion;
          private String estado;
 
-         public Terminales(String codigo, String nombre, String direccion, String estado) {
-                  this.codigo = codigo;
+         public Terminales( String nombre, String direccion, String estado) {
                   this.nombre = nombre;
                   this.direccion = direccion;
                   this.estado = estado;
-         }
-
-         public String getCodigo() {
-                  return codigo;
-         }
-
-         public void setCodigo(String codigo) {
-                  this.codigo = codigo;
          }
 
          public String getNombre() {
@@ -50,8 +40,7 @@ public class Terminales {
          }
 
          public boolean ConAtributosVacios() {
-                  return !(codigo != null && !codigo.isBlank())
-                           || !(nombre != null && !nombre.isBlank())
+                  return  !(nombre != null && !nombre.isBlank())
                            || !(direccion != null && !direccion.isBlank())
                            || !(estado != null && !estado.isBlank());
 }

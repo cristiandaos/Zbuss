@@ -97,11 +97,11 @@ public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,
                            PreparedStatement ps=null;
                            ResultSet rs=null;
                            Connection con= cone.getConnection();
-                           ps=con.prepareStatement("SELECT terminal_cod FROM Terminales WHERE terminal_estado='Habilitado'");
+                           ps=con.prepareStatement("SELECT terminal_id FROM Terminales WHERE terminal_estado='Habilitado'");
                            rs=ps.executeQuery();
                            while (rs.next()) {
-                                   vista.CBviaje_terminal_salida.addItem(rs.getString("terminal_cod"));
-                                   vista.CBviaje_terminal_llegada.addItem(rs.getString("terminal_cod"));
+                                   vista.CBviaje_terminal_salida.addItem(String.valueOf(rs.getInt("terminal_id")));
+                                   vista.CBviaje_terminal_llegada.addItem(String.valueOf(rs.getInt("terminal_id")));
                            }
                   } catch (SQLException e) {
                            System.err.println(e.toString());
@@ -127,7 +127,7 @@ public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,
                            try {
                                     binario = Files.readAllBytes(archivo.toPath());
                                     ImageIcon imagen = new ImageIcon(binario);
-                                     vista.LBL_img_referencial.setIcon(imagen);
+                                    vista.LBL_img_referencial.setIcon(imagen);
                            } catch (IOException ex) {
                            }
                   }
@@ -215,11 +215,9 @@ public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,
                  }
                   
                   if (e.getSource()==vista.BTN_guardar_viajes) {
-                           Viajes viaje=new Viajes(vista.TXTviaje_codigo.getText(), 
-                                                                    vista.CBviaje_terminal_salida.getSelectedItem().toString(),
+                           Viajes viaje=new Viajes( vista.CBviaje_terminal_salida.getSelectedItem().toString(),
                                                                     vista.CBviaje_terminal_llegada.getSelectedItem().toString(), 
-                                                                    vista.SPNviaje_fecha_salida.toString(),
-                                                                    vista.SPNviaje_fecha_llegada.getValue().toString(), 
+                                                                    vista.SPNviaje_fecha_salida.toString(), vista.SPNviaje_fecha_llegada.getValue().toString(), 
                                                                     vista.TXTviaje_distancia.getText(), 
                                                                     40, 
                                                                     (double) vista.SPNviaje_precio.getValue(), 
@@ -234,8 +232,7 @@ public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,
             
                   }
                   if (e.getSource()==vista.BTN_guardar_Terminales) {
-                           Terminales terminales=new Terminales(vista.TXTcodigoTerminal.getText(),
-                                                                                              vista.TXTnombreTerminal.getText(), 
+                           Terminales terminales=new Terminales(vista.TXTnombreTerminal.getText(), 
                                                                                               vista.TXTdireccionTerminal.getText(), 
                                                                                               vista.CBestadoTerminal.getSelectedItem().toString());
                            

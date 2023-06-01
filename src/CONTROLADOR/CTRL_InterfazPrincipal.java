@@ -320,7 +320,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                                 ps=con.prepareStatement("SELECT * FROM Viajes");
                                 rs=ps.executeQuery();
                                 while(rs.next() && i<cantidad){
-                                    ArrayPaneles.get(i).setName(rs.getString("viaje_cod"));
+                                    ArrayPaneles.get(i).setName(String.valueOf(rs.getString("viaje_id")));
                                     ArrayDestinos.get(i).setText(rs.getString("viaje_terminal_salida")+" --> "+rs.getString("viaje_terminal_llegada"));
                                     ArrayHorarios.get(i).setText(rs.getString("viaje_fecha_salida")+" --> "+rs.getString("viaje_fecha_llegada"));
                                     ArrayPrecios.get(i).setText("Precio: s/"+rs.getDouble("viaje_precio"));
@@ -352,7 +352,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   ResultSet rs=null;
                   Connection con=cone.getConnection();
                   try {
-                           ps=con.prepareStatement("SELECT * FROM Asientos WHERE asientos_viaje_cod=?");
+                           ps=con.prepareStatement("SELECT * FROM Asientos WHERE asientos_viaje_id=?");
                            ps.setString(0,viajeCod );
                            rs=ps.executeQuery();
                            if (rs.next()) {

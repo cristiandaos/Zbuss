@@ -11,16 +11,15 @@ public class ViajesDAO extends Conexion{
                   PreparedStatement ps=null;
                   Connection con =getConnection();
                   try{
-                           ps=con.prepareStatement("INSERT INTO Viajes(viaje_cod, viaje_terminal_salida,viaje_terminal_llegada,viaje_fecha_salida,viaje_fecha_llegada,viaje_distancia,viaje_asientos_Dispo,viaje_precio,viaje_img_Refe) VALUES(?,?,?,?,?,?,?,?,?)");
-                           ps.setString(1,viaje.getCodigo());
-                           ps.setString(2,viaje.getTerminalSalida());
-                           ps.setString(3,viaje.getTerminalLlegada());
-                           ps.setString(4, viaje.getFechaSalida());
-                           ps.setString(5, viaje.getFechaLlegada());
-                           ps.setString(6, viaje.getDistancia());
-                           ps.setInt(7,viaje.getAsientosDispo());
-                           ps.setDouble(8,viaje.getPrecio());
-                           ps.setBytes(9,viaje.getImg());
+                           ps=con.prepareStatement("INSERT INTO Viajes( viaje_terminal_salida,viaje_terminal_llegada,viaje_fecha_salida,viaje_fecha_llegada,viaje_distancia,viaje_asientos_Dispo,viaje_precio,viaje_img_Refe) VALUES(?,?,?,?,?,?,?,?)");
+                           ps.setString(1,viaje.getTerminalSalida());
+                           ps.setString(2,viaje.getTerminalLlegada());
+                           ps.setString(3, viaje.getFechaSalida());
+                           ps.setString(4, viaje.getFechaLlegada());
+                           ps.setString(5, viaje.getDistancia());
+                           ps.setInt(6,viaje.getAsientosDispo());
+                           ps.setDouble(7,viaje.getPrecio());
+                           ps.setBytes(8,viaje.getImg());
                            ps.execute();
                   }catch(SQLException ex){
                            System.err.println(ex);

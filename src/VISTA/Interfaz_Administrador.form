@@ -427,7 +427,7 @@
                 <Component class="javax.swing.JSpinner" name="SPNviaje_fecha_salida">
                   <Properties>
                     <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-                      <SpinnerModel initial="2287620180000" maximum="2287620180000" minimum="1688004180000" stepSize="10" type="date"/>
+                      <SpinnerModel initial="now" minimum="now" stepSize="11" type="date"/>
                     </Property>
                     <Property name="focusable" type="boolean" value="false"/>
                     <Property name="opaque" type="boolean" value="true"/>
@@ -447,7 +447,7 @@
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="60" y="430" width="80" height="-1"/>
+                      <AbsoluteConstraints x="60" y="490" width="80" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>

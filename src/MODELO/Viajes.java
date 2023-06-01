@@ -3,7 +3,6 @@ package MODELO;
 
 
 public class Viajes {
-        private String codigo;
         private String terminalSalida;
         private String terminalLlegada;
         private String fechaSalida;
@@ -13,8 +12,7 @@ public class Viajes {
         private double Precio;
         private byte [] img;
 
-    public Viajes(String codigo, String terminalSalida, String terminalLlegada, String fechaSalida, String fechaLlegada, String distancia, int AsientosDispo, double Precio, byte[] img) {
-                 this.codigo = codigo;
+    public Viajes( String terminalSalida, String terminalLlegada, String fechaSalida, String fechaLlegada, String distancia, int AsientosDispo, double Precio, byte[] img) {
                  this.terminalSalida = terminalSalida;
                  this.terminalLlegada = terminalLlegada;
                  this.fechaSalida = fechaSalida;
@@ -27,14 +25,6 @@ public class Viajes {
         
         
         
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
-
     public String getTerminalSalida() {
         return terminalSalida;
     }
@@ -100,8 +90,7 @@ public class Viajes {
     }
     
     public boolean ConAtributosVacios() {
-    return !(codigo != null && !codigo.isBlank())
-                || !(terminalSalida != null && !terminalSalida.isBlank())
+    return !(terminalSalida != null && !terminalSalida.isBlank())
                 || !(terminalLlegada != null && !terminalLlegada.isBlank())
                 || !(fechaSalida != null && !fechaSalida.isBlank())
                 || !(distancia != null && !distancia.isBlank())
