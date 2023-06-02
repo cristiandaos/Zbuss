@@ -36,6 +36,10 @@ public class CTRL_PanelTerminales implements ActionListener{
              
          }
          
+         void ListarTerminales(){
+         
+         
+         }
         
          
     @Override

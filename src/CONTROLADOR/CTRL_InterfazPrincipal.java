@@ -59,7 +59,8 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
          private Conexion cone=new Conexion();
          //componentes parar los paneles de los Destinos
          private ArrayList<PanelPersonalizado>ArrayPaneles;
-         private ArrayList<JLabel>ArrayHorarios;
+         private ArrayList<JLabel>ArrayFechas;
+         private ArrayList<JLabel>ArrayHoras;
          private ArrayList<JLabel>ArrayDestinos;
          private ArrayList<JLabel>ArrayImgs;
          private ArrayList<JLabel>ArrayAsientosDisp;
@@ -139,9 +140,8 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
        
          } 
     
-    
          
-          void EstadoInicial(){
+         void EstadoInicial(){
                   Interfaz_Principal reinicio_Interfaz=new Interfaz_Principal();
                   CTRL_InterfazPrincipal reinicio_CTRl =new CTRL_InterfazPrincipal(reinicio_Interfaz,cantidad);
                   reinicio_CTRl.Iniciar();
@@ -215,7 +215,8 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   ArrayPaneles=new ArrayList<>();
                   ArrayDestinos=new ArrayList<>();
                   ArrayAsientosDisp=new ArrayList<>();
-                  ArrayHorarios=new ArrayList<>();
+                  ArrayFechas=new ArrayList<>();
+                  ArrayHoras=new ArrayList<>();
                   ArrayImgs=new ArrayList<>();
                   ArrayPrecios=new ArrayList<>();
                   ArrayDistancias=new ArrayList<>();
@@ -229,7 +230,8 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            PanelPersonalizado contenedor=new PanelPersonalizado();
                            JLabel precio=new JLabel();
                            JLabel img=new JLabel();
-                           JLabel  horario=new JLabel();
+                           JLabel  fechas=new JLabel();
+                           JLabel horas=new JLabel();
                            JLabel destino=new JLabel();
                            JLabel  asientosDispo=new JLabel();
                            JLabel distancia=new JLabel();
@@ -249,14 +251,12 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
 
                            precio.setBounds(0, 280, 400, 30);
                            precio.setFont(new Font("Segoe UI Emoji",Font.PLAIN,16));
-                           precio.setText("Precio: s/35 ");
                            precio.setHorizontalAlignment(SwingConstants.CENTER);
                            precio.setForeground(Color.WHITE);
                            ArrayPrecios.add(precio);
                            contenedor.add(precio);
 
                            destino.setBounds(0, 310, 400, 30);
-                           destino.setText("Terminal de Ica  ---> Terminal de Lima");
                            destino.setHorizontalAlignment(SwingConstants.CENTER);
                            destino.setForeground(Color.WHITE);
                            destino.setFont(new Font("Segoe UI Emoji",Font.PLAIN,16));
@@ -271,16 +271,21 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            ArrayDistancias.add(distancia);
                            contenedor.add(distancia);
 
-                           horario.setBounds(0, 360, 400, 30);
-                           horario.setText("18:00  ---> 20:00");
-                           horario.setForeground(Color.WHITE);
-                           horario.setHorizontalAlignment(SwingConstants.CENTER);
-                           horario.setFont(new Font("Segoe UI Emoji",Font.PLAIN,16));
-                           ArrayHorarios.add(horario);
-                           contenedor.add(horario);
+                           fechas.setBounds(0, 360, 400, 30);
+                           fechas.setForeground(Color.WHITE);
+                           fechas.setHorizontalAlignment(SwingConstants.CENTER);
+                           fechas.setFont(new Font("Segoe UI Emoji",Font.PLAIN,16));
+                           ArrayFechas.add(fechas);
+                           contenedor.add(fechas);
+                           
+                           horas.setBounds(0, 380, 400, 30);
+                           horas.setForeground(Color.WHITE);
+                           horas.setHorizontalAlignment(SwingConstants.CENTER);
+                           horas.setFont(new Font("Segoe UI Emoji",Font.PLAIN,16));
+                           ArrayHoras.add(horas);
+                           contenedor.add(horas);
 
-                           asientosDispo.setBounds(0, 400, 400, 30);
-                           asientosDispo.setText(" Asientos Disponibles: 40");
+                           asientosDispo.setBounds(0, 420, 400, 30);
                            asientosDispo.setForeground(Color.WHITE);
                            asientosDispo.setFont(new Font("Segoe UI Emoji",Font.PLAIN,16));
                            asientosDispo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -312,11 +317,12 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                                 ps=con.prepareStatement("SELECT * FROM Viajes");
                                 rs=ps.executeQuery();
                                 while(rs.next() && i<cantidad){
-                                    ArrayPaneles.get(i).setName(String.valueOf(rs.getString("viaje_id")));
+                                    ArrayPaneles.get(i).setName(String.valueOf(rs.getInt("viaje_id")));
                                     ArrayDestinos.get(i).setText(rs.getString("viaje_terminal_salida")+" --> "+rs.getString("viaje_terminal_llegada"));
-                                    ArrayHorarios.get(i).setText(rs.getString("viaje_fecha_salida")+" --> "+rs.getString("viaje_fecha_llegada"));
+                                    ArrayFechas.get(i).setText(rs.getString("viaje_fecha_salida")+" --> "+rs.getString("viaje_fecha_llegada"));
+                                    ArrayHoras.get(i).setText(rs.getString("viaje_hora_salida")+" --> "+rs.getString("viaje_hora_llegada"));
                                     ArrayPrecios.get(i).setText("Precio: s/"+rs.getDouble("viaje_precio"));
-                                    ArrayAsientosDisp.get(i).setText(String.valueOf( rs.getInt("viaje_asientos_Dispo")));
+                                    ArrayAsientosDisp.get(i).setText("Asientos Disponibles:"+String.valueOf( rs.getInt("viaje_asientos_Dispo")));
                                     binario=rs.getBytes("viaje_img_Refe");
                                     InputStream img=new ByteArrayInputStream(binario);
                                     BufferedImage bfimagen=ImageIO.read(img);
@@ -334,7 +340,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   }    
          }
          
-          private void CargarButacas(String viajeCod){
+          private void CargarAsientos(int ID){
                   URL urlAsientoOcup = getClass().getResource("/IMGS/asientoOcup.png");
                   ImageIcon asientoOcup=new ImageIcon(urlAsientoOcup);
                   URL urlAsientoDisp = getClass().getResource("/IMGS/asientoDisp.png");
@@ -345,7 +351,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   Connection con=cone.getConnection();
                   try {
                            ps=con.prepareStatement("SELECT * FROM Asientos WHERE asientos_viaje_id=?");
-                           ps.setString(0,viajeCod );
+                           ps.setInt(1,ID );
                            rs=ps.executeQuery();
                            if (rs.next()) {
                                     for (int i = 1; i <=40; i++) {
@@ -545,13 +551,8 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   int incremento;
                   for (int i = 1; i <=40; i++) {
                            JLabel asiento=new JLabel();
-                           URL urlAsientoDisp = getClass().getResource("/IMGS/asientoDisp.png");
-                           ImageIcon asientoDisp=new ImageIcon(urlAsientoDisp);
-                           asiento.setIcon(asientoDisp);
                            asiento.setBounds(x,y,32,32);
-                           asiento.setBackground(Color.GREEN);
                            asiento.setName("A"+i);
-                           asiento.setText("A+i");
                            asiento.setCursor(new Cursor(Cursor.HAND_CURSOR));
                            ArrayBusAsientos.add(asiento);
                            vista.Buss.add(asiento);
@@ -707,6 +708,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                                  ImageIcon asientoSele=new ImageIcon(urlAsientoSele);
 
                                  if (e.getSource()==asientos ) {
+                                             
                                            if (asientos.getBackground().equals(Color.GREEN)) {
                                                       asientos.setBackground(Color.BLUE);
                                                       asientos.setIcon(asientoSele);
@@ -734,8 +736,9 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   
                      for (PanelPersonalizado paneles : ArrayPaneles) {
                                 if (e.getSource()==paneles) {
-                                          JScrollBar scrollBar = vista.ScrollPanelDinamico.getHorizontalScrollBar();
-                                          SliderScroll(scrollBar,10,1100,5);
+                                             CargarAsientos(Integer.parseInt(paneles.getName()));
+                                             JScrollBar scrollBar = vista.ScrollPanelDinamico.getHorizontalScrollBar();
+                                             SliderScroll(scrollBar,10,1100,5);
                                 }
                      }
                   

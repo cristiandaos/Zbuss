@@ -39,12 +39,15 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class CTRL_PanelViajes implements ActionListener,ChangeListener{
+    
          private Panel_GestionViajes panel;
          private byte [] bytes;
          private File archivo;
          private ViajesDAO viajeDAO=new ViajesDAO();
          private Date fechaSalidaAux=null;
          private Conexion cone=new Conexion();
+         private int ID=0;
+         
          public  CTRL_PanelViajes(Panel_GestionViajes panel){
                   this.panel=panel;
                   this.panel.BTN_guardar_viajes.addActionListener(this);
@@ -67,6 +70,20 @@ public class CTRL_PanelViajes implements ActionListener,ChangeListener{
          
          public Panel_GestionViajes getPanel(){
                   return  panel;
+         }
+         
+         void ActivarAsientos(Viajes viaje){
+                  PreparedStatement ps=null;
+                  Connection con =cone.getConnection();
+                  try{
+                           ps=con.prepareStatement("INSERT INTO Asientos VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                           ps.setInt(1,viaje.getId());
+                           for (int i = 2; i <= 41; i++) {
+                                    ps.setString(i,"Disponible");
+                           }
+                           ps.execute();
+                  }catch(SQLException ex){
+                  } 
          }
          
          void CargarCodigosTerminales(){
@@ -138,6 +155,7 @@ public class CTRL_PanelViajes implements ActionListener,ChangeListener{
                   ReinciarSpinners(spn);
          }
          
+         
          void ReinciarSpinners(JSpinner spn){
                   SimpleDateFormat formato = new SimpleDateFormat("HH:mm");
                   Date horaInicial;
@@ -166,7 +184,7 @@ public class CTRL_PanelViajes implements ActionListener,ChangeListener{
                   }
          }
          
-         void ReinciarCampos(){
+         void ReiniciarCampos(){
                   bytes=null;
                   panel.CBviaje_terminal_Llegada.setSelectedIndex(0);
                   panel.CBviaje_terminal_Salida.setSelectedIndex(0);
@@ -238,7 +256,14 @@ public class CTRL_PanelViajes implements ActionListener,ChangeListener{
                  }
          
          }
-
+         
+         
+         public int generarID(){
+                  int id = this.ID; 
+                  id++; 
+                  return id;
+         }
+         
 @Override
          public void actionPerformed(ActionEvent e) {
                   if (e.getSource()==panel.BTN_img_referencial) {
@@ -255,7 +280,8 @@ public class CTRL_PanelViajes implements ActionListener,ChangeListener{
                            String fecha=formatoFecha.format(fechaSalida);
                            String hora=formatoHora.format(horaSalida);
         
-                           Viajes viaje=new Viajes(panel.CBviaje_terminal_Salida.getSelectedItem().toString(), 
+                           Viajes viaje=new Viajes(generarID(),
+                                                                     panel.CBviaje_terminal_Salida.getSelectedItem().toString(), 
                                                                      panel.CBviaje_terminal_Llegada.getSelectedItem().toString(), 
                                                                      fecha, 
                                                                      panel.LBLviaje_fechaLlegada.getText(), 
@@ -270,7 +296,8 @@ public class CTRL_PanelViajes implements ActionListener,ChangeListener{
                                     return;
                            }
                            viajeDAO.RegistrarViaje(viaje);
-                           ReinciarCampos();
+                           ActivarAsientos(viaje);
+                           ReiniciarCampos();
             
                   }
          }

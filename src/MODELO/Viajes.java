@@ -3,6 +3,7 @@ package MODELO;
 
 
 public class Viajes {
+        private int id;
         private String terminalSalida;
         private String terminalLlegada;
         private String fechaSalida;
@@ -14,7 +15,8 @@ public class Viajes {
         private double Precio;
         private byte [] img;
 
-    public Viajes(String terminalSalida, String terminalLlegada, String fechaSalida, String fechaLlegada, String horaSalida, String horaLlegada, String distancia, int AsientosDispo, double Precio, byte[] img) {
+    public Viajes(int id,String terminalSalida, String terminalLlegada, String fechaSalida, String fechaLlegada, String horaSalida, String horaLlegada, String distancia, int AsientosDispo, double Precio, byte[] img) {
+                this.id=id;
                 this.terminalSalida = terminalSalida;
                 this.terminalLlegada = terminalLlegada;
                 this.fechaSalida = fechaSalida;
@@ -27,7 +29,13 @@ public class Viajes {
                 this.img = img;
     }
 
-   
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTerminalSalida() {
         return terminalSalida;
@@ -112,15 +120,15 @@ public class Viajes {
         
      
     
-    public boolean ConAtributosVacios() {
-    return !(terminalSalida != null && !terminalSalida.isBlank())
-                || !(terminalLlegada != null && !terminalLlegada.isBlank())
-                || !(fechaSalida != null && !fechaSalida.isBlank())
-                || !(horaSalida != null && !horaLlegada.isBlank())
-                || !(distancia != null && !distancia.isBlank())
-                || !(Precio != 0.00)
-                || !(img != null );
-                }
+         public boolean ConAtributosVacios() {
+                  return !(terminalSalida != null && !terminalSalida.isBlank())
+                            || !(terminalLlegada != null && !terminalLlegada.isBlank())
+                            || !(fechaSalida != null && !fechaSalida.isBlank())
+                            || !(horaSalida != null && !horaLlegada.isBlank())
+                            || !(distancia != null && !distancia.isBlank())
+                            || !(Precio != 0.00)
+                            || !(img != null );
+         }
         
         
 }

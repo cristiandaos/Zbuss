@@ -28,7 +28,7 @@ public class Panel_GestionTerminales extends javax.swing.JPanel {
 
         TXT_direccion_Terminal = new javax.swing.JTextField();
         jScrollPane4 = new javax.swing.JScrollPane();
-        TBLviajes = new javax.swing.JTable();
+        TBLterminales = new javax.swing.JTable();
         TXT_nombre_Terminal = new javax.swing.JTextField();
         CB_estado_Terminal = new javax.swing.JComboBox<>();
         BTN_eliminar_terminal = new javax.swing.JButton();
@@ -43,22 +43,22 @@ public class Panel_GestionTerminales extends javax.swing.JPanel {
         TXT_direccion_Terminal.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(102, 204, 0)));
         add(TXT_direccion_Terminal, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 190, 310, 30));
 
-        TBLviajes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 204, 0)));
-        TBLviajes.setModel(new javax.swing.table.DefaultTableModel(
+        TBLterminales.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 204, 0)));
+        TBLterminales.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
-        TBLviajes.setGridColor(new java.awt.Color(255, 255, 255));
-        TBLviajes.getTableHeader().setResizingAllowed(false);
-        TBLviajes.getTableHeader().setReorderingAllowed(false);
-        jScrollPane4.setViewportView(TBLviajes);
+        TBLterminales.setGridColor(new java.awt.Color(255, 255, 255));
+        TBLterminales.getTableHeader().setResizingAllowed(false);
+        TBLterminales.getTableHeader().setReorderingAllowed(false);
+        jScrollPane4.setViewportView(TBLterminales);
 
         add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 240, 670, 430));
 
@@ -86,7 +86,7 @@ public class Panel_GestionTerminales extends javax.swing.JPanel {
     public javax.swing.JButton BTN_guardar_terminal;
     public javax.swing.JButton BTN_nuevo_terminal;
     public javax.swing.JComboBox<String> CB_estado_Terminal;
-    public javax.swing.JTable TBLviajes;
+    public javax.swing.JTable TBLterminales;
     public javax.swing.JTextField TXT_direccion_Terminal;
     public javax.swing.JTextField TXT_nombre_Terminal;
     public javax.swing.JScrollPane jScrollPane4;
