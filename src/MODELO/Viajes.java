@@ -7,24 +7,28 @@ public class Viajes {
         private String terminalLlegada;
         private String fechaSalida;
         private String fechaLlegada;
+        private String horaSalida;
+        private String horaLlegada;
         private String distancia;
         private int AsientosDispo;
         private double Precio;
         private byte [] img;
 
-    public Viajes( String terminalSalida, String terminalLlegada, String fechaSalida, String fechaLlegada, String distancia, int AsientosDispo, double Precio, byte[] img) {
-                 this.terminalSalida = terminalSalida;
-                 this.terminalLlegada = terminalLlegada;
-                 this.fechaSalida = fechaSalida;
-                 this.fechaLlegada = fechaLlegada;
-                 this.distancia = distancia;
-                 this.AsientosDispo = AsientosDispo;
-                 this.Precio = Precio;
-                 this.img = img;
+    public Viajes(String terminalSalida, String terminalLlegada, String fechaSalida, String fechaLlegada, String horaSalida, String horaLlegada, String distancia, int AsientosDispo, double Precio, byte[] img) {
+                this.terminalSalida = terminalSalida;
+                this.terminalLlegada = terminalLlegada;
+                this.fechaSalida = fechaSalida;
+                this.fechaLlegada = fechaLlegada;
+                this.horaSalida = horaSalida;
+                this.horaLlegada = horaLlegada;
+                this.distancia = distancia;
+                this.AsientosDispo = AsientosDispo;
+                this.Precio = Precio;
+                this.img = img;
     }
-        
-        
-        
+
+   
+
     public String getTerminalSalida() {
         return terminalSalida;
     }
@@ -55,6 +59,22 @@ public class Viajes {
 
     public void setFechaLlegada(String fechaLlegada) {
         this.fechaLlegada = fechaLlegada;
+    }
+
+    public String getHoraSalida() {
+        return horaSalida;
+    }
+
+    public void setHoraSalida(String horaSalida) {
+        this.horaSalida = horaSalida;
+    }
+
+    public String getHoraLlegada() {
+        return horaLlegada;
+    }
+
+    public void setHoraLlegada(String horaLlegada) {
+        this.horaLlegada = horaLlegada;
     }
 
     public String getDistancia() {
@@ -88,11 +108,15 @@ public class Viajes {
     public void setImg(byte[] img) {
         this.img = img;
     }
+        
+        
+     
     
     public boolean ConAtributosVacios() {
     return !(terminalSalida != null && !terminalSalida.isBlank())
                 || !(terminalLlegada != null && !terminalLlegada.isBlank())
                 || !(fechaSalida != null && !fechaSalida.isBlank())
+                || !(horaSalida != null && !horaLlegada.isBlank())
                 || !(distancia != null && !distancia.isBlank())
                 || !(Precio != 0.00)
                 || !(img != null );

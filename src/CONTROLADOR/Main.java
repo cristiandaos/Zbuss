@@ -34,13 +34,19 @@ public class Main {
                   UIManager.put("Spinner.buttonPressedArrowColor", Color.GREEN);
                   UIManager.put("Spinner.buttonBackground", new Color(30,30,30));
                   UIManager.put("Spinner.foreground",Color.WHITE);
+                  UIManager.put("Spinner.disabledForeground",Color.WHITE);
+                 
                  //diseño del JScroll
                   UIManager.put("ScrollBar.thumb", new Color(123,216,80));
                   UIManager.put("ScrollBar.track", Color.BLACK);
                   UIManager.put("ScrollBar.hoverThumbColor", Color.GREEN);
                   UIManager.put("ScrollBar.pressedThumbColor", Color.GREEN);
                   UIManager.put("ScrollBar.hoverTrackColor", Color.BLACK);
-                 
+                  
+                  //diseño de Jtextfield
+                  UIManager.put("TextField.inactiveForeground", Color.WHITE);
+                  UIManager.put("TextField.inactiveBackground", new Color(10,10,10));
+                
         } catch( UnsupportedLookAndFeelException ex ) {
                   System.err.println( "Fallo en la inicialización del L&F" );
         }

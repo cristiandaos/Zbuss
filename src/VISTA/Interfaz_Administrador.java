@@ -24,48 +24,7 @@ public class Interfaz_Administrador extends javax.swing.JFrame {
         BTN_gestionTerminales = new javax.swing.JLabel();
         BTN_gestionAdmins = new javax.swing.JLabel();
         BTN_cerrarSesion = new javax.swing.JButton();
-        Scroll = new javax.swing.JScrollPane();
         PanelDinamico = new javax.swing.JPanel();
-        PanelViajes = new javax.swing.JPanel();
-        TXTviaje_distancia = new javax.swing.JTextField();
-        CBviaje_terminal_llegada = new javax.swing.JComboBox<>();
-        SPNviaje_precio = new javax.swing.JSpinner();
-        CBviaje_terminal_salida = new javax.swing.JComboBox<>();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        TBLviajes = new javax.swing.JTable();
-        BTN_eliminar_viajes = new javax.swing.JButton();
-        BTN_nuevo_viajes = new javax.swing.JButton();
-        BTN_guardar_viajes = new javax.swing.JButton();
-        LBL_img_referencial = new javax.swing.JLabel();
-        BTN_img_referencial = new javax.swing.JButton();
-        DCviaje_fechaSalida = new com.toedter.calendar.JDateChooser();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        LBLviaje_fechaLlegada = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        LBLviaje_horaLlegada = new javax.swing.JLabel();
-        SPNviaje_duracion = new javax.swing.JSpinner();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        SPNviaje_horaSalida = new javax.swing.JSpinner();
-        PanelTerminales = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        TBLterminales = new javax.swing.JTable();
-        TXTdireccionTerminal = new javax.swing.JTextField();
-        TXTcodigoTerminal = new javax.swing.JTextField();
-        TXTnombreTerminal = new javax.swing.JTextField();
-        CBestadoTerminal = new javax.swing.JComboBox<>();
-        BTN_guardar_Terminales = new javax.swing.JButton();
-        PanelAdministradores = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        TBLadministradores = new javax.swing.JTable();
-        TXTdireccionTerminal1 = new javax.swing.JTextField();
-        TXTcodigoTerminal1 = new javax.swing.JTextField();
-        TXTnombreTerminal1 = new javax.swing.JTextField();
-        TXTdireccionTerminal2 = new javax.swing.JTextField();
-        TXTcodigoTerminal2 = new javax.swing.JTextField();
-        TXTnombreTerminal2 = new javax.swing.JTextField();
-        PanelSocios = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -172,255 +131,21 @@ public class Interfaz_Administrador extends javax.swing.JFrame {
 
         getContentPane().add(BarraLateral, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 220, 670));
 
-        Scroll.setBorder(null);
-        Scroll.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        Scroll.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-        Scroll.setWheelScrollingEnabled(false);
-
         PanelDinamico.setBackground(new java.awt.Color(153, 153, 153));
-        PanelDinamico.setPreferredSize(new java.awt.Dimension(1060, 2680));
-        PanelDinamico.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        PanelDinamico.setPreferredSize(new java.awt.Dimension(1060, 670));
 
-        PanelViajes.setBackground(new java.awt.Color(20, 20, 20));
-        PanelViajes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        TXTviaje_distancia.setBackground(new java.awt.Color(14, 14, 14));
-        TXTviaje_distancia.setFont(new java.awt.Font("Segoe UI Emoji", 0, 16)); // NOI18N
-        TXTviaje_distancia.setForeground(new java.awt.Color(255, 255, 255));
-        TXTviaje_distancia.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(51, 204, 0)));
-        PanelViajes.add(TXTviaje_distancia, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 440, 180, 30));
-
-        CBviaje_terminal_llegada.setBackground(new java.awt.Color(14, 14, 14));
-        CBviaje_terminal_llegada.setFont(new java.awt.Font("Segoe UI Emoji", 0, 16)); // NOI18N
-        CBviaje_terminal_llegada.setForeground(new java.awt.Color(255, 255, 255));
-        CBviaje_terminal_llegada.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        CBviaje_terminal_llegada.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(123, 216, 80)));
-        CBviaje_terminal_llegada.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        CBviaje_terminal_llegada.setFocusable(false);
-        PanelViajes.add(CBviaje_terminal_llegada, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, 210, 30));
-
-        SPNviaje_precio.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, null, 1.0d));
-        SPNviaje_precio.setFocusable(false);
-        PanelViajes.add(SPNviaje_precio, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 500, 80, -1));
-
-        CBviaje_terminal_salida.setBackground(new java.awt.Color(14, 14, 14));
-        CBviaje_terminal_salida.setFont(new java.awt.Font("Segoe UI Emoji", 0, 16)); // NOI18N
-        CBviaje_terminal_salida.setForeground(new java.awt.Color(255, 255, 255));
-        CBviaje_terminal_salida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        CBviaje_terminal_salida.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(123, 216, 80)));
-        CBviaje_terminal_salida.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        PanelViajes.add(CBviaje_terminal_salida, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, 210, 30));
-
-        TBLviajes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 204, 0)));
-        TBLviajes.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        TBLviajes.setGridColor(new java.awt.Color(255, 255, 255));
-        TBLviajes.getTableHeader().setResizingAllowed(false);
-        TBLviajes.getTableHeader().setReorderingAllowed(false);
-        jScrollPane4.setViewportView(TBLviajes);
-
-        PanelViajes.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(382, 420, 660, 240));
-
-        BTN_eliminar_viajes.setText("Eliminar");
-        PanelViajes.add(BTN_eliminar_viajes, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 560, 90, 30));
-
-        BTN_nuevo_viajes.setText("Nuevo");
-        PanelViajes.add(BTN_nuevo_viajes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 560, 90, 30));
-
-        BTN_guardar_viajes.setText("Guardar");
-        PanelViajes.add(BTN_guardar_viajes, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 560, 90, 30));
-
-        LBL_img_referencial.setBackground(new java.awt.Color(0, 0, 0));
-        LBL_img_referencial.setOpaque(true);
-        PanelViajes.add(LBL_img_referencial, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 30, 360, 250));
-
-        BTN_img_referencial.setForeground(new java.awt.Color(255, 255, 255));
-        BTN_img_referencial.setText("Imagen Referencial");
-        BTN_img_referencial.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 204, 0)));
-        BTN_img_referencial.setFocusable(false);
-        PanelViajes.add(BTN_img_referencial, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 290, 120, 40));
-
-        DCviaje_fechaSalida.setForeground(new java.awt.Color(255, 255, 255));
-        DCviaje_fechaSalida.setDateFormatString("dd/MM/YYYY");
-        DCviaje_fechaSalida.setFocusable(false);
-        PanelViajes.add(DCviaje_fechaSalida, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 230, 130, 30));
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI Emoji", 0, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Fecha de Llegada:");
-        PanelViajes.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 200, -1, 30));
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI Emoji", 0, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Fecha de Salida:");
-        PanelViajes.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 190, 130, 30));
-
-        LBLviaje_fechaLlegada.setFont(new java.awt.Font("Segoe UI Emoji", 0, 14)); // NOI18N
-        LBLviaje_fechaLlegada.setForeground(new java.awt.Color(255, 255, 255));
-        LBLviaje_fechaLlegada.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LBLviaje_fechaLlegada.setText("DD/MM/YYYY");
-        PanelViajes.add(LBLviaje_fechaLlegada, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 230, 130, 30));
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI Emoji", 0, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Hora de Salida:");
-        PanelViajes.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, -1, 30));
-
-        LBLviaje_horaLlegada.setFont(new java.awt.Font("Segoe UI Emoji", 0, 14)); // NOI18N
-        LBLviaje_horaLlegada.setForeground(new java.awt.Color(255, 255, 255));
-        LBLviaje_horaLlegada.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LBLviaje_horaLlegada.setText("HH:MM:SS");
-        PanelViajes.add(LBLviaje_horaLlegada, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 310, 130, 30));
-        PanelViajes.add(SPNviaje_duracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 390, 120, -1));
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI Emoji", 0, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Hora de Llegada:");
-        PanelViajes.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 280, -1, 30));
-
-        jLabel8.setFont(new java.awt.Font("Segoe UI Emoji", 0, 16)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("Duración Aproximada:");
-        PanelViajes.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, -1, 30));
-        PanelViajes.add(SPNviaje_horaSalida, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, 120, -1));
-
-        PanelDinamico.add(PanelViajes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1060, 670));
-
-        PanelTerminales.setBackground(new java.awt.Color(20, 20, 20));
-        PanelTerminales.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 0, 1, new java.awt.Color(0, 204, 0)));
-        PanelTerminales.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        TBLterminales.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(TBLterminales);
-
-        PanelTerminales.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 230, 510, -1));
-
-        TXTdireccionTerminal.setBackground(new java.awt.Color(18, 18, 18));
-        TXTdireccionTerminal.setFont(new java.awt.Font("Segoe UI Emoji", 0, 14)); // NOI18N
-        TXTdireccionTerminal.setForeground(new java.awt.Color(255, 255, 255));
-        TXTdireccionTerminal.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(51, 204, 0)));
-        PanelTerminales.add(TXTdireccionTerminal, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, 350, 30));
-
-        TXTcodigoTerminal.setBackground(new java.awt.Color(18, 18, 18));
-        TXTcodigoTerminal.setFont(new java.awt.Font("Segoe UI Emoji", 0, 16)); // NOI18N
-        TXTcodigoTerminal.setForeground(new java.awt.Color(255, 255, 255));
-        TXTcodigoTerminal.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(51, 204, 0)));
-        PanelTerminales.add(TXTcodigoTerminal, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, 180, 30));
-
-        TXTnombreTerminal.setBackground(new java.awt.Color(18, 18, 18));
-        TXTnombreTerminal.setFont(new java.awt.Font("Segoe UI Emoji", 0, 16)); // NOI18N
-        TXTnombreTerminal.setForeground(new java.awt.Color(255, 255, 255));
-        TXTnombreTerminal.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(51, 204, 0)));
-        PanelTerminales.add(TXTnombreTerminal, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, 190, 30));
-
-        CBestadoTerminal.setBackground(new java.awt.Color(18, 18, 18));
-        CBestadoTerminal.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
-        CBestadoTerminal.setForeground(new java.awt.Color(255, 255, 255));
-        CBestadoTerminal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Habilitado", "Deshabilitado" }));
-        CBestadoTerminal.setBorder(null);
-        CBestadoTerminal.setFocusable(false);
-        PanelTerminales.add(CBestadoTerminal, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, 140, 30));
-
-        BTN_guardar_Terminales.setText("Guardar");
-        PanelTerminales.add(BTN_guardar_Terminales, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 420, -1, -1));
-
-        PanelDinamico.add(PanelTerminales, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 670, 1060, 670));
-
-        PanelAdministradores.setBackground(new java.awt.Color(20, 20, 20));
-        PanelAdministradores.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 0, 1, new java.awt.Color(51, 204, 0)));
-        PanelAdministradores.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        TBLadministradores.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(TBLadministradores);
-
-        PanelAdministradores.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 230, 510, -1));
-
-        TXTdireccionTerminal1.setBackground(new java.awt.Color(18, 18, 18));
-        TXTdireccionTerminal1.setFont(new java.awt.Font("Segoe UI Emoji", 0, 16)); // NOI18N
-        TXTdireccionTerminal1.setForeground(new java.awt.Color(255, 255, 255));
-        TXTdireccionTerminal1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(51, 204, 0)));
-        PanelAdministradores.add(TXTdireccionTerminal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, 190, 30));
-
-        TXTcodigoTerminal1.setBackground(new java.awt.Color(18, 18, 18));
-        TXTcodigoTerminal1.setFont(new java.awt.Font("Segoe UI Emoji", 0, 16)); // NOI18N
-        TXTcodigoTerminal1.setForeground(new java.awt.Color(255, 255, 255));
-        TXTcodigoTerminal1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(51, 204, 0)));
-        PanelAdministradores.add(TXTcodigoTerminal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, 190, 30));
-
-        TXTnombreTerminal1.setBackground(new java.awt.Color(18, 18, 18));
-        TXTnombreTerminal1.setFont(new java.awt.Font("Segoe UI Emoji", 0, 16)); // NOI18N
-        TXTnombreTerminal1.setForeground(new java.awt.Color(255, 255, 255));
-        TXTnombreTerminal1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(51, 204, 0)));
-        PanelAdministradores.add(TXTnombreTerminal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, 190, 30));
-
-        TXTdireccionTerminal2.setBackground(new java.awt.Color(18, 18, 18));
-        TXTdireccionTerminal2.setFont(new java.awt.Font("Segoe UI Emoji", 0, 16)); // NOI18N
-        TXTdireccionTerminal2.setForeground(new java.awt.Color(255, 255, 255));
-        TXTdireccionTerminal2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(51, 204, 0)));
-        PanelAdministradores.add(TXTdireccionTerminal2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 390, 230, 30));
-
-        TXTcodigoTerminal2.setBackground(new java.awt.Color(18, 18, 18));
-        TXTcodigoTerminal2.setFont(new java.awt.Font("Segoe UI Emoji", 0, 16)); // NOI18N
-        TXTcodigoTerminal2.setForeground(new java.awt.Color(255, 255, 255));
-        TXTcodigoTerminal2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(51, 204, 0)));
-        PanelAdministradores.add(TXTcodigoTerminal2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, 190, 30));
-
-        TXTnombreTerminal2.setBackground(new java.awt.Color(18, 18, 18));
-        TXTnombreTerminal2.setFont(new java.awt.Font("Segoe UI Emoji", 0, 16)); // NOI18N
-        TXTnombreTerminal2.setForeground(new java.awt.Color(255, 255, 255));
-        TXTnombreTerminal2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(51, 204, 0)));
-        PanelAdministradores.add(TXTnombreTerminal2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 330, 230, 30));
-
-        PanelDinamico.add(PanelAdministradores, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 1340, 1060, 670));
-
-        PanelSocios.setBackground(new java.awt.Color(153, 153, 0));
-
-        javax.swing.GroupLayout PanelSociosLayout = new javax.swing.GroupLayout(PanelSocios);
-        PanelSocios.setLayout(PanelSociosLayout);
-        PanelSociosLayout.setHorizontalGroup(
-            PanelSociosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout PanelDinamicoLayout = new javax.swing.GroupLayout(PanelDinamico);
+        PanelDinamico.setLayout(PanelDinamicoLayout);
+        PanelDinamicoLayout.setHorizontalGroup(
+            PanelDinamicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1060, Short.MAX_VALUE)
         );
-        PanelSociosLayout.setVerticalGroup(
-            PanelSociosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        PanelDinamicoLayout.setVerticalGroup(
+            PanelDinamicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 670, Short.MAX_VALUE)
         );
 
-        PanelDinamico.add(PanelSocios, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 2010, 1060, 670));
-
-        Scroll.setViewportView(PanelDinamico);
-
-        getContentPane().add(Scroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 50, 1060, 670));
+        getContentPane().add(PanelDinamico, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 50, -1, -1));
 
         pack();
         setLocationRelativeTo(null);
@@ -461,59 +186,18 @@ public class Interfaz_Administrador extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton BTN_cerrarSesion;
-    public javax.swing.JButton BTN_eliminar_viajes;
     public javax.swing.JLabel BTN_gestionAdmins;
     public javax.swing.JLabel BTN_gestionTerminales;
     public javax.swing.JLabel BTN_gestionViajes;
-    public javax.swing.JButton BTN_guardar_Terminales;
-    public javax.swing.JButton BTN_guardar_viajes;
-    public javax.swing.JButton BTN_img_referencial;
     public javax.swing.JLabel BTN_infoSocios;
-    public javax.swing.JButton BTN_nuevo_viajes;
     public javax.swing.JPanel BarraLateral;
     public javax.swing.JPanel BarraSuperior;
-    public javax.swing.JComboBox<String> CBestadoTerminal;
-    public javax.swing.JComboBox<String> CBviaje_terminal_llegada;
-    public javax.swing.JComboBox<String> CBviaje_terminal_salida;
-    public com.toedter.calendar.JDateChooser DCviaje_fechaSalida;
-    public javax.swing.JLabel LBL_img_referencial;
     public javax.swing.JLabel LBLadministrador;
     public javax.swing.JLabel LBLfecha;
     public javax.swing.JLabel LBLhora;
-    public javax.swing.JLabel LBLviaje_fechaLlegada;
-    public javax.swing.JLabel LBLviaje_horaLlegada;
     public javax.swing.JLabel Logo;
-    public javax.swing.JPanel PanelAdministradores;
     public javax.swing.JPanel PanelDinamico;
-    public javax.swing.JPanel PanelSocios;
-    public javax.swing.JPanel PanelTerminales;
     public javax.swing.JPanel PanelTiempo;
-    public javax.swing.JPanel PanelViajes;
-    public javax.swing.JSpinner SPNviaje_duracion;
-    public javax.swing.JSpinner SPNviaje_horaSalida;
-    public javax.swing.JSpinner SPNviaje_precio;
-    public javax.swing.JScrollPane Scroll;
-    public javax.swing.JTable TBLadministradores;
-    public javax.swing.JTable TBLterminales;
-    public javax.swing.JTable TBLviajes;
-    public javax.swing.JTextField TXTcodigoTerminal;
-    public javax.swing.JTextField TXTcodigoTerminal1;
-    public javax.swing.JTextField TXTcodigoTerminal2;
-    public javax.swing.JTextField TXTdireccionTerminal;
-    public javax.swing.JTextField TXTdireccionTerminal1;
-    public javax.swing.JTextField TXTdireccionTerminal2;
-    public javax.swing.JTextField TXTnombreTerminal;
-    public javax.swing.JTextField TXTnombreTerminal1;
-    public javax.swing.JTextField TXTnombreTerminal2;
-    public javax.swing.JTextField TXTviaje_distancia;
     public javax.swing.JLabel jLabel1;
-    public javax.swing.JLabel jLabel2;
-    public javax.swing.JLabel jLabel3;
-    public javax.swing.JLabel jLabel5;
-    public javax.swing.JLabel jLabel7;
-    public javax.swing.JLabel jLabel8;
-    public javax.swing.JScrollPane jScrollPane1;
-    public javax.swing.JScrollPane jScrollPane2;
-    public javax.swing.JScrollPane jScrollPane4;
     // End of variables declaration//GEN-END:variables
 }

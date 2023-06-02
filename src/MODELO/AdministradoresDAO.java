@@ -41,4 +41,61 @@ public class AdministradoresDAO extends Conexion{
             return true;
     }
     
+         public  boolean ValidarAdministrador(String correo, String contraseña){
+                  PreparedStatement ps=null;
+                  Connection con=getConnection();
+                  ResultSet rs=null;
+                  try {
+                           ps=con.prepareStatement("SELECT * FROM Administradores WHERE admin_correo=? AND admin_contraseña=?");
+                           ps.setString(1, correo);
+                           ps.setString(2,contraseña);
+                           rs=ps.executeQuery();
+                           if (rs.next()) {
+                                    return true;
+                           }
+
+                  } catch (SQLException e) {
+                            System.out.println(e);
+                  }finally{
+                           try {
+                                    con.close();
+                           } catch (SQLException ex) {
+                                    System.out.println(ex);
+                           }
+                  }
+                  return false;
+         }
+         
+         public Administrador ObtenerDatos(String correo, String contraseña){
+                  PreparedStatement ps=null;
+                  Connection con=getConnection();
+                  ResultSet rs=null;
+                  try {
+                           ps=con.prepareStatement("SELECT * FROM Administradores WHERE admin_correo=? AND admin_contraseña=?");
+                           ps.setString(1, correo);
+                           ps.setString(2,contraseña);
+                           rs=ps.executeQuery();
+                           if (rs.next()) {
+                                    Administrador admin=new Administrador(rs.getString("admin_dni"),
+                                                                               rs.getString("admin_nombre"),
+                                                                               rs.getString("admin_apellido_paterno"),
+                                                                               rs.getString("admin_apellido_materno"),
+                                                                               rs.getString("admin_correo"),
+                                                                               rs.getString("admin_contraseña"));
+                                    return admin ;
+                           }
+
+                  } catch (SQLException e) {
+                            System.out.println(e);
+                  }finally{
+                           try {
+                                    con.close();
+                           } catch (SQLException ex) {
+                                    System.out.println(ex);
+                           }
+                  }
+             return null;
+
+         }
+    
 }

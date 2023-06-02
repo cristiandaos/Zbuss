@@ -1,65 +1,36 @@
 
 package CONTROLADOR;
+import MODELO.Administrador;
 import MODELO.Conexion;
 import MODELO.Terminales;
-import MODELO.TerminalesDAO;
-import MODELO.Viajes;
-import MODELO.ViajesDAO;
 import UTILIDADES.Emergente;
 import VISTA.*;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.geom.RoundRectangle2D;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
-import javax.swing.JScrollBar;
-import javax.swing.JSpinner;
-import javax.swing.JSpinner.DateEditor;
-import javax.swing.SpinnerDateModel;
+import javax.swing.JPanel;
 import javax.swing.Timer;
-import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,MouseMotionListener,WindowListener,KeyListener{
+public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,MouseMotionListener,WindowListener{
          private Interfaz_Administrador vista;
+         private Administrador admin;
          private int x;
          private int y;
-         private byte [] binario;
-         private File archivo;
-         private ViajesDAO viajeDAO=new ViajesDAO();
-         private TerminalesDAO terminalDAO=new TerminalesDAO();
          private Conexion cone=new Conexion();
          
          public CTRL_InterfazAdministrador(Interfaz_Administrador vista) {
@@ -71,16 +42,6 @@ public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,
                   
                   this.vista.BTN_cerrarSesion.addActionListener(this);
                   this.vista.BTN_cerrarSesion.addMouseListener(this);
-                  
-                  this.vista.BTN_img_referencial.addActionListener(this);
-                  
-                  this.vista.BTN_guardar_viajes.addActionListener(this);
-                  
-                  this.vista.BTN_guardar_Terminales.addActionListener(this);
-                  
-                  this.vista.BTN_eliminar_viajes.addActionListener(this);
-                  
-                  this.vista.BTN_nuevo_viajes.addActionListener(this);
 
                   this.vista.BTN_gestionViajes.addMouseListener(this);
 
@@ -90,106 +51,21 @@ public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,
 
                   this.vista.BTN_infoSocios.addMouseListener(this);
                   
-                  InstanciarModeloSpinner(vista.SPNviaje_horaSalida);
-                  InstanciarModeloSpinner(vista.SPNviaje_duracion);
                   InicializarReloj();
                   
-                  vista.BTN_cerrarSesion.putClientProperty("JButton.buttonType", "roundRect");
-                  
                   Shape redondeado=new RoundRectangle2D.Double(0,0,this.vista.getBounds().width,this.vista.getBounds().getHeight(),30,30);
-                  this.vista.setShape(redondeado);      
+                  this.vista.setShape(redondeado); 
+                  
+                  Panel_GestionViajes panel=new Panel_GestionViajes();
+                  CTRL_PanelViajes ctrlViajes=new CTRL_PanelViajes(panel);
+                  mostrarPanel(vista.PanelDinamico,ctrlViajes.getPanel());
          }
          
-         
-          private void CargarCodigosTerminales(){
-                  try {     
-                           PreparedStatement ps=null;
-                           ResultSet rs=null;
-                           Connection con= cone.getConnection();
-                           ps=con.prepareStatement("SELECT terminal_id FROM Terminales WHERE terminal_estado='Habilitado'");
-                           rs=ps.executeQuery();
-                           while (rs.next()) {
-                                   vista.CBviaje_terminal_salida.addItem(String.valueOf(rs.getInt("terminal_id")));
-                                   vista.CBviaje_terminal_llegada.addItem(String.valueOf(rs.getInt("terminal_id")));
-                           }
-                  } catch (SQLException e) {
-                           System.err.println(e.toString());
-                  }    
-    
-    }
-         
-         void InstanciarModeloSpinner(JSpinner spn){
-                  SpinnerDateModel model = new SpinnerDateModel();
-                  spn.setModel(model);
-                  DateEditor editor = new DateEditor(spn, "HH:mm");
-                  spn.setEditor(editor);
-                  spn.addChangeListener(new ChangeListener() {
-            @Override
-                  public void stateChanged(ChangeEvent e) {
-                           Date selectedDate = (Date)  spn.getValue();
-                           Calendar calendar = Calendar.getInstance();
-                           calendar.setTime(selectedDate);
-                  }
-                  });
-                  SimpleDateFormat formato = new SimpleDateFormat("HH:mm");
-                  Date horaInicial;
-                  try {
-                           horaInicial = formato.parse("00:00");
-                           spn.setValue(horaInicial);
-                 } catch (ParseException ex) {
-                           System.out.println(ex);
-                  }
-         }
-         
-         
-         void CalcularHoraLlegada(){
-         }
-         
-         void CalcularFechaSalida(){
-         }
-         
-         void AbrirFileChooser() {
-                  JFileChooser FC = new JFileChooser();
-                  FC.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                  FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos de imagen", "jpg", "jpeg", "png");
-                  FC.setFileFilter(filtro);
-                  int sele = FC.showOpenDialog(null);
-                  if (sele == JFileChooser.APPROVE_OPTION) {
-                           archivo = FC.getSelectedFile();
-                           try {
-                                    binario = Files.readAllBytes(archivo.toPath());
-                                    ImageIcon imagen = new ImageIcon(binario);
-                                    vista.LBL_img_referencial.setIcon(imagen);
-                           } catch (IOException ex) {
-                           }
-                  }
-         }
-      
-         
-         void SliderScroll(JScrollBar scrollBar,int delay, int ValorDestino,int auxiliar) {
-                  Timer Temporizador = new Timer(delay, new ActionListener() {
-                  int incremento = (ValorDestino - scrollBar.getValue()) / auxiliar;
-                  int valor = scrollBar.getValue();
+  
 
-                  @Override
-                           public void actionPerformed(ActionEvent e) {
-                                    if (valor != ValorDestino) {
-                                             valor += incremento;
-                                             if ((incremento > 0 && valor > ValorDestino) || (incremento < 0 && valor < ValorDestino)) {
-                                                       valor = ValorDestino;
-                                             }
-                                             scrollBar.setValue(valor);
-                                    } else {
-                                             ((Timer) e.getSource()).stop();
-                                    }
-                            }
-                  }
-                  );
-                  Temporizador.start();
-         } 
-    
-
-         void Iniciar(){
+         void Iniciar(Administrador admin){
+                  this.admin=admin;
+                  vista.LBLadministrador.setText(this.admin.getNombre());
                   vista.setVisible(true);
          }
          
@@ -230,7 +106,15 @@ public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,
                   });
                   timer.start();
          }
-
+  
+         public void mostrarPanel(JPanel panelDinamico,JPanel panel ){
+                   panel.setSize(panelDinamico.getSize());
+                   panel.setLocation(0, 0);
+                   panelDinamico.removeAll();
+                   panelDinamico.add(panel,BorderLayout.CENTER);
+                   panelDinamico.revalidate();
+                   panelDinamico.repaint();
+         }
          
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -242,28 +126,6 @@ public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,
                            ctrlLogin.Iniciar();
                   }  
                   
-                  if (e.getSource()==vista.BTN_img_referencial) {
-                           AbrirFileChooser();
-                 }
-                  
-                  if (e.getSource()==vista.BTN_guardar_viajes) {
-
-      
-            
-                  }
-                  if (e.getSource()==vista.BTN_guardar_Terminales) {
-                           Terminales terminales=new Terminales(vista.TXTnombreTerminal.getText(), 
-                                                                                              vista.TXTdireccionTerminal.getText(), 
-                                                                                              vista.CBestadoTerminal.getSelectedItem().toString());
-                           
-                           if (terminales.ConAtributosVacios()) {
-                                    Emergente msg=new Emergente(null, "Error en el registro de la terminal", "No debe dejar campos vacios ");
-                           }else{
-                                    terminalDAO.RegistrarTerminal(terminales);
-                                    Emergente msg=new Emergente(null, "Registro Exitoso", "Nueva terminal agregada");
-                           }
-            
-                  }
     }
 
     @Override
@@ -280,19 +142,23 @@ public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,
                   }
         
                   if (e.getSource()==vista.BTN_gestionViajes) {
-                           SliderScroll(vista.Scroll.getVerticalScrollBar(), 10, 0, 5);
+                            Panel_GestionViajes panel=new Panel_GestionViajes();
+                            CTRL_PanelViajes ctrlViajes=new CTRL_PanelViajes(panel);
+                            mostrarPanel(vista.PanelDinamico,ctrlViajes.getPanel());
                   }
                   
                   if (e.getSource()==vista.BTN_gestionTerminales) {
-                           SliderScroll(vista.Scroll.getVerticalScrollBar(), 10, 670, 5);
+                           Panel_GestionTerminales panel=new Panel_GestionTerminales();
+                           CTRL_PanelTerminales ctrlTerminales=new CTRL_PanelTerminales(panel);
+                           mostrarPanel(vista.PanelDinamico, ctrlTerminales.getPanel());
                   }
                   
                   if (e.getSource()==vista.BTN_gestionAdmins) {
-                           SliderScroll(vista.Scroll.getVerticalScrollBar(), 10, 1340, 5);
+
                   }
                   
                   if (e.getSource()==vista.BTN_infoSocios) {
-                           SliderScroll(vista.Scroll.getVerticalScrollBar(), 10, 2010, 5);
+
                   }
     }
 
@@ -420,21 +286,8 @@ public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,
     public void windowDeactivated(WindowEvent e) {
        
     }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-        
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
        
     }
+
     
-    
-}
+

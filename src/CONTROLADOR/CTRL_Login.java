@@ -3,7 +3,6 @@ package CONTROLADOR;
 import UTILIDADES.*;
 import VISTA.*;
 import MODELO.*;
-import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Shape;
@@ -26,6 +25,7 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
          private  Login login;
          private int x;
          private int y;
+         private AdministradoresDAO adminDAO=new AdministradoresDAO();
          private SociosDAO sociosDAO=new SociosDAO();
          private ViajesDAO viajesDAO=new ViajesDAO();
     
@@ -56,8 +56,6 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                  this.login.BTN_clienteInvitado.addMouseListener(this);
                  
                  this.login.BTN_VisibilidadRegistro.addActionListener(this);
-                 
-                 this.login.BTN_administrador.addActionListener(this);
                  
                  PlaceHolder CorreoElectronico=new PlaceHolder("Correo Electronico", this.login.Txt_correoElectronico,PlaceHolder.Visibilidad.ALWAYS);
                  
@@ -169,13 +167,6 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                            System.exit(0);
                   }
                   
-                  if (e.getSource()==login.BTN_administrador) {
-                           Interfaz_Administrador interfazAdmin=new Interfaz_Administrador();
-                           CTRL_InterfazAdministrador ctrl_admin=new CTRL_InterfazAdministrador(interfazAdmin);
-                           ctrl_admin.Iniciar();
-                           Cerrar();
-                  }
-                  
                   if (e.getSource()==login.BTN_clienteInvitado) {
                            int cantViajes=viajesDAO.CantidadViajes();
                            Interfaz_Principal principal=new Interfaz_Principal();
@@ -195,19 +186,26 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                                     return;
                            }
                            
-                          if (!sociosDAO.ValidarSocio(correo, contraseña)) {
-                                    Emergente msg=new Emergente(null, "Error en el ingreso","El correo y/o contraseña ingresados son incorrectos");
+                          if (sociosDAO.ValidarSocio(correo, contraseña)) {
+                                    Socios sesionSocio= sociosDAO.ObtenerDatos(correo, contraseña);
+                                    int cantViajes=viajesDAO.CantidadViajes();
+                                    Interfaz_Principal principal=new Interfaz_Principal();
+                                    CTRL_InterfazPrincipal ctrl_principal=new CTRL_InterfazPrincipal(principal,cantViajes);                                          
+                                    ctrl_principal.Iniciar(sesionSocio);
+                                    Cerrar();
                                     return;
                            }
                           
-                           Socios sesionSocio= sociosDAO.ObtenerDatos(correo, contraseña);
-                           int cantViajes=viajesDAO.CantidadViajes();
-                           
-                           Interfaz_Principal principal=new Interfaz_Principal();
-                           CTRL_InterfazPrincipal ctrl_principal=new CTRL_InterfazPrincipal(principal,cantViajes);                                          
-                           ctrl_principal.Iniciar(sesionSocio);
-                           
-                           Cerrar();                           
+                          if (adminDAO.ValidarAdministrador(correo, contraseña)) {
+                                    Administrador sesionAdmin=adminDAO.ObtenerDatos(correo, contraseña);
+                                    Interfaz_Administrador interfazAdmin=new Interfaz_Administrador();
+                                    CTRL_InterfazAdministrador ctrlAdministrador=new CTRL_InterfazAdministrador(interfazAdmin);
+                                    ctrlAdministrador.Iniciar(sesionAdmin);
+                                    Cerrar();    
+                                    return;
+                           }
+                          
+                           Emergente msg=new Emergente(null, "Error en el ingreso","El correo y/o contraseña ingresados son incorrectos");               
                   }
         
                   
