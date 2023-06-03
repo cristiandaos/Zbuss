@@ -10,6 +10,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,7 +22,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 
-public class CTRL_PanelTerminales implements ActionListener{
+public class CTRL_PanelTerminales implements ActionListener,MouseListener{
          
          private  Panel_GestionTerminales panel;
          
@@ -37,6 +39,8 @@ public class CTRL_PanelTerminales implements ActionListener{
                   
                   this.panel.BTN_nuevo_terminal.addActionListener(this);
                   
+                  this.panel.TBLterminales.addMouseListener(this);
+                  
                   ListarTerminales();
          }
          
@@ -44,6 +48,13 @@ public class CTRL_PanelTerminales implements ActionListener{
                   return panel;
          }
          
+         
+        void Seleccionar(Terminales terminal){
+                panel.TXT_nombre_Terminal.setText(terminal.getNombre());
+                panel.TXT_direccion_Terminal.setText(terminal.getDireccion());
+                panel.CB_estado_Terminal.setSelectedItem(terminal.getEstado());
+        
+        }
          void ReiniciarCampos(){
                   panel.TXT_nombre_Terminal.setText(null);
                   panel.TXT_direccion_Terminal.setText(null);
@@ -100,21 +111,77 @@ public class CTRL_PanelTerminales implements ActionListener{
     @Override
          public void actionPerformed(ActionEvent e) {
                   if (e.getSource()==panel.BTN_guardar_terminal) {
-                          Terminales terminal=new Terminales(panel.TXT_nombre_Terminal.getText(), 
-                                                                                          panel.TXT_direccion_Terminal.getText(), 
-                                                                                          panel.CB_estado_Terminal.getSelectedItem().toString());
-                          
-                          if (terminal.ConAtributosVacios()) {
-                                    Emergente msg=new Emergente(null, "Error en el registro de una Terminal","No debe dejar campos vacios");
-                                    return;
-                           }
                            
-                           terminalDAO.RegistrarTerminal(terminal);
-                           ReiniciarCampos();
+                           if (panel.TBLterminales.getSelectedRow()>-1) {
+                                    int fila=panel.TBLterminales.getSelectedRow();
+                                    int id=(int) panel.TBLterminales.getValueAt(fila,0);
+                                    Terminales terminalModificada=terminalDAO.ObtenerDatos(id);
+                                    terminalModificada.setNombre(panel.TXT_nombre_Terminal.getText());
+                                    terminalModificada.setDireccion(panel.TXT_direccion_Terminal.getText());
+                                    terminalModificada.setEstado(panel.CB_estado_Terminal.getSelectedItem().toString());
+                                    terminalDAO.ModificarTerminal(terminalModificada, id);
+                                    ReiniciarCampos();
+                                    ListarTerminales();
+                           }else{
+                                    Terminales terminal=new Terminales(panel.TXT_nombre_Terminal.getText(), 
+                                                                                                   panel.TXT_direccion_Terminal.getText(), 
+                                                                                                   panel.CB_estado_Terminal.getSelectedItem().toString());
+                                   if (terminal.ConAtributosVacios()) {
+                                             Emergente msg=new Emergente(null, "Error en el registro de una Terminal","No debe dejar campos vacios");
+                                             return;
+                                    } 
+                                    terminalDAO.RegistrarTerminal(terminal);
+                                    ReiniciarCampos();
+                                    ListarTerminales();
+                           }
+
                   }
                   if (e.getSource()==panel.BTN_nuevo_terminal) {
                            ReiniciarCampos();
+                           ListarTerminales();
+                  }
+                  
+                  if (e.getSource()==panel.BTN_eliminar_terminal) {
+                           int fila=panel.TBLterminales.getSelectedRow();
+                           int id=(int) panel.TBLterminales.getValueAt(fila,0);
+                           terminalDAO.EliminarTerminal(id);
+                           ListarTerminales();
                   }
   
          }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+      
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+                  if (e.getSource()==panel.TBLterminales) {
+                           int fila=panel.TBLterminales.getSelectedRow();
+                           int id=(int) panel.TBLterminales.getValueAt(fila,0);
+                           Terminales terminal=terminalDAO.ObtenerDatos(id);
+                          Seleccionar(terminal);
+                  }
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+                  if (e.getSource()==panel.TBLterminales) {
+                           int fila=panel.TBLterminales.getSelectedRow();
+                           int id=(int) panel.TBLterminales.getValueAt(fila,0);
+                           Terminales terminal=terminalDAO.ObtenerDatos(id);
+                          Seleccionar(terminal);
+                  }
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+      
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+       
+    }
 }

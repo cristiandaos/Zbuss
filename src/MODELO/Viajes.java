@@ -3,53 +3,55 @@ package MODELO;
 
 
 public class Viajes {
-        private int id;
-        private String terminalSalida;
-        private String terminalLlegada;
+    private int Id;
+        private int terminalSalida;
+        private int terminalLlegada;
         private String fechaSalida;
         private String fechaLlegada;
         private String horaSalida;
         private String horaLlegada;
+        private String duracion;
         private String distancia;
         private int AsientosDispo;
         private double Precio;
         private byte [] img;
 
-    public Viajes(int id,String terminalSalida, String terminalLlegada, String fechaSalida, String fechaLlegada, String horaSalida, String horaLlegada, String distancia, int AsientosDispo, double Precio, byte[] img) {
-                this.id=id;
+    public Viajes(int terminalSalida, int terminalLlegada, String fechaSalida, String fechaLlegada, String horaSalida, String horaLlegada,String duracion, String distancia, int AsientosDispo, double Precio, byte[] img) {
                 this.terminalSalida = terminalSalida;
                 this.terminalLlegada = terminalLlegada;
                 this.fechaSalida = fechaSalida;
                 this.fechaLlegada = fechaLlegada;
                 this.horaSalida = horaSalida;
                 this.horaLlegada = horaLlegada;
+                this.duracion=duracion;
                 this.distancia = distancia;
                 this.AsientosDispo = AsientosDispo;
                 this.Precio = Precio;
                 this.img = img;
     }
+    
 
     public int getId() {
-        return id;
+        return Id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(int Id) {
+        this.Id = Id;
     }
-
-    public String getTerminalSalida() {
+    
+    public int getTerminalSalida() {
         return terminalSalida;
     }
 
-    public void setTerminalSalida(String terminalSalida) {
+    public void setTerminalSalida(int terminalSalida) {
         this.terminalSalida = terminalSalida;
     }
 
-    public String getTerminalLlegada() {
+    public int getTerminalLlegada() {
         return terminalLlegada;
     }
 
-    public void setTerminalLlegada(String terminalLlegada) {
+    public void setTerminalLlegada(int terminalLlegada) {
         this.terminalLlegada = terminalLlegada;
     }
 
@@ -85,6 +87,14 @@ public class Viajes {
         this.horaLlegada = horaLlegada;
     }
 
+    public String getDuracion() {
+        return duracion;
+    }
+
+    public void setDuracion(String duracion) {
+        this.duracion = duracion;
+    }
+    
     public String getDistancia() {
         return distancia;
     }
@@ -121,10 +131,11 @@ public class Viajes {
      
     
          public boolean ConAtributosVacios() {
-                  return !(terminalSalida != null && !terminalSalida.isBlank())
-                            || !(terminalLlegada != null && !terminalLlegada.isBlank())
+                  return !(terminalSalida != 0)
+                            || !(terminalLlegada != 0)
                             || !(fechaSalida != null && !fechaSalida.isBlank())
-                            || !(horaSalida != null && !horaLlegada.isBlank())
+                            || !(horaLlegada != null && !horaLlegada.isBlank())
+                            || !(duracion != null && !duracion.isBlank())
                             || !(distancia != null && !distancia.isBlank())
                             || !(Precio != 0.00)
                             || !(img != null );

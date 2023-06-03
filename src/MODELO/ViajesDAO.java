@@ -7,25 +7,27 @@ import java.sql.*;
 public class ViajesDAO extends Conexion{
     
          
-         public void RegistrarViaje(Viajes viaje){
+         public boolean RegistrarViaje(Viajes viaje){
                   PreparedStatement ps=null;
                   Connection con =getConnection();
                   try{
-                           ps=con.prepareStatement("INSERT INTO Viajes( viaje_id,viaje_terminal_salida,viaje_terminal_llegada,viaje_fecha_salida,viaje_fecha_llegada,viaje_hora_salida,viaje_hora_llegada,viaje_distancia,viaje_asientos_Dispo,viaje_precio,viaje_img_Refe) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
-                           ps.setInt(1,viaje.getId());
-                           ps.setString(2,viaje.getTerminalSalida());
-                           ps.setString(3,viaje.getTerminalLlegada());
-                           ps.setString(4, viaje.getFechaSalida());
-                           ps.setString(5, viaje.getFechaLlegada());
-                           ps.setString(6,viaje.getHoraSalida());
-                           ps.setString(7, viaje.getHoraLlegada());
+                           ps=con.prepareStatement("INSERT INTO Viajes( viaje_terminal_salida,viaje_terminal_llegada,viaje_fecha_salida,viaje_fecha_llegada,viaje_hora_salida,viaje_hora_llegada,viaje_duracion,viaje_distancia,viaje_asientos_Dispo,viaje_precio,viaje_img_Refe) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
+                           ps.setInt(1,viaje.getTerminalSalida());
+                           ps.setInt(2,viaje.getTerminalLlegada());
+                           ps.setString(3, viaje.getFechaSalida());
+                           ps.setString(4, viaje.getFechaLlegada());
+                           ps.setString(5,viaje.getHoraSalida());
+                           ps.setString(6, viaje.getHoraLlegada());
+                           ps.setString(7, viaje.getDuracion());
                            ps.setString(8, viaje.getDistancia());
                            ps.setInt(9,viaje.getAsientosDispo());
                            ps.setDouble(10,viaje.getPrecio());
                            ps.setBytes(11,viaje.getImg());
                            ps.execute();
+                           return true;
                   }catch(SQLException ex){
                            System.err.println(ex);
+                           return false;
                   }finally{
                            try {
                                     con.close();
@@ -33,8 +35,106 @@ public class ViajesDAO extends Conexion{
                                     System.out.println(ex);
                            }
                   } 
-         } 
+         }
+         
+         public boolean ModificarViaje(Viajes viaje, int id){
+                  PreparedStatement ps=null;
+                  Connection con =getConnection();
+                  try {
+                           ps=con.prepareStatement("UPDATE Viajes SET viaje_terminal_salida=?,viaje_terminal_llegada=?,viaje_fecha_salida=?,viaje_fecha_llegada=?,viaje_hora_salida=?,viaje_hora_llegada=?,viaje_duracion=?, viaje_distancia=?,viaje_asientos_Dispo=?,viaje_precio=?, viaje_img_Refe=? WHERE viaje_id=?");
+                           ps.setInt(1,viaje.getTerminalSalida());
+                           ps.setInt(2,viaje.getTerminalLlegada());
+                           ps.setString(3, viaje.getFechaSalida());
+                           ps.setString(4, viaje.getFechaLlegada());
+                           ps.setString(5,viaje.getHoraSalida());
+                           ps.setString(6, viaje.getHoraLlegada());
+                           ps.setString(7, viaje.getDuracion());
+                           ps.setString(8, viaje.getDistancia());
+                           ps.setInt(9,viaje.getAsientosDispo());
+                           ps.setDouble(10,viaje.getPrecio());
+                           ps.setBytes(11,viaje.getImg());
+                           ps.setInt(12,id);
+                           ps.execute();
+                           return true;
+                  }catch(SQLException ex) {
+                           System.err.println(ex);
+                           return false;
+                  }
+         
+         }
+         
+         public boolean EliminarViaje(int id){
+                  PreparedStatement ps=null;
+                  Connection con =getConnection();
+                  try {
+                           ps=con.prepareStatement("DELETE FROM Viajes WHERE viaje_id=?");
+                           ps.setInt(1,id);
+                           ps.execute();
+                           return true;
+                  }catch (SQLException ex) {
+                           System.out.println(ex);
+                           return false;
+                  }finally{
+                           try {
+                                    con.close();
+                           } catch (Exception e) {
+                                    System.out.println(e);
+                           }
+                  
+                  }
+         
+         }
+         public int ObtenerUltimoID(){
+                  PreparedStatement ps=null;
+                  Connection con=getConnection();
+                  ResultSet rs=null;
+                  try {
+                           ps=con.prepareStatement("SELECT MAX(viaje_id) AS ultimo_id FROM Viajes");
+                           rs=ps.executeQuery();
+                           if (rs.next()) {
+                                    return  rs.getInt("ultimo_id");
+                           }
+                  } catch (SQLException e) {
+                  }
+             return 0;
+         }
+         
+         public Viajes ObtenerDatos(int id){
+                  PreparedStatement ps=null;
+                  Connection con=getConnection();
+                  ResultSet rs=null;
+                  try {
+                           ps=con.prepareStatement("SELECT * FROM Viajes WHERE viaje_id=?");
+                           ps.setInt(1, id);
+                           rs=ps.executeQuery();
+                           if (rs.next()) {
+                                    Viajes viaje=new Viajes  ( rs.getInt("viaje_terminal_salida"),
+                                                                               rs.getInt("viaje_terminal_llegada"),
+                                                                               rs.getString("viaje_fecha_salida"),
+                                                                               rs.getString("viaje_fecha_llegada"),
+                                                                               rs.getString("viaje_hora_salida"),
+                                                                               rs.getString("viaje_hora_llegada"),
+                                                                               rs.getString("viaje_duracion"),
+                                                                               rs.getString("viaje_distancia"),
+                                                                               rs.getInt("viaje_asientos_Dispo"),
+                                                                               rs.getDouble("viaje_precio"),
+                                                                               rs.getBytes("viaje_img_Refe")); 
+                                    return viaje ;
+                           }
 
+                  } catch (SQLException e) {
+                            System.out.println(e);
+                  }finally{
+                           try {
+                                    con.close();
+                           } catch (SQLException ex) {
+                                    System.out.println(ex);
+                           }
+                  }
+             return null;
+         
+         }
+         
          public int CantidadViajes(){
                   int cantidad=0;
                   PreparedStatement ps=null;

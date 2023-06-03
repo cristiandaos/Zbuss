@@ -34,6 +34,9 @@ public class Panel_GestionTerminales extends javax.swing.JPanel {
         BTN_eliminar_terminal = new javax.swing.JButton();
         BTN_nuevo_terminal = new javax.swing.JButton();
         BTN_guardar_terminal = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(20, 20, 20));
         setPreferredSize(new java.awt.Dimension(1060, 670));
@@ -42,7 +45,7 @@ public class Panel_GestionTerminales extends javax.swing.JPanel {
         TXT_direccion_Terminal.setBackground(new java.awt.Color(14, 14, 14));
         TXT_direccion_Terminal.setForeground(new java.awt.Color(255, 255, 255));
         TXT_direccion_Terminal.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(102, 204, 0)));
-        add(TXT_direccion_Terminal, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 190, 330, 30));
+        add(TXT_direccion_Terminal, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, 340, 30));
 
         TBLterminales.setBackground(new java.awt.Color(12, 12, 12));
         TBLterminales.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
@@ -80,9 +83,9 @@ public class Panel_GestionTerminales extends javax.swing.JPanel {
         CB_estado_Terminal.setBackground(new java.awt.Color(14, 14, 14));
         CB_estado_Terminal.setFont(new java.awt.Font("Segoe UI Emoji", 1, 16)); // NOI18N
         CB_estado_Terminal.setForeground(new java.awt.Color(255, 255, 255));
-        CB_estado_Terminal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Habilitado", "Deshabilitado" }));
+        CB_estado_Terminal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Habilitado", "Deshabilitado" }));
         CB_estado_Terminal.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(102, 204, 0)));
-        add(CB_estado_Terminal, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, 170, 30));
+        add(CB_estado_Terminal, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, 170, 30));
 
         BTN_eliminar_terminal.setText("Eliminar");
         add(BTN_eliminar_terminal, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 410, 90, 30));
@@ -92,6 +95,21 @@ public class Panel_GestionTerminales extends javax.swing.JPanel {
 
         BTN_guardar_terminal.setText("Guardar");
         add(BTN_guardar_terminal, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 410, 90, 30));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 16)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Nombre:");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, -1, -1));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI Emoji", 1, 16)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Estado:");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI Emoji", 1, 16)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Dirección:");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -103,6 +121,9 @@ public class Panel_GestionTerminales extends javax.swing.JPanel {
     public javax.swing.JTable TBLterminales;
     public javax.swing.JTextField TXT_direccion_Terminal;
     public javax.swing.JTextField TXT_nombre_Terminal;
+    public javax.swing.JLabel jLabel1;
+    public javax.swing.JLabel jLabel2;
+    public javax.swing.JLabel jLabel3;
     public javax.swing.JScrollPane jScrollPane4;
     // End of variables declaration//GEN-END:variables
 }

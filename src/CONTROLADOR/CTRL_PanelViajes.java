@@ -12,22 +12,34 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
@@ -41,7 +53,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
-public class CTRL_PanelViajes implements ActionListener,ChangeListener{
+public class CTRL_PanelViajes implements ActionListener,MouseListener,ChangeListener{
     
          private Panel_GestionViajes panel;
          private byte [] bytes;
@@ -61,6 +73,8 @@ public class CTRL_PanelViajes implements ActionListener,ChangeListener{
                   
                   this.panel.BTN_img_referencial.addActionListener(this);
                   
+                  this.panel.TBLviajes.addMouseListener(this);
+                  
                   InstanciarModeloSpinner(this.panel.SPNviaje_horaSalida);
                   InstanciarModeloSpinner(this.panel.SPNviaje_duracion);
                   InstanciarPropiedadesDateChooser();
@@ -68,20 +82,21 @@ public class CTRL_PanelViajes implements ActionListener,ChangeListener{
                   this.panel.SPNviaje_horaSalida.addChangeListener(this);
                   this.panel.SPNviaje_duracion.addChangeListener(this);
                   
-                  CargarCodigosTerminales();
+                  CargarIDsTerminales();
                   ListarViajes();
          }
+         
          
          public Panel_GestionViajes getPanel(){
                   return  panel;
          }
          
-         void ActivarAsientos(Viajes viaje){
+         void ActivarAsientos(int id){
                   PreparedStatement ps=null;
                   Connection con =cone.getConnection();
                   try{
                            ps=con.prepareStatement("INSERT INTO Asientos VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-                           ps.setInt(1,viaje.getId());
+                           ps.setInt(1,id);
                            for (int i = 2; i <= 41; i++) {
                                     ps.setString(i,"Disponible");
                            }
@@ -90,16 +105,16 @@ public class CTRL_PanelViajes implements ActionListener,ChangeListener{
                   } 
          }
          
-         void CargarCodigosTerminales(){
+         void CargarIDsTerminales(){
                   try {     
                            PreparedStatement ps=null;
                            ResultSet rs=null;
                            Connection con= cone.getConnection();
-                           ps=con.prepareStatement("SELECT terminal_id FROM Terminales WHERE terminal_estado='Habilitado'");
+                           ps=con.prepareStatement("SELECT terminal_id, terminal_nombre FROM Terminales WHERE terminal_estado='Habilitado'");
                            rs=ps.executeQuery();
                            while (rs.next()) {
-                                   panel.CBviaje_terminal_Llegada.addItem(rs.getString("terminal_id"));
-                                   panel.CBviaje_terminal_Salida.addItem(rs.getString("terminal_id"));
+                                   panel.CBviaje_terminal_Llegada.addItem(rs.getString("terminal_id")+"-"+rs.getString("terminal_nombre"));
+                                   panel.CBviaje_terminal_Salida.addItem(rs.getString("terminal_id")+"-"+rs.getString("terminal_nombre"));
                                    
                            }
                   } catch (SQLException e) {
@@ -107,7 +122,8 @@ public class CTRL_PanelViajes implements ActionListener,ChangeListener{
                   }    
     
     }   
-         private void ListarViajes(){
+         
+         void ListarViajes(){
                   panel.TBLviajes.getTableHeader().setFont(new Font("Consolas", Font.PLAIN, 10));
                   panel.TBLviajes.getTableHeader().setBorder(new LineBorder(Color.WHITE,1));
                   panel.TBLviajes.getTableHeader().setForeground(Color.GREEN);
@@ -128,7 +144,7 @@ public class CTRL_PanelViajes implements ActionListener,ChangeListener{
                   PreparedStatement ps=null;
                   ResultSet rs=null;
                   Connection con=cone.getConnection();
-                  ps=con.prepareStatement("SELECT viaje_id,viaje_terminal_salida,viaje_terminal_llegada,viaje_fecha_salida,viaje_fecha_llegada,viaje_hora_salida,viaje_hora_llegada,viaje_distancia,viaje_asientos_Dispo,viaje_precio FROM Viajes ");
+                  ps=con.prepareStatement("SELECT viaje_id,viaje_terminal_salida,viaje_terminal_llegada,viaje_fecha_salida,viaje_hora_salida,viaje_fecha_llegada,viaje_hora_llegada,viaje_distancia,viaje_asientos_Dispo,viaje_precio FROM Viajes ");
                   rs=ps.executeQuery();
                   ResultSetMetaData rsMD=(ResultSetMetaData) rs.getMetaData();
                   int cantColumnas=rsMD.getColumnCount();
@@ -136,13 +152,13 @@ public class CTRL_PanelViajes implements ActionListener,ChangeListener{
                   modelo.addColumn("Terminal/Salida");
                   modelo.addColumn("Terminal/ Llegada");
                   modelo.addColumn("Fecha/Salida"); 
-                  modelo.addColumn("Fecha/Llegada");
                   modelo.addColumn("Hora/Salida");
+                  modelo.addColumn("Fecha/Llegada");
                   modelo.addColumn("Hora/LLegada");
                   modelo.addColumn("Distancia");
-                  modelo.addColumn("A. Disponibles");
+                  modelo.addColumn("A. Dispo.");
                   modelo.addColumn("Precio");
-                  int espacios[]={40,120,120,100,100,90,90,90,220,40};
+                  int espacios[]={40,180,180,100,100,90,90,90,100,60};
                   for (int j = 0; j < cantColumnas; j++) {
                            panel.TBLviajes.getColumnModel().getColumn(j).setPreferredWidth(espacios[j]);
                   }
@@ -157,6 +173,43 @@ public class CTRL_PanelViajes implements ActionListener,ChangeListener{
                            System.err.println(e);
                   }
     }
+         
+         void  Seleccionar(Viajes viaje) {
+
+             try {
+                 Seleccion_ID_CB(panel.CBviaje_terminal_Llegada,viaje.getTerminalLlegada());
+                 Seleccion_ID_CB(panel.CBviaje_terminal_Salida, viaje.getTerminalSalida());
+                 DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                 Date fecha = dateFormat.parse(viaje.getFechaSalida());
+                 panel.DCviaje_fechaSalida.setDate(fecha);
+                 ReinciarSpinners(panel.SPNviaje_horaSalida, viaje.getHoraSalida());
+                 ReinciarSpinners(panel.SPNviaje_duracion, viaje.getDuracion());
+                 panel.LBLviaje_fechaLlegada.setText(viaje.getFechaLlegada());
+                 panel.LBLviaje_horaLlegada.setText(viaje.getHoraLlegada());
+                 panel.TXTviaje_distancia.setText(viaje.getDistancia());
+                 panel.SPNviaje_precio.setValue(viaje.getPrecio());
+                 ImageIcon imagen = new ImageIcon(viaje.getImg());
+                 panel.LBL_img_referencial.setIcon(imagen);
+             } catch (ParseException ex) {
+             }
+                   
+         
+         }
+         
+         void Seleccion_ID_CB(JComboBox comboBox, int id){
+                  int indiceSeleccionado = -1;
+                  for (int i = 0; i < comboBox.getItemCount(); i++) {
+                            String item = (String) comboBox.getItemAt(i);
+                           if (item.startsWith(id + "-")) {
+                                    indiceSeleccionado = i;
+                                    break;
+                           }
+                  }
+                  if (indiceSeleccionado != -1) {
+                           comboBox.setSelectedIndex(indiceSeleccionado);
+                  }
+         
+         }
          
          void InstanciarPropiedadesDateChooser(){
                   JCalendar calendarPanel = panel.DCviaje_fechaSalida.getJCalendar();
@@ -206,15 +259,14 @@ public class CTRL_PanelViajes implements ActionListener,ChangeListener{
                            calendar.setTime(selectedDate);
                   }
                   });
-                  ReinciarSpinners(spn);
+                  ReinciarSpinners(spn,"00:00");
          }
-         
-         
-         void ReinciarSpinners(JSpinner spn){
+               
+         void ReinciarSpinners(JSpinner spn,String hora){
                   SimpleDateFormat formato = new SimpleDateFormat("HH:mm");
                   Date horaInicial;
                   try {
-                           horaInicial = formato.parse("00:00");
+                           horaInicial = formato.parse(hora);
                            spn.setValue(horaInicial);
                  } catch (ParseException ex) {
                            System.out.println(ex);
@@ -243,8 +295,8 @@ public class CTRL_PanelViajes implements ActionListener,ChangeListener{
                   panel.CBviaje_terminal_Llegada.setSelectedIndex(0);
                   panel.CBviaje_terminal_Salida.setSelectedIndex(0);
                   panel.TXTviaje_distancia.setText(null);
-                  ReinciarSpinners(panel.SPNviaje_duracion);
-                  ReinciarSpinners(panel.SPNviaje_horaSalida);
+                  ReinciarSpinners(panel.SPNviaje_duracion,"00:00");
+                  ReinciarSpinners(panel.SPNviaje_horaSalida,"00:00");
                   panel.SPNviaje_precio.setValue(0);
                   panel.LBL_img_referencial.setIcon(null);
                   panel.LBLviaje_fechaLlegada.setText(null);
@@ -318,46 +370,88 @@ public class CTRL_PanelViajes implements ActionListener,ChangeListener{
                   return id;
          }
          
-@Override
+         @Override
          public void actionPerformed(ActionEvent e) {
                   if (e.getSource()==panel.BTN_img_referencial) {
                            AbrirFileChooser();
-                 }
+                  }
                   
-                  if (e.getSource()==panel.BTN_guardar_viajes) { 
+                  if (e.getSource()==panel.BTN_guardar_viajes) {
                            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
                            SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm");
                            
                            Date fechaSalida=fechaSalidaAux;
                            Date horaSalida=(Date) panel.SPNviaje_horaSalida.getValue();
+                           Date duracion=(Date) panel.SPNviaje_duracion.getValue();
                            
-                           String fecha=formatoFecha.format(fechaSalida);
-                           String hora=formatoHora.format(horaSalida);
-        
-                           Viajes viaje=new Viajes(generarID(),
-                                                                     panel.CBviaje_terminal_Salida.getSelectedItem().toString(), 
-                                                                     panel.CBviaje_terminal_Llegada.getSelectedItem().toString(), 
-                                                                     fecha, 
-                                                                     panel.LBLviaje_fechaLlegada.getText(), 
-                                                                     hora , 
-                                                                     panel.LBLviaje_horaLlegada.getText(), 
-                                                                     panel.TXTviaje_distancia.getText(), 
-                                                                     40, 
-                                                                     (double) panel.SPNviaje_precio.getValue(), 
-                                                                     bytes);
-                           if (viaje.ConAtributosVacios()) {
-                                    Emergente msg=new Emergente(null, "Error en la programacion de un viaje","No debe dejar campos vacios");
-                                    return;
+                           String fecha_salida=formatoFecha.format(fechaSalida);
+                           String hora_salida=formatoHora.format(horaSalida);
+                           String duracionViaje=formatoHora.format(duracion);
+                           
+                           int IDterminalSalida=Integer.parseInt(panel.CBviaje_terminal_Salida.getSelectedItem().toString().replaceAll("[^0-9]", ""));
+                           int IDterminalLlegada=Integer.parseInt(panel.CBviaje_terminal_Llegada.getSelectedItem().toString().replaceAll("[^0-9]", ""));
+     
+                           if (panel.TBLviajes.getSelectedRow()>-1) {
+                                    int fila=panel.TBLviajes.getSelectedRow();
+                                    int id=(int) panel.TBLviajes.getValueAt(fila,0);
+                                    Viajes viajeModificado= viajeDAO.ObtenerDatos(id);
+                                    bytes=viajeModificado.getImg();
+                                    
+                                    viajeModificado.setTerminalSalida(IDterminalSalida);
+                                    viajeModificado.setTerminalLlegada(IDterminalLlegada);
+                                    viajeModificado.setFechaSalida(fecha_salida);
+                                    viajeModificado.setFechaLlegada(panel.LBLviaje_fechaLlegada.getText());
+                                    viajeModificado.setHoraSalida(hora_salida);
+                                    viajeModificado.setHoraLlegada(panel.LBLviaje_horaLlegada.getText());
+                                    viajeModificado.setDuracion(duracionViaje);
+                                    viajeModificado.setDistancia(panel.TXTviaje_distancia.getText());
+                                    viajeModificado.setPrecio((double) panel.SPNviaje_precio.getValue());
+                                    viajeModificado.setImg(bytes);
+                                    
+                                    viajeDAO.ModificarViaje(viajeModificado,id);
+                                    ReiniciarCampos();
+                                    ListarViajes();
+                           }else{    
+                                    Viajes viaje=new Viajes(IDterminalSalida, 
+                                                                              IDterminalLlegada, 
+                                                                              fecha_salida, 
+                                                                              panel.LBLviaje_fechaLlegada.getText(), 
+                                                                              hora_salida , 
+                                                                              panel.LBLviaje_horaLlegada.getText(), 
+                                                                              duracionViaje,
+                                                                              panel.TXTviaje_distancia.getText(), 
+                                                                              40, 
+                                                                              (double) panel.SPNviaje_precio.getValue(), 
+                                                                              bytes);
+                                    if (viaje.ConAtributosVacios()) {
+                                             Emergente msg=new Emergente(null, "Error en la programacion de un viaje","No debe dejar campos vacios");
+                                             return;
+                                    }
+                                    
+                                    viajeDAO.RegistrarViaje(viaje);
+                                    ActivarAsientos(viajeDAO.ObtenerUltimoID());
+                                    ReiniciarCampos();
+                                    ListarViajes();
+                           
                            }
-                           viajeDAO.RegistrarViaje(viaje);
-                           ActivarAsientos(viaje);
+                  }
+                  
+                  if (e.getSource()==panel.BTN_nuevo_viajes) {
                            ReiniciarCampos();
-            
+                           ListarViajes();
+                  }
+                  
+                  if (e.getSource()==panel.BTN_eliminar_viajes) {
+                           int fila=panel.TBLviajes.getSelectedRow();
+                           int id=(int) panel.TBLviajes.getValueAt(fila,0);
+                           viajeDAO.EliminarViaje(id);
+                           ReiniciarCampos();
+                           ListarViajes();
                   }
          }
 
-    @Override
-    public void stateChanged(ChangeEvent e) {
+        @Override
+        public void stateChanged(ChangeEvent e) {
                   if (e.getSource()==panel.SPNviaje_horaSalida) {
                            Date horaSalida=(Date) panel.SPNviaje_horaSalida.getValue();
                            Date duracion=(Date) panel.SPNviaje_duracion.getValue();
@@ -369,5 +463,40 @@ public class CTRL_PanelViajes implements ActionListener,ChangeListener{
                            Date duracion=(Date) panel.SPNviaje_duracion.getValue();
                            CalcularLlegada( horaSalida, duracion);
                   }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+      
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+                  if (e.getSource()==panel.TBLviajes) {
+                           int fila=panel.TBLviajes.getSelectedRow();
+                           int id=(int) panel.TBLviajes.getValueAt(fila,0);
+                           Viajes viaje= viajeDAO.ObtenerDatos(id);
+                           Seleccionar(viaje);
+                  }
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+                 if (e.getSource()==panel.TBLviajes) {
+                           int fila=panel.TBLviajes.getSelectedRow();
+                           int id=(int) panel.TBLviajes.getValueAt(fila,0);
+                           Viajes viaje= viajeDAO.ObtenerDatos(id);
+                           Seleccionar(viaje);
+                  }
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+       
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+      
     }
 }
