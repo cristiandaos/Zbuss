@@ -52,7 +52,7 @@ import javax.swing.text.MaskFormatter;
 public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,MouseMotionListener,KeyListener,WindowListener{
          private Interfaz_Principal vista;
          private Socios usuario;
-         private int cantidad=10;
+         private int cantidad;
          private int cantPasajeros;
          private int x;
          private int y;
@@ -640,7 +640,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
          }
          
          private void seleccionarAsiento(String asiento){
-                  if (vista.LBLasientosSeleccionados.getText().isEmpty()) {
+                  if (vista.LBLasientosSeleccionados.getText().isBlank() ) {
                            vista.LBLasientosSeleccionados.setText(asiento);
                    }else{
                             vista.LBLasientosSeleccionados.setText(vista.LBLasientosSeleccionados.getText()+","+asiento);
@@ -671,6 +671,9 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   
                   if (e.getSource()==vista.BTN_cancelarAsientos) {
                            JScrollBar scrollBar = vista.ScrollPanelDinamico.getHorizontalScrollBar();
+                           vista.LBLasientosSeleccionados.setText("");
+                           vista.LBLasientosCont.setText("");
+                           cantPasajeros=0;
                            SliderScroll(scrollBar, 10,0,5);
                   }
 
