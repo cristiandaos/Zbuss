@@ -62,6 +62,11 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         BTN_cancelarAsientos = new javax.swing.JButton();
         BTN_confirmarAsientos = new javax.swing.JButton();
+        LBLtermLlegadDireccion = new javax.swing.JLabel();
+        LBLtermSalidaDireccion = new javax.swing.JLabel();
+        LBLasientosDisponibles = new javax.swing.JLabel();
+        LBLprecioAsiento = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
         PanelPasajeros = new javax.swing.JPanel();
         ScrollPanelPasajeros = new javax.swing.JScrollPane();
         PanelFormPasajeros = new javax.swing.JPanel();
@@ -321,83 +326,82 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         LBLasientosSeleccionados.setForeground(new java.awt.Color(255, 255, 255));
         LBLasientosSeleccionados.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LBLasientosSeleccionados.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(123, 216, 80)));
-        jPanel1.add(LBLasientosSeleccionados, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 400, -1, 30));
+        jPanel1.add(LBLasientosSeleccionados, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 450, -1, 30));
 
         jLabel6.setBackground(new java.awt.Color(0, 255, 0));
         jLabel6.setOpaque(true);
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, 20, 20));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 110, 20, 20));
 
         jLabel7.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Disponible");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 110, 100, 20));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 110, 100, 20));
 
         jLabel8.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Ocupado");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, 80, 20));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, 80, 20));
 
         jLabel10.setBackground(new java.awt.Color(255, 0, 0));
         jLabel10.setOpaque(true);
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, 20, 20));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, 20, 20));
 
         jLabel11.setBackground(new java.awt.Color(255, 255, 255));
         jLabel11.setFont(new java.awt.Font("Segoe UI Emoji", 1, 20)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("Terminales de Salida/Llegada:");
         jLabel11.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 450, -1));
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, -1, -1));
 
-        LBLtermSalida.setFont(new java.awt.Font("Segoe UI Emoji", 0, 16)); // NOI18N
+        LBLtermSalida.setFont(new java.awt.Font("Segoe UI Emoji", 1, 16)); // NOI18N
         LBLtermSalida.setForeground(new java.awt.Color(255, 255, 255));
         LBLtermSalida.setText("SALIDA");
-        jPanel1.add(LBLtermSalida, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, -1, 30));
+        jPanel1.add(LBLtermSalida, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, -1, 30));
 
-        LBLtermLlegada.setFont(new java.awt.Font("Segoe UI Emoji", 0, 16)); // NOI18N
+        LBLtermLlegada.setFont(new java.awt.Font("Segoe UI Emoji", 1, 16)); // NOI18N
         LBLtermLlegada.setForeground(new java.awt.Color(255, 255, 255));
         LBLtermLlegada.setText("LLEGADA");
-        jPanel1.add(LBLtermLlegada, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, -1, 30));
+        jPanel1.add(LBLtermLlegada, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, -1, 30));
 
         jLabel16.setFont(new java.awt.Font("Segoe UI Emoji", 1, 20)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setText("Asientos Seleccionados:");
-        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, 230, 30));
+        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 420, 230, 30));
 
         jLabel18.setFont(new java.awt.Font("Segoe UI Emoji", 0, 20)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel18.setText("Precio:");
-        jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 500, -1, 30));
+        jLabel18.setText("Precio Total:");
+        jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 520, -1, 30));
 
         LBLprecio.setFont(new java.awt.Font("Consolas", 1, 20)); // NOI18N
         LBLprecio.setForeground(new java.awt.Color(255, 255, 255));
         LBLprecio.setText("S/0000");
-        jPanel1.add(LBLprecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 500, -1, 30));
+        jPanel1.add(LBLprecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 520, -1, 30));
 
         jLabel20.setBackground(new java.awt.Color(0, 0, 255));
         jLabel20.setOpaque(true);
-        jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, 20, 20));
+        jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, 20, 20));
 
         jLabel21.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(255, 255, 255));
         jLabel21.setText("Seleccionado");
-        jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, 120, 20));
+        jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 140, 120, 20));
 
-        LBLhoraLlegada.setFont(new java.awt.Font("Segoe UI Emoji", 0, 16)); // NOI18N
+        LBLhoraLlegada.setFont(new java.awt.Font("Segoe UI Emoji", 1, 16)); // NOI18N
         LBLhoraLlegada.setForeground(new java.awt.Color(255, 255, 255));
         LBLhoraLlegada.setText("HORARIO/LLEGADA");
-        jPanel1.add(LBLhoraLlegada, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 310, 150, 30));
+        jPanel1.add(LBLhoraLlegada, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 300, 150, 30));
 
-        LBLhoraSalida.setFont(new java.awt.Font("Segoe UI Emoji", 0, 16)); // NOI18N
+        LBLhoraSalida.setFont(new java.awt.Font("Segoe UI Emoji", 1, 16)); // NOI18N
         LBLhoraSalida.setForeground(new java.awt.Color(255, 255, 255));
         LBLhoraSalida.setText("HORARIO/SALIDA");
-        jPanel1.add(LBLhoraSalida, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 240, 140, 30));
+        jPanel1.add(LBLhoraSalida, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, 140, 30));
 
         LBLasientosCont.setFont(new java.awt.Font("Consolas", 1, 20)); // NOI18N
         LBLasientosCont.setForeground(new java.awt.Color(255, 255, 255));
         LBLasientosCont.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LBLasientosCont.setText("0");
-        jPanel1.add(LBLasientosCont, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 360, 30, 30));
+        jPanel1.add(LBLasientosCont, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 420, 30, 30));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -426,6 +430,29 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         BTN_confirmarAsientos.setFocusable(false);
         BTN_confirmarAsientos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel1.add(BTN_confirmarAsientos, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 610, 140, 30));
+
+        LBLtermLlegadDireccion.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        LBLtermLlegadDireccion.setForeground(new java.awt.Color(255, 255, 255));
+        LBLtermLlegadDireccion.setText("DIRECCION");
+        jPanel1.add(LBLtermLlegadDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 330, -1, -1));
+
+        LBLtermSalidaDireccion.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        LBLtermSalidaDireccion.setForeground(new java.awt.Color(255, 255, 255));
+        LBLtermSalidaDireccion.setText("DIRECCION");
+        jPanel1.add(LBLtermSalidaDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, -1, -1));
+
+        LBLasientosDisponibles.setFont(new java.awt.Font("Segoe UI Emoji", 1, 15)); // NOI18N
+        LBLasientosDisponibles.setText("Asientos Disponibles:");
+        jPanel1.add(LBLasientosDisponibles, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, -1, 30));
+
+        LBLprecioAsiento.setFont(new java.awt.Font("Segoe UI Emoji", 1, 16)); // NOI18N
+        LBLprecioAsiento.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(LBLprecioAsiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 370, 40, 30));
+
+        jLabel15.setFont(new java.awt.Font("Segoe UI Emoji", 1, 16)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("Precio: s/");
+        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 370, -1, 30));
 
         PanelAsientos.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 450, 650));
 
@@ -628,6 +655,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
     public javax.swing.JLabel LBLasientoName;
     public javax.swing.JLabel LBLasientoPasajero;
     public javax.swing.JLabel LBLasientosCont;
+    public javax.swing.JLabel LBLasientosDisponibles;
     public javax.swing.JLabel LBLasientosSeleccionados;
     public javax.swing.JLabel LBLfecha;
     public javax.swing.JLabel LBLhistorialUsuario;
@@ -636,9 +664,12 @@ public class Interfaz_Principal extends javax.swing.JFrame {
     public javax.swing.JLabel LBLhoraSalida;
     public javax.swing.JLabel LBLinfoUsuario;
     public javax.swing.JLabel LBLprecio;
+    public javax.swing.JLabel LBLprecioAsiento;
     public javax.swing.JLabel LBLpuntosUsuario;
+    public javax.swing.JLabel LBLtermLlegadDireccion;
     public javax.swing.JLabel LBLtermLlegada;
     public javax.swing.JLabel LBLtermSalida;
+    public javax.swing.JLabel LBLtermSalidaDireccion;
     public javax.swing.JLabel LBLusuario;
     public javax.swing.JLabel Logo;
     public javax.swing.JPanel PanelAsientos;
@@ -664,6 +695,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
     public javax.swing.JLabel jLabel11;
     public javax.swing.JLabel jLabel12;
     public javax.swing.JLabel jLabel13;
+    public javax.swing.JLabel jLabel15;
     public javax.swing.JLabel jLabel16;
     public javax.swing.JLabel jLabel18;
     public javax.swing.JLabel jLabel2;

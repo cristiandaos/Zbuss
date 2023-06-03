@@ -1,8 +1,6 @@
 
 package MODELO;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class SociosDAO extends Conexion {
          public boolean registrar(Socios socio){
@@ -36,7 +34,7 @@ public class SociosDAO extends Conexion {
                   PreparedStatement ps=null;
                   Connection con =getConnection();
                   try{
-                           ps=con.prepareStatement("UPDATE socios SET socio_nombre=?,socio_apellido_paterno=?,socio_apellido_materno=?,socio_correo=?,socio_nacimiento=?,socio_numero=?,socio_contraseña=? WHERE socio_DNI=?");
+                           ps=con.prepareStatement("UPDATE Socios SET socio_nombre=?,socio_apellido_paterno=?,socio_apellido_materno=?,socio_correo=?,socio_nacimiento=?,socio_numero=?,socio_contraseña=? WHERE socio_DNI=?");
                            ps.setString(1,socio.getNombre());
                            ps.setString(2,socio.getApellidoPaterno());
                            ps.setString(3,socio.getApellidoMaterno());

@@ -40,10 +40,13 @@ public class Panel_GestionTerminales extends javax.swing.JPanel {
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         TXT_direccion_Terminal.setBackground(new java.awt.Color(14, 14, 14));
+        TXT_direccion_Terminal.setForeground(new java.awt.Color(255, 255, 255));
         TXT_direccion_Terminal.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(102, 204, 0)));
-        add(TXT_direccion_Terminal, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 190, 310, 30));
+        add(TXT_direccion_Terminal, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 190, 330, 30));
 
-        TBLterminales.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 204, 0)));
+        TBLterminales.setBackground(new java.awt.Color(12, 12, 12));
+        TBLterminales.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        TBLterminales.setForeground(new java.awt.Color(255, 255, 255));
         TBLterminales.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
@@ -55,20 +58,31 @@ public class Panel_GestionTerminales extends javax.swing.JPanel {
 
             }
         ));
+        TBLterminales.setFocusable(false);
         TBLterminales.setGridColor(new java.awt.Color(255, 255, 255));
+        TBLterminales.setRequestFocusEnabled(false);
+        TBLterminales.setRowHeight(25);
+        TBLterminales.setSelectionBackground(new java.awt.Color(102, 204, 0));
+        TBLterminales.setSelectionForeground(new java.awt.Color(0, 0, 0));
+        TBLterminales.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        TBLterminales.setShowGrid(true);
         TBLterminales.getTableHeader().setResizingAllowed(false);
         TBLterminales.getTableHeader().setReorderingAllowed(false);
         jScrollPane4.setViewportView(TBLterminales);
 
-        add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 240, 670, 430));
+        add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 250, 640, 310));
 
         TXT_nombre_Terminal.setBackground(new java.awt.Color(14, 14, 14));
+        TXT_nombre_Terminal.setForeground(new java.awt.Color(255, 255, 255));
         TXT_nombre_Terminal.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(102, 204, 0)));
         add(TXT_nombre_Terminal, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, 180, 30));
 
+        CB_estado_Terminal.setBackground(new java.awt.Color(14, 14, 14));
+        CB_estado_Terminal.setFont(new java.awt.Font("Segoe UI Emoji", 1, 16)); // NOI18N
         CB_estado_Terminal.setForeground(new java.awt.Color(255, 255, 255));
         CB_estado_Terminal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Habilitado", "Deshabilitado" }));
-        add(CB_estado_Terminal, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, 170, -1));
+        CB_estado_Terminal.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(102, 204, 0)));
+        add(CB_estado_Terminal, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, 170, 30));
 
         BTN_eliminar_terminal.setText("Eliminar");
         add(BTN_eliminar_terminal, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 410, 90, 30));

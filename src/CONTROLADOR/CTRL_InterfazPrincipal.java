@@ -125,7 +125,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
 
                  InicializarReloj();
                  
-                 CargarDatosViajes();
+                 CargarPanelesViajes();
                  
                   vista.BTN_confirmarAsientos.setVisible(false);
                  
@@ -307,22 +307,26 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
          }
          
 
-          private void CargarDatosViajes(){
+          private void CargarPanelesViajes(){
                      PreparedStatement ps=null;
                      ResultSet rs=null;
                      Connection con=cone.getConnection();
                      int i=0;
                      byte[] binario;
+                     String sql="SELECT v.viaje_id, ts.terminal_nombre AS terminal_salida, tl.terminal_nombre AS terminal_llegada, v.viaje_fecha_salida, v.viaje_fecha_llegada, v.viaje_hora_salida, v.viaje_hora_llegada, v.viaje_distancia, v.viaje_asientos_Dispo, v.viaje_precio, v.viaje_promocion, v.viaje_img_Refe \n" +
+                                                                           "FROM Viajes v \n" +
+                                                                           "JOIN Terminales ts ON v.viaje_terminal_salida = ts.terminal_id \n" +
+                                                                           "JOIN Terminales tl ON v.viaje_terminal_llegada = tl.terminal_id;";
                      try {
-                                ps=con.prepareStatement("SELECT * FROM Viajes");
+                                ps=con.prepareStatement(sql);
                                 rs=ps.executeQuery();
                                 while(rs.next() && i<cantidad){
                                     ArrayPaneles.get(i).setName(String.valueOf(rs.getInt("viaje_id")));
-                                    ArrayDestinos.get(i).setText(rs.getString("viaje_terminal_salida")+" --> "+rs.getString("viaje_terminal_llegada"));
+                                    ArrayDestinos.get(i).setText(rs.getString("terminal_salida")+" --> "+rs.getString("terminal_llegada"));
                                     ArrayFechas.get(i).setText(rs.getString("viaje_fecha_salida")+" --> "+rs.getString("viaje_fecha_llegada"));
                                     ArrayHoras.get(i).setText(rs.getString("viaje_hora_salida")+" --> "+rs.getString("viaje_hora_llegada"));
                                     ArrayPrecios.get(i).setText("Precio: s/"+rs.getDouble("viaje_precio"));
-                                    ArrayAsientosDisp.get(i).setText("Asientos Disponibles:"+String.valueOf( rs.getInt("viaje_asientos_Dispo")));
+                                    ArrayAsientosDisp.get(i).setText("Asientos Disponibles: "+String.valueOf( rs.getInt("viaje_asientos_Dispo")));
                                     binario=rs.getBytes("viaje_img_Refe");
                                     InputStream img=new ByteArrayInputStream(binario);
                                     BufferedImage bfimagen=ImageIO.read(img);
@@ -339,8 +343,9 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            }
                   }    
          }
+          
          
-          private void CargarAsientos(int ID){
+         private void CargarAsientos(int ID){
                   URL urlAsientoOcup = getClass().getResource("/IMGS/asientoOcup.png");
                   ImageIcon asientoOcup=new ImageIcon(urlAsientoOcup);
                   URL urlAsientoDisp = getClass().getResource("/IMGS/asientoDisp.png");
@@ -376,7 +381,43 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            }
                   }
          }
-    
+         
+         
+         private void CargarInfoViaje(int ID){
+                  PreparedStatement ps=null;
+                  ResultSet rs=null;
+                  Connection con=cone.getConnection();
+                  String sql="SELECT ts.terminal_nombre AS terminal_salida, ts.terminal_dirección AS direccion_salida, tl.terminal_nombre AS terminal_llegada, tl.terminal_dirección AS direccion_llegada, v.viaje_fecha_salida, v.viaje_fecha_llegada, v.viaje_hora_salida, v.viaje_hora_llegada, v.viaje_asientos_Dispo, v.viaje_precio\n" +
+                                    "FROM Viajes v\n" +
+                                    "JOIN Terminales ts ON v.viaje_terminal_salida = ts.terminal_id\n" +
+                                    "JOIN Terminales tl ON v.viaje_terminal_llegada = tl.terminal_id\n"+
+                                     "WHERE  v. viaje_id=?";
+                  try {
+                           ps=con.prepareStatement(sql);
+                           ps.setInt(1,ID );
+                           rs=ps.executeQuery();
+                           if (rs.next()) {
+                                    vista.LBLtermSalida.setText(rs.getString("terminal_salida"));
+                                    vista.LBLtermSalidaDireccion.setText(rs.getString("direccion_salida"));
+                                    vista.LBLtermLlegada.setText(rs.getString("terminal_llegada"));
+                                    vista.LBLtermLlegadDireccion.setText(rs.getString("direccion_llegada"));
+                                    vista.LBLhoraSalida.setText(rs.getString("viaje_fecha_salida")+"-"+rs.getString("viaje_hora_salida"));
+                                    vista.LBLhoraLlegada.setText(rs.getString("viaje_fecha_llegada")+"-"+rs.getString("viaje_hora_llegada"));
+                                    vista.LBLasientosDisponibles.setText("Asientos Disponibles: "+String.valueOf(rs.getInt("viaje_asientos_Dispo")));
+                                    vista.LBLprecioAsiento.setText(String.valueOf(rs.getDouble("viaje_precio")));
+                           }
+                           
+                  } catch (SQLException e) {
+                           System.out.println(e);
+                  }finally{
+                           try {
+                                    con.close();
+                           } catch (SQLException e) {
+                                    System.out.println(e);
+                           }
+                  }
+         }
+         
          
          private void generarFormsAcompañantes(int cantAcomp){
                   ArrayAcompañantesPaneles=new ArrayList<>();
@@ -506,6 +547,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
              
          }
     
+         
          private void reiniciarFormsAcompañantes(){
                   vista.PanelFormPasajeros.removeAll();
                   ArrayAcompañantesPaneles.clear();
@@ -543,6 +585,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   Temporizador.start();
          }    
    
+         
          private void generarAsientos(){
        
                   ArrayBusAsientos=new ArrayList<>();
@@ -612,6 +655,8 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            ArrayAcompañantesAsientos.get(i).setText("Asiento: "+asientos[i+1]);
                   }
          }
+         
+         
          
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -736,7 +781,9 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   
                      for (PanelPersonalizado paneles : ArrayPaneles) {
                                 if (e.getSource()==paneles) {
-                                             CargarAsientos(Integer.parseInt(paneles.getName()));
+                                             int id=Integer.parseInt(paneles.getName());
+                                             CargarInfoViaje(id);
+                                             CargarAsientos(id);
                                              JScrollBar scrollBar = vista.ScrollPanelDinamico.getHorizontalScrollBar();
                                              SliderScroll(scrollBar,10,1100,5);
                                 }

@@ -6,10 +6,10 @@ import java.sql.*;
 
 
 public class Conexion {
-         private final String base="ZBUSSBD";
-         private final String user="admin";
-         private final String password="mysql";
-         private final String url="jdbc:mysql://155.248.192.192:3306/"+base;
+         private final String base="zbussbd";
+         private final String user="adminbuss";
+         private final String password="Azure@2023";
+         private final String url="jdbc:mysql://zbuss.mysql.database.azure.com:3306/"+base;
          private Connection con=null;
          
          public Connection getConnection() {

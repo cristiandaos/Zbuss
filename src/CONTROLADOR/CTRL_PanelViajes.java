@@ -9,6 +9,7 @@ import VISTA.Panel_GestionViajes;
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDayChooser;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -19,6 +20,7 @@ import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,6 +39,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 
 public class CTRL_PanelViajes implements ActionListener,ChangeListener{
     
@@ -46,7 +49,7 @@ public class CTRL_PanelViajes implements ActionListener,ChangeListener{
          private ViajesDAO viajeDAO=new ViajesDAO();
          private Date fechaSalidaAux=null;
          private Conexion cone=new Conexion();
-         private int ID=0;
+         private int ID=11;
          
          public  CTRL_PanelViajes(Panel_GestionViajes panel){
                   this.panel=panel;
@@ -66,6 +69,7 @@ public class CTRL_PanelViajes implements ActionListener,ChangeListener{
                   this.panel.SPNviaje_duracion.addChangeListener(this);
                   
                   CargarCodigosTerminales();
+                  ListarViajes();
          }
          
          public Panel_GestionViajes getPanel(){
@@ -102,6 +106,56 @@ public class CTRL_PanelViajes implements ActionListener,ChangeListener{
                            System.err.println(e.toString());
                   }    
     
+    }   
+         private void ListarViajes(){
+                  panel.TBLviajes.getTableHeader().setFont(new Font("Consolas", Font.PLAIN, 10));
+                  panel.TBLviajes.getTableHeader().setBorder(new LineBorder(Color.WHITE,1));
+                  panel.TBLviajes.getTableHeader().setForeground(Color.GREEN);
+                  panel.TBLviajes.getTableHeader().setBackground(new Color(6,6,6));
+                  
+                  try {
+                           DefaultTableModel modelo=new DefaultTableModel(){
+                  @Override
+                           public boolean isCellEditable(int row, int column) {
+                                    if (column==10) {
+                                             return true;
+                                    }else{
+                                             return false;
+                                    }
+                           }
+                           };   
+                  panel.TBLviajes.setModel(modelo);  
+                  PreparedStatement ps=null;
+                  ResultSet rs=null;
+                  Connection con=cone.getConnection();
+                  ps=con.prepareStatement("SELECT viaje_id,viaje_terminal_salida,viaje_terminal_llegada,viaje_fecha_salida,viaje_fecha_llegada,viaje_hora_salida,viaje_hora_llegada,viaje_distancia,viaje_asientos_Dispo,viaje_precio FROM Viajes ");
+                  rs=ps.executeQuery();
+                  ResultSetMetaData rsMD=(ResultSetMetaData) rs.getMetaData();
+                  int cantColumnas=rsMD.getColumnCount();
+                  modelo.addColumn("ID");
+                  modelo.addColumn("Terminal/Salida");
+                  modelo.addColumn("Terminal/ Llegada");
+                  modelo.addColumn("Fecha/Salida"); 
+                  modelo.addColumn("Fecha/Llegada");
+                  modelo.addColumn("Hora/Salida");
+                  modelo.addColumn("Hora/LLegada");
+                  modelo.addColumn("Distancia");
+                  modelo.addColumn("A. Disponibles");
+                  modelo.addColumn("Precio");
+                  int espacios[]={40,120,120,100,100,90,90,90,220,40};
+                  for (int j = 0; j < cantColumnas; j++) {
+                           panel.TBLviajes.getColumnModel().getColumn(j).setPreferredWidth(espacios[j]);
+                  }
+                  while (rs.next()) {
+                           Object [] filas = new Object[cantColumnas];
+                           for (int i = 0; i < cantColumnas; i++) {
+                                    filas[i]= rs.getObject(i+1);
+                           }
+                           modelo.addRow(filas);
+                  }
+                  } catch (SQLException e) {
+                           System.err.println(e);
+                  }
     }
          
          void InstanciarPropiedadesDateChooser(){
