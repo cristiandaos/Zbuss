@@ -73,17 +73,16 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                  
                  PlaceHolder confirmRegistro=new PlaceHolder("Confirmar Contraseña",this.login.Txt_ConfirmContraRegistro, PlaceHolder.Visibilidad.ALWAYS);
                  
-                 
          }
     
          void Iniciar(){
+                  login.Txt_correoElectronico.requestFocus();
                   JScrollBar scroll=login.ScrollPanelDinamico.getHorizontalScrollBar();
                   scroll.setValue(320);
                   Shape redondeado=new RoundRectangle2D.Double(0,0,login.getBounds().width,login.getBounds().getHeight(),30,30);
                   login.setShape(redondeado);
                   login.revalidate();
                   login.setVisible(true);  
-                  login.Txt_correoElectronico.requestFocus();
          }
      
      
@@ -92,7 +91,7 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
          }
       
          
-        void SliderScroll(JScrollBar scrollBar,int delay, int moverValor,int auxiliar) {
+        void Slider(JScrollBar scrollBar,int delay, int moverValor,int auxiliar) {
                   Timer Temporizador = new Timer(delay, new ActionListener() {
                   int incremento = (moverValor - scrollBar.getValue()) / auxiliar;
                   int valor = scrollBar.getValue();
@@ -182,11 +181,11 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                            String contraseña=login.Txt_contraseña.getText();
                            
                            if ( (correo.isBlank() && contraseña.isBlank()) || (!correo.isBlank() && contraseña.isBlank()) || (!contraseña.isBlank() && correo.isBlank()) ) {
-                                    Emergente msg=new Emergente(null,"Error en el ingreso","No se debe dejar ningún campo vacio");        
+                                    Emergente msg=new Emergente(null,"Error en el ingreso","No se debe dejar ningún campo vacio",Emergente.Tipo.MessageDialog);        
                                     return;
                            }
                            
-                          if (sociosDAO.ValidarSocio(correo, contraseña)) {
+                          if (sociosDAO.Validar(correo, contraseña)) {
                                     Socios sesionSocio= sociosDAO.ObtenerDatos(correo, contraseña);
                                     int cantViajes=viajesDAO.CantidadViajes();
                                     Interfaz_Principal principal=new Interfaz_Principal();
@@ -196,7 +195,7 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                                     return;
                            }
                           
-                          if (adminDAO.ValidarAdministrador(correo, contraseña)) {
+                          if (adminDAO.Validar(correo, contraseña)) {
                                     Administrador sesionAdmin=adminDAO.ObtenerDatos(correo, contraseña);
                                     Interfaz_Administrador interfazAdmin=new Interfaz_Administrador();
                                     CTRL_InterfazAdministrador ctrlAdministrador=new CTRL_InterfazAdministrador(interfazAdmin);
@@ -205,7 +204,7 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                                     return;
                            }
                           
-                           Emergente msg=new Emergente(null, "Error en el ingreso","El correo y/o contraseña ingresados son incorrectos");               
+                           Emergente msg=new Emergente(null, "Error en el ingreso","El correo y/o contraseña ingresados son incorrectos",Emergente.Tipo.MessageDialog);               
                   }
         
                   
@@ -235,12 +234,12 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                                                                        0);
                            
                            if (socio.ConAtributosVacios()) {
-                                    Emergente mg=new Emergente(null, "Error en el registro ", "No debe dejar campos vacios");
+                                    Emergente mg=new Emergente(null, "Error en el registro ", "No debe dejar campos vacios",Emergente.Tipo.MessageDialog);
                                     return;
                            }
                            
                            if (!contraseña.equals(contraseñaConfirmada)) {
-                                    Emergente msg=new Emergente(login, "Error en el registro","La contraseñas no coinciden");
+                                    Emergente msg=new Emergente(login, "Error en el registro","La contraseñas no coinciden",Emergente.Tipo.MessageDialog);
                                     return;
                            }
                            
@@ -248,7 +247,7 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                            InhabilitarRegistro();
                            HabilitarRegistro();
                            
-                           Emergente msg=new Emergente(login, "Socio registrado correctamente", "Bienvenido a socios Z-buss, "+socio.getNombre());
+                           Emergente msg=new Emergente(login, "Socio registrado correctamente", "Bienvenido a socios Z-buss, "+socio.getNombre(),Emergente.Tipo.MessageDialog);
                   }
           
                   
@@ -277,15 +276,15 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                   }
 
                   if (e.getSource()==login.LBL_mostrarRegistro) {
-                           SliderScroll(login.ScrollPanelInfo.getHorizontalScrollBar(), 10, 440, 10);
-                           SliderScroll(login.ScrollPanelDinamico.getHorizontalScrollBar(), 10, 0, 5);
+                           Slider(login.ScrollPanelInfo.getHorizontalScrollBar(), 10, 440, 10);
+                           Slider(login.ScrollPanelDinamico.getHorizontalScrollBar(), 10, 0, 5);
                            HabilitarRegistro();
                            InhabilitarInicioSesion();
                   }
 
                   if (e.getSource()==login.LBL_mostrarLogin) {
-                           SliderScroll(login.ScrollPanelInfo.getHorizontalScrollBar(), 10, 0, 10);
-                           SliderScroll(login.ScrollPanelDinamico.getHorizontalScrollBar(), 10, 320, 5);
+                           Slider(login.ScrollPanelInfo.getHorizontalScrollBar(), 10, 0, 10);
+                           Slider(login.ScrollPanelDinamico.getHorizontalScrollBar(), 10, 320, 5);
                            HabilitarInicioSesion();
                            InhabilitarRegistro();
 

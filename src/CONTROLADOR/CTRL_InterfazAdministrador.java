@@ -52,10 +52,7 @@ public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,
                   this.vista.BTN_infoSocios.addMouseListener(this);
                   
                   InicializarReloj();
-                  
-                  Shape redondeado=new RoundRectangle2D.Double(0,0,this.vista.getBounds().width,this.vista.getBounds().getHeight(),30,30);
-                  this.vista.setShape(redondeado); 
-                  
+
                   Panel_GestionViajes panel=new Panel_GestionViajes();
                   CTRL_PanelViajes ctrlViajes=new CTRL_PanelViajes(panel);
                   mostrarPanel(vista.PanelDinamico,ctrlViajes.getPanel());
@@ -154,10 +151,15 @@ public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,
                   }
                   
                   if (e.getSource()==vista.BTN_gestionAdmins) {
-
+                           Panel_GestionAdministradores panel=new Panel_GestionAdministradores();
+                           CTRL_PanelAdministradores ctrlAdministradores=new CTRL_PanelAdministradores(panel);
+                           mostrarPanel(vista.PanelDinamico, ctrlAdministradores.getPanel());
                   }
                   
                   if (e.getSource()==vista.BTN_infoSocios) {
+                           Panel_GestionSocios panel=new Panel_GestionSocios();
+                           CTRL_PanelSocios ctrlSocios=new CTRL_PanelSocios(panel);
+                           mostrarPanel(vista.PanelDinamico, ctrlSocios.getPanel());
 
                   }
     }

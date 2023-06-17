@@ -29,12 +29,12 @@ public class SociosDAO extends Conexion {
                                     System.out.println(ex);
                            }
                   }
-        }
+         }
          public boolean Actualizar(Socios socio){
                   PreparedStatement ps=null;
                   Connection con =getConnection();
                   try{
-                           ps=con.prepareStatement("UPDATE Socios SET socio_nombre=?,socio_apellido_paterno=?,socio_apellido_materno=?,socio_correo=?,socio_nacimiento=?,socio_numero=?,socio_contraseña=? WHERE socio_DNI=?");
+                           ps=con.prepareStatement("UPDATE Socios SET socio_nombre=?,socio_apellido_paterno=?,socio_apellido_materno=?,socio_correo=?,socio_nacimiento=?,socio_numero=?,socio_contraseña=? WHERE socio_dni=?");
                            ps.setString(1,socio.getNombre());
                            ps.setString(2,socio.getApellidoPaterno());
                            ps.setString(3,socio.getApellidoMaterno());
@@ -57,7 +57,7 @@ public class SociosDAO extends Conexion {
                   }
         }
          
-         public  boolean ValidarSocio(String correo, String contraseña){
+         public  boolean Validar(String correo, String contraseña){
                   PreparedStatement ps=null;
                   Connection con=getConnection();
                   ResultSet rs=null;

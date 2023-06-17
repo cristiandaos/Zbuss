@@ -65,6 +65,12 @@ public class Administrador {
     public void setContraseña(String contraseña) {
          this.contraseña = contraseña;
     }
-    
+        public boolean ConAtributosVacios() {
+                  return !(nombre != null && !nombre.isEmpty())
+                           || !(apellidoPaterno != null && !apellidoPaterno.isEmpty())
+                           || !(apellidoMaterno != null && !apellidoMaterno.isEmpty())
+                           || !(correo != null && !correo.isEmpty())
+                           || !(contraseña != null && !contraseña.isEmpty());
+}
     
 }

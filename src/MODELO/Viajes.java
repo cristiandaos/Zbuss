@@ -16,7 +16,7 @@ public class Viajes {
         private double Precio;
         private byte [] img;
 
-    public Viajes(int terminalSalida, int terminalLlegada, String fechaSalida, String fechaLlegada, String horaSalida, String horaLlegada,String duracion, String distancia, int AsientosDispo, double Precio, byte[] img) {
+        public Viajes(int terminalSalida, int terminalLlegada, String fechaSalida, String fechaLlegada, String horaSalida, String horaLlegada,String duracion, String distancia, int AsientosDispo, double Precio, byte[] img) {
                 this.terminalSalida = terminalSalida;
                 this.terminalLlegada = terminalLlegada;
                 this.fechaSalida = fechaSalida;
@@ -28,6 +28,9 @@ public class Viajes {
                 this.AsientosDispo = AsientosDispo;
                 this.Precio = Precio;
                 this.img = img;
+        }
+    
+    public Viajes(){
     }
     
 
@@ -129,7 +132,11 @@ public class Viajes {
         
         
      
-    
+         
+         public void RestarAsientosDisponibles(int cantidad){
+                  int nuevaCantidad=AsientosDispo-cantidad;
+                  setAsientosDispo(nuevaCantidad);
+        }
          public boolean ConAtributosVacios() {
                   return !(terminalSalida != 0)
                             || !(terminalLlegada != 0)

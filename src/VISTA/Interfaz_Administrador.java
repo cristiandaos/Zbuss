@@ -131,7 +131,7 @@ public class Interfaz_Administrador extends javax.swing.JFrame {
 
         getContentPane().add(BarraLateral, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 220, 670));
 
-        PanelDinamico.setBackground(new java.awt.Color(153, 153, 153));
+        PanelDinamico.setBackground(new java.awt.Color(255, 255, 255));
         PanelDinamico.setPreferredSize(new java.awt.Dimension(1060, 670));
 
         javax.swing.GroupLayout PanelDinamicoLayout = new javax.swing.GroupLayout(PanelDinamico);

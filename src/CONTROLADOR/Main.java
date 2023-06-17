@@ -4,10 +4,8 @@ package CONTROLADOR;
 import VISTA.*;
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.awt.Color;
-import java.awt.Font;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.border.LineBorder;
 public class Main {
 
 
@@ -37,10 +35,8 @@ public class Main {
                   UIManager.put("Spinner.disabledForeground",Color.WHITE);
                  
                  //diseño del JScroll
-                  UIManager.put("ScrollBar.thumb", new Color(123,216,80));
+                  UIManager.put("ScrollBar.thumb", Color.GREEN);
                   UIManager.put("ScrollBar.track", Color.BLACK);
-                  UIManager.put("ScrollBar.hoverThumbColor", Color.GREEN);
-                  UIManager.put("ScrollBar.pressedThumbColor", Color.GREEN);
                   UIManager.put("ScrollBar.hoverTrackColor", Color.BLACK);
                   
                   //diseño de Jtextfield
@@ -50,6 +46,9 @@ public class Main {
         } catch( UnsupportedLookAndFeelException ex ) {
                   System.err.println( "Fallo en la inicialización del L&F" );
         }
+         
+         
+         
         Login login=new Login();
         CTRL_Login ctrl_login=new CTRL_Login(login);
         ctrl_login.Iniciar();

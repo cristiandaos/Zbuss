@@ -11,7 +11,7 @@ public class PasajeroPrincipal {
     private int edad;
     private String asiento;
 
-    public PasajeroPrincipal(String PPdni, String PPpasajeroPrincipal, int PPviajeId, String PPnombre, String PPapePaterno, String PPapeMaterno, int PPedad, String PPasiento) {
+    public PasajeroPrincipal(String dni, int viajeId, String nombre, String apePaterno, String apeMaterno, int edad, String asiento) {
         this.dni = dni;
         this.viajeId = viajeId;
         this.nombre = nombre;

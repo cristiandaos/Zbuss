@@ -17,8 +17,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import javax.swing.ListSelectionModel;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -68,42 +71,52 @@ public class CTRL_PanelTerminales implements ActionListener,MouseListener{
                   panel.TBLterminales.getTableHeader().setForeground(Color.GREEN);
                   panel.TBLterminales.getTableHeader().setBackground(new Color(6,6,6));
                   
-                  try {
-                           DefaultTableModel modelo=new DefaultTableModel(){
-                  @Override
-                           public boolean isCellEditable(int row, int column) {
-                                    if (column==6) {
-                                             return true;
-                                    }else{
-                                             return false;
-                                    }
-                           }
-                           };   
-                  panel.TBLterminales.setModel(modelo);  
+                  DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+                  centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+                  
                   PreparedStatement ps=null;
                   ResultSet rs=null;
                   Connection con=cone.getConnection();
-                  ps=con.prepareStatement("SELECT terminal_id,terminal_nombre,terminal_dirección,terminal_estado FROM Terminales ");
-                  rs=ps.executeQuery();
-                  ResultSetMetaData rsMD=(ResultSetMetaData) rs.getMetaData();
-                  int cantColumnas=rsMD.getColumnCount();
-                  modelo.addColumn("ID");
-                  modelo.addColumn("Nombre");
-                  modelo.addColumn("Dirección");
-                  modelo.addColumn("Estado"); 
-                  int espacios[]={40,160,250,100};
-                  for (int j = 0; j < cantColumnas; j++) {
-                           panel.TBLterminales.getColumnModel().getColumn(j).setPreferredWidth(espacios[j]);
-                  }
-                  while (rs.next()) {
-                           Object [] filas = new Object[cantColumnas];
-                           for (int i = 0; i < cantColumnas; i++) {
-                                    filas[i]= rs.getObject(i+1);
+                  try {
+                           DefaultTableModel modelo=new DefaultTableModel(){
+                           @Override
+                                    public boolean isCellEditable(int row, int column) {
+                                             if (column==6) {
+                                                      return true;
+                                             }else{
+                                                      return false;
+                                             }
+                                    }
+                           };   
+                           panel.TBLterminales.setModel(modelo);  
+                           ps=con.prepareStatement("SELECT terminal_id,terminal_nombre,terminal_dirección,terminal_estado FROM Terminales ");
+                           rs=ps.executeQuery();
+                           ResultSetMetaData rsMD=(ResultSetMetaData) rs.getMetaData();
+                           int cantColumnas=rsMD.getColumnCount();
+                           modelo.addColumn("ID");
+                           modelo.addColumn("Nombre");
+                           modelo.addColumn("Dirección");
+                           modelo.addColumn("Estado"); 
+                           int espacios[]={40,160,320,90};
+                           for (int j = 0; j < cantColumnas; j++) {
+                                     panel.TBLterminales.getColumnModel().getColumn(j).setPreferredWidth(espacios[j]);
+                                     panel.TBLterminales.getColumnModel().getColumn(j).setCellRenderer(centerRenderer);
                            }
-                           modelo.addRow(filas);
-                  }
+                           while (rs.next()) {
+                                     Object [] filas = new Object[cantColumnas];
+                                     for (int i = 0; i < cantColumnas; i++) {
+                                              filas[i]= rs.getObject(i+1);
+                                     }
+                                     modelo.addRow(filas);
+                           }
                   } catch (SQLException e) {
                            System.err.println(e);
+                  }finally{
+                           try {
+                                    con.close();
+                           } catch (SQLException ex) {
+                                    System.out.println(ex);
+                           }
                   }
     } 
         
@@ -113,26 +126,40 @@ public class CTRL_PanelTerminales implements ActionListener,MouseListener{
                   if (e.getSource()==panel.BTN_guardar_terminal) {
                            
                            if (panel.TBLterminales.getSelectedRow()>-1) {
+                               
                                     int fila=panel.TBLterminales.getSelectedRow();
                                     int id=(int) panel.TBLterminales.getValueAt(fila,0);
+                                    
                                     Terminales terminalModificada=terminalDAO.ObtenerDatos(id);
                                     terminalModificada.setNombre(panel.TXT_nombre_Terminal.getText());
                                     terminalModificada.setDireccion(panel.TXT_direccion_Terminal.getText());
                                     terminalModificada.setEstado(panel.CB_estado_Terminal.getSelectedItem().toString());
-                                    terminalDAO.ModificarTerminal(terminalModificada, id);
+                                    
+                                    if (terminalModificada.ConAtributosVacios()) {
+                                             Emergente msg=new Emergente(null, "Error", "Hay campos vacios en la modificación de la terminal ", Emergente.Tipo.MessageDialog);
+                                             return;
+                                    }
+                                    
+                                    terminalDAO.Modificar(terminalModificada, id);
                                     ReiniciarCampos();
                                     ListarTerminales();
+                                    
+                                     Emergente msg=new Emergente(null, "Modificación","Terminal modificada correctamente",Emergente.Tipo.MessageDialog);
                            }else{
+                               
                                     Terminales terminal=new Terminales(panel.TXT_nombre_Terminal.getText(), 
                                                                                                    panel.TXT_direccion_Terminal.getText(), 
                                                                                                    panel.CB_estado_Terminal.getSelectedItem().toString());
                                    if (terminal.ConAtributosVacios()) {
-                                             Emergente msg=new Emergente(null, "Error en el registro de una Terminal","No debe dejar campos vacios");
+                                             Emergente msg=new Emergente(null, "Error ","Hay campos vacios en el registro de una Terminal",Emergente.Tipo.MessageDialog);
                                              return;
                                     } 
-                                    terminalDAO.RegistrarTerminal(terminal);
+                                   
+                                    terminalDAO.Registrar(terminal);
                                     ReiniciarCampos();
                                     ListarTerminales();
+                                    
+                                    Emergente msg=new Emergente(null, "Registro","Terminal registrada correctamente",Emergente.Tipo.MessageDialog);
                            }
 
                   }
@@ -143,9 +170,17 @@ public class CTRL_PanelTerminales implements ActionListener,MouseListener{
                   
                   if (e.getSource()==panel.BTN_eliminar_terminal) {
                            int fila=panel.TBLterminales.getSelectedRow();
+                           
+                           if (fila<0) {
+                                    Emergente msg=new Emergente(null, "Error","No hay ninguna terminal seleccionada",Emergente.Tipo.MessageDialog);
+                                    return;
+                           }
+                           
                            int id=(int) panel.TBLterminales.getValueAt(fila,0);
-                           terminalDAO.EliminarTerminal(id);
+                           terminalDAO.Eliminar(id);
+                           ReiniciarCampos();
                            ListarTerminales();
+                           
                   }
   
          }

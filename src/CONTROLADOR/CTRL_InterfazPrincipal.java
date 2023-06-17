@@ -7,7 +7,6 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -17,7 +16,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -40,6 +38,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import java.sql.*;
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
@@ -52,12 +51,18 @@ import javax.swing.text.MaskFormatter;
 public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,MouseMotionListener,KeyListener,WindowListener{
          private Interfaz_Principal vista;
          private Socios usuario;
-         private int cantidad;
-         private int cantPasajeros;
+         private int cant_ViajesDisponibles;
+         private Viajes viajeSeleccionado=new Viajes();
          private int x;
          private int y;
          private Conexion cone=new Conexion();
-         //componentes parar los paneles de los Destinos
+         private PasajerosPrincipalesDAO pasajeroDAO=new PasajerosPrincipalesDAO();
+         private AcompañantesDAO acompañanteDAO=new AcompañantesDAO();
+         private VentasDAO ventaDAO=new VentasDAO();
+         private AsientosDAO asientoDAO=new AsientosDAO();
+         private ViajesDAO viajeDAO=new ViajesDAO();
+         
+         //componentes de los paneles de Viaje
          private ArrayList<PanelPersonalizado>ArrayPaneles;
          private ArrayList<JLabel>ArrayFechas;
          private ArrayList<JLabel>ArrayHoras;
@@ -65,12 +70,12 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
          private ArrayList<JLabel>ArrayImgs;
          private ArrayList<JLabel>ArrayAsientosDisp;
          private ArrayList<JLabel>ArrayPrecios;
-         private  ArrayList<JLabel>ArrayDistancias;
+         private ArrayList<JLabel>ArrayDistancias;
          
          //asientos del Bus
          private ArrayList<JLabel>ArrayBusAsientos;
          
-         //componentes paa el form de los Acompañantes
+         //componentes para los formularios de los Acompañantes
          private ArrayList<JPanel>ArrayAcompañantesPaneles;
          private ArrayList<JLabel>ArrayAcompañantesAsientos;
          private ArrayList<JTextField>ArrayAcompañantesNombres;
@@ -84,7 +89,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                  this.vista=vistaPrincipal;
                  this.vista.addWindowListener(this);
                  
-                 this.cantidad=cantidad;
+                 this.cant_ViajesDisponibles=cantidad;
                  
                  this.vista.BarraSuperior.addMouseMotionListener(this);
                  this.vista.BarraSuperior.addMouseListener(this);
@@ -107,11 +112,14 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                  this.vista.BTN_IzquiAcompañantes.addActionListener(this);
                  this.vista.BTN_derechaAcompañantes.addActionListener(this);
                  
+                 this.vista.BTN_aplicarFiltro.addActionListener(this);
+                 this.vista.BTN_aplicarFiltro.addMouseListener(this);
+                 
                  this.vista.LBLinfoUsuario.addMouseListener(this);
                  
                  this.vista.LBLhistorialUsuario.addMouseListener(this);
                  
-                  GenerarPaneles(this.cantidad);
+                  GenerarPaneles(this.cant_ViajesDisponibles);
                  
                   generarAsientos();
                  
@@ -127,28 +135,28 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                  
                  CargarPanelesViajes();
                  
+                 CargarCBfiltro();
+                 
                   vista.BTN_confirmarAsientos.setVisible(false);
                  
-                 vista.BTN_confirmarCompra.setVisible(false);
                  
                  ((JSpinner.DefaultEditor) vista.SPNEdadPasajero.getEditor()).getTextField().setEditable(false);
-                 
-                 Shape redondeado=new RoundRectangle2D.Double(0,0,vista.getBounds().width,vista.getBounds().getHeight(),30,30);
-                 vista.setShape(redondeado);
-                 
-                 vista.ScrollPaneDestinos.getVerticalScrollBar().setUnitIncrement(15);                 
        
          } 
     
          
          void EstadoInicial(){
+                  
                   Interfaz_Principal reinicio_Interfaz=new Interfaz_Principal();
-                  CTRL_InterfazPrincipal reinicio_CTRl =new CTRL_InterfazPrincipal(reinicio_Interfaz,cantidad);
+                  CTRL_InterfazPrincipal reinicio_CTRl =new CTRL_InterfazPrincipal(reinicio_Interfaz,cant_ViajesDisponibles);
                   reinicio_CTRl.Iniciar();
                   Cerrar();
+                  
           }
            
+         
           void Iniciar(Socios socioIngresado){
+              
                   usuario=socioIngresado;
                   vista.LBLusuario.setText(usuario.getNombre());
                   vista.TxtNombrePasajero.setText(usuario.getNombre());
@@ -161,24 +169,26 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   vista.setVisible(true);
           }   
          
-          void Iniciar(){
+          
+         void Iniciar(){
                   
-                     PlaceHolder Nombre=new PlaceHolder("Nombre", vista.TxtNombrePasajero, PlaceHolder.Visibilidad.ALWAYS);
-                     PlaceHolder ApePat=new PlaceHolder("Apellido Paterno", vista.TxtApellidoPatePasajero, PlaceHolder.Visibilidad.ALWAYS);
-                     PlaceHolder ApeMat=new PlaceHolder("Apellido Materno", vista.TxtApellidoMatePasajero, PlaceHolder.Visibilidad.ALWAYS);
+                  PlaceHolder Nombre=new PlaceHolder("Nombre", vista.TxtNombrePasajero, PlaceHolder.Visibilidad.ALWAYS);
+                  PlaceHolder ApePat=new PlaceHolder("Apellido Paterno", vista.TxtApellidoPatePasajero, PlaceHolder.Visibilidad.ALWAYS);
+                  PlaceHolder ApeMat=new PlaceHolder("Apellido Materno", vista.TxtApellidoMatePasajero, PlaceHolder.Visibilidad.ALWAYS);
 
-                     vista.LBLusuario.setText("No registrado");
-                     vista.PanelUsuario.setVisible(false);
+                  vista.LBLusuario.setText("No registrado");
+                  vista.PanelUsuario.setVisible(false);
                   
                   vista.setVisible(true); 
           }
 
-          void Cerrar(){
+          
+         void Cerrar(){
                   vista.dispose();
           }
          
          
-          void InicializarReloj(){
+          private void InicializarReloj(){
                   Date horaActual=new Date();
                   Date fechaActual=new Date();
 
@@ -221,7 +231,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   ArrayPrecios=new ArrayList<>();
                   ArrayDistancias=new ArrayList<>();
                   int x=100;
-                  int y=150;
+                  int y=20;
                   int ancho=400;
                   int alto=450;
                   int incrementoX=500;
@@ -245,12 +255,11 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            ArrayPaneles.add(contenedor);
 
                            img.setBounds(20, 20, 360, 250);
-                           img.setBorder(new LineBorder(Color.WHITE,1));
                            ArrayImgs.add(img);
                            contenedor.add(img);
 
                            precio.setBounds(0, 280, 400, 30);
-                           precio.setFont(new Font("Segoe UI Emoji",Font.PLAIN,16));
+                           precio.setFont(new Font("Segoe UI Emoji",Font.BOLD,16));
                            precio.setHorizontalAlignment(SwingConstants.CENTER);
                            precio.setForeground(Color.WHITE);
                            ArrayPrecios.add(precio);
@@ -259,12 +268,12 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            destino.setBounds(0, 310, 400, 30);
                            destino.setHorizontalAlignment(SwingConstants.CENTER);
                            destino.setForeground(Color.WHITE);
-                           destino.setFont(new Font("Segoe UI Emoji",Font.PLAIN,16));
+                           destino.setFont(new Font("Segoe UI Emoji",Font.BOLD,16));
                            ArrayDestinos.add(destino);
                            contenedor.add(destino);
                            
                            distancia.setBounds(0,330,400,30);
-                           distancia.setFont(new Font("Segoe UI Emoji",Font.PLAIN,16));
+                           distancia.setFont(new Font("Segoe UI Emoji",Font.BOLD,16));
                            distancia.setForeground(Color.WHITE);
                            distancia.setHorizontalAlignment(SwingConstants.CENTER);
                            distancia.setText("5km");
@@ -274,34 +283,35 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            fechas.setBounds(0, 360, 400, 30);
                            fechas.setForeground(Color.WHITE);
                            fechas.setHorizontalAlignment(SwingConstants.CENTER);
-                           fechas.setFont(new Font("Segoe UI Emoji",Font.PLAIN,16));
+                           fechas.setFont(new Font("Segoe UI Emoji",Font.BOLD,16));
                            ArrayFechas.add(fechas);
                            contenedor.add(fechas);
                            
                            horas.setBounds(0, 380, 400, 30);
                            horas.setForeground(Color.WHITE);
                            horas.setHorizontalAlignment(SwingConstants.CENTER);
-                           horas.setFont(new Font("Segoe UI Emoji",Font.PLAIN,16));
+                           horas.setFont(new Font("Segoe UI Emoji",Font.BOLD,16));
                            ArrayHoras.add(horas);
                            contenedor.add(horas);
 
                            asientosDispo.setBounds(0, 420, 400, 30);
                            asientosDispo.setForeground(Color.WHITE);
-                           asientosDispo.setFont(new Font("Segoe UI Emoji",Font.PLAIN,16));
+                           asientosDispo.setFont(new Font("Segoe UI Emoji",Font.BOLD,16));
                            asientosDispo.setHorizontalAlignment(SwingConstants.CENTER);
                            ArrayAsientosDisp.add(asientosDispo);
                            contenedor.add(asientosDispo);
 
-                           vista.PanelDestinos.add(contenedor);
+                           vista.PanelViajes.add(contenedor);
                            x+=incrementoX;
-                           if(x>vista.PanelDestinos.getWidth()-contenedor.getWidth()){
+                           if(x>vista.PanelViajes.getWidth()-contenedor.getWidth()){
                                     x=100;
                                     y+=incrementoY;
                            }
 
-                           if (y>vista.PanelDestinos.getHeight()-alto) {
-                                    vista.PanelDestinos.setPreferredSize(new Dimension((int) vista.PanelDestinos.getPreferredSize().getWidth(),ArrayPaneles.get(i).getY()+alto+50));
-                                    vista.ScrollPaneDestinos.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                           if (y>vista.PanelViajes.getHeight()-alto) {
+                                    vista.PanelViajes.setPreferredSize(new Dimension((int) vista.PanelViajes.getPreferredSize().getWidth(),ArrayPaneles.get(i).getY()+alto+60));
+                                    vista.ScrollPanelViajes.getVerticalScrollBar().setUnitIncrement(15);
+                                    vista.ScrollPanelViajes.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
                            }
                   }   
          }
@@ -314,18 +324,18 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                      int i=0;
                      byte[] binario;
                      String sql="SELECT v.viaje_id, ts.terminal_nombre AS terminal_salida, tl.terminal_nombre AS terminal_llegada, v.viaje_fecha_salida, v.viaje_fecha_llegada, v.viaje_hora_salida, v.viaje_hora_llegada, v.viaje_distancia, v.viaje_asientos_Dispo, v.viaje_precio, v.viaje_promocion, v.viaje_img_Refe \n" +
-                                                                           "FROM Viajes v \n" +
-                                                                           "JOIN Terminales ts ON v.viaje_terminal_salida = ts.terminal_id \n" +
-                                                                           "JOIN Terminales tl ON v.viaje_terminal_llegada = tl.terminal_id;";
+                                       "FROM Viajes v \n" +
+                                       "JOIN Terminales ts ON v.viaje_terminal_salida = ts.terminal_id \n" +
+                                       "JOIN Terminales tl ON v.viaje_terminal_llegada = tl.terminal_id;";
                      try {
                                 ps=con.prepareStatement(sql);
                                 rs=ps.executeQuery();
-                                while(rs.next() && i<cantidad){
+                                while(rs.next() && i<cant_ViajesDisponibles){
                                     ArrayPaneles.get(i).setName(String.valueOf(rs.getInt("viaje_id")));
                                     ArrayDestinos.get(i).setText(rs.getString("terminal_salida")+" --> "+rs.getString("terminal_llegada"));
                                     ArrayFechas.get(i).setText(rs.getString("viaje_fecha_salida")+" --> "+rs.getString("viaje_fecha_llegada"));
                                     ArrayHoras.get(i).setText(rs.getString("viaje_hora_salida")+" --> "+rs.getString("viaje_hora_llegada"));
-                                    ArrayPrecios.get(i).setText("Precio: s/"+rs.getDouble("viaje_precio"));
+                                    ArrayPrecios.get(i).setText("Precio: S/"+rs.getDouble("viaje_precio"));
                                     ArrayAsientosDisp.get(i).setText("Asientos Disponibles: "+String.valueOf( rs.getInt("viaje_asientos_Dispo")));
                                     binario=rs.getBytes("viaje_img_Refe");
                                     InputStream img=new ByteArrayInputStream(binario);
@@ -354,31 +364,24 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   PreparedStatement ps=null;
                   ResultSet rs=null;
                   Connection con=cone.getConnection();
+                  int i=0;
                   try {
-                           ps=con.prepareStatement("SELECT * FROM Asientos WHERE asientos_viaje_id=?");
+                           ps=con.prepareStatement("SELECT asiento_estado FROM Asientos WHERE asiento_viaje_id=?");
                            ps.setInt(1,ID );
                            rs=ps.executeQuery();
-                           if (rs.next()) {
-                                    for (int i = 1; i <=40; i++) {
-                                             String asiento="A"+i;
-                                             if (rs.getString(asiento).equals("Ocupado")) {
-                                                      ArrayBusAsientos.get(i-1).setIcon(asientoOcup);
-                                                      ArrayBusAsientos.get(i-1).setBackground(Color.RED);
-                                             }else{
-                                                      ArrayBusAsientos.get(i-1).setIcon(asientoDisp);
-                                                      ArrayBusAsientos.get(i-1).setBackground(Color.GREEN);
-                                             }
+                           while(rs.next()){
+                                    if (rs.getString("asiento_estado").equals("Ocupado")) {
+                                                      ArrayBusAsientos.get(i).setIcon(asientoOcup);
+                                                      ArrayBusAsientos.get(i).setBackground(Color.RED);
+                                    }else{
+                                                      ArrayBusAsientos.get(i).setIcon(asientoDisp);
+                                                      ArrayBusAsientos.get(i).setBackground(Color.GREEN);
                                     }
+                                    i++;
                            }
                            
                   } catch (SQLException e) {
                            System.out.println(e);
-                  }finally{
-                           try {
-                                    con.close();
-                           } catch (SQLException e) {
-                                    System.out.println(e);
-                           }
                   }
          }
          
@@ -469,7 +472,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            TXTnombre.setBounds(10, 30, 270, 30);
                            TXTnombre.setBorder(new MatteBorder(0,0,2,0,Color.WHITE));
                            TXTnombre.setBackground(new Color(10,10,10));
-                           TXTnombre.setFont(new Font("Segoe UI",Font.PLAIN,16));
+                           TXTnombre.setFont(new Font("Segoe UI Emoji",Font.BOLD,16));
                            TXTnombre.setForeground(Color.WHITE);
                            TXTnombre.setCaretColor(Color.WHITE);
                            PlaceHolder nom=new PlaceHolder("Nombre",TXTnombre,PlaceHolder.Visibilidad.ALWAYS);
@@ -479,7 +482,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            
                            TXTapePat.setBounds(10, 80, 270, 30);
                            TXTapePat.setBorder(new MatteBorder(0,0,2,0,Color.WHITE));
-                           TXTapePat.setFont(new Font("Segoe UI",Font.PLAIN,16));
+                           TXTapePat.setFont(new Font("Segoe UI Emoji",Font.BOLD,16));
                            TXTapePat.setBackground(new Color(10,10,10));
                            TXTapePat.setForeground(Color.WHITE);
                            TXTapePat.setCaretColor(Color.WHITE);
@@ -490,7 +493,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
 
                            TXTapeMat.setBounds(10, 130, 270, 30);
                            TXTapeMat.setBorder(new MatteBorder(0,0,2,0,Color.WHITE));
-                           TXTapeMat.setFont(new Font("Segoe UI",Font.PLAIN,16));
+                           TXTapeMat.setFont(new Font("Segoe UI Emoji",Font.BOLD,16));
                            TXTapeMat.setBackground(new Color(10,10,10));
                            TXTapeMat.setForeground(Color.WHITE);
                            TXTapeMat.setCaretColor(Color.WHITE);
@@ -510,6 +513,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            SPNedad.setBounds(440,30,60,30);
                            SPNedad.setBorder(new MatteBorder(0,0,2,0,Color.WHITE));
                            ((JSpinner.DefaultEditor) SPNedad.getEditor()).getTextField().setEditable(false);
+                            ((JSpinner.DefaultEditor) SPNedad.getEditor()).getTextField().setFont(new Font("Segoe UI Emoji",Font.BOLD,14));
                            ArrayAcompañantesEdad.add(SPNedad);
                            contenedor.add(SPNedad);
 
@@ -525,7 +529,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                                     FTXTdni.setBounds(440, 90, 150, 30);
                                     FTXTdni.setBackground(new Color(10,10,10));
                                     FTXTdni.setBorder(new MatteBorder(0,0,2,0,Color.WHITE));
-                                    FTXTdni.setFont(new Font("Segoe UI",Font.PLAIN,16));
+                                    FTXTdni.setFont(new Font("Segoe UI Emoji",Font.BOLD,16));
                                     FTXTdni.setForeground(Color.WHITE);
                                     FTXTdni.setCaretColor(Color.WHITE);
                                     contenedor.add(FTXTdni);
@@ -564,7 +568,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
     }
 
          
-         private void SliderScroll(JScrollBar scrollBar,int delay, int ValorDestino,int auxiliar) {
+         private void Slider(JScrollBar scrollBar,int delay, int ValorDestino,int auxiliar) {
                   Timer Temporizador = new Timer(delay, new ActionListener() {
                            int incremento = (ValorDestino - scrollBar.getValue()) / auxiliar;
                            int valor = scrollBar.getValue();
@@ -614,6 +618,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   }
          }
         
+         
          private void deseleccionarAsiento(String asiento){
                   String txt="";
                   String texto=vista.LBLasientosSeleccionados.getText();
@@ -639,6 +644,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   vista.LBLasientosSeleccionados.setText(txt);
          }
          
+         
          private void seleccionarAsiento(String asiento){
                   if (vista.LBLasientosSeleccionados.getText().isBlank() ) {
                            vista.LBLasientosSeleccionados.setText(asiento);
@@ -647,16 +653,57 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   }
          }
          
+         
          private void asignarAsientos(){
+                  int cantidadPasajeros=Integer.parseInt(vista.LBLasientosCont.getText());
                   String texto=vista.LBLasientosSeleccionados.getText();
                   String [] asientos=texto.split(",");
-                  vista.LBLasientoPasajero.setText("Asiento: "+asientos[0]);
-                  for (int i = 0; i < cantPasajeros-1; i++) {
-                           ArrayAcompañantesAsientos.get(i).setText("Asiento: "+asientos[i+1]);
+                  vista.LBLasientoPasajero.setText(asientos[0]);
+                  for (int i = 0; i < cantidadPasajeros-1; i++) {
+                           ArrayAcompañantesAsientos.get(i).setText(asientos[i+1]);
                   }
          }
          
          
+         private void CargarCBfiltro(){
+                  PreparedStatement ps=null;
+                  ResultSet rs=null;
+                  Connection con= cone.getConnection();
+                  try {     
+                           ps=con.prepareStatement("SELECT terminal_id, terminal_nombre FROM Terminales WHERE terminal_estado='Habilitado'");
+                           rs=ps.executeQuery();
+                           while (rs.next()) {
+                                   vista.CBterminalLlegadaFiltro.addItem(rs.getString("terminal_id")+"-"+rs.getString("terminal_nombre"));
+                                   vista.CBterminalSalidaFiltro.addItem(rs.getString("terminal_id")+"-"+rs.getString("terminal_nombre"));
+                                   
+                           }
+                  } catch (SQLException e) {
+                           System.err.println(e.toString());
+                  }finally{
+                           try {
+                                    con.close();
+                           } catch (SQLException ex) {
+                                    System.out.println(ex);
+                           }
+                  }
+         
+         }
+         
+         
+         private void LimpiarPaneles(){
+                  vista.PanelViajes.removeAll();
+                  vista.PanelViajes.setPreferredSize(new Dimension(1100,560));
+                  ArrayPaneles.clear();
+                  ArrayPrecios.clear();
+                  ArrayImgs.clear();
+                  ArrayDestinos.clear();
+                  ArrayHoras.clear();
+                  ArrayFechas.clear();
+                  ArrayAsientosDisp.clear();
+                  ArrayDistancias.clear();
+         
+         
+         }
          
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -667,48 +714,98 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            ctrlLogin.Iniciar();
                            Cerrar();
                   }
+                  
+                  if (e.getSource()==vista.BTN_aplicarFiltro) {
+                           LimpiarPaneles();
+                  }
 
                   
-                  if (e.getSource()==vista.BTN_cancelarAsientos) {
-                           JScrollBar scrollBar = vista.ScrollPanelDinamico.getHorizontalScrollBar();
+                  if (e.getSource()==vista.BTN_cancelarAsientos) {;
                            vista.LBLasientosSeleccionados.setText("");
-                           vista.LBLasientosCont.setText("");
-                           cantPasajeros=0;
-                           SliderScroll(scrollBar, 10,0,5);
+                           vista.LBLasientosCont.setText("0");
+                           vista.LBLprecio.setText("00.0");
+                           vista.LBLPrecioTotal.setText("00.0");
+                           Slider(vista.ScrollPanelDinamico.getHorizontalScrollBar(), 10,0,5);
                   }
 
                   
                   if (e.getSource()==vista.BTN_confirmarAsientos) {
-                           JScrollBar scrollBar = vista.ScrollPanelDinamico.getHorizontalScrollBar();
-                           SliderScroll(scrollBar,10, 2200,5);
-                           generarFormsAcompañantes(cantPasajeros);
+                            int cantidadPasajeros=Integer.parseInt(vista.LBLasientosCont.getText());
+                           Slider(vista.ScrollPanelDinamico.getHorizontalScrollBar(),10, 2200,5);
+                           generarFormsAcompañantes(cantidadPasajeros);
                            asignarAsientos();
+                           
                   }
 
                   
                   if (e.getSource()==vista.BTN_cancelarPasajeros) {
-                           JScrollBar scrollBar = vista.ScrollPanelDinamico.getHorizontalScrollBar();
-                           SliderScroll(scrollBar,10,1100,5);
+              
+                           Slider(vista.ScrollPanelDinamico.getHorizontalScrollBar(),10,1100,5);
                            reiniciarFormsAcompañantes();
                   }
 
                   
                   if (e.getSource()==vista.BTN_confirmarCompra) {
+                           int cantidadPasajeros=Integer.parseInt(vista.LBLasientosCont.getText());
+                           Acompañantes [] acomp=new Acompañantes[cantidadPasajeros-1];
+                           PasajeroPrincipal pasajero=new PasajeroPrincipal(vista.TxtDNIpasajero.getText(), 
+                                                                                                                viajeSeleccionado.getId(),
+                                                                                                                vista.TxtNombrePasajero.getText(),
+                                                                                                                vista.TxtApellidoPatePasajero.getText(), 
+                                                                                                                vista.TxtApellidoMatePasajero.getText(), 
+                                                                                                                (int) vista.SPNEdadPasajero.getValue() , 
+                                                                                                                 vista.LBLasientoPasajero.getText());
+                           if (pasajero.ConAtributosVacios()) {
+                                    Emergente msg=new Emergente(null, "Error", "Hay campos vacios en el Pasajero Principal", Emergente.Tipo.MessageDialog);
+                                    return;
+                           }
+                           pasajeroDAO.registrar(pasajero);
+                           asientoDAO.DeshabilitarAsiento(pasajero);
+                           
+                           if (acomp.length>0) {
+                                    for (int i = 0; i <acomp.length; i++) {
+                                             acomp[i]=new Acompañantes(ArrayAcompañantesDNI.get(i).getText(), 
+                                                                                               pasajero,
+                                                                                               viajeSeleccionado.getId(),
+                                                                                               ArrayAcompañantesNombres.get(i).getText(),
+                                                                                               ArrayAcompañantesApellidosPat.get(i).getText() , 
+                                                                                               ArrayAcompañantesApellidosMat.get(i).getText(), 
+                                                                                               (int) ArrayAcompañantesEdad.get(i).getValue(), 
+                                                                                                ArrayAcompañantesAsientos.get(i).getText());
+                                            
+                                             if (acomp[i].ConAtributosVacios()) {
+                                                      Emergente msg=new Emergente(null, "Error", "Hay campos vacios en el Acompañante "+(i+1), Emergente.Tipo.MessageDialog);
+                                                      return;
+                                             }
+                                             
+                                             acompañanteDAO.registrar(acomp[i]);
+                                             asientoDAO.DeshabilitarAsiento(acomp[i]);
+                                    }
+                           }
+                           
+                           Ventas  venta=new Ventas(vista.LBLfecha.getText(), vista.LBLhora.getText(), viajeSeleccionado, pasajero, Integer.parseInt(vista.LBLasientosCont.getText()), vista.LBLasientosSeleccionados.getText(), Double.parseDouble(vista.LBLPrecioTotal.getText()));
+                           ventaDAO.registrar(venta);
+                           
+                           viajeSeleccionado.RestarAsientosDisponibles(venta.getNumAsientos());
+                           
+                           viajeDAO.ActualizarAsientosDispo(viajeSeleccionado);
+                           
                            EstadoInicial();
                   }
 
                   
                   if (e.getSource()==vista.BTN_IzquiAcompañantes) {
-                           JScrollBar scrollBar = vista.ScrollPanelPasajeros.getHorizontalScrollBar();
-                           int izquierda=scrollBar.getValue()-900;
-                           SliderScroll(scrollBar,10, izquierda,5);
+                      
+                           int izquierda=vista.ScrollPanelPasajeros.getHorizontalScrollBar().getValue()-900;
+                           Slider(vista.ScrollPanelPasajeros.getHorizontalScrollBar(),10, izquierda,5);
                   }
 
                   
                   if (e.getSource()==vista.BTN_derechaAcompañantes) {
-                           JScrollBar scrollBar = vista.ScrollPanelPasajeros.getHorizontalScrollBar();
-                           int derecha=scrollBar.getValue()+900;
-                           SliderScroll(scrollBar,10, derecha,5);
+
+                           int derecha=vista.ScrollPanelPasajeros.getHorizontalScrollBar().getValue()+900;
+                           Slider(vista.ScrollPanelPasajeros.getHorizontalScrollBar(),10, derecha,5);
+                           
                   }
                   
          }
@@ -749,32 +846,39 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                      
                      
 
-                     for (JLabel asientos : ArrayBusAsientos) {
+                     for (JLabel asiento : ArrayBusAsientos) {
                                  URL urlAsientoDisp = getClass().getResource("/IMGS/asientoDisp.png");
                                  ImageIcon asientoDisp=new ImageIcon(urlAsientoDisp);
                                  URL urlAsientoSele = getClass().getResource("/IMGS/asientoSele.png");
                                  ImageIcon asientoSele=new ImageIcon(urlAsientoSele);
-
-                                 if (e.getSource()==asientos ) {
-                                             
-                                           if (asientos.getBackground().equals(Color.GREEN)) {
-                                                      asientos.setBackground(Color.BLUE);
-                                                      asientos.setIcon(asientoSele);
-                                                      cantPasajeros++;
-                                                      vista.LBLasientosCont.setText(String.valueOf(cantPasajeros));
+              
+                                 if (e.getSource()==asiento ) {
+                                          int cantidadPasajeros=Integer.parseInt(vista.LBLasientosCont.getText());
+                                          double precioAcumulado=Double.parseDouble(vista.LBLprecio.getText());
+                                           if (asiento.getBackground().equals(Color.GREEN)) {
+                                                      asiento.setBackground(Color.BLUE);
+                                                      asiento.setIcon(asientoSele);
+                                                      cantidadPasajeros++;
+                                                      precioAcumulado=precioAcumulado+viajeSeleccionado.getPrecio();
+                                                      vista.LBLprecio.setText(precioAcumulado+"");
+                                                      vista.LBLPrecioTotal.setText(precioAcumulado+"");
+                                                      vista.LBLasientosCont.setText(String.valueOf(cantidadPasajeros));
                                                       vista.BTN_confirmarAsientos.setVisible(true);
-                                                      seleccionarAsiento(asientos.getName()); 
+                                                      seleccionarAsiento(asiento.getName()); 
                                                       return;
                                            }
-                                           if (asientos.getBackground().equals(Color.BLUE)) {
-                                                     asientos.setBackground(Color.GREEN);
-                                                     asientos.setIcon(asientoDisp);
-                                                     cantPasajeros--;
-                                                     vista.LBLasientosCont.setText(String.valueOf(cantPasajeros));
-                                                     deseleccionarAsiento(asientos.getName());
+                                           if (asiento.getBackground().equals(Color.BLUE)) {
+                                                     asiento.setBackground(Color.GREEN);
+                                                     asiento.setIcon(asientoDisp);
+                                                     cantidadPasajeros--;
+                                                     precioAcumulado=precioAcumulado-viajeSeleccionado.getPrecio();
+                                                     vista.LBLprecio.setText(precioAcumulado+"");
+                                                     vista.LBLPrecioTotal.setText(precioAcumulado+"");
+                                                     vista.LBLasientosCont.setText(String.valueOf(cantidadPasajeros));
+                                                     deseleccionarAsiento(asiento.getName());
                                            }
 
-                                           if (cantPasajeros==0) {
+                                           if (cantidadPasajeros==0) {
                                                      vista.BTN_confirmarAsientos.setVisible(false);
                                            }
 
@@ -783,12 +887,14 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   
                   
                      for (PanelPersonalizado paneles : ArrayPaneles) {
+                         
                                 if (e.getSource()==paneles) {
                                              int id=Integer.parseInt(paneles.getName());
                                              CargarInfoViaje(id);
                                              CargarAsientos(id);
-                                             JScrollBar scrollBar = vista.ScrollPanelDinamico.getHorizontalScrollBar();
-                                             SliderScroll(scrollBar,10,1100,5);
+                                             viajeSeleccionado=viajeDAO.ObtenerDatos(id);
+                                             viajeSeleccionado.setId(id);
+                                             Slider(vista.ScrollPanelDinamico.getHorizontalScrollBar(),10,1100,5);
                                 }
                      }
                   
@@ -908,8 +1014,8 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
          
                   if (e.getSource()==vista.BTN_confirmarCompra) {
                            vista.BTN_confirmarCompra.setFont(new  Font("Consolas",Font.PLAIN,18));
-                           vista.BTN_cancelarPasajeros.setBorder(new LineBorder(new Color(123,216,80)));
-                           vista.BTN_cancelarPasajeros.setBackground(new Color(6,6,6));
+                           vista.BTN_confirmarCompra.setBorder(new LineBorder(new Color(123,216,80)));
+                           vista.BTN_confirmarCompra.setBackground(new Color(6,6,6));
                   }
                   
                   if (e.getSource()==vista.LBLinfoUsuario) {

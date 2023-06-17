@@ -7,7 +7,7 @@ import java.sql.*;
 public class ViajesDAO extends Conexion{
     
          
-         public boolean RegistrarViaje(Viajes viaje){
+         public boolean Registrar(Viajes viaje){
                   PreparedStatement ps=null;
                   Connection con =getConnection();
                   try{
@@ -37,7 +37,7 @@ public class ViajesDAO extends Conexion{
                   } 
          }
          
-         public boolean ModificarViaje(Viajes viaje, int id){
+         public boolean Modificar(Viajes viaje, int id){
                   PreparedStatement ps=null;
                   Connection con =getConnection();
                   try {
@@ -63,7 +63,7 @@ public class ViajesDAO extends Conexion{
          
          }
          
-         public boolean EliminarViaje(int id){
+         public boolean Eliminar(int id){
                   PreparedStatement ps=null;
                   Connection con =getConnection();
                   try {
@@ -83,20 +83,6 @@ public class ViajesDAO extends Conexion{
                   
                   }
          
-         }
-         public int ObtenerUltimoID(){
-                  PreparedStatement ps=null;
-                  Connection con=getConnection();
-                  ResultSet rs=null;
-                  try {
-                           ps=con.prepareStatement("SELECT MAX(viaje_id) AS ultimo_id FROM Viajes");
-                           rs=ps.executeQuery();
-                           if (rs.next()) {
-                                    return  rs.getInt("ultimo_id");
-                           }
-                  } catch (SQLException e) {
-                  }
-             return 0;
          }
          
          public Viajes ObtenerDatos(int id){
@@ -156,6 +142,22 @@ public class ViajesDAO extends Conexion{
                            }
                   }
                   return cantidad;
+         }
+         
+         public boolean ActualizarAsientosDispo(Viajes viaje){
+                  PreparedStatement ps=null;
+                  Connection con =getConnection();
+                  try {
+                           ps=con.prepareStatement("UPDATE Viajes SET viaje_asientos_Dispo=? WHERE viaje_id=?");
+                           ps.setInt(1, viaje.getAsientosDispo());
+                           ps.setInt(2,viaje.getId());
+                           ps.execute();
+                           return true;
+                  }catch(SQLException ex) {
+                           System.err.println(ex);
+                           return false;
+                  }
+         
          }
          
 

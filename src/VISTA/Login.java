@@ -175,6 +175,7 @@ public class Login extends javax.swing.JFrame {
         LBL_mostrarLogin.setForeground(new java.awt.Color(123, 216, 80));
         LBL_mostrarLogin.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         LBL_mostrarLogin.setText("Inicia Sesión aquí");
+        LBL_mostrarLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         RegistrarPanelAux.add(LBL_mostrarLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 330, 120, 20));
 
         PanelDinamicoInfo.add(RegistrarPanelAux, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 0, 320, 400));
@@ -209,6 +210,7 @@ public class Login extends javax.swing.JFrame {
         LBL_mostrarRegistro.setForeground(new java.awt.Color(123, 216, 80));
         LBL_mostrarRegistro.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         LBL_mostrarRegistro.setText("Registrate aquí.");
+        LBL_mostrarRegistro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         IniciarSesionPanelAux.add(LBL_mostrarRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 330, 120, 20));
 
         PanelDinamicoInfo.add(IniciarSesionPanelAux, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, 400));
@@ -231,7 +233,7 @@ public class Login extends javax.swing.JFrame {
         BTN_ConfirmarRegistro.setFocusable(false);
         BTN_ConfirmarRegistro.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         BTN_ConfirmarRegistro.setOpaque(true);
-        PanelRegistro.add(BTN_ConfirmarRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 470, 130, 30));
+        PanelRegistro.add(BTN_ConfirmarRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 480, 130, 30));
 
         Txt_ApeMatRegistro.setBackground(new java.awt.Color(12, 12, 12));
         Txt_ApeMatRegistro.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N

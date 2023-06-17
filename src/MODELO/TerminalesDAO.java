@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 
 public class TerminalesDAO extends Conexion{
-         public boolean RegistrarTerminal(Terminales terminal){
+         public boolean Registrar(Terminales terminal){
                   PreparedStatement ps=null;
                   Connection con =getConnection();
                   try{
@@ -30,7 +30,7 @@ public class TerminalesDAO extends Conexion{
                   } 
          }
          
-         public boolean ModificarTerminal(Terminales terminal,int id){
+         public boolean Modificar(Terminales terminal,int id){
                   PreparedStatement ps=null;
                   Connection con =getConnection();
                   try{
@@ -53,7 +53,7 @@ public class TerminalesDAO extends Conexion{
                   } 
          }
          
-         public boolean EliminarTerminal(int id){
+         public boolean Eliminar(int id){
                   PreparedStatement ps=null;
                   Connection con =getConnection();
                   try{
@@ -72,6 +72,7 @@ public class TerminalesDAO extends Conexion{
                            }
                   } 
          }
+         
          public Terminales ObtenerDatos(int id){
                   PreparedStatement ps=null;
                   Connection con=getConnection();
@@ -96,23 +97,6 @@ public class TerminalesDAO extends Conexion{
                                     System.out.println(ex);
                            }
                   }
-             return null;
-
-         }
-         
-         public int ObtenerUltimoID(){
-                  PreparedStatement ps=null;
-                  Connection con=getConnection();
-                  ResultSet rs=null;
-                  try {
-                           ps=con.prepareStatement("SELECT MAX(terminal_id) AS ultimo_id FROM Terminales");
-                           rs=ps.executeQuery();
-                           if (rs.next()) {
-                                    return  rs.getInt("ultimo_id");
-                           }
-                  } catch (SQLException e) {
-                  }
-             return 0;
-         }
-    
+                  return null;
+         }    
 }

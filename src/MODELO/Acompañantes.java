@@ -3,7 +3,7 @@ package MODELO;
 
 public class Acompañantes {
     private String dni;
-    private String pasajeroPrincipal;
+    private PasajeroPrincipal pasajeroPrincipal;
     private int viajeId;
     private String nombre;
     private String apePaterno;
@@ -11,7 +11,7 @@ public class Acompañantes {
     private int edad;
     private String asiento;
 
-    public Acompañantes(String dni, String pasajeroPrincipal, int viajeId, String nombre, String apePaterno, String apeMaterno, int edad, String asiento) {
+    public Acompañantes(String dni, PasajeroPrincipal pasajeroPrincipal, int viajeId, String nombre, String apePaterno, String apeMaterno, int edad, String asiento) {
         this.dni = dni;
         this.pasajeroPrincipal = pasajeroPrincipal;
         this.viajeId = viajeId;
@@ -30,13 +30,15 @@ public class Acompañantes {
         this.dni = dni;
     }
 
-    public String getPasajeroPrincipal() {
+    public PasajeroPrincipal getPasajeroPrincipal() {
         return pasajeroPrincipal;
     }
 
-    public void setPasajeroPrincipal(String pasajeroPrincipal) {
+    public void setPasajeroPrincipal(PasajeroPrincipal pasajeroPrincipal) {
         this.pasajeroPrincipal = pasajeroPrincipal;
     }
+
+
 
     public int getViajeId() {
         return viajeId;
@@ -90,7 +92,7 @@ public class Acompañantes {
                   return !(nombre != null && !nombre.isEmpty())
                            || !(apePaterno != null && !apePaterno.isEmpty())
                            || !(apeMaterno != null && !apeMaterno.isEmpty())
-                           || !(pasajeroPrincipal != null && !pasajeroPrincipal.isEmpty())
+                           || !(pasajeroPrincipal != null )
                            || !(dni != null && !dni.isEmpty())
                            || !(asiento != null && !asiento.isEmpty())
                            || !(edad != 0)

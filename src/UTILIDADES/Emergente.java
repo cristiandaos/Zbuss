@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
@@ -13,112 +12,130 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 import java.awt.event.WindowListener;
-import java.awt.geom.RoundRectangle2D;
-import javax.security.auth.callback.TextOutputCallback;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.Timer;
-import javax.swing.UIDefaults;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
-import org.w3c.dom.events.MouseEvent;
 
 
 
 public  class Emergente extends JDialog implements ActionListener,MouseMotionListener,MouseListener,WindowListener,WindowFocusListener{
     
+    public enum Tipo { ConfirmDialog, MessageDialog; }
+    private int Opcion=0;
     private int x;
     private int y;
     private JPanel contenido;
     private JPanel BarraSuperior;
     private JLabel mensaje;
     private JButton btnConfirmar ;
+    private JButton btn_Si;
+    private JButton btn_No;
     private JButton btnCerrar;
     private JLabel Titulo;
-    public Emergente(JFrame frame,String titulo,String msg){
-        super(frame, true);
-                addWindowListener(this);
-                setUndecorated(true);
-                Dimension dimension=new Dimension(450,200);
-                setSize(dimension);
-                setPreferredSize(dimension);
-                setLayout(null);
-                setLocationRelativeTo(frame);
-                setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-                Shape redondeado=new RoundRectangle2D.Double(0,0,getBounds().width,getBounds().getHeight(),30,30);
-                setShape(redondeado);
-                
-                BarraSuperior=new JPanel(null);
-                BarraSuperior.setBounds(0, 0, getWidth(), 40);
-                BarraSuperior.setBackground(new Color(12, 12, 12));
-                BarraSuperior.setBorder(new MatteBorder(0, 0, 2, 0, new Color(123,216,80)));
-                BarraSuperior.addMouseMotionListener(this);
-                BarraSuperior.addMouseListener(this);
+        public Emergente(JFrame frame,String titulo,String msg,Tipo tipo){
+         super (frame, true);
+                  addWindowListener(this);
+                  setUndecorated(true);
+                  Dimension dimension=new Dimension(500,200);
+                  setSize(dimension);
+                  setPreferredSize(dimension);
+                  setLayout(null);
+                  setLocationRelativeTo(frame);
+                  setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                  
+                  BarraSuperior=new JPanel(null);
+                  BarraSuperior.setBounds(0, 0, getWidth(), 40);
+                  BarraSuperior.setBackground(Color.BLACK);
+                  BarraSuperior.setBorder(new MatteBorder(0, 0, 2, 0,Color.WHITE));
+                  BarraSuperior.addMouseMotionListener(this);
+                  BarraSuperior.addMouseListener(this);
                 
                 
-                btnCerrar =new JButton("X");
-                btnCerrar.setBounds((BarraSuperior.getWidth()-(int)btnCerrar.getPreferredSize().getWidth()),0,(int)btnCerrar.getPreferredSize().getWidth(),BarraSuperior.getHeight());
-                btnCerrar.setForeground(Color.WHITE);
-                btnCerrar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-                btnCerrar.setFont(new Font("Segou UI",Font.PLAIN,18 ));
-                btnCerrar.setHorizontalAlignment(SwingConstants.CENTER);
-                btnCerrar.setBackground(new Color(12,12,12));
-                btnCerrar.setBorder(new MatteBorder(0,0,2,0,new Color(123,216,80)));
-                btnCerrar.setFocusable(false);
-                btnCerrar.addMouseListener(this);
-                btnCerrar.addActionListener(this);
-                BarraSuperior.add(btnCerrar);
+                  btnCerrar =new JButton("X");
+                  btnCerrar.setBounds((BarraSuperior.getWidth()-50),0,50,BarraSuperior.getHeight());
+                  btnCerrar.setForeground(Color.WHITE);
+                  btnCerrar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                  btnCerrar.setFont(new Font("Segou UI",Font.PLAIN,18 ));
+                  btnCerrar.setHorizontalAlignment(SwingConstants.CENTER);
+                  btnCerrar.setBackground(Color.BLACK);
+                  btnCerrar.setBorder(new MatteBorder(0,0,2,0,Color.WHITE));
+                  btnCerrar.setFocusable(false);
+                  btnCerrar.addMouseListener(this);
+                  btnCerrar.addActionListener(this);
+                  BarraSuperior.add(btnCerrar);
                 
-                Titulo=new JLabel(titulo);
-                Titulo.setBounds(10,0, BarraSuperior.getWidth()-btnCerrar.getWidth(),40);
-                Titulo.setForeground(Color.WHITE);
-                Titulo.setFont(new Font("Segou UI",Font.BOLD,16));
-                BarraSuperior.add(Titulo);
+                  Titulo=new JLabel(titulo);
+                  Titulo.setBounds(10,0, BarraSuperior.getWidth()-btnCerrar.getWidth(),40);
+                  Titulo.setForeground(Color.GREEN);
+                  Titulo.setFont(new Font("Consolas",Font.PLAIN,16));
+                  BarraSuperior.add(Titulo);
                 
-                contenido=new JPanel(null);
-                contenido.setBounds(0, BarraSuperior.getHeight(), getWidth(), getHeight()-BarraSuperior.getHeight());
-                contenido.setBackground(new Color(14,14,14));    
+                  contenido=new JPanel(null);
+                  contenido.setBounds(0, BarraSuperior.getHeight(), getWidth(), getHeight()-BarraSuperior.getHeight());
+                  contenido.setBackground(new Color(10,10,10));    
                 
-                mensaje=new JLabel(msg);
-                mensaje.setFont(new Font("Segou UI",Font.BOLD,13));
-                mensaje.setForeground(Color.WHITE);
-                mensaje.setBounds((contenido.getWidth() - (int) mensaje.getPreferredSize().getWidth())/2,(contenido.getHeight()-((int)mensaje.getPreferredSize().getHeight())/2)-110, (int) mensaje.getPreferredSize().getWidth(), (int)mensaje.getPreferredSize().getHeight());
-                contenido.add(mensaje);
-                
-                btnConfirmar =new JButton("OK");
-                btnConfirmar.setForeground(Color.WHITE);
-                btnConfirmar.setFont(new Font("Consolas",Font.PLAIN,16));
-                btnConfirmar.setFocusable(false);
-                btnConfirmar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-                btnConfirmar.setBorder(new MatteBorder(0,0,2,0,new Color(123,216,80)));
-                btnConfirmar.setBackground(new Color(14,14,14));
-                btnConfirmar.setBounds((contenido.getWidth()-50)/2, mensaje.getY()+mensaje.getHeight()+20, 50, 30);
-                btnConfirmar.addMouseListener(this);
-                btnConfirmar.addActionListener(this);
-                contenido.add(btnConfirmar);
-                
+                  mensaje=new JLabel(msg);
+                  mensaje.setFont(new Font("Segou UI",Font.BOLD,14));
+                  mensaje.setForeground(Color.WHITE);
+                  mensaje.setBounds((contenido.getWidth() - (int) mensaje.getPreferredSize().getWidth())/2,(contenido.getHeight()-((int)mensaje.getPreferredSize().getHeight())/2)-110, (int) mensaje.getPreferredSize().getWidth(), (int)mensaje.getPreferredSize().getHeight());
+                  contenido.add(mensaje);
+                  if (tipo.equals(tipo.MessageDialog)) {
+                           btnConfirmar =new JButton("OK");
+                           EstiloBoton(btnConfirmar);
+                           btnConfirmar.setBounds((contenido.getWidth()/2)-30, mensaje.getY()+mensaje.getHeight()+20, 60, 30);
+                  
+                  }else if (tipo.equals(Tipo.ConfirmDialog)) {
+                           btn_Si=new JButton("Si");
+                           btn_No=new JButton("No");
+                           EstiloBoton(btn_Si);
+                           EstiloBoton(btn_No);
+                           btn_Si.setBounds((contenido.getWidth()/4), mensaje.getY()+mensaje.getHeight()+20, 60, 30);
+                           btn_No.setBounds((contenido.getWidth()*3/4)-60, mensaje.getY()+mensaje.getHeight()+20, 60, 30);
+                  }
+
                 add(BarraSuperior);
                 add(contenido);
                 setVisible(true);
-    }
+         }
     
- 
+         private void EstiloBoton(JButton btn){
+                  btn.setForeground(Color.WHITE);
+                  btn.setFont(new Font("Consolas",Font.PLAIN,16));
+                  btn.setFocusable(false);
+                  btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                  btn.setBorder(new MatteBorder(1,1,1,1,new Color(123,216,80)));
+                  btn.setBackground(new Color(10,10,10));
+                  btn.addMouseListener(this);
+                  btn.addActionListener(this);
+                  contenido.add(btn);
+         }
 
-
+        private int RetornarOpcion(){
+            return Opcion;
+        }
+         
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==btnConfirmar) {
-           dispose();
+                dispose();
+        }
+        
+        if (e.getSource()==btn_Si) {
+                Opcion=1;
+                dispose();
+        }
+        
+        if (e.getSource()==btn_No) {
+                Opcion=0;
+                dispose();
         }
         
         if (e.getSource()==btnCerrar) {
-           dispose();
+                dispose();
         }
     }
 
@@ -147,6 +164,17 @@ public  class Emergente extends JDialog implements ActionListener,MouseMotionLis
                     btnConfirmar.setBackground(new Color(21,24, 30));
             }
             
+            if (e.getSource()==btn_No) {
+                    btn_No.setFont(new Font("Consolas",Font.BOLD,16));
+                    btn_No.setBackground(new Color(21,24, 30));
+            }
+            
+            if (e.getSource()==btn_Si) {
+                    btn_Si.setFont(new Font("Consolas",Font.BOLD,16));
+                    btn_Si.setBackground(new Color(21,24, 30));
+            }
+            
+            
             if(e.getSource()==btnCerrar){
                     btnCerrar.setBackground(Color.RED);
             }
@@ -156,11 +184,21 @@ public  class Emergente extends JDialog implements ActionListener,MouseMotionLis
     public void mouseExited(java.awt.event.MouseEvent e) {
             if (e.getSource()==btnConfirmar) {
                     btnConfirmar.setFont(new Font("Consolas",Font.PLAIN,16));
-                    btnConfirmar.setBackground(new Color(14,14,14));
+                    btnConfirmar.setBackground(new Color(10,10,10));
+            }
+            
+            if (e.getSource()==btn_Si) {
+                    btn_Si.setFont(new Font("Consolas",Font.PLAIN,16));
+                    btn_Si.setBackground(new Color(10,10,10));
+            }
+            
+            if (e.getSource()==btn_No) {
+                    btn_No.setFont(new Font("Consolas",Font.PLAIN,16));
+                    btn_No.setBackground(new Color(10,10,10));
             }
             
             if(e.getSource()==btnCerrar){
-                    btnCerrar.setBackground(new Color(12,12,12));
+                    btnCerrar.setBackground(Color.BLACK);
             }
 
     }
