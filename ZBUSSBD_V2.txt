@@ -1,0 +1,149 @@
+DROP DATABASE ZBUSSBD;
+
+CREATE DATABASE ZBUSSBD;
+
+USE ZBUSSBD;
+
+CREATE TABLE Viajes (
+  viaje_id int AUTO_INCREMENT PRIMARY KEY,
+  viaje_terminal_salida int  NOT NULL,
+  viaje_terminal_llegada int NOT NULL,
+  viaje_fecha_salida varchar(100) NOT NULL,
+  viaje_fecha_llegada varchar(100) NOT NULL,
+  viaje_hora_salida varchar(100) NOT NULL,
+  viaje_hora_llegada varchar(100) NOT NULL,
+  viaje_duracion varchar(100) NOT NULL,
+  viaje_distancia varchar(50)NOT NULL,
+  viaje_asientos_Dispo int NOT NULL,
+  viaje_precio decimal(12,2) NOT NULL,
+  viaje_promocion int,
+  viaje_img_Refe longblob NOT NULL
+);
+
+
+CREATE TABLE Socios (
+  socio_dni char(8) PRIMARY KEY,
+  socio_nombre varchar(100) NOT NULL,
+  socio_apellido_paterno varchar(100) NOT NULL,
+  socio_apellido_materno varchar(100) NOT NULL,
+  socio_correo varchar(100) NOT NULL,
+  socio_nacimiento varchar(50) NOT NULL,
+  socio_numero char(9) NOT NULL,
+  socio_contraseña varchar(100) NOT NULL,
+  socio_puntos  int NOT NULL
+ );
+
+
+CREATE TABLE Administradores (
+  admin_dni char(8) PRIMARY KEY,
+  admin_nombre varchar(100) NOT NULL,
+  admin_apellido_paterno varchar(100) NOT NULL,
+  admin_apellido_materno varchar(100) NOT NULL,
+  admin_correo varchar(100) NOT NULL,
+  admin_contraseña varchar(100)
+ );
+
+
+CREATE TABLE Ventas (
+  venta_id int AUTO_INCREMENT PRIMARY KEY,
+  venta_fecha varchar(100) NOT NULL,
+  venta_hora varchar(100) NOT NULL,
+  venta_viaje_id int NOT NULL,
+  venta_pasajeroPrincipal_dni char(8)  NOT  NULL,
+  venta_num_asientos int  NOT NULL,
+  venta_asientos varchar(100)  NOT NULL,
+  venta_ganancia decimal(12,2) NOT NULL
+ );
+
+ CREATE TABLE PasajerosPrincipales (
+  pasajeroPrincipal_dni char(8) PRIMARY KEY,
+  pasajeroPrincipal_viaje_id int NOT NULL,
+  pasajeroPrincipal_nombre varchar(100) NOT NULL,
+  pasajeroPrincipal_apellido_paterno varchar(100) NOT NULL,
+  pasajeroPrincipal_apellido_materno varchar(100) NOT NULL,
+  pasajeroPrincipal_edad int NOT NULL,
+  pasajeroPrincipal_asiento varchar(50) NOT NULL
+  );
+  
+
+  CREATE TABLE Acompañantes(
+  acompañante_dni char(8) PRIMARY KEY,
+  acompañante_pasajeroPrincipal char(8) NOT NULL,
+  acompañante_viaje_id int NOT NULL,
+  acompañante_nombre varchar(100) NOT NULL,
+  acompañante_apellido_paterno varchar(100) NOT NULL,
+  acompañante_apellido_materno varchar(100) NOT NULL,
+  acompañante_edad int NOT NULL,
+  acompañante_asiento varchar(50) NOT NULL
+);
+
+
+CREATE TABLE Terminales (
+  terminal_id int AUTO_INCREMENT PRIMARY KEY,
+  terminal_nombre varchar(50) NOT NULL,
+  terminal_dirección varchar(200) NOT NULL,
+  terminal_estado varchar(50) NOT NULL
+);
+
+
+CREATE TABLE Asientos(
+  asiento_viaje_id int NOT NULL,
+  asiento_codigo varchar(50) NOT NULL,
+  asiento_estado varchar(100) NOT NULL
+);
+
+
+CREATE TABLE Promociones(
+  promocion_id int AUTO_INCREMENT PRIMARY KEY,
+  promocion_descuento DECIMAL(5,2) NOT NULL,
+  promocion_descripción varchar(200) NOT NULL
+);
+
+
+
+ALTER TABLE Asientos
+ADD CONSTRAINT FK_asientos_viaje FOREIGN KEY(asiento_viaje_id) REFERENCES Viajes(viaje_id) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE Viajes
+ADD CONSTRAINT FK_viaje_terminal_salida FOREIGN KEY(viaje_terminal_salida) REFERENCES Terminales(terminal_id) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT FK_viaje_terminal_llegada FOREIGN KEY(viaje_terminal_llegada) REFERENCES Terminales(terminal_id) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT FK_viaje_promocion FOREIGN KEY(viaje_promocion) REFERENCES Promociones(promocion_id) ON DELETE SET NULL;
+
+ALTER TABLE Ventas
+ADD CONSTRAINT FK_venta_pasajeroPrincipal FOREIGN KEY(venta_pasajeroPrincipal_dni) REFERENCES PasajerosPrincipales(pasajeroPrincipal_dni) ON DELETE NO ACTION,
+ADD CONSTRAINT FK_venta_viaje FOREIGN KEY(venta_viaje_id) REFERENCES Viajes(viaje_id) ON DELETE NO ACTION;
+
+ALTER TABLE PasajerosPrincipales
+ADD CONSTRAINT FK_pasajeroPrincipal_viaje FOREIGN KEY(pasajeroPrincipal_viaje_id) REFERENCES Viajes(viaje_id) ON DELETE CASCADE;
+
+ALTER TABLE Acompañantes
+ADD CONSTRAINT FK_acompañante_pasajeroPrincipal FOREIGN KEY(acompañante_pasajeroPrincipal) REFERENCES PasajerosPrincipales(pasajeroPrincipal_dni) ON DELETE CASCADE,
+ADD CONSTRAINT FK_acompañante_viaje FOREIGN KEY(acompañante_viaje_id) REFERENCES Viajes(viaje_id) ON DELETE CASCADE;
+
+insert into Administradores(
+admin_dni,
+admin_nombre,
+admin_apellido_paterno,
+admin_apellido_materno,
+admin_correo,
+admin_contraseña
+)VALUES('12345678','Administrador','Apellido1','Apellido2','admin@zbuss.com','12345');
+
+CREATE UNIQUE INDEX idx_correo_socio_unico ON Socios (socio_correo);
+CREATE UNIQUE INDEX idx_correo_administrador_unico ON Administradores(admin_correo);
+
+DELIMITER //
+CREATE TRIGGER crear_asientos AFTER INSERT ON Viajes
+FOR EACH ROW
+BEGIN
+    DECLARE i INT DEFAULT 1;
+    DECLARE codigo VARCHAR(10);
+    
+    WHILE i <= 40 DO
+        SET codigo = CONCAT('A', i);
+        INSERT INTO Asientos (viaje_id, asiento_codigo, asiento_estado, asiento_dueño)
+        VALUES (NEW.viaje_id, codigo, 'Disponible', NULL);
+        SET i = i + 1;
+    END WHILE;
+END //
+DELIMITER;
