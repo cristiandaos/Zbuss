@@ -1,10 +1,10 @@
 
 package VISTA;
 
-public class Login extends javax.swing.JFrame {
+public class Login_Registro extends javax.swing.JFrame {
 
 
-    public Login() {
+    public Login_Registro() {
         initComponents();
     }
 
@@ -174,9 +174,9 @@ public class Login extends javax.swing.JFrame {
         LBL_mostrarLogin.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         LBL_mostrarLogin.setForeground(new java.awt.Color(123, 216, 80));
         LBL_mostrarLogin.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        LBL_mostrarLogin.setText("Inicia Sesión aquí");
+        LBL_mostrarLogin.setText("Inicia Sesión.");
         LBL_mostrarLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        RegistrarPanelAux.add(LBL_mostrarLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 330, 120, 20));
+        RegistrarPanelAux.add(LBL_mostrarLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 330, 90, 20));
 
         PanelDinamicoInfo.add(RegistrarPanelAux, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 0, 320, 400));
 
@@ -209,9 +209,9 @@ public class Login extends javax.swing.JFrame {
         LBL_mostrarRegistro.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         LBL_mostrarRegistro.setForeground(new java.awt.Color(123, 216, 80));
         LBL_mostrarRegistro.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        LBL_mostrarRegistro.setText("Registrate aquí.");
+        LBL_mostrarRegistro.setText("Registrate.");
         LBL_mostrarRegistro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        IniciarSesionPanelAux.add(LBL_mostrarRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 330, 120, 20));
+        IniciarSesionPanelAux.add(LBL_mostrarRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 330, 70, 20));
 
         PanelDinamicoInfo.add(IniciarSesionPanelAux, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, 400));
 
@@ -381,21 +381,23 @@ public class Login extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login_Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login_Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login_Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login_Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+                new Login_Registro().setVisible(true);
             }
         });
     }

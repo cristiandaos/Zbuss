@@ -36,6 +36,7 @@ public class CTRL_PanelSocios  implements ActionListener,MouseListener,KeyListen
                   
                   this.panel.TXT_buscador.addKeyListener(this);
                   
+                  
                   ListarSocios();
          }
         

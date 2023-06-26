@@ -4,6 +4,7 @@ package CONTROLADOR;
 import VISTA.*;
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.awt.Color;
+import java.awt.Font;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 public class Main {
@@ -26,6 +27,11 @@ public class Main {
                   UIManager.put("Button.background", new Color(12,12,12));
                   UIManager.put("Button.borderColor", new Color(123,216,80));
                   UIManager.put("Button.hoverBorderColor",Color.GREEN);
+                  
+                  //Diseño de JToogleButton
+                  UIManager.put("ToggleButton.selectedBackground",new Color(21,24, 30));
+                  UIManager.put("ToggleButton.selectedForegorund",Color.WHITE);
+                  
                   //Diseño de Spinner
                   UIManager.put("Spinner.background", new Color(12,12,12));
                   UIManager.put("Spinner.buttonHoverArrowColor", Color.WHITE);
@@ -49,7 +55,7 @@ public class Main {
          
          
          
-        Login login=new Login();
+        Login_Registro login=new Login_Registro();
         CTRL_Login ctrl_login=new CTRL_Login(login);
         ctrl_login.Iniciar();
     }

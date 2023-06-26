@@ -1,5 +1,7 @@
 
-package MODELO;
+package DAO;
+import MODELO.Conexion;
+import MODELO.Socios;
 import java.sql.*;
 
 public class SociosDAO extends Conexion {

@@ -1,6 +1,8 @@
 
-package MODELO;
+package DAO;
 
+import MODELO.Conexion;
+import MODELO.Ventas;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -21,6 +23,7 @@ public class VentasDAO extends Conexion{
                             ps.execute();
                             return true; 
                   }catch(SQLException  e){
+                      System.out.println(e);
                             return false;
                   }finally{
                            try{

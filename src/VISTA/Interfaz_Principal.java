@@ -56,10 +56,9 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         LBLprecioAsiento = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         PanelFormularioPasajeros = new javax.swing.JPanel();
-        ScrollPanelPasajeros = new javax.swing.JScrollPane();
-        PanelFormPasajeros = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         LBLPrecioTotal = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
         BTN_confirmarCompra = new javax.swing.JButton();
         BTN_cancelarPasajeros = new javax.swing.JButton();
         PanelPasajeroPrincipal = new javax.swing.JPanel();
@@ -71,8 +70,13 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         SPNEdadPasajero = new javax.swing.JSpinner();
         jLabel3 = new javax.swing.JLabel();
         TxtDNIpasajero = new javax.swing.JFormattedTextField();
-        BTN_derechaAcompañantes = new javax.swing.JButton();
+        TxtcorreoPasajero = new javax.swing.JTextField();
+        PanelAcompañantes = new javax.swing.JPanel();
+        ScrollPanelPasajeros = new javax.swing.JScrollPane();
+        PanelFormPasajeros = new javax.swing.JPanel();
+        jLabel19 = new javax.swing.JLabel();
         BTN_IzquiAcompañantes = new javax.swing.JButton();
+        BTN_derechaAcompañantes = new javax.swing.JButton();
         BarraLateral = new javax.swing.JPanel();
         BTN_cerrarSesion = new javax.swing.JButton();
         Logo = new javax.swing.JLabel();
@@ -111,12 +115,12 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         PanelSeleccionViaje.setPreferredSize(new java.awt.Dimension(1100, 670));
         PanelSeleccionViaje.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        PanelFiltros.setBackground(new java.awt.Color(12, 12, 12));
+        PanelFiltros.setBackground(new java.awt.Color(6, 6, 6));
         PanelFiltros.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         PanelFiltros.setPreferredSize(new java.awt.Dimension(1000, 100));
         PanelFiltros.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel13.setFont(new java.awt.Font("Segoe UI Emoji", 1, 20)); // NOI18N
+        jLabel13.setFont(new java.awt.Font("Segoe UI Emoji", 1, 24)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setText("Nuestros Viajes:");
@@ -378,30 +382,6 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         PanelFormularioPasajeros.setPreferredSize(new java.awt.Dimension(1100, 670));
         PanelFormularioPasajeros.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        ScrollPanelPasajeros.setBackground(new java.awt.Color(51, 255, 0));
-        ScrollPanelPasajeros.setBorder(null);
-        ScrollPanelPasajeros.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        ScrollPanelPasajeros.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-        ScrollPanelPasajeros.setWheelScrollingEnabled(false);
-
-        PanelFormPasajeros.setBackground(new java.awt.Color(12, 12, 12));
-        PanelFormPasajeros.setPreferredSize(new java.awt.Dimension(850, 200));
-
-        javax.swing.GroupLayout PanelFormPasajerosLayout = new javax.swing.GroupLayout(PanelFormPasajeros);
-        PanelFormPasajeros.setLayout(PanelFormPasajerosLayout);
-        PanelFormPasajerosLayout.setHorizontalGroup(
-            PanelFormPasajerosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 850, Short.MAX_VALUE)
-        );
-        PanelFormPasajerosLayout.setVerticalGroup(
-            PanelFormPasajerosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 200, Short.MAX_VALUE)
-        );
-
-        ScrollPanelPasajeros.setViewportView(PanelFormPasajeros);
-
-        PanelFormularioPasajeros.add(ScrollPanelPasajeros, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 340, 850, 200));
-
         jLabel1.setFont(new java.awt.Font("Consolas", 1, 20)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Total a pagar:S/");
@@ -413,6 +393,13 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         LBLPrecioTotal.setText("00.0");
         LBLPrecioTotal.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(123, 216, 80)));
         PanelFormularioPasajeros.add(LBLPrecioTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 620, -1, 30));
+
+        jLabel17.setFont(new java.awt.Font("Segoe UI Emoji", 1, 30)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel17.setText("Complete su información");
+        jLabel17.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(123, 216, 80)));
+        PanelFormularioPasajeros.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, -1, -1));
 
         BTN_confirmarCompra.setBackground(new java.awt.Color(6, 6, 6));
         BTN_confirmarCompra.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
@@ -441,14 +428,14 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         TxtApellidoMatePasajero.setForeground(new java.awt.Color(255, 255, 255));
         TxtApellidoMatePasajero.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         TxtApellidoMatePasajero.setCaretColor(new java.awt.Color(255, 255, 255));
-        PanelPasajeroPrincipal.add(TxtApellidoMatePasajero, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 280, 30));
+        PanelPasajeroPrincipal.add(TxtApellidoMatePasajero, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 280, 30));
 
         TxtApellidoPatePasajero.setBackground(new java.awt.Color(10, 10, 10));
         TxtApellidoPatePasajero.setFont(new java.awt.Font("Segoe UI Emoji", 1, 16)); // NOI18N
         TxtApellidoPatePasajero.setForeground(new java.awt.Color(255, 255, 255));
         TxtApellidoPatePasajero.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         TxtApellidoPatePasajero.setCaretColor(new java.awt.Color(255, 255, 255));
-        PanelPasajeroPrincipal.add(TxtApellidoPatePasajero, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 280, 30));
+        PanelPasajeroPrincipal.add(TxtApellidoPatePasajero, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 280, 30));
 
         TxtNombrePasajero.setBackground(new java.awt.Color(10, 10, 10));
         TxtNombrePasajero.setFont(new java.awt.Font("Segoe UI Emoji", 1, 16)); // NOI18N
@@ -492,16 +479,51 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         TxtDNIpasajero.setFont(new java.awt.Font("Segoe UI Emoji", 1, 16)); // NOI18N
         PanelPasajeroPrincipal.add(TxtDNIpasajero, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 90, 150, 30));
 
+        TxtcorreoPasajero.setBackground(new java.awt.Color(10, 10, 10));
+        TxtcorreoPasajero.setFont(new java.awt.Font("Segoe UI Emoji", 1, 16)); // NOI18N
+        TxtcorreoPasajero.setForeground(new java.awt.Color(255, 255, 255));
+        TxtcorreoPasajero.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        TxtcorreoPasajero.setCaretColor(new java.awt.Color(255, 255, 255));
+        PanelPasajeroPrincipal.add(TxtcorreoPasajero, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 150, 280, 30));
+
         PanelFormularioPasajeros.add(PanelPasajeroPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 110, 850, 200));
 
-        BTN_derechaAcompañantes.setBackground(new java.awt.Color(0, 0, 0));
-        BTN_derechaAcompañantes.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
-        BTN_derechaAcompañantes.setForeground(new java.awt.Color(255, 255, 255));
-        BTN_derechaAcompañantes.setText(">>>>");
-        BTN_derechaAcompañantes.setBorderPainted(false);
-        BTN_derechaAcompañantes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BTN_derechaAcompañantes.setFocusable(false);
-        PanelFormularioPasajeros.add(BTN_derechaAcompañantes, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 540, 80, 30));
+        PanelAcompañantes.setBackground(new java.awt.Color(12, 12, 12));
+        PanelAcompañantes.setPreferredSize(new java.awt.Dimension(850, 200));
+        PanelAcompañantes.setRequestFocusEnabled(false);
+        PanelAcompañantes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        ScrollPanelPasajeros.setBackground(new java.awt.Color(51, 255, 0));
+        ScrollPanelPasajeros.setBorder(null);
+        ScrollPanelPasajeros.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        ScrollPanelPasajeros.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        ScrollPanelPasajeros.setWheelScrollingEnabled(false);
+
+        PanelFormPasajeros.setBackground(new java.awt.Color(12, 12, 12));
+        PanelFormPasajeros.setPreferredSize(new java.awt.Dimension(850, 200));
+
+        javax.swing.GroupLayout PanelFormPasajerosLayout = new javax.swing.GroupLayout(PanelFormPasajeros);
+        PanelFormPasajeros.setLayout(PanelFormPasajerosLayout);
+        PanelFormPasajerosLayout.setHorizontalGroup(
+            PanelFormPasajerosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 850, Short.MAX_VALUE)
+        );
+        PanelFormPasajerosLayout.setVerticalGroup(
+            PanelFormPasajerosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
+        );
+
+        ScrollPanelPasajeros.setViewportView(PanelFormPasajeros);
+
+        PanelAcompañantes.add(ScrollPanelPasajeros, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, -1));
+
+        PanelFormularioPasajeros.add(PanelAcompañantes, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 330, 850, 200));
+
+        jLabel19.setFont(new java.awt.Font("Segoe UI Emoji", 1, 30)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel19.setText("SIN ACOMPAÑANTES");
+        PanelFormularioPasajeros.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 400, -1, 60));
 
         BTN_IzquiAcompañantes.setBackground(new java.awt.Color(0, 0, 0));
         BTN_IzquiAcompañantes.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
@@ -511,6 +533,15 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         BTN_IzquiAcompañantes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BTN_IzquiAcompañantes.setFocusable(false);
         PanelFormularioPasajeros.add(BTN_IzquiAcompañantes, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 540, 80, 30));
+
+        BTN_derechaAcompañantes.setBackground(new java.awt.Color(0, 0, 0));
+        BTN_derechaAcompañantes.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        BTN_derechaAcompañantes.setForeground(new java.awt.Color(255, 255, 255));
+        BTN_derechaAcompañantes.setText(">>>>");
+        BTN_derechaAcompañantes.setBorderPainted(false);
+        BTN_derechaAcompañantes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BTN_derechaAcompañantes.setFocusable(false);
+        PanelFormularioPasajeros.add(BTN_derechaAcompañantes, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 540, 80, 30));
 
         PanelDinamico.add(PanelFormularioPasajeros, new org.netbeans.lib.awtextra.AbsoluteConstraints(2200, 0, 1100, 670));
 
@@ -536,7 +567,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
         Logo.setFont(new java.awt.Font("SansSerif", 1, 40)); // NOI18N
         Logo.setForeground(new java.awt.Color(255, 255, 255));
         Logo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Logo.setText(" Z-Buss");
+        Logo.setText(" ZBuss");
         Logo.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(123, 216, 80)));
         BarraLateral.add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, -1));
 
@@ -674,6 +705,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
     public javax.swing.JLabel LBLtermSalidaDireccion;
     public javax.swing.JLabel LBLusuario;
     public javax.swing.JLabel Logo;
+    public javax.swing.JPanel PanelAcompañantes;
     public javax.swing.JPanel PanelDinamico;
     public javax.swing.JPanel PanelFiltros;
     public javax.swing.JPanel PanelFormPasajeros;
@@ -692,6 +724,7 @@ public class Interfaz_Principal extends javax.swing.JFrame {
     public javax.swing.JTextField TxtApellidoPatePasajero;
     public javax.swing.JFormattedTextField TxtDNIpasajero;
     public javax.swing.JTextField TxtNombrePasajero;
+    public javax.swing.JTextField TxtcorreoPasajero;
     public javax.swing.JLabel jLabel1;
     public javax.swing.JLabel jLabel10;
     public javax.swing.JLabel jLabel11;
@@ -699,7 +732,9 @@ public class Interfaz_Principal extends javax.swing.JFrame {
     public javax.swing.JLabel jLabel13;
     public javax.swing.JLabel jLabel15;
     public javax.swing.JLabel jLabel16;
+    public javax.swing.JLabel jLabel17;
     public javax.swing.JLabel jLabel18;
+    public javax.swing.JLabel jLabel19;
     public javax.swing.JLabel jLabel2;
     public javax.swing.JLabel jLabel20;
     public javax.swing.JLabel jLabel21;

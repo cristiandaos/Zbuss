@@ -1,6 +1,8 @@
 
-package MODELO;
+package DAO;
 
+import MODELO.Conexion;
+import MODELO.Terminales;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

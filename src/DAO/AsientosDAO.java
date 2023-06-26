@@ -1,6 +1,10 @@
 
-package MODELO;
+package DAO;
 
+import MODELO.Acompañantes;
+import MODELO.Conexion;
+import MODELO.PasajeroPrincipal;
+import MODELO.Viajes;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -36,4 +40,22 @@ public class AsientosDAO extends Conexion{
                            return false;
                   }
         }
+        
+         public void ActivarAsientos(int id){
+                  PreparedStatement ps=null;
+                  Connection con=getConnection();
+                  String sql="INSERT INTO Asientos (asiento_viaje_id, asiento_codigo, asiento_estado) VALUES (?,?,?)";
+                  try{
+                           for (int i = 1; i <= 40; i++) {
+                                    ps=con.prepareStatement(sql);
+                                    ps.setInt(1, id);
+                                    ps.setString(2, "A"+i);
+                                    ps.setString(3, "Disponible");
+                                    ps.execute();
+                           }
+                  }catch(SQLException ex){
+                           System.out.println(ex);
+                  }
+                  
+         } 
 }

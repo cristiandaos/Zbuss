@@ -1,14 +1,10 @@
 
 package CONTROLADOR;
 import MODELO.Administrador;
-import MODELO.Conexion;
-import MODELO.Terminales;
-import UTILIDADES.Emergente;
 import VISTA.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -16,14 +12,13 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.awt.geom.RoundRectangle2D;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 import javax.swing.Timer;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
 public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,MouseMotionListener,WindowListener{
@@ -31,7 +26,7 @@ public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,
          private Administrador admin;
          private int x;
          private int y;
-         private Conexion cone=new Conexion();
+         ArrayList<JToggleButton> botones=new  ArrayList<>();
          
          public CTRL_InterfazAdministrador(Interfaz_Administrador vista) {
                   this.vista=vista;
@@ -42,20 +37,40 @@ public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,
                   
                   this.vista.BTN_cerrarSesion.addActionListener(this);
                   this.vista.BTN_cerrarSesion.addMouseListener(this);
-
-                  this.vista.BTN_gestionViajes.addMouseListener(this);
-
-                  this.vista.BTN_gestionAdmins.addMouseListener(this);
-
-                  this.vista.BTN_gestionTerminales.addMouseListener(this);
-
-                  this.vista.BTN_infoSocios.addMouseListener(this);
+                  
+                  this.vista.BTN_gestionarViajes.addActionListener(this);
+                  
+                  this.vista.BTN_gestionarAdministradores.addActionListener(this);
+                  
+                  this.vista.BTN_gestionarTerminales.addActionListener(this);
+                  
+                  this.vista.BTN_gestionarSocios.addActionListener(this);
+                  
+                  this.vista.BTN_gestionarVentas.addActionListener(this);
+                  
+                  this.vista.BTN_gestionarViajes.addMouseListener(this);
+                  
+                  this.vista.BTN_gestionarAdministradores.addMouseListener(this);
+                  
+                  this.vista.BTN_gestionarTerminales.addMouseListener(this);
+                  
+                  this.vista.BTN_gestionarSocios.addMouseListener(this);
+                  
+                  this.vista.BTN_gestionarVentas.addMouseListener(this);
                   
                   InicializarReloj();
-
+                  this.vista.BTN_gestionarViajes.setSelected(true);
+                  
+                  botones.add(this.vista.BTN_gestionarAdministradores);
+                  botones.add(this.vista.BTN_gestionarViajes);
+                  botones.add(this.vista.BTN_gestionarTerminales);
+                  botones.add(this.vista.BTN_gestionarVentas);
+                  botones.add(this.vista.BTN_gestionarSocios);
+                  
                   Panel_GestionViajes panel=new Panel_GestionViajes();
                   CTRL_PanelViajes ctrlViajes=new CTRL_PanelViajes(panel);
                   mostrarPanel(vista.PanelDinamico,ctrlViajes.getPanel());
+                  ReiniciarBTNS();
          }
          
   
@@ -71,6 +86,19 @@ public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,
                   vista.dispose();
          }
          
+         void ReiniciarBTNS(){
+                  for (JToggleButton boton : botones) {
+                           if (boton.isSelected()) {
+                                    for (JToggleButton botones : botones) {
+                                             botones.setBackground(Color.BLACK);
+                                             botones.setFont(new Font("Segoe UI Emoji",Font.PLAIN,16));
+                                             botones.setBorder(new EmptyBorder(0,0,0,0));
+                                             boton.setFont(new Font("Segoe UI Emoji",Font.BOLD,16));
+                                             boton.setBorder(new LineBorder(new Color(123,216,80),1,false));
+                                    }
+                           }  
+                  }
+         }
          
          void InicializarReloj(){
                   java.util.Date horaActual=new java.util.Date();
@@ -117,11 +145,48 @@ public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,
     public void actionPerformed(ActionEvent e) {
         
                   if (e.getSource()==vista.BTN_cerrarSesion) {
-                           Login login=new Login();
+                           Login_Registro login=new Login_Registro();
                            CTRL_Login ctrlLogin=new CTRL_Login(login);
                            Cerrar();
                            ctrlLogin.Iniciar();
-                  }  
+                           ReiniciarBTNS();
+                  }
+                  
+                  if (e.getSource()==vista.BTN_gestionarViajes ) {
+                            Panel_GestionViajes panel=new Panel_GestionViajes();
+                            CTRL_PanelViajes ctrlViajes=new CTRL_PanelViajes(panel);
+                            mostrarPanel(vista.PanelDinamico,ctrlViajes.getPanel());
+                            ReiniciarBTNS();
+                  }
+                  
+                  if (e.getSource()==vista.BTN_gestionarTerminales) {
+                           Panel_GestionTerminales panel=new Panel_GestionTerminales();
+                           CTRL_PanelTerminales ctrlTerminales=new CTRL_PanelTerminales(panel);
+                           mostrarPanel(vista.PanelDinamico, ctrlTerminales.getPanel());
+                           ReiniciarBTNS();
+                  }
+                  
+                  if (e.getSource()==vista.BTN_gestionarAdministradores) {
+                           Panel_GestionAdministradores panel=new Panel_GestionAdministradores();
+                           CTRL_PanelAdministradores ctrlAdministradores=new CTRL_PanelAdministradores(panel);
+                           mostrarPanel(vista.PanelDinamico, ctrlAdministradores.getPanel());
+                           ReiniciarBTNS();
+                  }
+                  
+                  if (e.getSource()==vista.BTN_gestionarSocios ) {
+                           Panel_GestionSocios panel=new Panel_GestionSocios();
+                           CTRL_PanelSocios ctrlSocios=new CTRL_PanelSocios(panel);
+                           mostrarPanel(vista.PanelDinamico, ctrlSocios.getPanel());
+                           ReiniciarBTNS();
+                  }
+                  
+                  if (e.getSource()==vista.BTN_gestionarVentas) {
+                           Panel_GestionVentas panel=new Panel_GestionVentas();
+                           CTRL_PanelVentas ctrlVentas=new CTRL_PanelVentas(panel);
+                           mostrarPanel(vista.PanelDinamico, ctrlVentas.getPanel());
+                           ReiniciarBTNS();
+            
+                  }
                   
     }
 
@@ -132,36 +197,11 @@ public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,
 
     @Override
     public void mousePressed(MouseEvent e) {
-        
                   if (e.getSource()==vista.BarraSuperior) {
                            x=e.getX();
                            y=e.getY();
                   }
-        
-                  if (e.getSource()==vista.BTN_gestionViajes) {
-                            Panel_GestionViajes panel=new Panel_GestionViajes();
-                            CTRL_PanelViajes ctrlViajes=new CTRL_PanelViajes(panel);
-                            mostrarPanel(vista.PanelDinamico,ctrlViajes.getPanel());
-                  }
                   
-                  if (e.getSource()==vista.BTN_gestionTerminales) {
-                           Panel_GestionTerminales panel=new Panel_GestionTerminales();
-                           CTRL_PanelTerminales ctrlTerminales=new CTRL_PanelTerminales(panel);
-                           mostrarPanel(vista.PanelDinamico, ctrlTerminales.getPanel());
-                  }
-                  
-                  if (e.getSource()==vista.BTN_gestionAdmins) {
-                           Panel_GestionAdministradores panel=new Panel_GestionAdministradores();
-                           CTRL_PanelAdministradores ctrlAdministradores=new CTRL_PanelAdministradores(panel);
-                           mostrarPanel(vista.PanelDinamico, ctrlAdministradores.getPanel());
-                  }
-                  
-                  if (e.getSource()==vista.BTN_infoSocios) {
-                           Panel_GestionSocios panel=new Panel_GestionSocios();
-                           CTRL_PanelSocios ctrlSocios=new CTRL_PanelSocios(panel);
-                           mostrarPanel(vista.PanelDinamico, ctrlSocios.getPanel());
-
-                  }
     }
 
     @Override
@@ -179,25 +219,31 @@ public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,
 
                   }
                   
-                  if (e.getSource()==vista.BTN_gestionViajes) {
-                           vista.BTN_gestionViajes.setBackground(new Color(21,24, 30));
-                           vista.BTN_gestionViajes.setFont(new Font("Segoe UI Emoji",Font.BOLD,16)); 
+                  if (e.getSource()==vista.BTN_gestionarViajes  &&  !vista.BTN_gestionarViajes.isSelected()) {
+                           vista.BTN_gestionarViajes.setBackground(new Color(21,24, 30));
+                           vista.BTN_gestionarViajes.setFont(new Font("Segoe UI Emoji",Font.BOLD,16)); 
                   }
                   
-                  if (e.getSource()==vista.BTN_gestionTerminales) {
-                           vista.BTN_gestionTerminales.setBackground(new Color(21,24, 30));
-                           vista.BTN_gestionTerminales.setFont(new Font("Segoe UI Emoji",Font.BOLD,16)); 
+                  if (e.getSource()==vista.BTN_gestionarTerminales &&  !vista.BTN_gestionarTerminales.isSelected()) {
+                           vista.BTN_gestionarTerminales.setBackground(new Color(21,24, 30));
+                           vista.BTN_gestionarTerminales.setFont(new Font("Segoe UI Emoji",Font.BOLD,16)); 
                   }
                   
-                  if (e.getSource()==vista.BTN_gestionAdmins) {
-                           vista.BTN_gestionAdmins.setBackground(new Color(21,24, 30));
-                           vista.BTN_gestionAdmins.setFont(new Font("Segoe UI Emoji",Font.BOLD,16)); 
+                  if (e.getSource()==vista.BTN_gestionarAdministradores  &&  !vista.BTN_gestionarAdministradores.isSelected()) {
+                           vista.BTN_gestionarAdministradores.setBackground(new Color(21,24, 30));
+                           vista.BTN_gestionarAdministradores.setFont(new Font("Segoe UI Emoji",Font.BOLD,16)); 
                   }
                   
-                  if (e.getSource()==vista.BTN_infoSocios) {
-                           vista.BTN_infoSocios.setBackground(new Color(21,24, 30));
-                           vista.BTN_infoSocios.setFont(new Font("Segoe UI Emoji",Font.BOLD,16)); 
+                  if (e.getSource()==vista.BTN_gestionarSocios &&  !vista.BTN_gestionarSocios.isSelected() ) {
+                           vista.BTN_gestionarSocios.setBackground(new Color(21,24, 30));
+                           vista.BTN_gestionarSocios.setFont(new Font("Segoe UI Emoji",Font.BOLD,16)); 
                   }
+                  
+                  if (e.getSource()==vista.BTN_gestionarVentas  &&  !vista.BTN_gestionarVentas.isSelected()) {
+                           vista.BTN_gestionarVentas.setBackground(new Color(21,24, 30));
+                           vista.BTN_gestionarVentas.setFont(new Font("Segoe UI Emoji",Font.BOLD,16)); 
+                  }
+                  
     }
 
     @Override
@@ -209,24 +255,29 @@ public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,
                            vista.BTN_cerrarSesion.setBorder(new MatteBorder(1,1,1,1,new Color(123,216,80)));
                   }
                   
-                  if (e.getSource()==vista.BTN_gestionViajes) {
-                           vista.BTN_gestionViajes.setBackground(Color.BLACK);
-                           vista.BTN_gestionViajes.setFont(new Font("Segoe UI Emoji",Font.PLAIN,16)); 
+                  if (e.getSource()==vista.BTN_gestionarViajes  &&  !vista.BTN_gestionarViajes.isSelected()) {
+                           vista.BTN_gestionarViajes.setBackground(Color.BLACK);
+                           vista.BTN_gestionarViajes.setFont(new Font("Segoe UI Emoji",Font.PLAIN,16)); 
                   }
                   
-                  if (e.getSource()==vista.BTN_gestionTerminales) {
-                           vista.BTN_gestionTerminales.setBackground(Color.BLACK);
-                           vista.BTN_gestionTerminales.setFont(new Font("Segoe UI Emoji",Font.PLAIN,16)); 
+                  if (e.getSource()==vista.BTN_gestionarTerminales &&  !vista.BTN_gestionarTerminales.isSelected()) {
+                           vista.BTN_gestionarTerminales.setBackground(Color.BLACK);
+                           vista.BTN_gestionarTerminales.setFont(new Font("Segoe UI Emoji",Font.PLAIN,16)); 
                   }
                   
-                   if (e.getSource()==vista.BTN_gestionAdmins) {
-                           vista.BTN_gestionAdmins.setBackground(Color.BLACK);
-                           vista.BTN_gestionAdmins.setFont(new Font("Segoe UI Emoji",Font.PLAIN,16)); 
+                   if (e.getSource()==vista.BTN_gestionarAdministradores &&  !vista.BTN_gestionarAdministradores.isSelected()) {
+                           vista.BTN_gestionarAdministradores.setBackground(Color.BLACK);
+                           vista.BTN_gestionarAdministradores.setFont(new Font("Segoe UI Emoji",Font.PLAIN,16)); 
                   }
                   
-                  if (e.getSource()==vista.BTN_infoSocios) {
-                           vista.BTN_infoSocios.setBackground(Color.BLACK);
-                           vista.BTN_infoSocios.setFont(new Font("Segoe UI Emoji",Font.PLAIN,16)); 
+                  if (e.getSource()==vista.BTN_gestionarSocios &&  !vista.BTN_gestionarSocios.isSelected()) {
+                           vista.BTN_gestionarSocios.setBackground(Color.BLACK);
+                           vista.BTN_gestionarSocios.setFont(new Font("Segoe UI Emoji",Font.PLAIN,16)); 
+                  }
+                  
+                  if (e.getSource()==vista.BTN_gestionarVentas &&  !vista.BTN_gestionarVentas.isSelected()) {
+                           vista.BTN_gestionarVentas.setBackground(Color.BLACK);
+                           vista.BTN_gestionarVentas.setFont(new Font("Segoe UI Emoji",Font.PLAIN,16)); 
                   }
     }
     

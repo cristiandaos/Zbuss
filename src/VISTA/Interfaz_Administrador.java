@@ -11,6 +11,7 @@ public class Interfaz_Administrador extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        BTNgroup = new javax.swing.ButtonGroup();
         BarraSuperior = new javax.swing.JPanel();
         BarraLateral = new javax.swing.JPanel();
         PanelTiempo = new javax.swing.JPanel();
@@ -19,11 +20,12 @@ public class Interfaz_Administrador extends javax.swing.JFrame {
         Logo = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         LBLadministrador = new javax.swing.JLabel();
-        BTN_infoSocios = new javax.swing.JLabel();
-        BTN_gestionViajes = new javax.swing.JLabel();
-        BTN_gestionTerminales = new javax.swing.JLabel();
-        BTN_gestionAdmins = new javax.swing.JLabel();
         BTN_cerrarSesion = new javax.swing.JButton();
+        BTN_gestionarAdministradores = new javax.swing.JToggleButton();
+        BTN_gestionarSocios = new javax.swing.JToggleButton();
+        BTN_gestionarVentas = new javax.swing.JToggleButton();
+        BTN_gestionarViajes = new javax.swing.JToggleButton();
+        BTN_gestionarTerminales = new javax.swing.JToggleButton();
         PanelDinamico = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -70,7 +72,7 @@ public class Interfaz_Administrador extends javax.swing.JFrame {
         Logo.setFont(new java.awt.Font("SansSerif", 1, 40)); // NOI18N
         Logo.setForeground(new java.awt.Color(255, 255, 255));
         Logo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Logo.setText(" Z-Buss");
+        Logo.setText(" ZBuss");
         Logo.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(123, 216, 80)));
         BarraLateral.add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, -1));
 
@@ -86,38 +88,6 @@ public class Interfaz_Administrador extends javax.swing.JFrame {
         LBLadministrador.setText("ADMINISTRADOR");
         BarraLateral.add(LBLadministrador, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 220, 20));
 
-        BTN_infoSocios.setBackground(new java.awt.Color(0, 0, 0));
-        BTN_infoSocios.setFont(new java.awt.Font("Segoe UI Emoji", 0, 16)); // NOI18N
-        BTN_infoSocios.setForeground(new java.awt.Color(255, 255, 255));
-        BTN_infoSocios.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        BTN_infoSocios.setText("Información de Socios");
-        BTN_infoSocios.setOpaque(true);
-        BarraLateral.add(BTN_infoSocios, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, 220, 70));
-
-        BTN_gestionViajes.setBackground(new java.awt.Color(0, 0, 0));
-        BTN_gestionViajes.setFont(new java.awt.Font("Segoe UI Emoji", 0, 16)); // NOI18N
-        BTN_gestionViajes.setForeground(new java.awt.Color(255, 255, 255));
-        BTN_gestionViajes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        BTN_gestionViajes.setText("Gestionar Viajes");
-        BTN_gestionViajes.setOpaque(true);
-        BarraLateral.add(BTN_gestionViajes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 220, 70));
-
-        BTN_gestionTerminales.setBackground(new java.awt.Color(0, 0, 0));
-        BTN_gestionTerminales.setFont(new java.awt.Font("Segoe UI Emoji", 0, 16)); // NOI18N
-        BTN_gestionTerminales.setForeground(new java.awt.Color(255, 255, 255));
-        BTN_gestionTerminales.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        BTN_gestionTerminales.setText("Gestionar Terminales");
-        BTN_gestionTerminales.setOpaque(true);
-        BarraLateral.add(BTN_gestionTerminales, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 220, 70));
-
-        BTN_gestionAdmins.setBackground(new java.awt.Color(0, 0, 0));
-        BTN_gestionAdmins.setFont(new java.awt.Font("Segoe UI Emoji", 0, 16)); // NOI18N
-        BTN_gestionAdmins.setForeground(new java.awt.Color(255, 255, 255));
-        BTN_gestionAdmins.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        BTN_gestionAdmins.setText("Gestionar Administradores");
-        BTN_gestionAdmins.setOpaque(true);
-        BarraLateral.add(BTN_gestionAdmins, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 220, 70));
-
         BTN_cerrarSesion.setBackground(new java.awt.Color(0, 0, 0));
         BTN_cerrarSesion.setFont(new java.awt.Font("Consolas", 0, 16)); // NOI18N
         BTN_cerrarSesion.setForeground(new java.awt.Color(255, 255, 255));
@@ -127,7 +97,52 @@ public class Interfaz_Administrador extends javax.swing.JFrame {
         BTN_cerrarSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BTN_cerrarSesion.setFocusPainted(false);
         BTN_cerrarSesion.setFocusable(false);
-        BarraLateral.add(BTN_cerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 610, 140, 30));
+        BarraLateral.add(BTN_cerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 600, 140, 30));
+
+        BTN_gestionarAdministradores.setBackground(new java.awt.Color(0, 0, 0));
+        BTNgroup.add(BTN_gestionarAdministradores);
+        BTN_gestionarAdministradores.setFont(new java.awt.Font("Segoe UI Emoji", 0, 16)); // NOI18N
+        BTN_gestionarAdministradores.setForeground(new java.awt.Color(255, 255, 255));
+        BTN_gestionarAdministradores.setText("Gestionar Administradores");
+        BTN_gestionarAdministradores.setBorder(null);
+        BTN_gestionarAdministradores.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BarraLateral.add(BTN_gestionarAdministradores, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 220, 70));
+
+        BTN_gestionarSocios.setBackground(new java.awt.Color(0, 0, 0));
+        BTNgroup.add(BTN_gestionarSocios);
+        BTN_gestionarSocios.setFont(new java.awt.Font("Segoe UI Emoji", 0, 16)); // NOI18N
+        BTN_gestionarSocios.setForeground(new java.awt.Color(255, 255, 255));
+        BTN_gestionarSocios.setText("Gestionar Socios");
+        BTN_gestionarSocios.setBorder(null);
+        BTN_gestionarSocios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BarraLateral.add(BTN_gestionarSocios, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, 220, 70));
+
+        BTN_gestionarVentas.setBackground(new java.awt.Color(0, 0, 0));
+        BTNgroup.add(BTN_gestionarVentas);
+        BTN_gestionarVentas.setFont(new java.awt.Font("Segoe UI Emoji", 0, 16)); // NOI18N
+        BTN_gestionarVentas.setForeground(new java.awt.Color(255, 255, 255));
+        BTN_gestionarVentas.setText("Gestionar Ventas");
+        BTN_gestionarVentas.setBorder(null);
+        BTN_gestionarVentas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BarraLateral.add(BTN_gestionarVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 490, 220, 70));
+
+        BTN_gestionarViajes.setBackground(new java.awt.Color(0, 0, 0));
+        BTNgroup.add(BTN_gestionarViajes);
+        BTN_gestionarViajes.setFont(new java.awt.Font("Segoe UI Emoji", 0, 16)); // NOI18N
+        BTN_gestionarViajes.setForeground(new java.awt.Color(255, 255, 255));
+        BTN_gestionarViajes.setText("Gestionar Viajes");
+        BTN_gestionarViajes.setBorder(null);
+        BTN_gestionarViajes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BarraLateral.add(BTN_gestionarViajes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 220, 70));
+
+        BTN_gestionarTerminales.setBackground(new java.awt.Color(0, 0, 0));
+        BTNgroup.add(BTN_gestionarTerminales);
+        BTN_gestionarTerminales.setFont(new java.awt.Font("Segoe UI Emoji", 0, 16)); // NOI18N
+        BTN_gestionarTerminales.setForeground(new java.awt.Color(255, 255, 255));
+        BTN_gestionarTerminales.setText("Gestionar Terminales");
+        BTN_gestionarTerminales.setBorder(null);
+        BTN_gestionarTerminales.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BarraLateral.add(BTN_gestionarTerminales, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 220, 70));
 
         getContentPane().add(BarraLateral, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 220, 670));
 
@@ -186,10 +201,12 @@ public class Interfaz_Administrador extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton BTN_cerrarSesion;
-    public javax.swing.JLabel BTN_gestionAdmins;
-    public javax.swing.JLabel BTN_gestionTerminales;
-    public javax.swing.JLabel BTN_gestionViajes;
-    public javax.swing.JLabel BTN_infoSocios;
+    public javax.swing.JToggleButton BTN_gestionarAdministradores;
+    public javax.swing.JToggleButton BTN_gestionarSocios;
+    public javax.swing.JToggleButton BTN_gestionarTerminales;
+    public javax.swing.JToggleButton BTN_gestionarVentas;
+    public javax.swing.JToggleButton BTN_gestionarViajes;
+    public javax.swing.ButtonGroup BTNgroup;
     public javax.swing.JPanel BarraLateral;
     public javax.swing.JPanel BarraSuperior;
     public javax.swing.JLabel LBLadministrador;

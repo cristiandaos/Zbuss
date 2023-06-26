@@ -10,13 +10,15 @@ public class PasajeroPrincipal {
     private String apeMaterno;
     private int edad;
     private String asiento;
+    private String correo;
 
-    public PasajeroPrincipal(String dni, int viajeId, String nombre, String apePaterno, String apeMaterno, int edad, String asiento) {
+    public PasajeroPrincipal(String dni, int viajeId, String nombre, String apePaterno, String apeMaterno, int edad,String correo,String asiento) {
         this.dni = dni;
         this.viajeId = viajeId;
         this.nombre = nombre;
         this.apePaterno = apePaterno;
         this.apeMaterno = apeMaterno;
+        this.correo=correo;
         this.edad = edad;
         this.asiento = asiento;
     }
@@ -77,12 +79,21 @@ public class PasajeroPrincipal {
         this.asiento = asiento;
     }
 
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+    
     
     
     public boolean ConAtributosVacios() {
                   return !(nombre != null && !nombre.isEmpty())
                            || !(apePaterno != null && !apePaterno.isEmpty())
                            || !(apeMaterno != null && !apeMaterno.isEmpty())
+                          || !(correo != null && !correo.isEmpty())
                            || !(dni != null && !dni.isEmpty())
                            || !(asiento != null && !asiento.isEmpty())
                            || !(edad != 0)

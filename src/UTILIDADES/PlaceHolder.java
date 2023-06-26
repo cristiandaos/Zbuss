@@ -23,7 +23,7 @@ public class PlaceHolder extends JLabel implements FocusListener, DocumentListen
 	setText(text);
 	setFont(component.getFont());
 	setForeground(Color.gray);
-	setHorizontalAlignment(JLabel.CENTER);
+	setHorizontalAlignment(JLabel.LEADING);
 	component.addFocusListener(this);
 	document.addDocumentListener(this);
 	component.setLayout(new BorderLayout());

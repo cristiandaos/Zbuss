@@ -1,8 +1,10 @@
 
 package CONTROLADOR;
 
+import DAO.AdministradoresDAO;
 import MODELO.*;
 import UTILIDADES.Emergente;
+import UTILIDADES.PlaceHolder;
 import VISTA.Panel_GestionAdministradores;
 import java.awt.Color;
 import java.awt.Font;
@@ -37,6 +39,13 @@ public class CTRL_PanelAdministradores implements ActionListener,MouseListener{
                   this.panel.BTN_nuevo_admin.addActionListener(this);
                   
                   this.panel.TBLadministradores.addMouseListener(this);
+                  
+                  PlaceHolder nombre=new PlaceHolder("Nombre",this.panel.TXT_nombre_admin, PlaceHolder.Visibilidad.ALWAYS);
+                  PlaceHolder apellidoPat=new PlaceHolder("Apellido Paterno",this.panel.TXT_apePat_admin, PlaceHolder.Visibilidad.ALWAYS);
+                  PlaceHolder apellidoMat=new PlaceHolder("Apellido Materno",this.panel.TXT_apeMat_admin, PlaceHolder.Visibilidad.ALWAYS);
+                  PlaceHolder correo=new PlaceHolder("Correo Electrónico",this.panel.TXT_correo_admin, PlaceHolder.Visibilidad.ALWAYS);
+                  PlaceHolder contraseña=new PlaceHolder("Contraseña",this.panel.TXT_contraseña_admin, PlaceHolder.Visibilidad.ALWAYS);
+                  
                   
                   ListarAdministradores();
                   

@@ -3,8 +3,9 @@ package CONTROLADOR;
 
 import MODELO.Conexion;
 import MODELO.Terminales;
-import MODELO.TerminalesDAO;
+import DAO.TerminalesDAO;
 import UTILIDADES.Emergente;
+import UTILIDADES.PlaceHolder;
 import VISTA.Panel_GestionTerminales;
 import java.awt.Color;
 import java.awt.Font;
@@ -17,8 +18,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -34,6 +33,7 @@ public class CTRL_PanelTerminales implements ActionListener,MouseListener{
          private Conexion cone=new Conexion();
          
          public CTRL_PanelTerminales(Panel_GestionTerminales panel){
+             
                   this.panel=panel;
                   
                   this.panel.BTN_eliminar_terminal.addActionListener(this);
@@ -43,6 +43,10 @@ public class CTRL_PanelTerminales implements ActionListener,MouseListener{
                   this.panel.BTN_nuevo_terminal.addActionListener(this);
                   
                   this.panel.TBLterminales.addMouseListener(this);
+                  
+                  PlaceHolder Nombre=new PlaceHolder("Nombre", this.panel.TXT_nombre_Terminal, PlaceHolder.Visibilidad.ALWAYS);
+                  
+                  PlaceHolder Direccion=new PlaceHolder("Dirección de la Terminal", this.panel.TXT_direccion_Terminal, PlaceHolder.Visibilidad.ALWAYS);
                   
                   ListarTerminales();
          }

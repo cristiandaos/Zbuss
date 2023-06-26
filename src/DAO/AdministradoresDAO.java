@@ -1,6 +1,8 @@
 
-package MODELO;
+package DAO;
 
+import MODELO.Administrador;
+import MODELO.Conexion;
 import java.sql.*;
 
 

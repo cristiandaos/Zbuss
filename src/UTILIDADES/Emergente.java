@@ -114,10 +114,6 @@ public  class Emergente extends JDialog implements ActionListener,MouseMotionLis
                   contenido.add(btn);
          }
 
-        private int RetornarOpcion(){
-            return Opcion;
-        }
-         
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==btnConfirmar) {

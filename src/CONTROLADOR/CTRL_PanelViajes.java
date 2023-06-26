@@ -1,9 +1,10 @@
 
 package CONTROLADOR;
 
+import DAO.AsientosDAO;
 import MODELO.Conexion;
 import MODELO.Viajes;
-import MODELO.ViajesDAO;
+import DAO.ViajesDAO;
 import UTILIDADES.Emergente;
 import VISTA.Panel_GestionViajes;
 import com.toedter.calendar.JCalendar;
@@ -18,7 +19,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,7 +30,6 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,6 +44,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -56,10 +56,14 @@ public class CTRL_PanelViajes implements ActionListener,MouseListener,ChangeList
     
          public static  SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
          public static SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm");
+         
          private Panel_GestionViajes panel;
+         
          private byte [] bytes=null;
          private File archivo;
+         
          private ViajesDAO viajeDAO=new ViajesDAO();
+        private AsientosDAO asientoDAO=new AsientosDAO();
          private Date fechaAuxiliarDC=null;
          private Date fechaSalidaCompleta=null;
          private Date fechaLlegadaCompleta=null;
@@ -135,7 +139,7 @@ public class CTRL_PanelViajes implements ActionListener,MouseListener,ChangeList
          
          void ListarViajes(){
                   panel.TBL_viajes.getTableHeader().setFont(new Font("Consolas", Font.PLAIN, 10));
-                  panel.TBL_viajes.getTableHeader().setBorder(new LineBorder(Color.WHITE,1));
+                  panel.TBL_viajes.getTableHeader().setBorder(new EmptyBorder(1,1,1,1));
                   panel.TBL_viajes.getTableHeader().setForeground(Color.GREEN);
                   panel.TBL_viajes.getTableHeader().setBackground(new Color(6,6,6));
                   
@@ -257,6 +261,7 @@ public class CTRL_PanelViajes implements ActionListener,MouseListener,ChangeList
 
          }
          
+         
          void Slider(JScrollBar scrollBar,int delay, int ValorDestino,int auxiliar) {
                   Timer Temporizador = new Timer(delay, new ActionListener() {
                   int incremento = (ValorDestino - scrollBar.getValue()) / auxiliar;
@@ -300,6 +305,7 @@ public class CTRL_PanelViajes implements ActionListener,MouseListener,ChangeList
                   panel.DCviaje_fechaSalida.getCalendarButton().setBorder(new LineBorder(Color.GREEN));
                   panel.DCviaje_fechaSalida.setMinSelectableDate(Date.from(Instant.now()));
                   panel.DCviaje_fechaSalida.getDateEditor().setEnabled(false);
+                  panel.DCviaje_fechaSalida.getDateEditor().getUiComponent().setFont(new Font("Consolas",Font.BOLD,16));
                   panel.DCviaje_fechaSalida.addPropertyChangeListener(new PropertyChangeListener() {
          @Override
                   public void propertyChange(PropertyChangeEvent evt) {
@@ -701,6 +707,7 @@ public class CTRL_PanelViajes implements ActionListener,MouseListener,ChangeList
                                     ListarViajes();
                                     
                                     Emergente msg=new Emergente(null, "Modificación","Viaje modificado correctamente",Emergente.Tipo.MessageDialog);
+                                    
                            }else{    
                                
                                     Viajes viaje=new Viajes(IDterminalSalida, 
@@ -721,9 +728,9 @@ public class CTRL_PanelViajes implements ActionListener,MouseListener,ChangeList
                                     }
                                     
                                     viajeDAO.Registrar(viaje);
+                                    asientoDAO.ActivarAsientos(viajeDAO.ObtenerIDgenerado());
                                     ReiniciarCampos();
                                     ListarViajes();
-                                    
                                     Emergente msg=new Emergente(null, "Registro","Viaje programado correctamente",Emergente.Tipo.MessageDialog);
                            
                            }
@@ -753,14 +760,13 @@ public class CTRL_PanelViajes implements ActionListener,MouseListener,ChangeList
                   }
                   
                   if (e.getSource()==panel.BTN_infoViaje) {
+                           
+                           int fila=panel.TBL_viajes.getSelectedRow();
+                           int id=(int) panel.TBL_viajes.getValueAt(fila, 0);
+                           CargarViajeInfoDetalle(id);
+                           CargarViajeInfoPasajeros(id);
+                           CargarViajeInfoBuss(id);
                            Slider(panel.ScrollPanelDinamico.getHorizontalScrollBar(), 10, 1060, 5);
-                           
-                            int fila=panel.TBL_viajes.getSelectedRow();
-                            int id=(int) panel.TBL_viajes.getValueAt(fila, 0);
-                            CargarViajeInfoDetalle(id);
-                            CargarViajeInfoPasajeros(id);
-                            CargarViajeInfoBuss(id);
-                           
                   }
                   
                   if (e.getSource()==panel.BTN_volver) {

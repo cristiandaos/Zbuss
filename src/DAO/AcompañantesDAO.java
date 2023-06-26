@@ -1,5 +1,7 @@
 
-package MODELO;
+package DAO;
+import MODELO.Acompañantes;
+import MODELO.Conexion;
 import java.sql.*;
 
 public class AcompañantesDAO extends Conexion{

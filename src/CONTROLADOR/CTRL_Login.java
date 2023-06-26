@@ -1,5 +1,8 @@
 
 package CONTROLADOR;
+import DAO.ViajesDAO;
+import DAO.SociosDAO;
+import DAO.AdministradoresDAO;
 import UTILIDADES.*;
 import VISTA.*;
 import MODELO.*;
@@ -22,14 +25,14 @@ import javax.swing.Timer;
 
 public class CTRL_Login implements ActionListener,MouseListener,KeyListener,MouseMotionListener,WindowListener{
     
-         private  Login login;
+         private  Login_Registro login;
          private int x;
          private int y;
          private AdministradoresDAO adminDAO=new AdministradoresDAO();
          private SociosDAO sociosDAO=new SociosDAO();
          private ViajesDAO viajesDAO=new ViajesDAO();
     
-         public CTRL_Login(Login login)  {
+         public CTRL_Login(Login_Registro login)  {
 
                  this.login=login;
                  this.login.addWindowListener(this);

@@ -1,5 +1,7 @@
 
-package MODELO;
+package DAO;
+import MODELO.Conexion;
+import MODELO.Viajes;
 import java.sql.*;
 
 
@@ -11,7 +13,7 @@ public class ViajesDAO extends Conexion{
                   PreparedStatement ps=null;
                   Connection con =getConnection();
                   try{
-                           ps=con.prepareStatement("INSERT INTO Viajes( viaje_terminal_salida,viaje_terminal_llegada,viaje_fecha_salida,viaje_fecha_llegada,viaje_hora_salida,viaje_hora_llegada,viaje_duracion,viaje_distancia,viaje_asientos_Dispo,viaje_precio,viaje_img_Refe) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
+                           ps=con.prepareStatement("INSERT INTO Viajes(viaje_terminal_salida,viaje_terminal_llegada,viaje_fecha_salida,viaje_fecha_llegada,viaje_hora_salida,viaje_hora_llegada,viaje_duracion,viaje_distancia,viaje_asientos_Dispo,viaje_precio,viaje_img_Refe) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
                            ps.setInt(1,viaje.getTerminalSalida());
                            ps.setInt(2,viaje.getTerminalLlegada());
                            ps.setString(3, viaje.getFechaSalida());
@@ -144,7 +146,7 @@ public class ViajesDAO extends Conexion{
                   return cantidad;
          }
          
-         public boolean ActualizarAsientosDispo(Viajes viaje){
+         public boolean ActualizarAsientosDisponibles(Viajes viaje){
                   PreparedStatement ps=null;
                   Connection con =getConnection();
                   try {
@@ -160,5 +162,20 @@ public class ViajesDAO extends Conexion{
          
          }
          
-
+         public int ObtenerIDgenerado(){
+                  PreparedStatement ps=null;
+                  ResultSet rs=null;
+                  Connection con=getConnection();
+                  try {
+                           ps=con.prepareStatement("SELECT MAX(viaje_id) AS IDgenerado FROM Viajes");
+                           rs=ps.executeQuery();
+                           if (rs.next()) {
+                                    int id=rs.getInt("IDgenerado");
+                                    return  id;    
+                            }        
+                  } catch (SQLException e) {
+                           System.out.println(e);
+                  }
+                 return 0;
+        }
 }
