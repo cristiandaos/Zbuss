@@ -19,6 +19,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -71,7 +72,7 @@ public class CTRL_PanelTerminales implements ActionListener,MouseListener{
          
          private void ListarTerminales(){
                   panel.TBLterminales.getTableHeader().setFont(new Font("Consolas", Font.PLAIN, 16));
-                  panel.TBLterminales.getTableHeader().setBorder(new LineBorder(Color.WHITE,1));
+                  panel.TBLterminales.getTableHeader().setBorder(new EmptyBorder(1,1,1,1));
                   panel.TBLterminales.getTableHeader().setForeground(Color.GREEN);
                   panel.TBLterminales.getTableHeader().setBackground(new Color(6,6,6));
                   
@@ -141,14 +142,26 @@ public class CTRL_PanelTerminales implements ActionListener,MouseListener{
                                     
                                     if (terminalModificada.ConAtributosVacios()) {
                                              Emergente msg=new Emergente(null, "Error", "Hay campos vacios en la modificación de la terminal ", Emergente.Tipo.MessageDialog);
+                                             msg.MostrarMSG();
                                              return;
                                     }
+                                    if (terminalDAO.TerminalenUso(id)) {
+                                             if (terminalModificada.getEstado().equals("Deshabilitado")) {
+                                                      Emergente msg=new Emergente(null, "Error", "No se puede deshabilitar una terminal en uso", Emergente.Tipo.MessageDialog);
+                                                      msg.MostrarMSG();
+                                                      return;
+                                             }
+                                    }
+                                    if (terminalDAO.Modificar(terminalModificada, id)) {
+                                             ReiniciarCampos();
+                                             ListarTerminales();
+                                             Emergente msg=new Emergente(null, "Modificación","Terminal modificada correctamente",Emergente.Tipo.MessageDialog);
+                                             msg.MostrarMSG();
+                                    }else{
+                                             Emergente msg=new Emergente(null, "Error","Error en la modificación de la terminal",Emergente.Tipo.MessageDialog);
+                                             msg.MostrarMSG();
+                                    }
                                     
-                                    terminalDAO.Modificar(terminalModificada, id);
-                                    ReiniciarCampos();
-                                    ListarTerminales();
-                                    
-                                     Emergente msg=new Emergente(null, "Modificación","Terminal modificada correctamente",Emergente.Tipo.MessageDialog);
                            }else{
                                
                                     Terminales terminal=new Terminales(panel.TXT_nombre_Terminal.getText(), 
@@ -156,14 +169,18 @@ public class CTRL_PanelTerminales implements ActionListener,MouseListener{
                                                                                                    panel.CB_estado_Terminal.getSelectedItem().toString());
                                    if (terminal.ConAtributosVacios()) {
                                              Emergente msg=new Emergente(null, "Error ","Hay campos vacios en el registro de una Terminal",Emergente.Tipo.MessageDialog);
+                                             msg.MostrarMSG();
                                              return;
                                     } 
-                                   
-                                    terminalDAO.Registrar(terminal);
-                                    ReiniciarCampos();
-                                    ListarTerminales();
-                                    
-                                    Emergente msg=new Emergente(null, "Registro","Terminal registrada correctamente",Emergente.Tipo.MessageDialog);
+                                   if (terminalDAO.Registrar(terminal)) {
+                                             ReiniciarCampos();
+                                             ListarTerminales();
+                                             Emergente msg=new Emergente(null, "Registro","Terminal registrada correctamente",Emergente.Tipo.MessageDialog);
+                                             msg.MostrarMSG();
+                                     }else{
+                                             Emergente msg=new Emergente(null, "Error","Error en el registro de la terminal",Emergente.Tipo.MessageDialog);
+                                             msg.MostrarMSG();
+                                   }
                            }
 
                   }
@@ -174,16 +191,24 @@ public class CTRL_PanelTerminales implements ActionListener,MouseListener{
                   
                   if (e.getSource()==panel.BTN_eliminar_terminal) {
                            int fila=panel.TBLterminales.getSelectedRow();
+                           int id=(int) panel.TBLterminales.getValueAt(fila,0);
                            
                            if (fila<0) {
                                     Emergente msg=new Emergente(null, "Error","No hay ninguna terminal seleccionada",Emergente.Tipo.MessageDialog);
+                                    msg.MostrarMSG();
                                     return;
                            }
-                           
-                           int id=(int) panel.TBLterminales.getValueAt(fila,0);
-                           terminalDAO.Eliminar(id);
-                           ReiniciarCampos();
-                           ListarTerminales();
+                           if (terminalDAO.TerminalenUso(id)) {
+                                    Emergente msg=new Emergente(null, "Error", "No se puede eliminar una terminal en uso", Emergente.Tipo.MessageDialog);
+                                    msg.MostrarMSG();
+                                    return;
+                           } 
+                           if (terminalDAO.Eliminar(id)) {
+                                    ReiniciarCampos();
+                                    ListarTerminales();
+                                    Emergente msg=new Emergente(null, "Eliminación", "Terminal eliminada correctamente", Emergente.Tipo.MessageDialog);
+                                    msg.MostrarMSG();
+                           }
                            
                   }
   

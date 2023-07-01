@@ -1,6 +1,9 @@
 
 package MODELO;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Acompañantes {
     private String dni;
     private PasajeroPrincipal pasajeroPrincipal;
@@ -88,7 +91,14 @@ public class Acompañantes {
         this.asiento = asiento;
     }
     
-    public boolean ConAtributosVacios() {
+    public boolean igualDNI(){
+         if (getDni().equals(pasajeroPrincipal.getDni())) {
+                return true;
+         }
+         return false;
+    }
+    
+         public boolean ConAtributosVacios() {
                   return !(nombre != null && !nombre.isEmpty())
                            || !(apePaterno != null && !apePaterno.isEmpty())
                            || !(apeMaterno != null && !apeMaterno.isEmpty())
@@ -97,5 +107,16 @@ public class Acompañantes {
                            || !(asiento != null && !asiento.isEmpty())
                            || !(edad != 0)
                            || !(viajeId != 0);
-}
+         }
+         
+         public boolean dniValido(){
+                  String patron="[0-9]+$";
+                  Pattern pattern=Pattern.compile(patron);
+                  Matcher matcher=pattern.matcher(dni);
+                  if (dni.length()==8 & matcher.matches()) {
+                           return true;
+                  }
+                  return false;
+         }
+
 }

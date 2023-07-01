@@ -17,6 +17,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -47,7 +48,7 @@ public class CTRL_PanelSocios  implements ActionListener,MouseListener,KeyListen
          
          void ListarSocios(){
                   panel.TBLsocios.getTableHeader().setFont(new Font("Consolas", Font.PLAIN, 14));
-                  panel.TBLsocios.getTableHeader().setBorder(new LineBorder(Color.WHITE,1));
+                  panel.TBLsocios.getTableHeader().setBorder(new EmptyBorder(1,1,1,1));
                   panel.TBLsocios.getTableHeader().setForeground(Color.GREEN);
                   panel.TBLsocios.getTableHeader().setBackground(new Color(6,6,6));
                   

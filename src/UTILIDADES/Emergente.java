@@ -17,6 +17,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
@@ -24,7 +25,7 @@ import javax.swing.border.MatteBorder;
 
 public  class Emergente extends JDialog implements ActionListener,MouseMotionListener,MouseListener,WindowListener,WindowFocusListener{
     
-    public enum Tipo { ConfirmDialog, MessageDialog; }
+    public enum Tipo { ConfirmDialog, MessageDialog,InputDialog; }
     private int Opcion=0;
     private int x;
     private int y;
@@ -35,6 +36,7 @@ public  class Emergente extends JDialog implements ActionListener,MouseMotionLis
     private JButton btn_Si;
     private JButton btn_No;
     private JButton btnCerrar;
+    private JTextField input;
     private JLabel Titulo;
         public Emergente(JFrame frame,String titulo,String msg,Tipo tipo){
          super (frame, true);
@@ -95,11 +97,22 @@ public  class Emergente extends JDialog implements ActionListener,MouseMotionLis
                            EstiloBoton(btn_No);
                            btn_Si.setBounds((contenido.getWidth()/4), mensaje.getY()+mensaje.getHeight()+20, 60, 30);
                            btn_No.setBounds((contenido.getWidth()*3/4)-60, mensaje.getY()+mensaje.getHeight()+20, 60, 30);
+                  }else if (tipo.equals(Tipo.InputDialog)) {
+                           input=new JTextField();
+                           contenido.add(input);
+                           input.setBounds((contenido.getWidth()/2)-100, mensaje.getY()+mensaje.getHeight()+10, 200, 30);
+                           input.setBackground(new Color(10,10,10));
+                           input.setFont(new Font("Segoe UI Emoji",Font.BOLD,16));
+                           input.setCaretColor(Color.WHITE);
+                           input.setBorder(new MatteBorder(0,0,2,0,Color.GREEN));
+                           input.requestFocus();
+                           btnConfirmar =new JButton("OK");
+                           EstiloBoton(btnConfirmar);
+                           btnConfirmar.setBounds((contenido.getWidth()/2)-30,input.getY()+input.getHeight()+10, 60, 30);
                   }
 
                 add(BarraSuperior);
                 add(contenido);
-                setVisible(true);
          }
     
          private void EstiloBoton(JButton btn){
@@ -112,6 +125,18 @@ public  class Emergente extends JDialog implements ActionListener,MouseMotionLis
                   btn.addMouseListener(this);
                   btn.addActionListener(this);
                   contenido.add(btn);
+         }
+         
+         public int MostrarConfirm(){
+                  setVisible(true);
+                  return Opcion;
+         }
+         public void MostrarMSG(){
+                  setVisible(true);
+         }
+         public String MostrarInput(){
+                  setVisible(true);
+                  return input.getText(); 
          }
 
     @Override

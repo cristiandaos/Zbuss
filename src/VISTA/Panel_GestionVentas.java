@@ -17,13 +17,13 @@ public class Panel_GestionVentas extends javax.swing.JPanel {
         jScrollPane4 = new javax.swing.JScrollPane();
         TBLventas = new javax.swing.JTable();
 
-        setBackground(new java.awt.Color(16, 16, 16));
-        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(123, 216, 80)));
+        setBackground(new java.awt.Color(12, 12, 12));
         setPreferredSize(new java.awt.Dimension(1060, 670));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jScrollPane4.setBorder(null);
+
         TBLventas.setBackground(new java.awt.Color(12, 12, 12));
-        TBLventas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         TBLventas.setFont(new java.awt.Font("Consolas", 1, 12)); // NOI18N
         TBLventas.setForeground(new java.awt.Color(255, 255, 255));
         TBLventas.setModel(new javax.swing.table.DefaultTableModel(
@@ -37,6 +37,7 @@ public class Panel_GestionVentas extends javax.swing.JPanel {
 
             }
         ));
+        TBLventas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         TBLventas.setFocusable(false);
         TBLventas.setGridColor(new java.awt.Color(255, 255, 255));
         TBLventas.setRequestFocusEnabled(false);
@@ -44,7 +45,7 @@ public class Panel_GestionVentas extends javax.swing.JPanel {
         TBLventas.setSelectionBackground(new java.awt.Color(51, 204, 0));
         TBLventas.setSelectionForeground(new java.awt.Color(0, 0, 0));
         TBLventas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        TBLventas.setShowGrid(true);
+        TBLventas.setShowGrid(false);
         TBLventas.getTableHeader().setResizingAllowed(false);
         TBLventas.getTableHeader().setReorderingAllowed(false);
         jScrollPane4.setViewportView(TBLventas);

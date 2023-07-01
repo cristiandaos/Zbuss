@@ -59,6 +59,26 @@ public class SociosDAO extends Conexion {
                   }
         }
          
+         public boolean Eliminar(Socios socio){
+                  PreparedStatement ps=null;
+                  Connection con =getConnection();
+                  try{
+                           ps=con.prepareStatement("DELETE FROM Socios WHERE socio_dni=?");
+                           ps.setString(1,socio.getDni());
+                           ps.execute();
+                           return true;
+                  }catch(SQLException ex){
+                           System.out.println(ex);
+                           return false;
+                  }finally{
+                           try {
+                                    con.close();
+                           } catch (SQLException ex) {
+                                    System.out.println(ex);
+                           }
+                  }
+        }
+         
          public  boolean Validar(String correo, String contraseña){
                   PreparedStatement ps=null;
                   Connection con=getConnection();
@@ -115,10 +135,32 @@ public class SociosDAO extends Conexion {
                                     System.out.println(ex);
                            }
                   }
-             return null;
+                  return null;
 
          }
+         public boolean  ActualizarPuntos(Socios socio){
+                  PreparedStatement ps=null;
+                  Connection con=getConnection();
+                  try {
+                           ps=con.prepareStatement("UPDATE Socios SET socio_puntos=? WHERE socio_dni=?");
+                           ps.setInt(1, socio.getPuntos());
+                           ps.setString(2,socio.getDni());
+                           ps.execute();
+                           
+                           return true;
+                           
+                  } catch (SQLException e) {
+                            System.out.println(e);
+                  }finally{
+                           try {
+                                    con.close();
+                           } catch (SQLException ex) {
+                                    System.out.println(ex);
+                           }
+                  }
+                  return false;
          }
+}
     
     
 

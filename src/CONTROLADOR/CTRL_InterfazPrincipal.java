@@ -5,15 +5,20 @@ import DAO.AsientosDAO;
 import DAO.VentasDAO;
 import DAO.AcompañantesDAO;
 import DAO.PasajerosPrincipalesDAO;
+import DAO.SociosDAO;
 import MODELO.*;
 import VISTA.*;
 import UTILIDADES.*;
+import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDayChooser;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -22,6 +27,8 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,6 +49,9 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import java.sql.*;
+import java.time.Instant;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.Timer;
 import javax.swing.border.Border;
@@ -52,14 +62,17 @@ import javax.swing.text.MaskFormatter;
 
 
 
-public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,MouseMotionListener,KeyListener,WindowListener{
+public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,MouseMotionListener,KeyListener,FocusListener,WindowListener{
          private Interfaz_Principal vista;
-         private Socios usuario;
+         private Socios SesionSocio;
+         private Date fechafiltroAUX;
          private int cant_ViajesDisponibles;
          private Viajes viajeSeleccionado=new Viajes();
          private int x;
          private int y;
+         
          private Conexion cone=new Conexion();
+         private SociosDAO socioDAO=new SociosDAO();
          private PasajerosPrincipalesDAO pasajeroDAO=new PasajerosPrincipalesDAO();
          private AcompañantesDAO acompañanteDAO=new AcompañantesDAO();
          private VentasDAO ventaDAO=new VentasDAO();
@@ -116,61 +129,65 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                  this.vista.BTN_IzquiAcompañantes.addActionListener(this);
                  this.vista.BTN_derechaAcompañantes.addActionListener(this);
                  
+                 this.vista.BTN_infoSocio.addActionListener(this);
+                 this.vista.BTN_infoSocio.addMouseListener(this);
+
+                 this.vista.BTN_editarNombreSocio.addActionListener(this);
+                 this.vista.BTN_editarPaternoSocio.addActionListener(this);
+                 this.vista.BTN_editarMaternoSocio.addActionListener(this);
+                 this.vista.BTN_editarFnacSocio.addActionListener(this);
+                 this.vista.BTN_editarNumeroSocio.addActionListener(this);
+                 this.vista.BTN_editarCorreoSocio.addActionListener(this);
+                 this.vista.BTN_editarContraSocio.addActionListener(this);
+                 
+                 this.vista.BTN_eliminarCuenta.addActionListener(this);
+                 
                  this.vista.BTN_aplicarFiltro.addActionListener(this);
-                 this.vista.BTN_aplicarFiltro.addMouseListener(this);
-                 
-                 this.vista.LBLinfoUsuario.addMouseListener(this);
-                 
-                 this.vista.LBLhistorialUsuario.addMouseListener(this);
+                 this.vista.BTN_limpiarFiltro.addActionListener(this);
                  
                   GenerarPaneles(this.cant_ViajesDisponibles);
                  
                   generarAsientos();
-                 
-                  for (PanelPersonalizado paneles : ArrayPaneles) {
-                           paneles.addMouseListener(this);
-                  }
-                 
-                  for (JLabel asientos : ArrayBusAsientos) {
-                           asientos.addMouseListener(this);
-                  }
 
-                 InicializarReloj();
+                  InicializarReloj();
                  
-                 CargarPanelesViajes();
+                  CargarPanelesViajes(viajeDAO.ListarViajes());
+
+                  CargarCBfiltro();
                  
-                 CargarCBfiltro();
+                  InstanciarPropiedadesDateChooser();
                  
                   vista.BTN_confirmarAsientos.setVisible(false);
                  
                  
-                 ((JSpinner.DefaultEditor) vista.SPNEdadPasajero.getEditor()).getTextField().setEditable(false);
-       
+                  ((JSpinner.DefaultEditor) vista.SPNEdadPasajero.getEditor()).getTextField().setEditable(false);
+                  ((JTextField) vista.DCfechaFiltros.getDateEditor().getUiComponent()).setForeground(Color.WHITE);
          } 
-    
-         
-         void EstadoInicial(){
-                  
-                  Interfaz_Principal reinicio_Interfaz=new Interfaz_Principal();
-                  CTRL_InterfazPrincipal reinicio_CTRl =new CTRL_InterfazPrincipal(reinicio_Interfaz,cant_ViajesDisponibles);
-                  reinicio_CTRl.Iniciar();
-                  Cerrar();
-                  
-          }
-           
          
          void Iniciar(Socios socioIngresado){
               
-                  usuario=socioIngresado;
+                  SesionSocio=socioIngresado;
+
+                  vista.LBLusuario.setText(SesionSocio.getNombre());
+                   vista.LBLpuntosUsuario.setText(String.valueOf(SesionSocio.getPuntos()));
+                   
+                  vista.TXT_dniSocio.setText(SesionSocio.getDni());
+                  vista.TXT_nombreSocio.setText(SesionSocio.getNombre());
+                  vista.TXT_paternoSocio.setText(SesionSocio.getApellidoPaterno());
+                  vista.TXT_maternoSocio.setText(SesionSocio.getApellidoMaterno());
+                  vista.TXT_fnacSocio.setText(SesionSocio.getNacimiento());
+                  vista.TXT_NumeroSocio.setText(SesionSocio.getNumero());
+                  vista.TXT_correoSocio.setText(SesionSocio.getCorreo());
+                  vista.TXT_contraSocio.setText(SesionSocio.getContraseña());
                   
-                  vista.LBLusuario.setText(usuario.getNombre());
-                  vista.TxtNombrePasajero.setText(usuario.getNombre());
-                  vista.TxtApellidoPatePasajero.setText(usuario.getApellidoPaterno());
-                  vista.TxtApellidoMatePasajero.setText(usuario.getApellidoMaterno());
-                  vista.TxtcorreoPasajero.setText(usuario.getCorreo());
-                  vista.SPNEdadPasajero.setValue(usuario.calcularEdad());
-                  vista.TxtDNIpasajero.setText(usuario.getDni());
-                  vista.LBLpuntosUsuario.setText(String.valueOf(usuario.getPuntos()));
+                  vista.TxtNombrePasajero.setText(SesionSocio.getNombre());
+                  vista.TxtApellidoPatePasajero.setText(SesionSocio.getApellidoPaterno());
+                  vista.TxtApellidoMatePasajero.setText(SesionSocio.getApellidoMaterno());
+                  vista.TxtcorreoPasajero.setText(SesionSocio.getCorreo());
+                  vista.SPNEdadPasajero.setValue(SesionSocio.calcularEdad());
+                  vista.TxtDNIpasajero.setText(SesionSocio.getDni());
+                  
+                  vista.ScrollPanelDinamico.getHorizontalScrollBar().setValue(1100);
                   
                   vista.setVisible(true);
           }   
@@ -185,6 +202,8 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
 
                   vista.LBLusuario.setText("No registrado");
                   vista.PanelUsuario.setVisible(false);
+                  
+                  vista.ScrollPanelDinamico.getHorizontalScrollBar().setValue(1100);
                   
                   vista.setVisible(true); 
           }
@@ -228,7 +247,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
          }
     
          
-          private void GenerarPaneles(int cant){
+          private boolean GenerarPaneles(int cant){
                   ArrayPaneles=new ArrayList<>();
                   ArrayDestinos=new ArrayList<>();
                   ArrayAsientosDisp=new ArrayList<>();
@@ -260,6 +279,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            contenedor.setBorder(new LineBorder(new Color(123,216,80),1,true));
                            contenedor.setCursor(new Cursor(Cursor.HAND_CURSOR));
                            ArrayPaneles.add(contenedor);
+                           
 
                            img.setBounds(20, 20, 360, 250);
                            ArrayImgs.add(img);
@@ -306,7 +326,7 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            asientosDispo.setHorizontalAlignment(SwingConstants.CENTER);
                            ArrayAsientosDisp.add(asientosDispo);
                            contenedor.add(asientosDispo);
-
+                           
                            vista.PanelViajes.add(contenedor);
                            x+=incrementoX;
                            if(x>vista.PanelViajes.getWidth()-contenedor.getWidth()){
@@ -317,48 +337,39 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            if (y>vista.PanelViajes.getHeight()-alto) {
                                     vista.PanelViajes.setPreferredSize(new Dimension((int) vista.PanelViajes.getPreferredSize().getWidth(),ArrayPaneles.get(i).getY()+alto+60));
                                     vista.ScrollPanelViajes.getVerticalScrollBar().setUnitIncrement(15);
-                                    vista.ScrollPanelViajes.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                                    vista.ScrollPanelViajes.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
                            }
-                  }   
+                  }
+                  if (!ArrayPaneles.isEmpty()) {
+                           for (PanelPersonalizado paneles : ArrayPaneles) {
+                                    paneles.addMouseListener(this);
+                           }
+                           return  true;
+                  }
+                  return false;
          }
          
 
-          private void CargarPanelesViajes(){
-                     PreparedStatement ps=null;
-                     ResultSet rs=null;
-                     Connection con=cone.getConnection();
-                     int i=0;
-                     byte[] binario;
-                     String sql="SELECT v.viaje_id, ts.terminal_nombre AS terminal_salida, tl.terminal_nombre AS terminal_llegada, v.viaje_fecha_salida, v.viaje_fecha_llegada, v.viaje_hora_salida, v.viaje_hora_llegada, v.viaje_distancia, v.viaje_asientos_Dispo, v.viaje_precio, v.viaje_promocion, v.viaje_img_Refe \n" +
-                                       "FROM Viajes v \n" +
-                                       "JOIN Terminales ts ON v.viaje_terminal_salida = ts.terminal_id \n" +
-                                       "JOIN Terminales tl ON v.viaje_terminal_llegada = tl.terminal_id;";
-                     try {
-                                ps=con.prepareStatement(sql);
-                                rs=ps.executeQuery();
-                                while(rs.next() && i<cant_ViajesDisponibles){
-                                    ArrayPaneles.get(i).setName(String.valueOf(rs.getInt("viaje_id")));
-                                    ArrayDestinos.get(i).setText(rs.getString("terminal_salida")+"--->"+rs.getString("terminal_llegada"));
-                                    ArrayDistancias.get(i).setText(rs.getString("viaje_distancia"));
-                                    ArrayFechas.get(i).setText(rs.getString("viaje_fecha_salida")+"--->"+rs.getString("viaje_fecha_llegada"));
-                                    ArrayHoras.get(i).setText(rs.getString("viaje_hora_salida")+"            "+rs.getString("viaje_hora_llegada"));
-                                    ArrayPrecios.get(i).setText("Precio: S/"+rs.getDouble("viaje_precio"));
-                                    ArrayAsientosDisp.get(i).setText("Asientos Disponibles: "+String.valueOf( rs.getInt("viaje_asientos_Dispo")));
-                                    binario=rs.getBytes("viaje_img_Refe");
+          private void CargarPanelesViajes(ArrayList<Viajes> ListViajes){
+                  byte[]  binario;
+                  for (int i=0;i<ListViajes.size();i++) {
+                          try {
+                                    ArrayPaneles.get(i).setName(String.valueOf(ListViajes.get(i).getId()));
+                                    ArrayDestinos.get(i).setText(ListViajes.get(i).getT_salida()+"-->"+ListViajes.get(i).getT_llegada());
+                                    ArrayDistancias.get(i).setText(ListViajes.get(i).getDistancia());
+                                    ArrayFechas.get(i).setText(ListViajes.get(i).getFechaSalida()+"--->"+ListViajes.get(i).getFechaLlegada());
+                                    ArrayHoras.get(i).setText(ListViajes.get(i).getHoraSalida()+"            "+ListViajes.get(i).getHoraLlegada());
+                                    ArrayPrecios.get(i).setText("Precio: S/"+String.valueOf(ListViajes.get(i).getPrecio()));
+                                    ArrayAsientosDisp.get(i).setText("Asientos Disponibles: "+String.valueOf(ListViajes.get(i).getAsientosDispo()));
+                                    binario=ListViajes.get(i).getImg();
                                     InputStream img=new ByteArrayInputStream(binario);
                                     BufferedImage bfimagen=ImageIO.read(img);
                                     ImageIcon imagen=new ImageIcon(bfimagen);
                                     ArrayImgs.get(i).setIcon(imagen);
-                                    i++;
-                                }
-                  } catch ( SQLException | IOException e ) {                         
-                  }finally{
-                           try {
-                                    con.close();
-                           } catch (Exception e) {
-                                    System.out.println(e);
-                           }
-                  }    
+                           } catch (IOException ex) {
+                                             Logger.getLogger(CTRL_InterfazPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                 }
          }
           
          
@@ -567,17 +578,18 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
          }
     
          
-         private void reiniciarFormsAcompañantes(){
+         private void ReiniciarFormularioPasajeros(){
                   vista.PanelFormPasajeros.removeAll();
                   ArrayAcompañantesPaneles.clear();
                   vista.PanelFormPasajeros.setPreferredSize(new Dimension(850,200));
                   vista.ScrollPanelPasajeros.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
                   vista.ScrollPanelPasajeros.getHorizontalScrollBar().setValue(0);
-                  if (usuario==null) {
+                  if (SesionSocio==null) {
                            vista.TxtNombrePasajero.setText(null);
                            vista.TxtApellidoMatePasajero.setText(null);
                            vista.TxtApellidoPatePasajero.setText(null);
                            vista.TxtDNIpasajero.setText(null);
+                           vista.TxtcorreoPasajero.setText(null);
                            vista.SPNEdadPasajero.setValue(0);
                   }
     }
@@ -606,7 +618,6 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
    
          
          private void generarAsientos(){
-       
                   ArrayBusAsientos=new ArrayList<>();
                   int x=15;
                   int y=80;
@@ -630,6 +641,9 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                                     x=15;
                                     y+=50;
                            }
+                  }
+                  for (JLabel asientos : ArrayBusAsientos) {
+                           asientos.addMouseListener(this);
                   }
          }
         
@@ -680,6 +694,38 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
          }
          
          
+         void InstanciarPropiedadesDateChooser(){
+                  JCalendar calendarPanel = vista.DCfechaFiltros.getJCalendar();
+                  calendarPanel.setDecorationBackgroundVisible(false);
+                  calendarPanel.setForeground(Color.GREEN);
+                  calendarPanel.getParent().setBackground(new Color(10, 10, 10));
+                  
+                  JDayChooser jdc=calendarPanel.getDayChooser();
+                  jdc.setDayBordersVisible(false);
+                  
+                  for (int i = 0; i < jdc.getDayPanel().getComponentCount(); i++) {
+                           jdc.getDayPanel().getComponent(i).setForeground(Color.WHITE);
+
+                  }
+                  JPanel pane=jdc.getDayPanel();
+                  pane.setBackground(new Color(10,10,10));
+                  
+                  vista.DCfechaFiltros.getCalendarButton().setBorder(new LineBorder(Color.GREEN));
+                  vista.DCfechaFiltros.setMinSelectableDate(Date.from(Instant.now()));
+                  vista.DCfechaFiltros.getDateEditor().setEnabled(false);
+                  vista.DCfechaFiltros.getDateEditor().getUiComponent().setFont(new Font("Consolas",Font.BOLD,16));
+                 vista.DCfechaFiltros.addPropertyChangeListener(new PropertyChangeListener() {
+         @Override
+                  public void propertyChange(PropertyChangeEvent evt) {
+                           if (evt.getPropertyName().equals("date")) {
+                                    Date fechaSele= (Date) evt.getNewValue();
+                                    fechafiltroAUX = fechaSele;
+                                    
+                           }
+                  }
+                  });
+         }
+         
          private void CargarCBfiltro(){
                   PreparedStatement ps=null;
                   ResultSet rs=null;
@@ -705,23 +751,15 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
          }
          
          
-         private void LimpiarPanelesViajes(){
+         private boolean LimpiarPanelesViajes(){
                   vista.PanelViajes.removeAll();
                   vista.PanelViajes.setPreferredSize(new Dimension(1100,560));
-                  ArrayPaneles.clear();
-                  ArrayPrecios.clear();
-                  ArrayImgs.clear();
-                  ArrayDestinos.clear();
-                  ArrayHoras.clear();
-                  ArrayFechas.clear();
-                  ArrayAsientosDisp.clear();
-                  ArrayDistancias.clear();
-         
-         
+                  vista.ScrollPanelViajes.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+                  return true;
          }
          
         @Override
-        public void actionPerformed(ActionEvent e) {
+         public void actionPerformed(ActionEvent e) {
 
                   if (e.getSource()==vista.BTN_cerrarSesion) {
                            Login_Registro login=new Login_Registro();
@@ -730,8 +768,125 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            Cerrar();
                   }
                   
+                  if (e.getSource()==vista.BTN_infoSocio) {
+                           if (!vista.BTN_infoSocio.isSelected()) {
+                                    Slider(vista.ScrollPanelDinamico.getHorizontalScrollBar(), 10, 1100, 10);
+                           }else{
+                                    Slider(vista.ScrollPanelDinamico.getHorizontalScrollBar(), 10, 0, 10);
+                           }    
+                  }
+                  
+
+                  if (e.getSource()==vista.BTN_editarNombreSocio) {
+                           Emergente input=new Emergente(vista,"Editar Nombre","Ingrese el nombre a reemplazar", Emergente.Tipo.InputDialog);
+                           String nombre=input.MostrarInput();
+                           SesionSocio.setNombre(nombre);
+                           if (socioDAO.Actualizar(SesionSocio)) {
+                                    vista.TXT_nombreSocio.setText(nombre);
+                                    vista.LBLusuario.setText(nombre);
+                           }
+                           
+                  }
+                  if (e.getSource()==vista.BTN_editarPaternoSocio) {
+                           Emergente input=new Emergente(vista,"Editar Apellido Paterno","Ingrese el apellido paterno a reemplazar", Emergente.Tipo.InputDialog);
+                           String pat=input.MostrarInput();
+                           SesionSocio.setApellidoPaterno(pat);
+                           if (socioDAO.Actualizar(SesionSocio)) {
+                                    vista.TXT_paternoSocio.setText(pat);
+                           }
+                  }
+                   if (e.getSource()==vista.BTN_editarMaternoSocio) {
+                           Emergente input=new Emergente(vista,"Editar Apellido Materno","Ingrese el apellido materno a reemplazar", Emergente.Tipo.InputDialog);
+                           String mat=input.MostrarInput();
+                           SesionSocio.setApellidoMaterno(mat);
+                           if (socioDAO.Actualizar(SesionSocio)) {
+                                    vista.TXT_maternoSocio.setText(mat);
+                           }
+                  }
+                  if (e.getSource()==vista.BTN_editarFnacSocio) {
+                           Emergente input=new Emergente(vista,"Editar fecha de nacimiento","Ingrese la nueva fecha de nacimiento", Emergente.Tipo.InputDialog);
+                           String fnac=input.MostrarInput();
+                           SesionSocio.setNacimiento(fnac);
+                           if (socioDAO.Actualizar(SesionSocio)) {
+                                    vista.TXT_fnacSocio.setText(fnac);
+                           }
+                  }
+                  if (e.getSource()==vista.BTN_editarNumeroSocio) {
+                           Emergente input=new Emergente(vista,"Editar número de contacto","Ingrese el nuevo número", Emergente.Tipo.InputDialog);
+                           String num=input.MostrarInput();
+                           SesionSocio.setNumero(num);
+                           if (socioDAO.Actualizar(SesionSocio)) {
+                                    vista.TXT_NumeroSocio.setText(num);
+                           }
+                  }
+                  if (e.getSource()==vista.BTN_editarCorreoSocio) {
+                           Emergente input=new Emergente(vista,"Editar correo electrónico","Ingrese el nuevo correo electrónico", Emergente.Tipo.InputDialog);
+                           String correo=input.MostrarInput();
+                           SesionSocio.setCorreo(correo);
+                           if (socioDAO.Actualizar(SesionSocio)) {
+                                    vista.TXT_correoSocio.setText(correo);
+                           }
+                  }
+                  if (e.getSource()==vista.BTN_editarContraSocio) {
+                           Emergente input=new Emergente(vista,"Editar contraseña","Ingrese la nueva contraseña", Emergente.Tipo.InputDialog);
+                           String contra=input.MostrarInput();
+                           SesionSocio.setContraseña(contra);
+                           if (socioDAO.Actualizar(SesionSocio)) {
+                                    vista.TXT_contraSocio.setText(contra);
+                           }
+                      
+                  }
+                  if (e.getSource()==vista.BTN_eliminarCuenta) {
+                           Emergente confirmacion=new Emergente(vista, "Eliminación de cuenta", "Seguro que desea eliminar la cuenta?", Emergente.Tipo.ConfirmDialog);
+                           int Opcion=confirmacion.MostrarConfirm();
+                           
+                           if (Opcion==1) {
+                                    socioDAO.Eliminar(SesionSocio);
+                                    Login_Registro login_registro=new Login_Registro();
+                                    CTRL_Login login=new CTRL_Login(login_registro);
+                                    login.Iniciar();
+                                    Cerrar();
+                           }
+                  }
+                  
                   if (e.getSource()==vista.BTN_aplicarFiltro) {
-                           LimpiarPanelesViajes();
+                           String fechafiltro="";
+                           int idSalida=0;
+                           int idLlegada=0;
+                         
+                           if (vista.CBterminalSalidaFiltro.getSelectedIndex()!=0) {
+                                    String IDsalida=vista.CBterminalSalidaFiltro.getSelectedItem().toString().replaceAll("[^0-9]", "");
+                                    idSalida=Integer.parseInt(IDsalida);
+                          }
+                           if (vista.CBterminalLlegadaFiltro.getSelectedIndex()!=0) {
+                                    String IDllegada=vista.CBterminalLlegadaFiltro.getSelectedItem().toString().replaceAll("[^0-9]", "");
+                                    idLlegada=Integer.parseInt(IDllegada);
+                           }
+                           if (fechafiltroAUX!=null) {
+                                    SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+                                    fechafiltro=formatoFecha.format(fechafiltroAUX);
+                           }
+                           cant_ViajesDisponibles=viajeDAO.CantidadFiltradaViajes(idSalida, idLlegada, fechafiltro);
+                           if (LimpiarPanelesViajes()) {
+                                    if (GenerarPaneles(cant_ViajesDisponibles)) {
+                                             CargarPanelesViajes(viajeDAO.ListarViajesFiltrados(idSalida, idLlegada, fechafiltro));
+
+                                    }
+                           }               
+                  }
+                  
+                  if (e.getSource()==vista.BTN_limpiarFiltro) {
+                           fechafiltroAUX=null;
+                           vista.CBterminalSalidaFiltro.setSelectedIndex(0);
+                           vista.CBterminalLlegadaFiltro.setSelectedIndex(0);
+                           ((JTextField) vista.DCfechaFiltros.getDateEditor().getUiComponent()).setText("");
+                           cant_ViajesDisponibles=viajeDAO.CantidadTotalViajes();
+                           if (LimpiarPanelesViajes()) {
+                                    if (GenerarPaneles(cant_ViajesDisponibles)) {
+                                             CargarPanelesViajes(viajeDAO.ListarViajes());
+
+                                    }
+                           }
                   }
 
                   
@@ -740,13 +895,13 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            vista.LBLasientosCont.setText("0");
                            vista.LBLprecio.setText("00.0");
                            vista.LBLPrecioTotal.setText("00.0");
-                           Slider(vista.ScrollPanelDinamico.getHorizontalScrollBar(), 10,0,5);
+                           Slider(vista.ScrollPanelDinamico.getHorizontalScrollBar(), 10,1100,10);
                   }
 
                   
                   if (e.getSource()==vista.BTN_confirmarAsientos) {
                             int cantidadPasajeros=Integer.parseInt(vista.LBLasientosCont.getText());
-                           Slider(vista.ScrollPanelDinamico.getHorizontalScrollBar(),10, 2200,5);
+                           Slider(vista.ScrollPanelDinamico.getHorizontalScrollBar(),10, 3300,10);
                            generarFormsAcompañantes(cantidadPasajeros);
                            asignarAsientos();
                            
@@ -755,60 +910,9 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                   
                   if (e.getSource()==vista.BTN_cancelarPasajeros) {
               
-                           Slider(vista.ScrollPanelDinamico.getHorizontalScrollBar(),10,1100,5);
-                           reiniciarFormsAcompañantes();
+                           Slider(vista.ScrollPanelDinamico.getHorizontalScrollBar(),10,2200,10);
+                           ReiniciarFormularioPasajeros();
                   }
-
-                  
-                  if (e.getSource()==vista.BTN_confirmarCompra) {
-                           int cantidadPasajeros=Integer.parseInt(vista.LBLasientosCont.getText());
-                           Acompañantes [] acomp=new Acompañantes[cantidadPasajeros-1];
-                           PasajeroPrincipal pasajero=new PasajeroPrincipal(vista.TxtDNIpasajero.getText(), 
-                                                                                                                viajeSeleccionado.getId(),
-                                                                                                                vista.TxtNombrePasajero.getText(),
-                                                                                                                vista.TxtApellidoPatePasajero.getText(), 
-                                                                                                                vista.TxtApellidoMatePasajero.getText(), 
-                                                                                                                (int) vista.SPNEdadPasajero.getValue(),
-                                                                                                                vista.TxtcorreoPasajero.getText(),
-                                                                                                                vista.LBLasientoPasajero.getText());
-                           if (pasajero.ConAtributosVacios()) {
-                                    Emergente msg=new Emergente(null, "Error", "Hay campos vacios en el Pasajero Principal", Emergente.Tipo.MessageDialog);
-                                    return;
-                           }
-                           pasajeroDAO.registrar(pasajero);
-                           asientoDAO.DeshabilitarAsiento(pasajero);
-                           
-                           if (acomp.length>0) {
-                                    for (int i = 0; i <acomp.length; i++) {
-                                             acomp[i]=new Acompañantes(ArrayAcompañantesDNI.get(i).getText(), 
-                                                                                               pasajero,
-                                                                                               viajeSeleccionado.getId(),
-                                                                                               ArrayAcompañantesNombres.get(i).getText(),
-                                                                                               ArrayAcompañantesApellidosPat.get(i).getText() , 
-                                                                                               ArrayAcompañantesApellidosMat.get(i).getText(), 
-                                                                                               (int) ArrayAcompañantesEdad.get(i).getValue(), 
-                                                                                                ArrayAcompañantesAsientos.get(i).getText());
-                                            
-                                             if (acomp[i].ConAtributosVacios()) {
-                                                      Emergente msg=new Emergente(null, "Error", "Hay campos vacios en el Acompañante "+(i+1), Emergente.Tipo.MessageDialog);
-                                                      return;
-                                             }
-                                             
-                                             acompañanteDAO.registrar(acomp[i]);
-                                             asientoDAO.DeshabilitarAsiento(acomp[i]);
-                                    }
-                           }
-                           
-                           Ventas  venta=new Ventas(vista.LBLfecha.getText(), vista.LBLhora.getText(), viajeSeleccionado, pasajero, Integer.parseInt(vista.LBLasientosCont.getText()), vista.LBLasientosSeleccionados.getText(), Double.parseDouble(vista.LBLPrecioTotal.getText()));
-                           ventaDAO.registrar(venta);
-                           
-                           viajeSeleccionado.RestarAsientosDisponibles(venta.getNumAsientos());
-                           
-                           viajeDAO.ActualizarAsientosDisponibles(viajeSeleccionado);
-                           
-                           EstadoInicial();
-                  }
-
                   
                   if (e.getSource()==vista.BTN_IzquiAcompañantes) {
                       
@@ -824,6 +928,153 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            
                   }
                   
+                  if (e.getSource()==vista.BTN_confirmarCompra) {
+                           int cantidadPasajeros=Integer.parseInt(vista.LBLasientosCont.getText());
+                           Acompañantes [] acomp=new Acompañantes[cantidadPasajeros-1];
+                           PasajeroPrincipal pasajero=new PasajeroPrincipal(vista.TxtDNIpasajero.getText(), 
+                                                                                                                viajeSeleccionado.getId(),
+                                                                                                                vista.TxtNombrePasajero.getText(),
+                                                                                                                vista.TxtApellidoPatePasajero.getText(), 
+                                                                                                                vista.TxtApellidoMatePasajero.getText(), 
+                                                                                                                (int) vista.SPNEdadPasajero.getValue(),
+                                                                                                                vista.TxtcorreoPasajero.getText(),
+                                                                                                                vista.LBLasientoPasajero.getText());
+                           if (pasajero.ConAtributosVacios()) {
+                                    Emergente msg=new Emergente(null, "Error", "Hay campos vacios en el Pasajero Principal", Emergente.Tipo.MessageDialog);
+                                    msg.MostrarMSG();
+                                    return;
+                           }
+                           if (!pasajero.dniValido()) {
+                                    Emergente msg=new Emergente(null, "Error", "El pasajero principal debe tener un DNI válido", Emergente.Tipo.MessageDialog);
+                                    msg.MostrarMSG();
+                                    return;
+                           }
+                           if (!pasajero.CorreoValido()) {
+                                    Emergente msg=new Emergente(null, "Error", "El pasajero principal debe tener un correo válido", Emergente.Tipo.MessageDialog);
+                                    msg.MostrarMSG();
+                                    return;
+                           }
+                           if (!pasajero.edadValida()) {
+                                    Emergente msg=new Emergente(null, "Error", "El pasajero principal no puede ser menor de edad", Emergente.Tipo.MessageDialog);
+                                    msg.MostrarMSG();
+                                    return;
+                           } 
+                           
+                           if (pasajeroDAO.ExisteEnPasajeros(pasajero)) {
+                                    Emergente msg=new Emergente(null, "Error", "El pasajero principal ya esta registrado en el viaje ", Emergente.Tipo.MessageDialog);
+                                    msg.MostrarMSG();
+                                    return;
+                           }
+                           
+                           if (pasajeroDAO.ExisteEnAcompañantes(pasajero)) {
+                                    Emergente msg=new Emergente(null, "Error", "El pasajero principal ya esta registrado en el viaje ", Emergente.Tipo.MessageDialog);
+                                    msg.MostrarMSG();
+                                     return;
+                           }
+                           
+                           if (acomp.length>0) {
+                                    for (int i = 0; i <acomp.length; i++) {
+                                             acomp[i]=new Acompañantes(ArrayAcompañantesDNI.get(i).getText(), 
+                                                                                               pasajero,
+                                                                                               viajeSeleccionado.getId(),
+                                                                                               ArrayAcompañantesNombres.get(i).getText(),
+                                                                                               ArrayAcompañantesApellidosPat.get(i).getText() , 
+                                                                                               ArrayAcompañantesApellidosMat.get(i).getText(), 
+                                                                                               (int) ArrayAcompañantesEdad.get(i).getValue(), 
+                                                                                                ArrayAcompañantesAsientos.get(i).getText());
+                                             if (i>0) {
+                                                      for (int j = 0; j <i; j++) {
+                                                               if (acomp[i].getDni().equals(acomp[j].getDni())) {
+                                                                        Emergente msg=new Emergente(null,"Error","El DNI del acompañante "+(i+1)+" es el mismo del Acompañante "+(j+1), Emergente.Tipo.MessageDialog);
+                                                                        msg.MostrarMSG();
+                                                                        return;
+                                                               }
+                                                      }
+                                             }
+                                             if (acomp[i].ConAtributosVacios()) {
+                                                      Emergente msg=new Emergente(null, "Error", "Hay campos vacios en el Acompañante "+(i+1), Emergente.Tipo.MessageDialog);
+                                                      msg.MostrarMSG();
+                                                      return;
+                                             }
+                                             if (!acomp[i].dniValido()) {
+                                                      Emergente msg=new Emergente(null, "Error", "El acompañante "+(i+1)+" no tiene un DNI válido", Emergente.Tipo.MessageDialog);
+                                                      msg.MostrarMSG();
+                                                      return;
+                                             }
+                                             if (acomp[i].igualDNI()) {
+                                                      Emergente msg=new Emergente(null, "Error", "El DNI del acompañante "+(i+1)+" es igual al del Pasajero Principal", Emergente.Tipo.MessageDialog);
+                                                      msg.MostrarMSG();
+                                                      return;
+                                             }
+                                             if (acompañanteDAO.ExisteEnPasajeros(acomp[i])) {
+                                                      Emergente msg=new Emergente(null, "Error", "El acompañante "+(i+1)+"ya esta registrado en el viaje", Emergente.Tipo.MessageDialog);
+                                                      msg.MostrarMSG();
+                                                      return;
+                                             }
+                                             if (acompañanteDAO.ExisteEnAcompañantes(acomp[i])) {
+                                                      Emergente msg=new Emergente(null, "Error", "El acompañante "+(i+1)+"ya esta registrado en el viaje", Emergente.Tipo.MessageDialog);
+                                                      msg.MostrarMSG();
+                                                      return;
+                                             }
+                                    }
+                           }
+                           
+                           Emergente confirmacion=new Emergente(vista, "Confirmación", "¿Seguro que desea realizar esta compra?", Emergente.Tipo.ConfirmDialog);
+                           int Opcion=confirmacion.MostrarConfirm();
+                           if (Opcion==1) {
+                                    Ventas  venta=new Ventas(vista.LBLfecha.getText(), 
+                                                                        vista.LBLhora.getText(),
+                                                                        viajeSeleccionado,
+                                                                        pasajero,
+                                                                        Integer.parseInt(vista.LBLasientosCont.getText()), 
+                                                                        vista.LBLasientosSeleccionados.getText(),
+                                                                        Double.parseDouble(vista.LBLPrecioTotal.getText()));
+                           
+                                    if (!pasajeroDAO.registrar(pasajero)) {
+                                            return;
+                                    }
+                           
+                                    if (!asientoDAO.DeshabilitarAsiento(pasajero)) {
+                                             return;
+                                    }
+                           
+                                    for (int i = 0; i < acomp.length; i++) {
+                                             if (!acompañanteDAO.registrar(acomp[i])) {
+                                                      return;
+                                             }
+                                             if (!asientoDAO.DeshabilitarAsiento(acomp[i])) {
+                                                      return;
+                                             }
+                                    }
+                           
+                                    if (!ventaDAO.registrar(venta)) {
+                                             return;
+                                    }     
+                           
+                                    viajeSeleccionado.RestarAsientosDisponibles(venta.getNumAsientos());
+                           
+                                    if (!viajeDAO.ActualizarAsientosDisponibles(viajeSeleccionado)) {
+                                             return;
+                                    }
+                           
+                                    Interfaz_Principal reinicio_Interfaz=new Interfaz_Principal();
+                                    CTRL_InterfazPrincipal reinicio_CTRl =new CTRL_InterfazPrincipal(reinicio_Interfaz,cant_ViajesDisponibles);
+                           
+                                    if (SesionSocio == null) {
+                                             reinicio_CTRl.Iniciar();
+                                             Cerrar();
+                           
+                                    }else{
+                                             SesionSocio.AcumularPuntos(venta.getGanancia());
+                                    
+                                             if (socioDAO.ActualizarPuntos(SesionSocio)) {
+                                                      reinicio_CTRl.Iniciar(SesionSocio);
+                                                      Cerrar();
+                                             }
+
+                                    }
+                           }      
+                  }
          }
 
     @Override
@@ -908,28 +1159,31 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                                              int id=Integer.parseInt(paneles.getName());
                                              CargarInfoViaje(id);
                                              CargarAsientos(id);
-                                             viajeSeleccionado=viajeDAO.ObtenerDatos(id);
+                                             viajeSeleccionado=viajeDAO.ObtenerDatoViaje(id);
                                              viajeSeleccionado.setId(id);
-                                             Slider(vista.ScrollPanelDinamico.getHorizontalScrollBar(),10,1100,5);
+                                             Slider(vista.ScrollPanelDinamico.getHorizontalScrollBar(),10,2200,10);
                                 }
                      }
                   
          }
 
     @Override
-    public void mouseReleased(MouseEvent e) {
+         public void mouseReleased(MouseEvent e) {
        
     }
 
     @Override
-    public void mouseEntered(MouseEvent e) {
+         public void mouseEntered(MouseEvent e) {
         
                   if (e.getSource()==vista.BTN_cerrarSesion) {
                            vista.BTN_cerrarSesion.setFont(new  Font("Consolas",Font.BOLD,16));
                            vista.BTN_cerrarSesion.setBorder(new LineBorder(Color.GREEN));
                            vista.BTN_cerrarSesion.setBackground(new Color(21,24, 30));
                   }
-
+                  
+                  if (e.getSource()==vista.BTN_infoSocio) {
+                           vista.BTN_infoSocio.setFont(new  Font("Segoe UI Emoji",Font.BOLD,20));
+                  }
                   
                   for (PanelPersonalizado paneles : ArrayPaneles) {
                           if (e.getSource()==paneles) {
@@ -973,27 +1227,22 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            vista.BTN_confirmarCompra.setBackground(new Color(21,24, 30));
                   }
                   
-                  
-                  if (e.getSource()==vista.LBLinfoUsuario) {
-                           vista.LBLinfoUsuario.setBackground(new Color(21,24, 30));
-                           vista.LBLinfoUsuario.setFont(new Font("Consolas",Font.BOLD,18)); 
-                  }
-                  
-                  if (e.getSource()==vista.LBLhistorialUsuario) {
-                           vista.LBLhistorialUsuario.setBackground(new Color(21,24, 30));
-                           vista.LBLhistorialUsuario.setFont(new Font("Consolas",Font.BOLD,18)); 
-                  }
-            
          }
     
-
     @Override
          public void mouseExited(MouseEvent e) {
-        
+                    
                   if (e.getSource()==vista.BTN_cerrarSesion) {
                            vista.BTN_cerrarSesion.setFont(new  Font("Consolas",Font.PLAIN,16));
                            vista.BTN_cerrarSesion.setBorder(new LineBorder(new Color(123,216,80)));
                            vista.BTN_cerrarSesion.setBackground(new Color(6,6,6));
+                  }
+                  
+                  if (e.getSource()==vista.BTN_infoSocio) {
+                           vista.BTN_infoSocio.setFont(new  Font("Segoe UI Emoji",Font.PLAIN,20));
+                           if (vista.BTN_infoSocio.isSelected()) {
+                                    vista.BTN_infoSocio.setFont(new  Font("Segoe UI Emoji",Font.BOLD,20)); 
+                           }
                   }
         
                   for (PanelPersonalizado paneles : ArrayPaneles) {
@@ -1034,15 +1283,6 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
                            vista.BTN_confirmarCompra.setBackground(new Color(6,6,6));
                   }
                   
-                  if (e.getSource()==vista.LBLinfoUsuario) {
-                           vista.LBLinfoUsuario.setBackground(Color.BLACK);
-                           vista.LBLinfoUsuario.setFont(new Font("Consolas",Font.PLAIN,18)); 
-                  }
-                  
-                  if (e.getSource()==vista.LBLhistorialUsuario) {
-                           vista.LBLhistorialUsuario.setBackground(Color.BLACK);
-                           vista.LBLhistorialUsuario.setFont(new Font("Consolas",Font.PLAIN,18)); 
-                  }
     }
 
     @Override
@@ -1055,25 +1295,34 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
          }
 
     @Override
-    public void mouseMoved(MouseEvent e) {
+         public void mouseMoved(MouseEvent e) {
        
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
+         public void keyTyped(KeyEvent e) {
        
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
+         public void keyPressed(KeyEvent e) {
       
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
+         public void keyReleased(KeyEvent e) {
       
     }
 
+        @Override
+         public void focusGained(FocusEvent e) {
+         
+         }
+
+    @Override
+         public void focusLost(FocusEvent e) {
+       
+    }
     @Override
          public void windowOpened(WindowEvent e) {
                   if (e.getSource()==vista) {
@@ -1089,32 +1338,32 @@ public class CTRL_InterfazPrincipal implements ActionListener,MouseListener,Mous
          }
 
     @Override
-    public void windowClosing(WindowEvent e) {
+         public void windowClosing(WindowEvent e) {
       
     }
 
     @Override
-    public void windowClosed(WindowEvent e) {
+         public void windowClosed(WindowEvent e) {
        
     }
 
     @Override
-    public void windowIconified(WindowEvent e) {
+         public void windowIconified(WindowEvent e) {
       
     }
 
     @Override
-    public void windowDeiconified(WindowEvent e) {
+         public void windowDeiconified(WindowEvent e) {
         
     }
 
     @Override
-    public void windowActivated(WindowEvent e) {
+         public void windowActivated(WindowEvent e) {
        
     }
 
     @Override
-    public void windowDeactivated(WindowEvent e) {
+         public void windowDeactivated(WindowEvent e) {
        
     }
 

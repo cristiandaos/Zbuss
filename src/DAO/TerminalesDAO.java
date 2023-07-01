@@ -59,7 +59,7 @@ public class TerminalesDAO extends Conexion{
                   PreparedStatement ps=null;
                   Connection con =getConnection();
                   try{
-                           ps=con.prepareStatement("DELETE * FROM Terminales WHERE terminal_id=?");
+                           ps=con.prepareStatement("DELETE FROM Terminales WHERE terminal_id=?");
                            ps.setInt(1, id);
                            ps.execute();
                            return true;
@@ -100,5 +100,32 @@ public class TerminalesDAO extends Conexion{
                            }
                   }
                   return null;
-         }    
+         }
+         public boolean TerminalenUso(int id){
+                  PreparedStatement ps=null;
+                  Connection con =getConnection();
+                  ResultSet rs=null;
+                  try{
+                           ps=con.prepareStatement("SELECT COUNT(*)  AS en_uso FROM Viajes WHERE viaje_terminal_salida = ? OR viaje_terminal_llegada = ?");
+                           ps.setInt(1, id);
+                           ps.setInt(2, id);
+                           rs=ps.executeQuery();
+                           if (rs.next()) {
+                                    int cant=rs.getInt("en_uso");
+                                    
+                                    return cant>0;
+                           }
+                  }catch(SQLException ex){
+                           System.err.println(ex);
+                           return false;
+                  }finally{
+                           try {
+                                    con.close();
+                           } catch (SQLException ex) {
+                                    System.out.println(ex);
+                           }
+                  } 
+             return false;
+         }
+
 }

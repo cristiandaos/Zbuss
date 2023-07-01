@@ -35,7 +35,7 @@ public class AdministradoresDAO extends Conexion{
         
     }
     
-         public boolean Modificar(Administrador admin,String dni){
+         public boolean Modificar(Administrador admin){
                   PreparedStatement ps=null;
                   Connection con =getConnection();
                   try{
@@ -45,7 +45,7 @@ public class AdministradoresDAO extends Conexion{
                            ps.setString(3,admin.getApellidoMaterno());
                            ps.setString(4, admin.getCorreo());
                            ps.setString(5, admin.getContraseña());
-                           ps.setString(6, dni);
+                           ps.setString(6, admin.getDni());
                            ps.execute();
                            return true;
                   }catch(SQLException ex){

@@ -60,6 +60,19 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                  
                  this.login.BTN_VisibilidadRegistro.addActionListener(this);
                  
+                 this.login.Txt_DniRegistro.addKeyListener(this);
+                 this.login.Txt_NomRegistro.addKeyListener(this);
+                 this.login.Txt_ApePatRegistro.addKeyListener(this);
+                 this.login.Txt_ApeMatRegistro.addKeyListener(this);
+                 this.login.Txt_FNacRegistro.addKeyListener(this);
+                 this.login.Txt_NumRegistro.addKeyListener(this);
+                 this.login.Txt_CorreoRegistro.addKeyListener(this);
+                 this.login.Txt_ContraRegistro.addKeyListener(this);
+                 this.login.Txt_ConfirmContraRegistro.addKeyListener(this);
+                 
+                 this.login.Txt_correoElectronico.addKeyListener(this);
+                 this.login.Txt_contraseña.addKeyListener(this);
+                 
                  PlaceHolder CorreoElectronico=new PlaceHolder("Correo Electronico", this.login.Txt_correoElectronico,PlaceHolder.Visibilidad.ALWAYS);
                  
                  PlaceHolder Contraseña=new PlaceHolder("Contraseña", this.login.Txt_contraseña,PlaceHolder.Visibilidad.ALWAYS);
@@ -74,8 +87,7 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                  
                  PlaceHolder contraRegistro=new PlaceHolder("Contraseña",this.login.Txt_ContraRegistro, PlaceHolder.Visibilidad.ALWAYS);
                  
-                 PlaceHolder confirmRegistro=new PlaceHolder("Confirmar Contraseña",this.login.Txt_ConfirmContraRegistro, PlaceHolder.Visibilidad.ALWAYS);
-                 
+                 PlaceHolder confirmRegistro=new PlaceHolder("Confirmar Contraseña",this.login.Txt_ConfirmContraRegistro, PlaceHolder.Visibilidad.ALWAYS);     
          }
     
          void Iniciar(){
@@ -170,7 +182,7 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                   }
                   
                   if (e.getSource()==login.BTN_clienteInvitado) {
-                           int cantViajes=viajesDAO.CantidadViajes();
+                           int cantViajes=viajesDAO.CantidadTotalViajes();
                            Interfaz_Principal principal=new Interfaz_Principal();
                            CTRL_InterfazPrincipal ctrl_principal=new CTRL_InterfazPrincipal(principal,cantViajes);
                            ctrl_principal.Iniciar();
@@ -184,13 +196,14 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                            String contraseña=login.Txt_contraseña.getText();
                            
                            if ( (correo.isBlank() && contraseña.isBlank()) || (!correo.isBlank() && contraseña.isBlank()) || (!contraseña.isBlank() && correo.isBlank()) ) {
-                                    Emergente msg=new Emergente(null,"Error en el ingreso","No se debe dejar ningún campo vacio",Emergente.Tipo.MessageDialog);        
+                                    Emergente msg=new Emergente(null,"Error en el ingreso","No se debe dejar ningún campo vacio",Emergente.Tipo.MessageDialog);
+                                    msg.MostrarMSG();
                                     return;
                            }
                            
                           if (sociosDAO.Validar(correo, contraseña)) {
                                     Socios sesionSocio= sociosDAO.ObtenerDatos(correo, contraseña);
-                                    int cantViajes=viajesDAO.CantidadViajes();
+                                    int cantViajes=viajesDAO.CantidadTotalViajes();
                                     Interfaz_Principal principal=new Interfaz_Principal();
                                     CTRL_InterfazPrincipal ctrl_principal=new CTRL_InterfazPrincipal(principal,cantViajes);                                          
                                     ctrl_principal.Iniciar(sesionSocio);
@@ -207,7 +220,8 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                                     return;
                            }
                           
-                           Emergente msg=new Emergente(null, "Error en el ingreso","El correo y/o contraseña ingresados son incorrectos",Emergente.Tipo.MessageDialog);               
+                           Emergente msg=new Emergente(null, "Error en el ingreso","El correo y/o contraseña ingresados son incorrectos",Emergente.Tipo.MessageDialog);
+                           msg.MostrarMSG();
                   }
         
                   
@@ -237,20 +251,48 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
                                                                        0);
                            
                            if (socio.ConAtributosVacios()) {
-                                    Emergente mg=new Emergente(null, "Error en el registro ", "No debe dejar campos vacios",Emergente.Tipo.MessageDialog);
+                                    Emergente msg=new Emergente(null, "Error en el registro ", "No debe dejar campos vacios",Emergente.Tipo.MessageDialog);
+                                    msg.MostrarMSG();
+                                    return;
+                           }
+                           if (!socio.CorreoValido()) {
+                                    Emergente msg=new Emergente(null, "Error en el registro ", "Ingrese un correo válido",Emergente.Tipo.MessageDialog);
+                                    msg.MostrarMSG();
+                                    return;
+                           }
+                           if (!socio.dniValido()) {
+                                    Emergente msg=new Emergente(null, "Error en el registro ", "Ingrese un DNI válido",Emergente.Tipo.MessageDialog);
+                                    msg.MostrarMSG();
+                                    return;
+                           }
+                           
+                           if (!socio.FNacValido()) {
+                                    Emergente msg=new Emergente(null, "Error en el registro ", "Ingrese una fecha de nacimiento válida",Emergente.Tipo.MessageDialog);
+                                    msg.MostrarMSG();
+                                    return;
+                           }
+                           if (!socio.NumeroValido()) {
+                                    Emergente msg=new Emergente(null, "Error en el registro ", "Ingrese un número válido",Emergente.Tipo.MessageDialog);
+                                    msg.MostrarMSG();
                                     return;
                            }
                            
                            if (!contraseña.equals(contraseñaConfirmada)) {
                                     Emergente msg=new Emergente(login, "Error en el registro","La contraseñas no coinciden",Emergente.Tipo.MessageDialog);
+                                    msg.MostrarMSG();
                                     return;
                            }
-                           
-                           sociosDAO.registrar(socio);
-                           InhabilitarRegistro();
-                           HabilitarRegistro();
-                           
-                           Emergente msg=new Emergente(login, "Socio registrado correctamente", "Bienvenido a socios Z-buss, "+socio.getNombre(),Emergente.Tipo.MessageDialog);
+                           Emergente confirmacion=new Emergente(login, "Confirmación", "¿Seguro que desea registrarse?", Emergente.Tipo.ConfirmDialog);
+                           int opcion=confirmacion.MostrarConfirm();
+                           if (opcion==0) {
+                                    return;
+                           }else{
+                                    sociosDAO.registrar(socio);
+                                    InhabilitarRegistro();
+                                    HabilitarRegistro(); 
+                                    Emergente msg=new Emergente(login, "Socio registrado correctamente", "Bienvenido a socios Z-buss, "+socio.getNombre(),Emergente.Tipo.MessageDialog);
+                                    msg.MostrarMSG();
+                           }
                   }
           
                   
@@ -388,9 +430,71 @@ public class CTRL_Login implements ActionListener,MouseListener,KeyListener,Mous
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
-     
-    }
+         public void keyPressed(KeyEvent e) {
+                  if (e.getKeyCode()==KeyEvent.VK_UP) {
+                      //registro
+                           if (login.Txt_ApePatRegistro.isFocusOwner()) {
+                                    login.Txt_NomRegistro.requestFocus();
+                           }
+                           if (login.Txt_ApeMatRegistro.isFocusOwner()) {
+                                    login.Txt_ApePatRegistro.requestFocus();
+                           }
+                           if (login.Txt_CorreoRegistro.isFocusOwner()) {
+                                    login.Txt_ApeMatRegistro.requestFocus();
+                           }
+                           if (login.Txt_DniRegistro.isFocusOwner()) {
+                                    login.Txt_CorreoRegistro.requestFocus();
+                           }
+                           if (login.Txt_FNacRegistro.isFocusOwner()) {
+                                    login.Txt_DniRegistro.requestFocus();
+                           }
+                           if (login.Txt_NumRegistro.isFocusOwner()) {
+                                    login.Txt_FNacRegistro.requestFocus();
+                           }
+                           if (login.Txt_ContraRegistro.isFocusOwner()) {
+                                    login.Txt_NumRegistro.requestFocus();
+                           }
+                           if (login.Txt_ConfirmContraRegistro.isFocusOwner()) {
+                                    login.Txt_ContraRegistro.requestFocus();
+                           }
+                           //login
+                           if (login.Txt_contraseña.isFocusOwner()) {
+                                    login.Txt_correoElectronico.requestFocus();
+                           }
+                           
+                  }
+                  if (e.getKeyCode()==KeyEvent.VK_DOWN) {
+                            //registro
+                           if (login.Txt_NomRegistro.isFocusOwner()) {
+                                    login.Txt_ApePatRegistro.requestFocus();
+                           }
+                           if (login.Txt_ApePatRegistro.isFocusOwner()) {
+                                    login.Txt_ApeMatRegistro.requestFocus();
+                           }
+                           if (login.Txt_ApeMatRegistro.isFocusOwner()) {
+                                    login.Txt_CorreoRegistro.requestFocus();
+                           }
+                           if (login.Txt_CorreoRegistro.isFocusOwner()) {
+                                    login.Txt_DniRegistro.requestFocus();
+                           }
+                           if (login.Txt_DniRegistro.isFocusOwner()) {
+                                    login.Txt_FNacRegistro.requestFocus();
+                           }
+                           if (login.Txt_FNacRegistro.isFocusOwner()) {
+                                    login.Txt_NumRegistro.requestFocus();
+                           }
+                           if (login.Txt_NumRegistro.isFocusOwner()) {
+                                    login.Txt_ContraRegistro.requestFocus();
+                           }
+                           if (login.Txt_ContraRegistro.isFocusOwner()) {
+                                    login.Txt_ConfirmContraRegistro.requestFocus();
+                           }
+                           //login
+                           if (login.Txt_correoElectronico.isFocusOwner()) {
+                                    login.Txt_contraseña.requestFocus();
+                           }
+                  }
+         }
 
     @Override
     public void keyReleased(KeyEvent e) {

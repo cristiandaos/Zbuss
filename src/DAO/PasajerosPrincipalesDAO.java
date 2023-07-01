@@ -5,9 +5,11 @@ import MODELO.Conexion;
 import MODELO.PasajeroPrincipal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class PasajerosPrincipalesDAO extends Conexion{
+    
          public boolean registrar(PasajeroPrincipal PPrincipal){
                   PreparedStatement ps = null;
                   Connection con = getConnection();
@@ -34,5 +36,53 @@ public class PasajerosPrincipalesDAO extends Conexion{
                                     System.out.println(e);
                            }
                   }
+         }
+         public boolean ExisteEnPasajeros(PasajeroPrincipal PPrincipal){
+                  PreparedStatement ps=null;
+                  Connection con=getConnection();
+                  ResultSet rs=null;
+                  try {
+                           ps=con.prepareStatement("SELECT * FROM PasajerosPrincipales WHERE pasajeroPrincipal_dni=? AND pasajeroPrincipal_viaje_id=?");
+                           ps.setString(1, PPrincipal.getDni());
+                           ps.setInt(2, PPrincipal.getViajeId());
+                           rs=ps.executeQuery();
+                           if (rs.next()) {
+                                    return true;
+                           }
+                           
+                  } catch (SQLException e) {
+                            System.out.println(e);
+                  }finally{
+                           try {
+                                    con.close();
+                           } catch (SQLException ex) {
+                                    System.out.println(ex);
+                           }
+                  }
+                  return false;
+         }
+         public boolean ExisteEnAcompañantes(PasajeroPrincipal PPrincipal){
+                  PreparedStatement ps=null;
+                  Connection con=getConnection();
+                  ResultSet rs=null;
+                  try {
+                           ps=con.prepareStatement("SELECT * FROM Acompañantes WHERE acompañante_dni=? AND acompañante_viaje_id=?");
+                           ps.setString(1, PPrincipal.getDni());
+                           ps.setInt(2, PPrincipal.getViajeId());
+                           rs=ps.executeQuery();
+                           if (rs.next()) {
+                                    return true;
+                           }
+                           
+                  } catch (SQLException e) {
+                            System.out.println(e);
+                  }finally{
+                           try {
+                                    con.close();
+                           } catch (SQLException ex) {
+                                    System.out.println(ex);
+                           }
+                  }
+                  return false;
          }
 }

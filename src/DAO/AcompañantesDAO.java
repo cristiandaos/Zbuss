@@ -26,4 +26,53 @@ public class AcompañantesDAO extends Conexion{
                             return false;
                   }
          }
+         
+                  public boolean ExisteEnPasajeros(Acompañantes acompa){
+                  PreparedStatement ps=null;
+                  Connection con=getConnection();
+                  ResultSet rs=null;
+                  try {
+                           ps=con.prepareStatement("SELECT * FROM PasajerosPrincipales WHERE pasajeroPrincipal_dni=? AND pasajeroPrincipal_viaje_id=?");
+                           ps.setString(1, acompa.getDni());
+                           ps.setInt(2, acompa.getViajeId());
+                           rs=ps.executeQuery();
+                           if (rs.next()) {
+                                    return true;
+                           }
+                           
+                  } catch (SQLException e) {
+                            System.out.println(e);
+                  }finally{
+                           try {
+                                    con.close();
+                           } catch (SQLException ex) {
+                                    System.out.println(ex);
+                           }
+                  }
+                  return false;
+         }
+         public boolean ExisteEnAcompañantes(Acompañantes acompa){
+                  PreparedStatement ps=null;
+                  Connection con=getConnection();
+                  ResultSet rs=null;
+                  try {
+                           ps=con.prepareStatement("SELECT * FROM Acompañantes WHERE acompañante_dni=? AND acompañante_viaje_id=?");
+                           ps.setString(1,acompa.getDni());
+                           ps.setInt(2, acompa.getViajeId());
+                           rs=ps.executeQuery();
+                           if (rs.next()) {
+                                    return true;
+                           }
+                           
+                  } catch (SQLException e) {
+                            System.out.println(e);
+                  }finally{
+                           try {
+                                    con.close();
+                           } catch (SQLException ex) {
+                                    System.out.println(ex);
+                           }
+                  }
+                  return false;
+         }
 }

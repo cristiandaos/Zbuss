@@ -3,6 +3,8 @@ package DAO;
 import MODELO.Conexion;
 import MODELO.Viajes;
 import java.sql.*;
+import java.util.ArrayList;
+import javax.swing.JComboBox;
 
 
 
@@ -87,7 +89,7 @@ public class ViajesDAO extends Conexion{
          
          }
          
-         public Viajes ObtenerDatos(int id){
+         public Viajes ObtenerDatoViaje(int id){
                   PreparedStatement ps=null;
                   Connection con=getConnection();
                   ResultSet rs=null;
@@ -123,7 +125,7 @@ public class ViajesDAO extends Conexion{
          
          }
          
-         public int CantidadViajes(){
+         public int CantidadTotalViajes(){
                   int cantidad=0;
                   PreparedStatement ps=null;
                   Connection con=getConnection();
@@ -145,6 +147,161 @@ public class ViajesDAO extends Conexion{
                   }
                   return cantidad;
          }
+         public int CantidadFiltradaViajes(int id1,int id2,String fecha){
+                  String where="";
+                  if (id1!=0 &&  id2!=0 && !fecha.isBlank()) {
+                           where="WHERE viaje_terminal_salida="+id1+" AND viaje_terminal_llegada="+id2+" AND viaje_fecha_salida='"+fecha+"'"; 
+                  }
+                  
+                  if (id1!=0 && id2!=0 && fecha.isBlank()) {
+                           where="WHERE viaje_terminal_salida="+id1+" AND viaje_terminal_llegada="+id2+";";
+                  }
+                  if (id1!=0 && id2==0 && !fecha.isBlank()) {
+                           where="WHERE viaje_terminal_salida="+id1+" AND viaje_fecha_salida= '"+fecha+"'";
+                  }
+                  if (id1!=0 && id2==0 && fecha.isBlank()) {
+                           where="WHERE viaje_terminal_salida="+id1;
+                  }
+                  if (id1==0 && id2!=0 && fecha.isBlank()) {
+                           where="WHERE viaje_terminal_llegada="+id2;
+                  }
+                  
+                  if (id1==0 && id2!=0 && !fecha.isBlank()) {
+                           where="WHERE viaje_terminal_llegada="+id2+" AND viaje_fecha_salida= '"+fecha+"'";
+                  }
+                  
+                  if (id1==0 && id2==0 && !fecha.isBlank()) {
+                           where="WHERE viaje_fecha_salida= '"+fecha+"'";
+                  }
+
+                   String sql="SELECT count(*) AS cantidad_viajes FROM Viajes "+where;
+                  int cantidad=0;
+                  PreparedStatement ps=null;
+                  Connection con=getConnection();
+                  ResultSet rs=null;
+                  try {
+                           ps=con.prepareStatement(sql);
+                           rs=ps.executeQuery(); 
+                           if (rs.next()) {
+                                    cantidad=Integer.parseInt(rs.getString("cantidad_viajes"));
+                           }
+                  } catch (SQLException e) {
+                           System.out.println(e);
+                  }finally{
+                           try {
+                                    con.close();
+                           } catch (SQLException ex) {
+                                    System.out.println(ex);
+                           }
+                  }
+                  return cantidad;
+         }
+         
+         public ArrayList<Viajes> ListarViajes() {
+                  ArrayList<Viajes> ListViajes = new ArrayList<>();
+                  PreparedStatement ps = null;
+                  Connection con = getConnection();
+                  String sql = "SELECT v.viaje_id, ts.terminal_nombre AS terminal_salida, tl.terminal_nombre AS terminal_llegada, v.viaje_fecha_salida, v.viaje_fecha_llegada, v.viaje_hora_salida, v.viaje_hora_llegada, v.viaje_distancia, v.viaje_asientos_Dispo, v.viaje_precio, v.viaje_promocion, v.viaje_img_Refe \n" +
+                                      "FROM Viajes v \n" +
+                                      "JOIN Terminales ts ON v.viaje_terminal_salida = ts.terminal_id \n" +
+                                      "JOIN Terminales tl ON v.viaje_terminal_llegada = tl.terminal_id;";
+                  ResultSet rs = null;
+                  try {
+                           ps = con.prepareStatement(sql);
+                           rs= ps.executeQuery();
+                           
+                            while (rs.next()) {
+                                    Viajes viaje = new Viajes(  rs.getInt("viaje_id"),
+                                                                                 rs.getString("terminal_salida"),
+                                                                                 rs.getString("terminal_llegada"),
+                                                                                 rs.getString("viaje_fecha_salida"),
+                                                                                 rs.getString("viaje_fecha_llegada"),
+                                                                                 rs.getString("viaje_hora_salida"),
+                                                                                 rs.getString("viaje_hora_llegada"),
+                                                                                 rs.getString("viaje_distancia"),
+                                                                                 rs.getInt("viaje_asientos_Dispo"),
+                                                                                 rs.getDouble("viaje_precio"),
+                                                                                 rs.getBytes("viaje_img_Refe"));
+                                    ListViajes.add(viaje);
+                           }
+                  } catch (SQLException e) {
+                           System.out.println(e);
+                  } finally {
+                           try {
+                                    con.close();
+                           } catch (SQLException ex) {
+                                    System.out.println(ex);
+                           }
+                  }
+                  return ListViajes;
+        }
+         
+         
+         public ArrayList<Viajes> ListarViajesFiltrados(int id1,int id2,String fecha) {
+                  String where="";
+                  if (id1!=0 &&  id2!=0 && !fecha.isBlank()) {
+                           where="WHERE viaje_terminal_salida="+id1+" AND viaje_terminal_llegada="+id2+" AND viaje_fecha_salida='"+fecha+"'"; 
+                  }
+                  
+                  if (id1!=0 && id2!=0 && fecha.isBlank()) {
+                           where=" WHERE viaje_terminal_salida="+id1+" AND viaje_terminal_llegada="+id2;
+                  }
+                  if (id1!=0 && id2==0 && !fecha.isBlank()) {
+                           where=" WHERE viaje_terminal_salida="+id1+" AND viaje_fecha_salida= '"+fecha+"'";
+                  }
+                  if (id1!=0 && id2==0 && fecha.isBlank()) {
+                           where="WHERE viaje_terminal_salida="+id1;
+                  }
+                  if (id1==0 && id2!=0 && fecha.isBlank()) {
+                           where="WHERE viaje_terminal_llegada="+id2;
+                  }
+                  
+                  if (id1==0 && id2!=0 && !fecha.isBlank()) {
+                           where="WHERE viaje_terminal_llegada="+id2+" AND viaje_fecha_salida= '"+fecha+"'";
+                  }
+                  
+                  if (id1==0 && id2==0 && !fecha.isBlank()) {
+                           where="WHERE viaje_fecha_salida= '"+fecha+"'";
+                  }
+                  ArrayList<Viajes> ListViajes = new ArrayList<>();
+                  PreparedStatement ps = null;
+                  Connection con = getConnection();
+                  String sql = "SELECT v.viaje_id, ts.terminal_nombre AS terminal_salida, tl.terminal_nombre AS terminal_llegada, v.viaje_fecha_salida, v.viaje_fecha_llegada, v.viaje_hora_salida, v.viaje_hora_llegada, v.viaje_distancia, v.viaje_asientos_Dispo, v.viaje_precio, v.viaje_promocion, v.viaje_img_Refe \n" +
+                                      "FROM Viajes v \n" +
+                                      "JOIN Terminales ts ON v.viaje_terminal_salida = ts.terminal_id \n" +
+                                      "JOIN Terminales tl ON v.viaje_terminal_llegada = tl.terminal_id \n"+
+                                       where;
+                  ResultSet rs = null;
+                  try {
+                           ps = con.prepareStatement(sql);
+                           rs= ps.executeQuery();
+                           
+                            while (rs.next()) {
+                                    Viajes viaje = new Viajes(  rs.getInt("viaje_id"),
+                                                                                 rs.getString("terminal_salida"),
+                                                                                 rs.getString("terminal_llegada"),
+                                                                                 rs.getString("viaje_fecha_salida"),
+                                                                                 rs.getString("viaje_fecha_llegada"),
+                                                                                 rs.getString("viaje_hora_salida"),
+                                                                                 rs.getString("viaje_hora_llegada"),
+                                                                                 rs.getString("viaje_distancia"),
+                                                                                 rs.getInt("viaje_asientos_Dispo"),
+                                                                                 rs.getDouble("viaje_precio"),
+                                                                                 rs.getBytes("viaje_img_Refe"));
+                                    ListViajes.add(viaje);
+                           }
+                  } catch (SQLException e) {
+                           System.out.println(e);
+                  } finally {
+                           try {
+                                    con.close();
+                           } catch (SQLException ex) {
+                                    System.out.println(ex);
+                           }
+                  }
+                  return ListViajes;
+        }
+        
          
          public boolean ActualizarAsientosDisponibles(Viajes viaje){
                   PreparedStatement ps=null;

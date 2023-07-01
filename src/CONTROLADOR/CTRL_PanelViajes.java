@@ -229,6 +229,7 @@ public class CTRL_PanelViajes implements ActionListener,MouseListener,ChangeList
                   } 
          }
          
+         
          void Seleccion_ID_CB(JComboBox comboBox, int id){
                   int indiceSeleccionado = -1;
                   for (int i = 0; i < comboBox.getItemCount(); i++) {
@@ -241,8 +242,8 @@ public class CTRL_PanelViajes implements ActionListener,MouseListener,ChangeList
                   if (indiceSeleccionado != -1) {
                            comboBox.setSelectedIndex(indiceSeleccionado);
                   }
-         
          }
+         
          
          void ReiniciarCampos(){
                   bytes=null;
@@ -258,7 +259,6 @@ public class CTRL_PanelViajes implements ActionListener,MouseListener,ChangeList
                   fechaAuxiliarDC=null;
                   ((JTextField) panel.DCviaje_fechaSalida.getDateEditor().getUiComponent()).setText("");
                   panel.BTN_infoViaje.setVisible(false);
-
          }
          
          
@@ -349,6 +349,7 @@ public class CTRL_PanelViajes implements ActionListener,MouseListener,ChangeList
                   }
          }
          
+         
          void AbrirFileChooser() {
                   JFileChooser FC = new JFileChooser();
                   FC.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -397,14 +398,19 @@ public class CTRL_PanelViajes implements ActionListener,MouseListener,ChangeList
                            
                            panel.LBLviaje_fechaLlegada.setText(llegadaFecha);
                            panel.LBLviaje_horaLlegada.setText(llegadaHora);                        
-                 }
-         
+                 }    
          }
+         
          
          private void CalcularTiempoRestante(Date fechaSalida,Date fechaLlegada){
                   Date fechaActual=new Date();
                   
-                  long tiempoRestante = fechaSalida.getTime() - System.currentTimeMillis();
+                  long longActual=fechaActual.getTime();
+                  long longSalida=fechaSalida.getTime();
+                  long longLlegada=fechaLlegada.getTime();
+                  long longDuracion=longLlegada-longSalida;
+                  
+                  long tiempoRestante = longSalida - longActual;
                   long dias = TimeUnit.MILLISECONDS.toDays(tiempoRestante);
                   long horas = TimeUnit.MILLISECONDS.toHours(tiempoRestante)%24;
                   long minutos = TimeUnit.MILLISECONDS.toMinutes(tiempoRestante) % 60;
@@ -424,17 +430,20 @@ public class CTRL_PanelViajes implements ActionListener,MouseListener,ChangeList
                             T_restante+=segundos+"seg ";
                   }
                   
-                  
                   if (fechaActual.compareTo(fechaSalida)<0) {    
-                      
                            panel.LBL_infoViajeEstado.setText("Planificado");
-                           
+                           panel.PB_viajeProgreso.setValue(0);       
                            panel.LBL_infoTiempoRestante.setText(T_restante);
                            
-                  }else if (fechaActual.compareTo(fechaSalida)>0) {     
-                      
+                  }else if (fechaActual.compareTo(fechaSalida)>0) {  
+                            double act=longActual;
+                            double sal=longSalida;
+                            double dur=longDuracion;
+                            double val=((act-sal)/dur)*100;
+                            int porcentaje=(int) val;
+                            
+                           panel.PB_viajeProgreso.setValue(porcentaje);          
                            panel.LBL_infoViajeEstado.setText("En curso");
-                           
                            panel.LBL_infoTiempoRestante.setText("El viaje esta en curso");
 
                            
@@ -482,6 +491,12 @@ public class CTRL_PanelViajes implements ActionListener,MouseListener,ChangeList
                            }
                   } catch (SQLException e) {
                            System.out.println(e);
+                  }finally{
+                           try {
+                                    con.close();
+                           } catch (SQLException e) {
+                                    System.out.println(e);
+                           }
                   }
   
                   try {
@@ -521,11 +536,24 @@ public class CTRL_PanelViajes implements ActionListener,MouseListener,ChangeList
                   
                  CalcularTiempoRestante(fechaSalidaCompleta, fechaLlegadaCompleta);
                  Timer temporizador = new Timer(1000, new ActionListener() {
+                     
                            public void actionPerformed(ActionEvent e) {
+                          
                                     CalcularTiempoRestante(fechaSalidaCompleta, fechaLlegadaCompleta);
+                                    
+                                    if (panel.LBL_infoViajeEstado.getText().equals("Finalizado")) {
+                                            ((Timer) e.getSource()).stop();
+                                    }
+                                    if (!panel.BTN_volver.isOpaque()) {
+                                             ((Timer) e.getSource()).stop();
+                                    }
+                                    if (!panel.BTN_volver.isShowing()) {
+                                             ((Timer) e.getSource()).stop();
+                                    }
+
                            }
                  });
-                 temporizador.start();
+                 temporizador.start();              
          }
          
          
@@ -598,6 +626,7 @@ public class CTRL_PanelViajes implements ActionListener,MouseListener,ChangeList
          
          }
          
+         
          void CargarViajeInfoBuss(int id){
                   int x=20;
                   int y=80;
@@ -663,6 +692,7 @@ public class CTRL_PanelViajes implements ActionListener,MouseListener,ChangeList
                            
                            if (fechaSalida==null || horaSalida==null || duracion==null) {
                                     Emergente msg=new Emergente(null, "Error","No debe dejar campos vacios en la programación de un viaje",Emergente.Tipo.MessageDialog);
+                                    msg.MostrarMSG();
                                     return;
                            }
                            
@@ -675,6 +705,7 @@ public class CTRL_PanelViajes implements ActionListener,MouseListener,ChangeList
                            
                            if (IDllegada.isBlank() || IDsalida.isBlank()) {
                                     Emergente msg=new Emergente(null, "Error","No debe dejar campos vacios en la programación de un viaje",Emergente.Tipo.MessageDialog);
+                                    msg.MostrarMSG();
                                     return;
                            }
                            
@@ -684,7 +715,7 @@ public class CTRL_PanelViajes implements ActionListener,MouseListener,ChangeList
                            if (panel.TBL_viajes.getSelectedRow()>-1) {
                                     int fila=panel.TBL_viajes.getSelectedRow();
                                     int id=(int) panel.TBL_viajes.getValueAt(fila,0);
-                                    Viajes viajeModificado= viajeDAO.ObtenerDatos(id);
+                                    Viajes viajeModificado= viajeDAO.ObtenerDatoViaje(id);
                                     
                                     viajeModificado.setTerminalSalida(IDterminalSalida);
                                     viajeModificado.setTerminalLlegada(IDterminalLlegada);
@@ -699,15 +730,23 @@ public class CTRL_PanelViajes implements ActionListener,MouseListener,ChangeList
                                     
                                     if (viajeModificado.ConAtributosVacios()) {
                                              Emergente msg=new Emergente(null, "Error","Hay campos vacios en la Modificación de un viaje",Emergente.Tipo.MessageDialog);
+                                             msg.MostrarMSG();
                                              return;
                                     }
-                                    
-                                    viajeDAO.Modificar(viajeModificado,id);
-                                    ReiniciarCampos();
-                                    ListarViajes();
-                                    
-                                    Emergente msg=new Emergente(null, "Modificación","Viaje modificado correctamente",Emergente.Tipo.MessageDialog);
-                                    
+                                    if (!viajeModificado.TerminalesValidas()) {
+                                             Emergente msg=new Emergente(null, "Error","La terminal de salida es la misma que la terminal de llegada",Emergente.Tipo.MessageDialog);
+                                             msg.MostrarMSG();
+                                             return;
+                                    }
+                                    if (viajeDAO.Modificar(viajeModificado,id)){
+                                             ReiniciarCampos();
+                                             ListarViajes();
+                                             Emergente msg=new Emergente(null, "Modificación","Viaje modificado correctamente",Emergente.Tipo.MessageDialog);
+                                             msg.MostrarMSG();
+                                    }else{
+                                             Emergente msg=new Emergente(null, "Error","Error en la modificación del viaje",Emergente.Tipo.MessageDialog);
+                                             msg.MostrarMSG();
+                                    }
                            }else{    
                                
                                     Viajes viaje=new Viajes(IDterminalSalida, 
@@ -724,14 +763,26 @@ public class CTRL_PanelViajes implements ActionListener,MouseListener,ChangeList
                                     
                                     if (viaje.ConAtributosVacios()) {  
                                              Emergente msg=new Emergente(null, "Error","Hay  campos vacios en la programación de un viaje",Emergente.Tipo.MessageDialog);
+                                             msg.MostrarMSG();
+                                             return;
+                                    }
+                                    if (!viaje.TerminalesValidas()) {
+                                             Emergente msg=new Emergente(null, "Error","La terminal de salida es la misma que la terminal de llegada",Emergente.Tipo.MessageDialog);
+                                             msg.MostrarMSG();
                                              return;
                                     }
                                     
-                                    viajeDAO.Registrar(viaje);
-                                    asientoDAO.ActivarAsientos(viajeDAO.ObtenerIDgenerado());
-                                    ReiniciarCampos();
-                                    ListarViajes();
-                                    Emergente msg=new Emergente(null, "Registro","Viaje programado correctamente",Emergente.Tipo.MessageDialog);
+                                    if (viajeDAO.Registrar(viaje)) {
+                                             if (asientoDAO.ActivarAsientos(viajeDAO.ObtenerIDgenerado())) {
+                                                      ReiniciarCampos();
+                                                      ListarViajes();
+                                                      Emergente msg=new Emergente(null, "Registro","Viaje programado correctamente",Emergente.Tipo.MessageDialog);
+                                                      msg.MostrarMSG();
+                                             }
+                                    }else{
+                                             Emergente msg=new Emergente(null, "Error","Error en la programacion de un viaje",Emergente.Tipo.MessageDialog);
+                                             msg.MostrarMSG();
+                                    }
                            
                            }
                   }
@@ -750,17 +801,21 @@ public class CTRL_PanelViajes implements ActionListener,MouseListener,ChangeList
                            
                            if (fila<0) {
                                     Emergente msg=new Emergente(null, "Error","No hay ningún viaje seleccionado",Emergente.Tipo.MessageDialog);
+                                    msg.MostrarMSG();
                                     return;
                            }
                            
                            int id=(int) panel.TBL_viajes.getValueAt(fila,0);
-                           viajeDAO.Eliminar(id);
-                           ReiniciarCampos();
-                           ListarViajes();
+                           if (viajeDAO.Eliminar(id)) {
+                                    ReiniciarCampos();
+                                    ListarViajes();
+                                    Emergente msg=new Emergente(null, "Eliminación","Viaje Eliminado correctamente",Emergente.Tipo.MessageDialog);
+                                    msg.MostrarMSG();
+                           }
                   }
                   
                   if (e.getSource()==panel.BTN_infoViaje) {
-                           
+                           panel.BTN_volver.setOpaque(true);
                            int fila=panel.TBL_viajes.getSelectedRow();
                            int id=(int) panel.TBL_viajes.getValueAt(fila, 0);
                            CargarViajeInfoDetalle(id);
@@ -770,6 +825,7 @@ public class CTRL_PanelViajes implements ActionListener,MouseListener,ChangeList
                   }
                   
                   if (e.getSource()==panel.BTN_volver) {
+                           panel.BTN_volver.setOpaque(false);
                            panel.Buss.removeAll();
                            Slider(panel.ScrollPanelDinamico.getHorizontalScrollBar(), 10, 0, 5);
                            
@@ -801,7 +857,7 @@ public class CTRL_PanelViajes implements ActionListener,MouseListener,ChangeList
                   if (e.getSource()==panel.TBL_viajes) {
                            int fila=panel.TBL_viajes.getSelectedRow();
                            int id=(int) panel.TBL_viajes.getValueAt(fila,0);
-                           Viajes viaje= viajeDAO.ObtenerDatos(id);
+                           Viajes viaje= viajeDAO.ObtenerDatoViaje(id);
                            Seleccionar(viaje);
                   }
 
@@ -815,7 +871,7 @@ public class CTRL_PanelViajes implements ActionListener,MouseListener,ChangeList
                   if (e.getSource()==panel.TBL_viajes) {
                            int fila=panel.TBL_viajes.getSelectedRow();
                            int id=(int) panel.TBL_viajes.getValueAt(fila,0);
-                           Viajes viaje= viajeDAO.ObtenerDatos(id);
+                           Viajes viaje= viajeDAO.ObtenerDatoViaje(id);
                            Seleccionar(viaje);
                   }
          }

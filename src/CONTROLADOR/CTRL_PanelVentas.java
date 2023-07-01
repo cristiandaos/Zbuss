@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -29,7 +30,7 @@ public class CTRL_PanelVentas {
          
          private void ListarVentas(){
                   panel.TBLventas.getTableHeader().setFont(new Font("Consolas", Font.PLAIN, 16));
-                  panel.TBLventas.getTableHeader().setBorder(new LineBorder(Color.WHITE,1));
+                  panel.TBLventas.getTableHeader().setBorder(new EmptyBorder(1,1,1,1));
                   panel.TBLventas.getTableHeader().setForeground(Color.GREEN);
                   panel.TBLventas.getTableHeader().setBackground(new Color(6,6,6));
                   

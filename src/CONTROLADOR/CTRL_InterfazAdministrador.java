@@ -18,7 +18,6 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
 public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,MouseMotionListener,WindowListener{
@@ -94,7 +93,6 @@ public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,
                                              botones.setFont(new Font("Segoe UI Emoji",Font.PLAIN,16));
                                              botones.setBorder(new EmptyBorder(0,0,0,0));
                                              boton.setFont(new Font("Segoe UI Emoji",Font.BOLD,16));
-                                             boton.setBorder(new LineBorder(new Color(123,216,80),1,false));
                                     }
                            }  
                   }
@@ -149,7 +147,6 @@ public class CTRL_InterfazAdministrador implements ActionListener,MouseListener,
                            CTRL_Login ctrlLogin=new CTRL_Login(login);
                            Cerrar();
                            ctrlLogin.Iniciar();
-                           ReiniciarBTNS();
                   }
                   
                   if (e.getSource()==vista.BTN_gestionarViajes ) {

@@ -1,9 +1,13 @@
 
 package MODELO;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class Socios {
@@ -111,8 +115,14 @@ public class Socios {
          return periodo.getYears();
     }
     
+    public void  AcumularPuntos(double gasto){
+             int pts=(int) (gasto*0.05);
+             int ptsActualizados=puntos+pts;
+             setPuntos(ptsActualizados);
+    }
+    
     //retorna true si algun atributo es una cadena vacia o un null
-    public boolean ConAtributosVacios() {
+         public boolean ConAtributosVacios() {
                   return !(nombre != null && !nombre.isEmpty())
                            || !(apellidoPaterno != null && !apellidoPaterno.isEmpty())
                            || !(apellidoMaterno != null && !apellidoMaterno.isEmpty())
@@ -120,7 +130,47 @@ public class Socios {
                            || !(nacimiento != null && !nacimiento.isEmpty())
                            || !(numero != null && !numero.isEmpty())
                            || !(contraseña != null && !contraseña.isEmpty());
-}
+         }
+         
+         public boolean CorreoValido(){
+                  if (correo.indexOf('@') != correo.lastIndexOf('@')) {
+                           return false;
+                  }
+                  int punto = correo.lastIndexOf('.');
+                  return punto > correo.indexOf('@') + 1 && punto < correo.length() - 1;
+         }
+         
+         public boolean dniValido(){
+                  String patron="[0-9]+$";
+                  Pattern pattern=Pattern.compile(patron);
+                  Matcher matcher=pattern.matcher(dni);
+                  if (dni.length()==8 & matcher.matches()) {
+                           return true;
+                  }
+                  return false;
+         }
+         
+         public boolean NumeroValido(){
+                  String patron="[0-9]+$";
+                  Pattern pattern=Pattern.compile(patron);
+                  Matcher matcher=pattern.matcher(numero);
+                  if (numero.length()==9 & matcher.matches()) {
+                           return true;
+                  }
+                  return false;
+         }
+         
+         public boolean FNacValido(){
+                  LocalDate fechaActual = LocalDate.now();
+                  
+                  DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                  LocalDate fechaNac = LocalDate.parse(nacimiento, formato);
+                  
+                  Period edad = Period.between(fechaNac, fechaActual);
+                  
+                  return edad.getYears()>=18 && edad.getYears()<=100;
+         }
+         
     
          
 }

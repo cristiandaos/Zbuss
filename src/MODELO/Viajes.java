@@ -6,6 +6,8 @@ public class Viajes {
     private int Id;
         private int terminalSalida;
         private int terminalLlegada;
+        private String T_salida;
+        private String T_llegada;
         private String fechaSalida;
         private String fechaLlegada;
         private String horaSalida;
@@ -24,6 +26,20 @@ public class Viajes {
                 this.horaSalida = horaSalida;
                 this.horaLlegada = horaLlegada;
                 this.duracion=duracion;
+                this.distancia = distancia;
+                this.AsientosDispo = AsientosDispo;
+                this.Precio = Precio;
+                this.img = img;
+        }
+        
+        public Viajes(int ID,String  T_salida, String T_llegada, String fechaSalida, String fechaLlegada, String horaSalida, String horaLlegada, String distancia, int AsientosDispo, double Precio, byte[] img) {
+                this.Id=ID;
+                this.T_salida=T_salida;
+                this.T_llegada=T_llegada;
+                this.fechaSalida = fechaSalida;
+                this.fechaLlegada = fechaLlegada;
+                this.horaSalida = horaSalida;
+                this.horaLlegada = horaLlegada;
                 this.distancia = distancia;
                 this.AsientosDispo = AsientosDispo;
                 this.Precio = Precio;
@@ -48,6 +64,22 @@ public class Viajes {
 
     public void setTerminalSalida(int terminalSalida) {
         this.terminalSalida = terminalSalida;
+    }
+
+    public String getT_salida() {
+        return T_salida;
+    }
+
+    public void setT_salida(String T_salida) {
+        this.T_salida = T_salida;
+    }
+
+    public String getT_llegada() {
+        return T_llegada;
+    }
+
+    public void setT_llegada(String T_llegada) {
+        this.T_llegada = T_llegada;
     }
 
     public int getTerminalLlegada() {
@@ -137,6 +169,7 @@ public class Viajes {
                   int nuevaCantidad=AsientosDispo-cantidad;
                   setAsientosDispo(nuevaCantidad);
         }
+         
          public boolean ConAtributosVacios() {
                   return !(terminalSalida != 0)
                             || !(terminalLlegada != 0)
@@ -146,6 +179,13 @@ public class Viajes {
                             || !(distancia != null && !distancia.isBlank())
                             || !(Precio != 0.00)
                             || !(img != null );
+         }
+         
+         public boolean TerminalesValidas(){
+                  if (terminalSalida!=terminalLlegada) {
+                           return true;
+                  }
+                  return false;
          }
         
         

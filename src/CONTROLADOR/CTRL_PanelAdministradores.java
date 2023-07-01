@@ -18,6 +18,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -45,8 +46,7 @@ public class CTRL_PanelAdministradores implements ActionListener,MouseListener{
                   PlaceHolder apellidoMat=new PlaceHolder("Apellido Materno",this.panel.TXT_apeMat_admin, PlaceHolder.Visibilidad.ALWAYS);
                   PlaceHolder correo=new PlaceHolder("Correo Electrónico",this.panel.TXT_correo_admin, PlaceHolder.Visibilidad.ALWAYS);
                   PlaceHolder contraseña=new PlaceHolder("Contraseña",this.panel.TXT_contraseña_admin, PlaceHolder.Visibilidad.ALWAYS);
-                  
-                  
+
                   ListarAdministradores();
                   
    
@@ -57,6 +57,8 @@ public class CTRL_PanelAdministradores implements ActionListener,MouseListener{
          }
          
          void ReiniciarCampos(){
+                  panel.TXT_dni_admin.setEnabled(true);
+                  panel.TXT_dni_admin.requestFocus();
                   panel.TXT_dni_admin.setText(null);
                   panel.TXT_nombre_admin.setText(null);
                   panel.TXT_apePat_admin.setText(null);
@@ -68,7 +70,7 @@ public class CTRL_PanelAdministradores implements ActionListener,MouseListener{
          
          void ListarAdministradores(){
                   panel.TBLadministradores.getTableHeader().setFont(new Font("Consolas", Font.PLAIN, 14));
-                  panel.TBLadministradores.getTableHeader().setBorder(new LineBorder(Color.WHITE,1));
+                  panel.TBLadministradores.getTableHeader().setBorder(new EmptyBorder(1,1,1,1));
                   panel.TBLadministradores.getTableHeader().setForeground(Color.GREEN);
                   panel.TBLadministradores.getTableHeader().setBackground(new Color(6,6,6));
                   
@@ -120,6 +122,7 @@ public class CTRL_PanelAdministradores implements ActionListener,MouseListener{
          
          void  Seleccionar(Administrador admin){
                   panel.TXT_dni_admin.setText(admin.getDni());
+                  panel.TXT_dni_admin.setEnabled(false);
                   panel.TXT_nombre_admin.setText(admin.getNombre());
                   panel.TXT_apePat_admin.setText(admin.getApellidoPaterno());
                   panel.TXT_apeMat_admin.setText(admin.getApellidoMaterno());
@@ -150,12 +153,20 @@ public class CTRL_PanelAdministradores implements ActionListener,MouseListener{
                                     
                                     if (adminModificado.ConAtributosVacios()) {
                                              Emergente msg=new Emergente(null, "Error", "Hay campos vacios en la modificación de un administrador", Emergente.Tipo.MessageDialog);
+                                             msg.MostrarMSG();
                                              return;
                                     }
-                                    adminDAO.Modificar(adminModificado,dni);
-                                    ReiniciarCampos();
-                                    ListarAdministradores();
-                                    Emergente msg=new Emergente(null, "Modificación","Administrador modificado correctamente", Emergente.Tipo.MessageDialog);
+                                    if (!adminModificado.CorreoValido()) {
+                                             Emergente msg=new Emergente(null, "Error", "El administrador debe tener un correo válido", Emergente.Tipo.MessageDialog);
+                                             msg.MostrarMSG();
+                                             return;
+                                    }
+                                    if (adminDAO.Modificar(adminModificado)) {
+                                            ReiniciarCampos();
+                                            ListarAdministradores();
+                                            Emergente msg=new Emergente(null, "Modificación","Administrador modificado correctamente", Emergente.Tipo.MessageDialog);
+                                            msg.MostrarMSG();
+                                    }
                                     
                            }else{
                                     Administrador admin=new Administrador(panel.TXT_dni_admin.getText(),
@@ -166,13 +177,25 @@ public class CTRL_PanelAdministradores implements ActionListener,MouseListener{
                                                                                                             panel.TXT_contraseña_admin.getText());
                                     if (admin.ConAtributosVacios()) {
                                              Emergente msg=new Emergente(null, "Error", "Hay campos vacios en el registro de un administrador", Emergente.Tipo.MessageDialog);
+                                             msg.MostrarMSG();
                                              return;
                                     }
-                                    
-                                    adminDAO.registrar(admin);
-                                    ReiniciarCampos();
-                                    ListarAdministradores();
-                                     Emergente msg=new Emergente(null, "Registro","Administrador registrado correctamente", Emergente.Tipo.MessageDialog);
+                                    if (!admin.dniValido()) {
+                                             Emergente msg=new Emergente(null, "Error", "El administrador debe tener un dni válido", Emergente.Tipo.MessageDialog);
+                                             msg.MostrarMSG();
+                                             return;
+                                    }
+                                    if (!admin.CorreoValido()) {
+                                             Emergente msg=new Emergente(null, "Error", "El administrador debe tener un dni válido", Emergente.Tipo.MessageDialog);
+                                             msg.MostrarMSG();
+                                             return;
+                                    }
+                                    if (adminDAO.registrar(admin)) {
+                                             ReiniciarCampos();
+                                             ListarAdministradores();
+                                             Emergente msg=new Emergente(null, "Registro","Administrador registrado correctamente", Emergente.Tipo.MessageDialog);
+                                             msg.MostrarMSG();
+                                    }
                            }
                   }
                   
@@ -181,14 +204,18 @@ public class CTRL_PanelAdministradores implements ActionListener,MouseListener{
                            
                            if (fila<0) {
                                     Emergente msg=new Emergente(null, "Error","No hay ningún administrador seleccionado",Emergente.Tipo.MessageDialog);
+                                    msg.MostrarMSG();
                                     return;
                            }
                            
                            String dni = (String) panel.TBLadministradores.getValueAt(fila,0);
-                           adminDAO.Eliminar(dni);
-                           ReiniciarCampos();
-                           ListarAdministradores();
-                           Emergente msg=new Emergente(null, "Eliminación","Administrador elimininado correctamente", Emergente.Tipo.MessageDialog);
+                           if (adminDAO.Eliminar(dni)) {
+                                    ReiniciarCampos();
+                                    ListarAdministradores();
+                                    Emergente msg=new Emergente(null, "Eliminación","Administrador elimininado correctamente", Emergente.Tipo.MessageDialog);
+                                    msg.MostrarMSG();
+                           }
+
                   }
         }
 

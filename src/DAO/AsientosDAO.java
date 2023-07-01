@@ -41,7 +41,7 @@ public class AsientosDAO extends Conexion{
                   }
         }
         
-         public void ActivarAsientos(int id){
+         public boolean ActivarAsientos(int id){
                   PreparedStatement ps=null;
                   Connection con=getConnection();
                   String sql="INSERT INTO Asientos (asiento_viaje_id, asiento_codigo, asiento_estado) VALUES (?,?,?)";
@@ -53,9 +53,11 @@ public class AsientosDAO extends Conexion{
                                     ps.setString(3, "Disponible");
                                     ps.execute();
                            }
+                           return true;
+                                   
                   }catch(SQLException ex){
                            System.out.println(ex);
                   }
-                  
+            return false;       
          } 
 }

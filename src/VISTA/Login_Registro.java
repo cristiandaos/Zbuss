@@ -96,7 +96,7 @@ public class Login_Registro extends javax.swing.JFrame {
         PanelInicioSesion.add(BTN_Visibilidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, 40, 40));
 
         Txt_contraseña.setBackground(new java.awt.Color(12, 12, 12));
-        Txt_contraseña.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
+        Txt_contraseña.setFont(new java.awt.Font("Segoe UI Emoji", 1, 16)); // NOI18N
         Txt_contraseña.setForeground(new java.awt.Color(255, 255, 255));
         Txt_contraseña.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         Txt_contraseña.setCaretColor(new java.awt.Color(255, 255, 255));
@@ -104,7 +104,7 @@ public class Login_Registro extends javax.swing.JFrame {
         PanelInicioSesion.add(Txt_contraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 220, 40));
 
         Txt_correoElectronico.setBackground(new java.awt.Color(12, 12, 12));
-        Txt_correoElectronico.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
+        Txt_correoElectronico.setFont(new java.awt.Font("Segoe UI Emoji", 1, 16)); // NOI18N
         Txt_correoElectronico.setForeground(new java.awt.Color(255, 255, 255));
         Txt_correoElectronico.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         Txt_correoElectronico.setCaretColor(new java.awt.Color(255, 255, 255));
